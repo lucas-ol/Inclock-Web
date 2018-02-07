@@ -1,0 +1,83 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="masterpage.master.cs" Inherits="masterpage" %>
+
+<%@ Register TagPrefix="uc" TagName="Logar" Src="~/inc/Login/Logar.ascx" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/Styles/Style.css" rel="stylesheet" />
+    <link href="/Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
+ 
+    
+
+    <script src="/Scripts/jquery.js"></script> 
+    <script src="/Scripts/popper/popper.js"></script>
+    <script src="/Scripts/bootstrap/bootstrap.js"></script>
+    <asp:ContentPlaceHolder runat="server" ID="Head">
+    </asp:ContentPlaceHolder>
+    <script>        
+</script>
+    <style>
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+
+            <!-- Menu de Navegação -->
+            <nav class="navbar navbar-expand-xl navbar-dark bg-dark  " role="navigation" id="menu">
+                <div class=" container-fluid">
+                    <!-- Menu  -->
+                    <a class=" navbar-brand" href="/"><span class=" house"></span></a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class=" navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav mr-auto ">
+                            <li class=" nav-item"><a class="nav-link" href="/">Home</a></li>
+                            <li class="nav-item dropdown">
+                                <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#">Funcionarios</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/Funcionario/cadastro/index.aspx">Cadastrar</a>
+                                    <a class="dropdown-item" href="/Funcionario/listar/listar.aspx">Listar</a>
+                                    <a class="dropdown-item " href="#">aqui</a>
+                                </div>
+                            </li>
+                            <li class="nav-item"><a class=" nav-link" href="#contact">Contato</a></li>
+                        </ul>
+                        <uc:logar runat="server" id="ucLogar" />
+                    </div>
+
+                </div>
+                <!-- fim do menu-->
+
+            </nav>
+            <!-- Navbar -->
+        </div>
+
+
+        <asp:ContentPlaceHolder runat="server" ID="Corpo">
+        </asp:ContentPlaceHolder>
+
+        <div>
+            <asp:ContentPlaceHolder runat="server" ID="footer">
+            </asp:ContentPlaceHolder>
+        </div>
+      
+
+    </form>
+
+
+    <!--FrameWorks secundarias-->
+
+    <script> $(document).ready(function () {
+            $("").mouseenter(function () {
+                $(this).trigger("click");
+            });
+        });</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+﻿body {
+}
+
+.house {
+    color: black;
+}
+
+    .house:before {
+        content: '\1F3E0';
+    }
