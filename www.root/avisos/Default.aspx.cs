@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class noticia_Default : Autenticador
+public partial class noticia_Default : Autenticacao
 {
     public int TipoPagina
     {
