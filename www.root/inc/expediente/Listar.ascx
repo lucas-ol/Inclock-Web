@@ -4,7 +4,7 @@
     <asp:Literal Text="text" runat="server" ID="dd"/>
     <asp:ListView runat="server" ID="lvExpediente">
         <ItemTemplate>
-            <div>
+            <div style="border:1px solid black">
                 ID:
                 <asp:Literal Text="text" runat="server" ID="txtId" />
                 Entrada:

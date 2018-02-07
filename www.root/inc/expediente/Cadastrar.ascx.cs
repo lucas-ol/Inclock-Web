@@ -27,4 +27,8 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         expediente.Periodo = Convert.ToInt32(ddlPeriodo.SelectedValue);
         return expediente;
     }
+    public bool ValidaDados()
+    {
+        return true;
+    }
 }

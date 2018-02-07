@@ -1,14 +1,14 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Cadastrar.aspx.cs" Inherits="Funcionario_Cadastrar" MasterPageFile="~/masterpage/masterpage.Master"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Cadastrar.aspx.cs" Inherits="Funcionario_Cadastrar" MasterPageFile="~/masterpage/masterpage.Master" %>
 
 <%@ Register TagName="alerta" TagPrefix="uc" Src="~/inc/AlertaGenerico.ascx" %>
-
+<%@ Register TagName="ExpedienteCadastrar" TagPrefix="uc" Src="~/inc/expediente/Cadastrar.ascx" %>
+<%@ Register TagName="ExpedienteListar" TagPrefix="uc" Src="~/inc/expediente/Listar.ascx" %>
 <asp:Content ContentPlaceHolderID="Head" runat="server">
     <style>
         body {
         }
 
         label {
-         
             padding: 0 !important;
         }
     </style>
@@ -185,6 +185,11 @@
                 <uc:alerta runat="server" ID="alerta"></uc:alerta>
             </div>
         </div>
+        <div>
+            <button data-target="#cadastrar_expediente" data-toggle="modal" type="button" class="btn btn-secondary btn-outline-danger">Cadastrar Expediente</button>
+            <uc:ExpedienteCadastrar runat="server" ID="ucExpCadastrar" />
+        </div>
+        <uc:ExpedienteListar runat="server" ID="ucExpListar" />
     </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="footer" runat="server">

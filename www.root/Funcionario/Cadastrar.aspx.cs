@@ -44,7 +44,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
         if (IdFuncionario > 0)
         {
             PreencheDados(Controller.Pesquisa_Funcionario_ID(IdFuncionario));
-            CarregaExpedientes(IdFuncionario);
+            CarregaExpedientes(IdFuncionario);            
         }
     }
 

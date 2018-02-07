@@ -32,7 +32,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         Saida.Text = funcionario.Saida.ToString("HH:MM");
         HorasTrabalhada.Text = funcionario.Horas_Trabalho.ToString("HH:MM");
         TempoPausa.Text = funcionario.Tempo_Pausa.ToString("HH:MM");
-        Semanda.Text = funcionario.Semana;
+        Semanda.Text = funcionario.Semana.ToString();
         Periodo.Text = funcionario.Periodo.ToString();
     }
 }

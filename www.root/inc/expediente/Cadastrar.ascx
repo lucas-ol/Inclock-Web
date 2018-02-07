@@ -54,8 +54,11 @@
                     </div>
                     <div class="col-sm-3">Pausa</div>
                     <div class="col-sm-4">
-                        <asp:TextBox runat="server" ID="txtTempoPausa" TextMode="Time" CssClass="form-control" /></div>
+                        <asp:TextBox runat="server" ID="txtTempoPausa" TextMode="Time" CssClass="form-control" />
+                    </div>
                 </div>
+                <asp:RequiredFieldValidator ErrorMessage="Entrada Invalida" ControlToValidate="txtEntrada" runat="server" />
+                
             </div>
             <div class="modal-body">
                 <asp:Button Text="Cadastrar" runat="server" class="btn btn-outline-success" ID="btnInserir" />
