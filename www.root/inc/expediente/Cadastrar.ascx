@@ -8,7 +8,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class=" modal-title">Castrar Expediente</h4>
+                <h4 class=" modal-title font-weight-bold">Castrar Expediente</h4>
                 <button type="button" data-dismiss="modal" class="close" aria-label="Fechar"><span class="close " aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
@@ -20,11 +20,11 @@
                     <div class="col-sm-1"></div>
                 </div>
                 <div class="form-inline pt-1">
-                    <div class="col-sm-2">Entra</div>
+                    <div class="col-sm-2 font-weight-bold">Entra</div>
                     <div class="col-sm-3">
                         <asp:TextBox runat="server" TextMode="Time" CssClass="form-control" ID="txtEntrada" />
                     </div>
-                    <div class="col-sm-3">Saida</div>
+                    <div class="col-sm-3 font-weight-bold" >Saida</div>
                     <div class="col-sm-4">
                         <asp:TextBox runat="server" ID="txtSaida" CssClass="form-control" TextMode="Time" />
                     </div>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="form-inline pt-1">
                     <div class="col-sm-5">
-                        <asp:DropDownList runat="server" CssClass="form-control w-100" ID="ddlDiaSemana">
+                        <asp:DropDownList runat="server" CssClass="form-control w-100" ID="ddlDiaSemana" CausesValidation="true">
                             <asp:ListItem Text="Dia da Semana" Value="0" />
                             <asp:ListItem Text="Segunda" Value="2" />
                             <asp:ListItem Text="Terça" Value="3" />
@@ -52,16 +52,20 @@
                             <asp:ListItem Text="Domingo" Value="1" />
                         </asp:DropDownList>
                     </div>
-                    <div class="col-sm-3">Pausa</div>
+                    <div class="col-sm-3 font-weight-bold">Pausa</div>
                     <div class="col-sm-4">
                         <asp:TextBox runat="server" ID="txtTempoPausa" TextMode="Time" CssClass="form-control" />
                     </div>
                 </div>
-                <asp:RequiredFieldValidator ErrorMessage="Entrada Invalida" ControlToValidate="txtEntrada" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" />
-                
+                <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Entrada Invalida" ControlToValidate="txtEntrada" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqfEntrada" Display="Dynamic" />
+                <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Saida Invalida" ControlToValidate="txtSaida" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="RequiredFieldValidator1" Display="Dynamic" />
+
+                <asp:CustomValidator ErrorMessage="<br>Escolha o periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" />
+                <asp:CustomValidator ErrorMessage="<br>Escolha o Dia da Semana" ControlToValidate="ddlDiaSemana" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" />
+
             </div>
             <div class="modal-body">
-                <asp:Button Text="Cadastrar" runat="server" class="btn btn-outline-success" ID="btnInserir" />
+                <asp:Button Text="Cadastrar" runat="server" class="btn btn-outline-success" ID="btnInserir" ValidationGroup="ExpedienteCadastro" />
                 <input value="Cancelar" type="button" data-dismiss="modal" class="btn btn-outline-danger" />
             </div>
         </div>
@@ -71,7 +75,10 @@
     function OpenCadastrar() {
         $('#cadastrar_expediente').modal('show');
     }
-    $(function () {
 
-    });
+    function validateCamp(oSrc, args) {
+        var time = args.Value;
+        args.IsValid = (args.Value != '0');
+    }
+
 </script>

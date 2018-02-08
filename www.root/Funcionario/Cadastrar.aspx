@@ -13,9 +13,6 @@
         }
     </style>
     <link href="/Scripts/jqueryUI/jquery-ui.css" rel="stylesheet" />
-
-
-
     <script src="/Scripts/jqueryUI/jquery-ui.js"></script>
     <script src="/Scripts/jquery.mask.js"></script>
     <script src="/Scripts/cadastrofuncionario.js"></script>
