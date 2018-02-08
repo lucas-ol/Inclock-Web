@@ -57,7 +57,7 @@
                         <asp:TextBox runat="server" ID="txtTempoPausa" TextMode="Time" CssClass="form-control" />
                     </div>
                 </div>
-                <asp:RequiredFieldValidator ErrorMessage="Entrada Invalida" ControlToValidate="txtEntrada" runat="server" />
+                <asp:RequiredFieldValidator ErrorMessage="Entrada Invalida" ControlToValidate="txtEntrada" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" />
                 
             </div>
             <div class="modal-body">
