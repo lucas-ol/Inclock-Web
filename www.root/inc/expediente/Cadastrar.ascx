@@ -22,11 +22,11 @@
                 <div class="form-inline pt-1">
                     <div class="col-sm-2 font-weight-bold">Entra</div>
                     <div class="col-sm-3">
-                        <asp:TextBox runat="server" TextMode="Time" CssClass="form-control" ID="txtEntrada" />
+                        <asp:TextBox runat="server" TextMode="Time" CssClass="form-control" ID="txtEntrada" CausesValidation="true" />
                     </div>
-                    <div class="col-sm-3 font-weight-bold" >Saida</div>
+                    <div class="col-sm-3 font-weight-bold">Saida</div>
                     <div class="col-sm-4">
-                        <asp:TextBox runat="server" ID="txtSaida" CssClass="form-control" TextMode="Time" />
+                        <asp:TextBox runat="server" ID="txtSaida" CssClass="form-control" TextMode="Time" CausesValidation="true" />
                     </div>
                 </div>
                 <div class="form-inline pt-1">
@@ -57,15 +57,16 @@
                         <asp:TextBox runat="server" ID="txtTempoPausa" TextMode="Time" CssClass="form-control" />
                     </div>
                 </div>
-                <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Entrada Invalida" ControlToValidate="txtEntrada" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqfEntrada" Display="Dynamic" />
-                <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Saida Invalida" ControlToValidate="txtSaida" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="RequiredFieldValidator1" Display="Dynamic" />
-
-                <asp:CustomValidator ErrorMessage="<br>Escolha o periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" />
-                <asp:CustomValidator ErrorMessage="<br>Escolha o Dia da Semana" ControlToValidate="ddlDiaSemana" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" />
-
+                <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Entrada Invalida" ControlToValidate="txtEntrada" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvEntrada" Display="Dynamic" EnableTheming="true" />
+                <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Saida Invalida" ControlToValidate="txtSaida" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvSaida" Display="Dynamic" EnableTheming="true" />
+                <span style="display: none" id="vlHoraInterval">
+                    <br>
+                    O intervalo da entrada e saida deve ser maior que 01:00</span>
+                <asp:CustomValidator ErrorMessage="<br>Escolha o periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
+                <asp:CustomValidator ErrorMessage="<br>Escolha o Dia da Semana" ControlToValidate="ddlDiaSemana" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
             </div>
             <div class="modal-body">
-                <asp:Button Text="Cadastrar" runat="server" class="btn btn-outline-success" ID="btnInserir" ValidationGroup="ExpedienteCadastro" />
+                <asp:Button Text="Cadastrar" runat="server" class="btn btn-outline-success" ID="btnInserir" ValidationGroup="ExpedienteCadastro" OnClick="btnInserir_Click" />
                 <input value="Cancelar" type="button" data-dismiss="modal" class="btn btn-outline-danger" />
             </div>
         </div>
@@ -77,8 +78,23 @@
     }
 
     function validateCamp(oSrc, args) {
-        var time = args.Value;
         args.IsValid = (args.Value != '0');
     }
 
+    $('#<% =txtEntrada.ClientID%>, #<% =txtSaida.ClientID%>').change(function () {
+        try {
+            var saida = parseInt($('#<% =txtSaida.ClientID%>').val());
+            var entrada = parseInt($('#<% =txtEntrada.ClientID%>').val());
+            var horas = Math.abs(saida - entrada);
+            if (horas >= 1) {
+                $('#vlHoraInterval').css('display', 'none');
+            }
+            else {
+                $('#vlHoraInterval').css('display', 'inline');
+            }
+
+        } catch (e) {
+
+        }
+    });
 </script>
