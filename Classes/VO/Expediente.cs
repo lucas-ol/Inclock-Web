@@ -11,7 +11,7 @@ namespace Classes.VO
     public class Expediente
     {
         public int id { get; set; }
-        public int IdFuncionario { get; set; }
+        public int funcionario_id { get; set; }
         public TimeSpan Entrada { get; set; }
         public TimeSpan Saida { get; set; }
         public TimeSpan Horas_Trabalho { get; set; }

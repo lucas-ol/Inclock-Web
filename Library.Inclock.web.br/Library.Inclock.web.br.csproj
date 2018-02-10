@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\Avisos.cs" />
+    <Compile Include="BL\Expedientes.cs" />
     <Compile Include="BL\Funcionarios.cs" />
     <Compile Include="Connected Services\Autenticador\Reference.cs">
       <AutoGen>True</AutoGen>

@@ -59,7 +59,7 @@
                 </div>
                 <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Entrada Invalida" ControlToValidate="txtEntrada" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvEntrada" Display="Dynamic" EnableTheming="true" />
                 <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Saida Invalida" ControlToValidate="txtSaida" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvSaida" Display="Dynamic" EnableTheming="true" />
-                <span style="display: none" id="vlHoraInterval">
+                <span style="display: none; color:red" id="vlHoraInterval">
                     <br>
                     O intervalo da entrada e saida deve ser maior que 01:00</span>
                 <asp:CustomValidator ErrorMessage="<br>Escolha o periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
@@ -89,7 +89,7 @@
             if (horas >= 1) {
                 $('#vlHoraInterval').css('display', 'none');
             }
-            else {
+            else if (horas < 1 && !isNaN(horas)) {
                 $('#vlHoraInterval').css('display', 'inline');
             }
 
