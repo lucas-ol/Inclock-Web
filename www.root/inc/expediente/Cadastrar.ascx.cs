@@ -77,7 +77,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
             {
                 if (feed.Mensagem.ToLower().Contains("duplicate"))
                 {
-                    feed.Mensagem = "";
+                    feed.Mensagem = "Expediente ja esta cadastrado nesse periodo";
                 }
                 Response.Write("<script>alert('" + feed.Mensagem + "')</script>");
             }
