@@ -26,5 +26,11 @@ namespace Library.Inclock.web.br.BL
             feedback.Status = retorno > 0;
             return feedback; ;
         }
+        public List<Expediente> ListaExpediente()
+        {
+            List<Expediente> expediente = new List<Expediente>();
+
+            return expediente;
+        }
     }
 }

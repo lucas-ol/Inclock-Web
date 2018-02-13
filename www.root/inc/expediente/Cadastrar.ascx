@@ -36,6 +36,7 @@
                             <asp:ListItem Text="Manhã" Value="1" />
                             <asp:ListItem Text="Tarde" Value="2" />
                             <asp:ListItem Text="Noite" Value="3" />
+                            <asp:ListItem Text="Integral" Value="4" />
                         </asp:DropDownList>
                     </div>
                 </div>
@@ -59,8 +60,9 @@
                 </div>
                 <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Entrada Invalida" ControlToValidate="txtEntrada" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvEntrada" Display="Dynamic" EnableTheming="true" />
                 <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Saida Invalida" ControlToValidate="txtSaida" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvSaida" Display="Dynamic" EnableTheming="true" />
-                <span style="display: none; color:red" id="vlHoraInterval" runat="server">
-                    </span>
+                <span style="display: none; color: red" id="vlHoraInterval" runat="server"></span>
+                <asp:CustomValidator ErrorMessage="<br>Esse horario não pertence a esse horio" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="ValidaPeriodo" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
+
                 <asp:CustomValidator ErrorMessage="<br>Escolha o periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
                 <asp:CustomValidator ErrorMessage="<br>Escolha o Dia da Semana" ControlToValidate="ddlDiaSemana" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
             </div>
@@ -79,7 +81,27 @@
     function validateCamp(oSrc, args) {
         args.IsValid = (args.Value != '0');
     }
-
+    function ValidaPeriodo(oSrc, args) {
+        var entrada = parseInt($('#<% =txtEntrada.ClientID%>').val());
+        switch (args.Value) {
+            case 1:
+                var Periodo = parseInt(<% =Convert.ToInt32(ConfigurationManager.AppSettings["manha"]) %>);
+                args.IsValid = Periodo >= entrada;
+                break;
+            case 2:
+                var Periodo = parseInt(<% =Convert.ToInt32(ConfigurationManager.AppSettings["tarde"]) %>);
+                args.IsValid = Periodo >= entrada;
+                break;
+            case 3:
+                var Periodo = parseInt(<% =Convert.ToInt32(ConfigurationManager.AppSettings["noite"]) %>);
+                args.IsValid = Periodo >= entrada;
+                break;
+            case 4:
+                args.IsValid = true
+                break;
+            default:
+        }
+    }
     $('#<% =txtEntrada.ClientID%>, #<% =txtSaida.ClientID%>').change(function () {
         try {
             var saida = parseInt($('#<% =txtSaida.ClientID%>').val());
