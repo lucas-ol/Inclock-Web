@@ -89,4 +89,11 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         else
             Response.Write("<script>alert('Preencha todos os campos corretamente')</script>");
     }
+    public float ConverteHora(string hora)
+    {
+        float fHora;
+        int minutos;
+        float.TryParse(hora, out fHora);
+        return fHora;
+    }
 }
