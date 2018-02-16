@@ -48,5 +48,7 @@ namespace Autenticador
         [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         string CheckPoint(Ponto ponto);
+        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "GET")]
+        string GetExpediente(int semana, int funcionario_Id);
     }
 }

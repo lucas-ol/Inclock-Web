@@ -33,8 +33,13 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
     {
         Expediente expediente = new Expediente();
         expediente.funcionario_id = Id_funcionario;
-        expediente.Entrada = Convert.ToDateTime(txtEntrada.Text).TimeOfDay;
-        expediente.Saida = Convert.ToDateTime(txtSaida.Text).TimeOfDay;
+        if (!string.IsNullOrWhiteSpace(txtTempoPausa.Text))
+            expediente.Tempo_Pausa = txtTempoPausa.Text;
+        else
+            expediente.Tempo_Pausa = "00:00";
+
+        expediente.Entrada = txtEntrada.Text;
+        expediente.Saida = txtSaida.Text;
         expediente.Semana = Convert.ToInt32(ddlDiaSemana.SelectedValue);
         expediente.Periodo = Convert.ToInt32(ddlPeriodo.SelectedValue);
         return expediente;

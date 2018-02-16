@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="lDP5Er5wsKCPHTkwD9aD1Oy3ldY=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="N0QHXuE+qGB7xuJrH81JXAELhHY=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IAutenticador">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IAutenticador" contract="Autenticador.IAutenticador" bindingType="basicHttpBinding" address="http://desktop-kjnc04n/Service.svc" bindingConfiguration="BasicHttpBinding_IAutenticador">
+    <endpoint name="BasicHttpBinding_IAutenticador" contract="Autenticador.IAutenticador" bindingType="basicHttpBinding" address="http://localhost:8733/inclock/autenticador" bindingConfiguration="BasicHttpBinding_IAutenticador">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://desktop-kjnc04n/Service.svc</serializedValue>
+          <serializedValue>http://localhost:8733/inclock/autenticador</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

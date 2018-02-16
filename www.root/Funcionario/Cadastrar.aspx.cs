@@ -39,13 +39,16 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
             txtCargo.DataBind();
             txtCargo.Items.Insert(0, new ListItem("Selecione o Cargo", "0") { Selected = true });
 
+            if (IdFuncionario > 0)
+            {
+                PreencheDados(Controller.Pesquisa_Funcionario_ID(IdFuncionario));
+                ucExpCadastrar.Visible = true;
+                ucExpListar.Visible = true;
+                CarregaExpedientes(IdFuncionario);
+            }
         }
 
-        if (IdFuncionario > 0)
-        {
-            PreencheDados(Controller.Pesquisa_Funcionario_ID(IdFuncionario));
-            CarregaExpedientes(IdFuncionario);            
-        }
+
     }
 
     protected void btnCadastrar_Click(object sender, EventArgs e)

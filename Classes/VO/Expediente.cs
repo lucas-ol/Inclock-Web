@@ -12,10 +12,10 @@ namespace Classes.VO
     {
         public int id { get; set; }
         public int funcionario_id { get; set; }
-        public TimeSpan Entrada { get; set; }
-        public TimeSpan Saida { get; set; }
-        public TimeSpan Horas_Trabalho { get; set; }
-        public TimeSpan Tempo_Pausa { get; set; }
+        public string Entrada { get; set; }
+        public string Saida { get; set; }
+        public string Horas_Trabalho { get; set; }
+        public string Tempo_Pausa { get; set; }
         public int Periodo { get; set; }
         public int Semana { get; set; }
 

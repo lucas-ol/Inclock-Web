@@ -68,6 +68,12 @@ namespace Library.Inclock.web.br.Autenticador {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/CheckPoint", ReplyAction="http://tempuri.org/IAutenticador/CheckPointResponse")]
         System.Threading.Tasks.Task<string> CheckPointAsync(Classes.VO.Ponto ponto);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetExpediente", ReplyAction="http://tempuri.org/IAutenticador/GetExpedienteResponse")]
+        string GetExpediente(int semana, int funcionario_Id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetExpediente", ReplyAction="http://tempuri.org/IAutenticador/GetExpedienteResponse")]
+        System.Threading.Tasks.Task<string> GetExpedienteAsync(int semana, int funcionario_Id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -167,6 +173,14 @@ namespace Library.Inclock.web.br.Autenticador {
         
         public System.Threading.Tasks.Task<string> CheckPointAsync(Classes.VO.Ponto ponto) {
             return base.Channel.CheckPointAsync(ponto);
+        }
+        
+        public string GetExpediente(int semana, int funcionario_Id) {
+            return base.Channel.GetExpediente(semana, funcionario_Id);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetExpedienteAsync(int semana, int funcionario_Id) {
+            return base.Channel.GetExpedienteAsync(semana, funcionario_Id);
         }
     }
 }

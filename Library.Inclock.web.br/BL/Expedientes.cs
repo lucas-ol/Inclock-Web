@@ -1,5 +1,6 @@
 ﻿using Classes.Common;
 using Classes.VO;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,18 @@ namespace Library.Inclock.web.br.BL
             feedback.Status = retorno > 0;
             return feedback; ;
         }
-        public List<Expediente> ListaExpediente()
+        public List<Expediente> ListaExpediente(int funcionario_Id)
+        {
+            return ListaExpediente(funcionario_Id, 0);
+        }
+        public List<Expediente> ListaExpediente(int funcionario_Id, int semana)
         {
             List<Expediente> expediente = new List<Expediente>();
-
+            expediente = JsonConvert.DeserializeObject<List<Expediente>>(new Autenticador.AutenticadorClient().GetExpediente(semana, funcionario_Id));
             return expediente;
         }
+
+
+
     }
 }

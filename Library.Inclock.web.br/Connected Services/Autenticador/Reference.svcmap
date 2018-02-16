@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="833fc660-614c-4f0c-8e85-ba650fb0e84c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f540a995-8a4b-4321-9eb4-89eb0ee2f9f7" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,13 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://192.168.0.103/Service.svc/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://localhost:8733/inclock/autenticador" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="01bea642-0967-4c3c-a98a-72323c1d8570" SourceId="1" SourceUrl="http://192.168.0.103/Service.svc/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="cd8d6d69-30a7-4b80-9df2-0470fc05c406" SourceId="1" SourceUrl="http://192.168.0.103/Service.svc/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="92b59f58-62f4-4aee-8f82-59e6eb407159" SourceId="1" SourceUrl="http://192.168.0.103/Service.svc/mex" />
-    <MetadataFile FileName="Classes.VO.xsd" MetadataType="Schema" ID="c2192200-bc86-4643-b871-87712b458b14" SourceId="1" SourceUrl="http://192.168.0.103/Service.svc/mex" />
+    <MetadataFile FileName="autenticador.disco" MetadataType="Disco" ID="9b91663a-62d9-422b-984a-659c6e1f547a" SourceId="1" SourceUrl="http://localhost:8733/inclock/autenticador?disco" />
+    <MetadataFile FileName="autenticador.xsd" MetadataType="Schema" ID="2836659d-fe26-4a99-b6ff-4e3c73078f80" SourceId="1" SourceUrl="http://localhost:8733/inclock/autenticador?xsd=xsd1" />
+    <MetadataFile FileName="autenticador1.xsd" MetadataType="Schema" ID="bc8e5505-d07e-4b08-99fa-be84d15481bf" SourceId="1" SourceUrl="http://localhost:8733/inclock/autenticador?xsd=xsd0" />
+    <MetadataFile FileName="Autenticador.wsdl" MetadataType="Wsdl" ID="100ed7f9-99f1-4439-862c-04c03dc25408" SourceId="1" SourceUrl="http://localhost:8733/inclock/autenticador?wsdl" />
+    <MetadataFile FileName="autenticador2.xsd" MetadataType="Schema" ID="b390fedd-5eaa-49cc-bb10-585f39a22180" SourceId="1" SourceUrl="http://localhost:8733/inclock/autenticador?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

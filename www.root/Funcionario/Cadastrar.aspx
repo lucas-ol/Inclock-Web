@@ -183,10 +183,11 @@
             </div>
         </div>
         <div>
-            <button data-target="#cadastrar_expediente" data-toggle="modal" type="button" class="btn btn-secondary btn-outline-danger">Cadastrar Expediente</button>
-            <uc:ExpedienteCadastrar runat="server" ID="ucExpCadastrar" />
+
+            <uc:ExpedienteCadastrar runat="server" ID="ucExpCadastrar" Visible="false" />
+            <uc:ExpedienteListar runat="server" ID="ucExpListar" Visible="false" />
         </div>
-        <uc:ExpedienteListar runat="server" ID="ucExpListar" />
+
     </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="footer" runat="server">

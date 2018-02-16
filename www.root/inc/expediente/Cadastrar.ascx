@@ -3,13 +3,13 @@
 <style>
    
 </style>
-
+<button data-target="#cadastrar_expediente" data-toggle="modal" type="button" class="btn btn-secondary btn-outline-danger">Cadastrar Expediente</button>
 <div class="modal fade" id="cadastrar_expediente">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class=" modal-title font-weight-bold">Castrar Expediente</h4>
-                <button type="button" data-dismiss="modal" class="close" aria-label="Fechar"><span class="close " aria-hidden="true">&times;</span></button>
+                <button type="button" data-dismiss="modal" class="close" aria-label="Fechar">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="form-inline">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="form-inline pt-1">
-                    <div class="col-sm-5">
+                    <div class="col-sm-6">
                         <asp:DropDownList runat="server" ID="ddlPeriodo" CssClass="form-control w-100">
                             <asp:ListItem Text="Periodo" Value="0" />
                             <asp:ListItem Text="Manhã" Value="1" />
@@ -39,9 +39,7 @@
                             <asp:ListItem Text="Integral" Value="4" />
                         </asp:DropDownList>
                     </div>
-                </div>
-                <div class="form-inline pt-1">
-                    <div class="col-sm-5">
+                     <div class="col-sm-6">
                         <asp:DropDownList runat="server" CssClass="form-control w-100" ID="ddlDiaSemana" CausesValidation="true">
                             <asp:ListItem Text="Dia da Semana" Value="0" />
                             <asp:ListItem Text="Segunda" Value="2" />
@@ -53,7 +51,10 @@
                             <asp:ListItem Text="Domingo" Value="1" />
                         </asp:DropDownList>
                     </div>
-                    <div class="col-sm-3 font-weight-bold">Pausa</div>
+                </div>
+                <div class="form-inline pt-1">
+                   
+                    <div class="col-sm-2 font-weight-bold">Pausa</div>
                     <div class="col-sm-4">
                         <asp:TextBox runat="server" ID="txtTempoPausa" TextMode="Time" CssClass="form-control" />
                     </div>
@@ -61,7 +62,7 @@
                 <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Entrada Invalida" ControlToValidate="txtEntrada" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvEntrada" Display="Dynamic" EnableTheming="true" />
                 <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Saida Invalida" ControlToValidate="txtSaida" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvSaida" Display="Dynamic" EnableTheming="true" />
                 <span style="display: none; color: red" id="vlHoraInterval" runat="server"></span>
-                <asp:CustomValidator ErrorMessage="<br>Esse horario não pertence a esse horio" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="ValidaPeriodo" Display="Dynamic" ForeColor="Red" EnableTheming="true" ID="vPeriodo" />
+                <asp:CustomValidator ErrorMessage="<br>Esse horario não pertence a esse Periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="ValidaPeriodo" Display="Dynamic" ForeColor="Red" EnableTheming="true" ID="vPeriodo" />
                 <asp:CustomValidator ErrorMessage="" ControlToValidate="txtEntrada" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="ValidaPeriodo" Display="None" ForeColor="Red" EnableTheming="true" />
 
                 <asp:CustomValidator ErrorMessage="<br>Escolha o periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
@@ -122,7 +123,7 @@
             var entrada = parseInt($('#<% =txtEntrada.ClientID%>').val());
             var horas = Math.abs(saida - entrada);
             if (horas >= 1) {
-                $('#vlHoraInterval').css('display', 'none');
+                $('#<% =vlHoraInterval.ClientID %>').css('display', 'none');
             }
             else if (horas < 1 && !isNaN(horas)) {
                 $('#<% =vlHoraInterval.ClientID%>').css('display', 'inline');

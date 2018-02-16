@@ -68,14 +68,14 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Autenticador\Classes.VO.xsd">
+    <None Include="Connected Services\Autenticador\Autenticador.wsdl" />
+    <None Include="Connected Services\Autenticador\autenticador.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Autenticador\service.wsdl" />
-    <None Include="Connected Services\Autenticador\service.xsd">
+    <None Include="Connected Services\Autenticador\autenticador1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Autenticador\service1.xsd">
+    <None Include="Connected Services\Autenticador\autenticador2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config">
@@ -93,6 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\Autenticador\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Autenticador\autenticador.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\Autenticador\configuration91.svcinfo" />

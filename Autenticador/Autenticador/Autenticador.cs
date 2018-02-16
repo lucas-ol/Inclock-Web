@@ -55,6 +55,9 @@ namespace Autenticador
           return nameof(CheckPoint);
         }
 
-        
+        public string GetExpediente(int semana, int funcionario_Id)
+        {
+            return new BL.CAutenticador().GetExpediente(semana,funcionario_Id);
+        }
     }
 }
