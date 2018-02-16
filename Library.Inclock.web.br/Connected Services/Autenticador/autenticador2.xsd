@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Classes.VO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Classes.VO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="Ponto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Data" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Funcionario" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Hora" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Latitude" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Logitude" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="periodo" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Ponto" nillable="true" type="tns:Ponto" />
+</xs:schema>

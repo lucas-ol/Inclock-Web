@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Autenticador" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:8733/inclock/autenticador?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8733/inclock/autenticador?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8733/inclock/autenticador?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Classes.VO" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IAutenticador_Logar_InputMessage">
+    <wsdl:part name="parameters" element="tns:Logar" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_Logar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetLogin_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogin" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetLogin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPassword" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetCheckPointDateInterval_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCheckPointDateInterval" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetCheckPointDateInterval_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCheckPointDateIntervalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetCheckPointByDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCheckPointByDate" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetCheckPointByDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCheckPointByDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetCheckPointById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCheckPointById" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetCheckPointById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCheckPointByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetUserById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserById" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetUserById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetListUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetListUsers" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetListUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetListUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_CheckPoint_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckPoint" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_CheckPoint_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckPointResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetExpediente_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetExpediente" />
+  </wsdl:message>
+  <wsdl:message name="IAutenticador_GetExpediente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetExpedienteResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IAutenticador">
+    <wsdl:operation name="Logar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutenticador/Logar" message="tns:IAutenticador_Logar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutenticador/LogarResponse" message="tns:IAutenticador_Logar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLogin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutenticador/GetLogin" message="tns:IAutenticador_GetLogin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutenticador/GetLoginResponse" message="tns:IAutenticador_GetLogin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutenticador/GetPassword" message="tns:IAutenticador_GetPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutenticador/GetPasswordResponse" message="tns:IAutenticador_GetPassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckPointDateInterval">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutenticador/GetCheckPointDateInterval" message="tns:IAutenticador_GetCheckPointDateInterval_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutenticador/GetCheckPointDateIntervalResponse" message="tns:IAutenticador_GetCheckPointDateInterval_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckPointByDate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutenticador/GetCheckPointByDate" message="tns:IAutenticador_GetCheckPointByDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutenticador/GetCheckPointByDateResponse" message="tns:IAutenticador_GetCheckPointByDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckPointById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutenticador/GetCheckPointById" message="tns:IAutenticador_GetCheckPointById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutenticador/GetCheckPointByIdResponse" message="tns:IAutenticador_GetCheckPointById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutenticador/GetUserById" message="tns:IAutenticador_GetUserById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutenticador/GetUserByIdResponse" message="tns:IAutenticador_GetUserById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutenticador/GetListUsers" message="tns:IAutenticador_GetListUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutenticador/GetListUsersResponse" message="tns:IAutenticador_GetListUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckPoint">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutenticador/CheckPoint" message="tns:IAutenticador_CheckPoint_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutenticador/CheckPointResponse" message="tns:IAutenticador_CheckPoint_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExpediente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutenticador/GetExpediente" message="tns:IAutenticador_GetExpediente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutenticador/GetExpedienteResponse" message="tns:IAutenticador_GetExpediente_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IAutenticador" type="tns:IAutenticador">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Logar">
+      <soap:operation soapAction="http://tempuri.org/IAutenticador/Logar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLogin">
+      <soap:operation soapAction="http://tempuri.org/IAutenticador/GetLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPassword">
+      <soap:operation soapAction="http://tempuri.org/IAutenticador/GetPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckPointDateInterval">
+      <soap:operation soapAction="http://tempuri.org/IAutenticador/GetCheckPointDateInterval" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckPointByDate">
+      <soap:operation soapAction="http://tempuri.org/IAutenticador/GetCheckPointByDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCheckPointById">
+      <soap:operation soapAction="http://tempuri.org/IAutenticador/GetCheckPointById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserById">
+      <soap:operation soapAction="http://tempuri.org/IAutenticador/GetUserById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListUsers">
+      <soap:operation soapAction="http://tempuri.org/IAutenticador/GetListUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckPoint">
+      <soap:operation soapAction="http://tempuri.org/IAutenticador/CheckPoint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExpediente">
+      <soap:operation soapAction="http://tempuri.org/IAutenticador/GetExpediente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Autenticador">
+    <wsdl:port name="BasicHttpBinding_IAutenticador" binding="tns:BasicHttpBinding_IAutenticador">
+      <soap:address location="http://localhost:8733/inclock/autenticador" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
