@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Library.Inclock.web.br.BL;
+using System.Globalization;
+
 public partial class inc_expediente_Listar : System.Web.UI.UserControl
 {
     public int FuncionarioId
@@ -20,8 +22,17 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
     protected void Page_Load(object sender, EventArgs e)
     {
         lvExpediente.ItemDataBound += LvExpediente_ItemDataBound;
-        lvExpediente.DataSource = new Expedientes().ListaExpediente(FuncionarioId);
-        lvExpediente.DataBind();
+        try
+        {
+            lvExpediente.DataSource = new Expedientes().ListaExpediente(FuncionarioId);
+            lvExpediente.DataBind();
+        }
+        catch (Exception ex)
+        {
+            // Response.Redirect("\\Erro");
+            throw new HttpException(ex.Message);
+        }
+
     }
 
 
@@ -36,12 +47,35 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         Literal Semanda = (Literal)e.Item.FindControl("txtDiaSemana");
         Literal Periodo = (Literal)e.Item.FindControl("txtPeriodo");
 
-        ID.Value = expediente.id.ToString();
+        ID.Value = expediente.Id.ToString();
         Entrada.Text = expediente.Entrada;
         Saida.Text = expediente.Saida;
         HorasTrabalhada.Text = expediente.Horas_Trabalho;
         TempoPausa.Text = expediente.Tempo_Pausa;
-        Semanda.Text = expediente.Semana.ToString();
-        Periodo.Text = expediente.Periodo.ToString();
+        CultureInfo culture = new CultureInfo("pt-BR");
+        DateTimeFormatInfo dif = culture.DateTimeFormat;
+        Semanda.Text = culture.TextInfo.ToTitleCase(dif.GetDayName((DayOfWeek)expediente.DiaSemana - 1));
+        Periodo.Text = ConvertePeriodo(expediente.Periodo);
+    }
+    public string ConvertePeriodo(int periodo)
+    {
+        string szPeriodo = "";
+        switch (periodo)
+        {
+            case 1:
+                szPeriodo = "Manhã";
+                break;
+            case 2:
+                szPeriodo = "Tarde";
+                break;
+            case 3:
+                szPeriodo = "Noite";
+                break;
+            case 4:
+                szPeriodo = "Integral";
+                break;
+        }
+
+        return szPeriodo;
     }
 }

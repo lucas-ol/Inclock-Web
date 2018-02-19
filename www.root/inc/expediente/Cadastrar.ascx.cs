@@ -32,7 +32,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
     public Expediente CriaObjeto()
     {
         Expediente expediente = new Expediente();
-        expediente.funcionario_id = Id_funcionario;
+        expediente.Funcionario_id = Id_funcionario;
         if (!string.IsNullOrWhiteSpace(txtTempoPausa.Text))
             expediente.Tempo_Pausa = txtTempoPausa.Text;
         else
@@ -40,7 +40,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
 
         expediente.Entrada = txtEntrada.Text;
         expediente.Saida = txtSaida.Text;
-        expediente.Semana = Convert.ToInt32(ddlDiaSemana.SelectedValue);
+        expediente.DiaSemana = Convert.ToInt32(ddlDiaSemana.SelectedValue);
         expediente.Periodo = Convert.ToInt32(ddlPeriodo.SelectedValue);
         return expediente;
     }

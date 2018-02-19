@@ -18,9 +18,9 @@ namespace Library.Inclock.web.br.BL
             MySqlAdicionaParametro("_saida", expediente.Saida);
             MySqlAdicionaParametro("_entrada", expediente.Entrada);
             MySqlAdicionaParametro("_tempo_pausa", expediente.Tempo_Pausa);
-            MySqlAdicionaParametro("_diasemana", expediente.Semana);
+            MySqlAdicionaParametro("_diasemana", expediente.DiaSemana);
             MySqlAdicionaParametro("_periodo", expediente.Periodo);
-            MySqlAdicionaParametro("_funcionario_id", expediente.funcionario_id);
+            MySqlAdicionaParametro("_funcionario_id", expediente.Funcionario_id);
             feedback = MySqlExecutaComando("prd_insert_expediente", System.Data.CommandType.StoredProcedure);
             int retorno;
             int.TryParse(feedback.Mensagem, out retorno);
