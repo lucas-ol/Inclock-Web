@@ -54,28 +54,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         TempoPausa.Text = expediente.Tempo_Pausa;
         CultureInfo culture = new CultureInfo("pt-BR");
         DateTimeFormatInfo dif = culture.DateTimeFormat;
-        Semanda.Text = culture.TextInfo.ToTitleCase(dif.GetDayName((DayOfWeek)expediente.DiaSemana - 1));
-        Periodo.Text = ConvertePeriodo(expediente.Periodo);
-    }
-    public string ConvertePeriodo(int periodo)
-    {
-        string szPeriodo = "";
-        switch (periodo)
-        {
-            case 1:
-                szPeriodo = "Manhã";
-                break;
-            case 2:
-                szPeriodo = "Tarde";
-                break;
-            case 3:
-                szPeriodo = "Noite";
-                break;
-            case 4:
-                szPeriodo = "Integral";
-                break;
-        }
-
-        return szPeriodo;
+        Semanda.Text = Expediente.ConverteDiaSemana(expediente.DiaSemana);
+        Periodo.Text = Expediente.ConvertePeriodo(expediente.Periodo);
     }
 }

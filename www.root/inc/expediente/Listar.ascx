@@ -5,6 +5,7 @@
     <asp:ListView runat="server" ID="lvExpediente">
         <ItemTemplate>
             <div style="border: 1px solid black" class="autowidth">
+              <div style="text-align:center"><asp:Literal Text="text" runat="server" ID="txtDiaSemana" /></div>   
                 <asp:HiddenField  runat="server" ID="hddId" />
                 <div class="form-group">
                     <div class="">
@@ -27,10 +28,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="">
-                        Dia Semana:
-                <asp:Literal Text="text" runat="server" ID="txtDiaSemana" />
-                    </div>
                     <div class="">
                         Periodo:
                     <asp:Literal Text="text" runat="server" ID="txtPeriodo" />
