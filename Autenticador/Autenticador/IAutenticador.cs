@@ -13,7 +13,7 @@ namespace Autenticador
     {
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json
-            , UriTemplate = "logar?password={senha}&login={usr}")]
+            , UriTemplate = "logar/{password}/{login}")]
         string Logar(string password, string login);
 
         [OperationContract]
@@ -21,8 +21,9 @@ namespace Autenticador
         string GetLogin(string Email);
 
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json,
-            UriTemplate = "GetPassword?Email={Email}"
+        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json,
+            Method = "GET",
+            UriTemplate = "GetPassword/{Login}"
             )]
         string GetPassword(string Login);
 
@@ -32,15 +33,17 @@ namespace Autenticador
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        string GetCheckPointByDate(string InitialDate, string FinalDate);
+        string GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario);
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         string GetCheckPointById(int id);
 
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        string GetUserById(int id);
+        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate ="getuser/{id}")]
+        string GetUserById(string id);
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
@@ -48,7 +51,8 @@ namespace Autenticador
         [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         string CheckPoint(Ponto ponto);
-        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "GET")]
-        string GetExpediente(int semana, int funcionario_Id);
+        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "GET",
+           UriTemplate = "getexpediente/{semana}/{funcionario_Id}")]
+        string GetExpediente(string semana, string funcionario_Id);
     }
 }

@@ -62,7 +62,7 @@ namespace Autenticador.BL
         public string GetUserById(int id)
         {
             MySqlAdicionaParametro("_id", id);
-            return JsonConvert.SerializeObject(MySqlLeitura("prd_se_pessoa_id", System.Data.CommandType.StoredProcedure), new JsonSerializerSettings() { Formatting = Formatting.Indented, DateFormatString = "dd/MM/yyyy", Culture = System.Globalization.CultureInfo.CurrentCulture });
+            return JsonConvert.SerializeObject(MySqlLeitura("prd_se_pessoa_id", System.Data.CommandType.StoredProcedure), new JsonSerializerSettings() { Formatting = Formatting.None, DateFormatString = "dd/MM/yyyy" });
 
         }
 

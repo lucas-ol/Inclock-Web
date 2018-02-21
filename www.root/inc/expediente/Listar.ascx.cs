@@ -53,6 +53,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
 
         
         btnEditar.Attributes.Add("data-id", expediente.Id.ToString());
+        btnEditar.Attributes.Add("onclick","");
         btnExcluir.Attributes.Add("data-id", expediente.Id.ToString());
 
 

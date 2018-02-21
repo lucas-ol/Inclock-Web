@@ -19,10 +19,15 @@ namespace Autenticador
         public string GetListUsers()
         {
             return nameof(GetListUsers);
-        }      
-        public string GetUserById(int id)
+        }
+        public string GetUserById(string id)
         {
-            return new BL.CAutenticador().GetUserById(id);
+            int iId;
+            int.TryParse(id,out iId);
+            if (iId == 0)
+                return "erro";
+            else
+                return new BL.CAutenticador().GetUserById(iId);
         }
 
         public string Logar(string password, string login)
@@ -40,24 +45,34 @@ namespace Autenticador
             return nameof(GetCheckPointDateInterval);
         }
 
-        public string GetCheckPointByDate(string InitialDate, string FinalDate)
+        public string GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario)
         {
-          return nameof(GetCheckPointByDate);
+            return nameof(GetCheckPointByDate);
         }
 
         public string GetCheckPointById(int id)
         {
-          return nameof(GetCheckPointById);
+            return nameof(GetCheckPointById);
         }
 
         public string CheckPoint(Ponto ponto)
         {
-          return nameof(CheckPoint);
+            return nameof(CheckPoint);
         }
 
-        public string GetExpediente(int semana, int funcionario_Id)
+        public string GetExpediente(string semana, string funcionario_Id)
         {
-            return new BL.CAutenticador().GetExpediente(semana,funcionario_Id);
+            int isemana, ifuncionario_Id;
+            int.TryParse(semana, out isemana);
+            int.TryParse(funcionario_Id, out ifuncionario_Id);
+            if (isemana == 0 || ifuncionario_Id == 0)
+                return "Paramentros incorretos";
+            else
+                return new BL.CAutenticador().GetExpediente(isemana, ifuncionario_Id);
         }
+
+      
+
+
     }
 }
