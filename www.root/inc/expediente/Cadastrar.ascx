@@ -3,7 +3,7 @@
 <style>
    
 </style>
-<button data-target="#cadastrar_expediente" data-toggle="modal" type="button" class="btn btn-secondary btn-outline-danger">Cadastrar Expediente</button>
+
 <div class="modal fade" id="cadastrar_expediente">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -134,6 +134,16 @@
 
         }
     });
-
+    function CarregaDados(Expediente)
+    {
+        $('#<% =txtEntrada.ClientID%>').val(Expediente.Entrada);
+        $('#<% =txtSaida.ClientID %>').val(Expediente.saida);
+        $('#<% =txtTempoPausa.ClientID %>').val(Expediente.Pausa);
+        $('#<% =ddlDiaSemana.ClientID %>').val(Expediente.Semana);
+        $('#<% =ddlDiaSemana.ClientID %>').attr("enable", "false");
+        $('#<% =ddlPeriodo.ClientID%>').val(Expediente.Periodo)
+        $('#<% =ddlPeriodo.ClientID%>').attr("enable", "false");
+        
+    }
 
 </script>

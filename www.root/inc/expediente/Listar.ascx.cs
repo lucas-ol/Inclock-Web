@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Library.Inclock.web.br.BL;
 using System.Globalization;
+using System.Web.UI.HtmlControls;
 
 public partial class inc_expediente_Listar : System.Web.UI.UserControl
 {
@@ -40,12 +41,20 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
     {
         Expediente expediente = (Expediente)e.Item.DataItem;
         HiddenField ID = (HiddenField)e.Item.FindControl("hddId");
-        Literal Entrada = (Literal)e.Item.FindControl("txtEntrada");
-        Literal Saida = (Literal)e.Item.FindControl("txtSaida");
-        Literal HorasTrabalhada = (Literal)e.Item.FindControl("txtHosrasTrabalhada");
-        Literal TempoPausa = (Literal)e.Item.FindControl("txtTempoPausa");
-        Literal Semanda = (Literal)e.Item.FindControl("txtDiaSemana");
-        Literal Periodo = (Literal)e.Item.FindControl("txtPeriodo");
+        Label Entrada = (Label)e.Item.FindControl("txtEntrada");
+        Label Saida = (Label)e.Item.FindControl("txtSaida");
+        Label HorasTrabalhada = (Label)e.Item.FindControl("txtHosrasTrabalhada");
+        Label TempoPausa = (Label)e.Item.FindControl("txtTempoPausa");
+        Label Semanda = (Label)e.Item.FindControl("txtDiaSemana");
+        Label Periodo = (Label)e.Item.FindControl("txtPeriodo");
+
+        HtmlButton btnEditar = (HtmlButton)e.Item.FindControl("btnEditar");
+        Button btnExcluir = (Button)e.Item.FindControl("btnExcluir");
+
+        
+        btnEditar.Attributes.Add("data-id", expediente.Id.ToString());
+        btnExcluir.Attributes.Add("data-id", expediente.Id.ToString());
+
 
         ID.Value = expediente.Id.ToString();
         Entrada.Text = expediente.Entrada;
