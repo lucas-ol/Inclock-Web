@@ -38,16 +38,16 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
             txtCargo.DataValueField = "id";
             txtCargo.DataBind();
             txtCargo.Items.Insert(0, new ListItem("Selecione o Cargo", "0") { Selected = true });
-
-            if (IdFuncionario > 0)
-            {
-                PreencheDados(Controller.Pesquisa_Funcionario_ID(IdFuncionario));
-                ucExpCadastrar.Visible = true;
-                ucExpListar.Visible = true;
-                CarregaExpedientes(IdFuncionario);
-            }
         }
 
+        if (IdFuncionario > 0)
+        {
+            btnCadastraExpediente.Visible = true;
+            PreencheDados(Controller.Pesquisa_Funcionario_ID(IdFuncionario));
+            ucExpCadastrar.Visible = true;
+            ucExpListar.Visible = true;
+        
+        }
 
     }
 
@@ -74,11 +74,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
             // Response.Write("<script>alert('Por favor verifique os campos incorretos')</script>");
             alerta.ShowMessager("Por favor corrija todos os campos  <strong>destacados em vermelho</strong>", StatusEnum.Info);
         }
-    }
-    public void CarregaExpedientes(int id)
-    {
-
-    }
+    }   
     private void Cadastrar()
     {
         if (ValidaCampos())
@@ -302,7 +298,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
         txtSexoFeminino.Checked = false;
         txtCargo.SelectedValue = "0";
 
-        txtEstado.Text = "";
+        txtEstado.SelectedValue = "0";
 
         txtAniversario.Text = "";
 

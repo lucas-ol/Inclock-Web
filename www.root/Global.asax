@@ -39,7 +39,7 @@
         // HttpContext.Current.RewritePath("/index.aspx");
         if (url.AbsolutePath.ToLower().Contains("/avisos"))
         {            
-            HttpContext.Current.RewritePath(MakeUrl(url.Segments));
+          //  HttpContext.Current.RewritePath(MakeUrl(url.Segments));
         }
 
 
@@ -50,8 +50,9 @@
         //   routes.MapPageRoute("ExpenseReport/{locale}","~/",);
     }
 
-    string MakeUrl(string[] url)
+   /*  string MakeUrl(string[] url)
     {
+       
         if (url.Contains("cadastrar"))
         {         
             return string.Format("/{0}Default.aspx?acao=1", url[1].ToLower());
@@ -66,5 +67,5 @@
         }
         else
             return "/";
-    }
+    }*/
 </script>

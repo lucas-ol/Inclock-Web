@@ -5,6 +5,7 @@
 </style>
 
 <div class="modal fade" id="cadastrar_expediente">
+    <asp:HiddenField runat="server" ID="hhdIdExpediente" Value="0" />
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -39,7 +40,7 @@
                             <asp:ListItem Text="Integral" Value="4" />
                         </asp:DropDownList>
                     </div>
-                     <div class="col-sm-6">
+                    <div class="col-sm-6">
                         <asp:DropDownList runat="server" CssClass="form-control w-100" ID="ddlDiaSemana" CausesValidation="true">
                             <asp:ListItem Text="Dia da Semana" Value="0" />
                             <asp:ListItem Text="Segunda" Value="2" />
@@ -53,7 +54,7 @@
                     </div>
                 </div>
                 <div class="form-inline pt-1">
-                   
+
                     <div class="col-sm-2 font-weight-bold">Pausa</div>
                     <div class="col-sm-4">
                         <asp:TextBox runat="server" ID="txtTempoPausa" TextMode="Time" CssClass="form-control" />
@@ -96,26 +97,26 @@
             switch (iPeriodo) {
                 case 1:
                     args.IsValid = entrada >= manha && manha < tarde;
-                  
-                     break;
-                 case 2:
-                     args.IsValid = entrada >= tarde && tarde < noite;
-                   
+
                     break;
-                 case 3:
-                     args.IsValid = entrada >= noite && noite < fim;
-                   
+                case 2:
+                    args.IsValid = entrada >= tarde && tarde < noite;
+
+                    break;
+                case 3:
+                    args.IsValid = entrada >= noite && noite < fim;
+
                     break;
                 case 4:
                     args.IsValid = true
                     break;
             }
-            if (!args.IsValid) 
+            if (!args.IsValid)
                 $("#<% =vPeriodo.ClientID%>").css("display", "inline");
             else
                 $("#<% =vPeriodo.ClientID%>").css("display", "none");
 
-       }
+        }
     }
     $('#<% =txtEntrada.ClientID%>, #<% =txtSaida.ClientID%>').change(function () {
         try {
@@ -130,20 +131,26 @@
                 $('#<% =vlHoraInterval.ClientID%>').html('<br>O intervalo da entrada e saida deve ser maior que 01:00');
             }
 
-        } catch (e) {
+    } catch (e) {
 
-        }
+    }
     });
-    function CarregaDados(Expediente)
-    {
-        $('#<% =txtEntrada.ClientID%>').val(Expediente.Entrada);
-        $('#<% =txtSaida.ClientID %>').val(Expediente.saida);
-        $('#<% =txtTempoPausa.ClientID %>').val(Expediente.Pausa);
-        $('#<% =ddlDiaSemana.ClientID %>').val(Expediente.Semana);
-        $('#<% =ddlDiaSemana.ClientID %>').attr("enable", "false");
-        $('#<% =ddlPeriodo.ClientID%>').val(Expediente.Periodo)
+function CarregaDados(Expediente) {
+    try {
+        $('#<% =hhdIdExpediente.ClientID%>').val(Expediente.Id);
+            $('#<% =txtEntrada.ClientID%>').val(Expediente.Entrada);
+            $('#<% =txtSaida.ClientID %>').val(Expediente.saida);
+            $('#<% =txtTempoPausa.ClientID %>').val(Expediente.Pausa);
+            $('#<% =ddlDiaSemana.ClientID %>').val(Expediente.Semana);
+            $('#<% =ddlDiaSemana.ClientID %>').attr("enable", "false");
+            $('#<% =ddlPeriodo.ClientID%>').val(Expediente.Periodo)
         $('#<% =ddlPeriodo.ClientID%>').attr("enable", "false");
-        
+        alert("Sucesso");
+        } catch (e) {
+            alert(e);
+        }
+
+
     }
 
 </script>

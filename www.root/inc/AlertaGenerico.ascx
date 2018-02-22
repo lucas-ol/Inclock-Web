@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="AlertaGenerico.ascx.cs" Inherits="inc_AlertaGenerico" %>
-<!-<link href="../Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
+<!-- <link href="../Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
 -->
 <script>
     $(document).ready(function () {

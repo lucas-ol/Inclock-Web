@@ -1,12 +1,15 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Cadastrar.ascx.cs" Inherits="inc_noticia_Cadastrar" %>
+
 <%@ Register TagPrefix="uc" TagName="Alerta" Src="~/inc/AlertaGenerico.ascx" %>
 <link href="../../Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
+
 <style>
     .form-grop > .form-inline > span {
         padding: 0 !important;
         text-align: left;
     }
 </style>
+
 <div class="form-group">
     <div class="form-inline">
         <asp:Label runat="server" ID="lblTitulo" Text="Titulo" AssociatedControlID="" CssClass="col-sm-1" />

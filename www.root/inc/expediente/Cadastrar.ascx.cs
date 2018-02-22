@@ -70,6 +70,38 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
 
     protected void btnInserir_Click(object sender, EventArgs e)
     {
+        if (hhdIdExpediente.Value == "0")
+            AdicionaExpediente();
+        else
+            EditaExpediente();
+
+
+    }
+    public float ConverteHora(string hora)
+    {
+        float fHora;
+        int minutos;
+        float.TryParse(hora, out fHora);
+        return fHora;
+    }
+    public void EditaExpediente()
+    {
+        if (ValidaDados())
+        {
+            Expedientes expedientes = new Expedientes();
+            FeedBack feed = new FeedBack { Status = false };
+            CriaObjeto();
+            if (feed.Status)
+                Response.Write("<script>alert('Expediente Cadastrado com sucesso')</script>");
+        }
+        else if (Id_funcionario <= 0 || hhdIdExpediente.Value == "0")
+            Response.Write("<script>alert('Erro inesperado')</script>");
+        else
+            Response.Write("<script>alert('Preencha todos os campos corretamente')</script>");
+
+    }
+    public void AdicionaExpediente()
+    {
 
         if (ValidaDados())
         {
@@ -86,19 +118,10 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
                 }
                 Response.Write("<script>alert('" + feed.Mensagem + "')</script>");
             }
-
-
         }
         else if (Id_funcionario <= 0)
             Response.Write("<script>alert('Erro inesperado')</script>");
         else
             Response.Write("<script>alert('Preencha todos os campos corretamente')</script>");
-    }
-    public float ConverteHora(string hora)
-    {
-        float fHora;
-        int minutos;
-        float.TryParse(hora, out fHora);
-        return fHora;
     }
 }

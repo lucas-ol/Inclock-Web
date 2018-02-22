@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class noticia_Default : Autenticacao
+public partial class avisos_Default : System.Web.UI.Page
 {
     public int TipoPagina
     {
@@ -16,24 +16,24 @@ public partial class noticia_Default : Autenticacao
             return n1;
         }
     }
-
     protected void Page_Load(object sender, EventArgs e)
     {
-       
-        if (TipoPagina == 1)
-        {
-            pnlCorpo.Controls.Add(LoadControl("~/inc/avisos/Cadastrar.ascx"));           
-        }
-        else if (TipoPagina == 2)
-        {
-            pnlCorpo.Controls.Add(LoadControl("~/inc/avisos/Alterar.ascx"));
-        }
-        else if (TipoPagina == 3)
-        {
-            pnlCorpo.Controls.Add(LoadControl("~/inc/avisos/Excluir.ascx"));
-        }
-        else
-            pnlCorpo.Controls.Add(LoadControl("~/inc/avisos/Listar.ascx"));
-        //   Response.Redirect("/");
+        
+
+            if (TipoPagina == 1)
+            {
+                pnlCorpo.Controls.Add(LoadControl("~/inc/avisos/Cadastrar.ascx"));
+            }
+            else if (TipoPagina == 2)
+            {
+                pnlCorpo.Controls.Add(LoadControl("~/inc/avisos/Alterar.ascx"));
+            }
+            else if (TipoPagina == 3)
+            {
+                pnlCorpo.Controls.Add(LoadControl("~/inc/avisos/Excluir.ascx"));
+            }
+            else
+                pnlCorpo.Controls.Add(LoadControl("~/inc/avisos/Listar.ascx"));
+        
     }
 }
