@@ -17,7 +17,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         {
             int id;
             int.TryParse(Request.QueryString["id"], out id);
-            return 1;
+            return id;
         }
     }
     protected void Page_Load(object sender, EventArgs e)
@@ -39,6 +39,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
 
     private void LvExpediente_ItemDataBound(object sender, ListViewItemEventArgs e)
     {
+    
         Expediente expediente = (Expediente)e.Item.DataItem;
         HiddenField ID = (HiddenField)e.Item.FindControl("hddId");
         Label Entrada = (Label)e.Item.FindControl("txtEntrada");
@@ -47,23 +48,29 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         Label TempoPausa = (Label)e.Item.FindControl("txtTempoPausa");
         Label Semanda = (Label)e.Item.FindControl("txtDiaSemana");
         Label Periodo = (Label)e.Item.FindControl("txtPeriodo");
-
+       
         HtmlButton btnEditar = (HtmlButton)e.Item.FindControl("btnEditar");
         Button btnExcluir = (Button)e.Item.FindControl("btnExcluir");
+        Panel painel = (Panel)e.Item.FindControl("pnlExpediente");
 
+<<<<<<< .mine
+        painel.Attributes.Add("data-id","id"+ expediente.Id);
+=======
         
         btnEditar.Attributes.Add("data-id", expediente.Id.ToString());
         btnEditar.Attributes.Add("onclick","");
         btnExcluir.Attributes.Add("data-id", expediente.Id.ToString());
+>>>>>>> .r31
+
+        btnEditar.Attributes.Add("onclick", "Editar(" + expediente.Id + ")");
+        btnExcluir.Attributes.Add("onclick", "Excluir(" + expediente.Id + ")");
 
 
         ID.Value = expediente.Id.ToString();
         Entrada.Text = expediente.Entrada;
         Saida.Text = expediente.Saida;
         HorasTrabalhada.Text = expediente.Horas_Trabalho;
-        TempoPausa.Text = expediente.Tempo_Pausa;
-        CultureInfo culture = new CultureInfo("pt-BR");
-        DateTimeFormatInfo dif = culture.DateTimeFormat;
+        TempoPausa.Text = expediente.Tempo_Pausa; 
         Semanda.Text = Expediente.ConverteDiaSemana(expediente.DiaSemana);
         Periodo.Text = Expediente.ConvertePeriodo(expediente.Periodo);
     }
