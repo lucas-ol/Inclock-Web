@@ -135,22 +135,23 @@
 
     }
     });
-function CarregaDados(Expediente) {
-    try {
-        $('#<% =hhdIdExpediente.ClientID%>').val(Expediente.Id);
-            $('#<% =txtEntrada.ClientID%>').val(Expediente.Entrada);
-            $('#<% =txtSaida.ClientID %>').val(Expediente.saida);
-            $('#<% =txtTempoPausa.ClientID %>').val(Expediente.Pausa);
-            $('#<% =ddlDiaSemana.ClientID %>').val(Expediente.Semana);
-            $('#<% =ddlDiaSemana.ClientID %>').attr("enable", "false");
-            $('#<% =ddlPeriodo.ClientID%>').val(Expediente.Periodo)
-        $('#<% =ddlPeriodo.ClientID%>').attr("enable", "false");
-        alert("Sucesso");
-        } catch (e) {
-            alert(e);
-        }
 
+function CarregaDados(Expediente) {
+
+    $('#cadastrar_expediente').modal('show');
+    $('#<% =hhdIdExpediente.ClientID%>').val(Expediente["id"]);
+    $('#<% =txtEntrada.ClientID%>').val(Expediente["entrada"]);
+    $('#<% =txtSaida.ClientID %>').val(Expediente["saida"]);
+    $('#<% =txtTempoPausa.ClientID %>').val(Expediente["pausa"]);
+    $('#<% =ddlDiaSemana.ClientID %>').val(Expediente["semana"]);
+    $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", true);
+    $('#<% =ddlPeriodo.ClientID%>').selected = 1 ;//Expediente["periodo"];
+   // $('#<% =ddlPeriodo.ClientID%>').prop("disabled", true);
 
     }
+    $('#cadastrar_expediente').on('hide.bs.modal', function (event) {
+        $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", false);
+        $('#<% =ddlPeriodo.ClientID%>').prop("disabled", false);
+    });
 
 </script>

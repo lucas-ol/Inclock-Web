@@ -34,7 +34,14 @@ namespace Library.Inclock.web.br.BL
         public List<Expediente> ListaExpediente(int funcionario_Id, int semana)
         {
             List<Expediente> expediente = new List<Expediente>();
-            expediente = JsonConvert.DeserializeObject<List<Expediente>>(new Autenticador.AutenticadorClient().GetExpediente(semana, funcionario_Id));
+
+            if (funcionario_Id <= 0)
+            {
+                return expediente;
+            }
+           
+                expediente = JsonConvert.DeserializeObject<List<Expediente>>(new Autenticador.AutenticadorClient().GetExpediente(semana, funcionario_Id));
+           
             return expediente;
         }
 

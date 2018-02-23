@@ -65,7 +65,7 @@ namespace Autenticador
             int isemana, ifuncionario_Id;
             int.TryParse(semana, out isemana);
             int.TryParse(funcionario_Id, out ifuncionario_Id);
-            if (isemana == 0 || ifuncionario_Id == 0)
+            if ( ifuncionario_Id == 0)
                 return "Paramentros incorretos";
             else
                 return new BL.CAutenticador().GetExpediente(isemana, ifuncionario_Id);

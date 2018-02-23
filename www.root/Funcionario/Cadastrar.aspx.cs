@@ -13,14 +13,15 @@ using System.Web.UI.WebControls;
 
 public partial class Funcionario_Cadastrar : System.Web.UI.Page
 {
+    private int idfuncionario;
     public int IdFuncionario
     {
         get
         {
-            int id;
-            int.TryParse(Request.QueryString["id"], out id);
-            return id;
+            int.TryParse(Request.QueryString["id"], out idfuncionario);
+            return idfuncionario;
         }
+        private set { idfuncionario = value; }
     }
 
     #region Metodos
@@ -42,11 +43,17 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
 
         if (IdFuncionario > 0)
         {
-            btnCadastraExpediente.Visible = true;
-            PreencheDados(Controller.Pesquisa_Funcionario_ID(IdFuncionario));
-            ucExpCadastrar.Visible = true;
-            ucExpListar.Visible = true;
-        
+            if (PreencheDados(Controller.Pesquisa_Funcionario_ID(IdFuncionario)))
+            {
+                btnCadastraExpediente.Visible = true;
+             
+                ucExpCadastrar.Visible = true;
+                ucExpListar.Visible = true;
+                ucExpListar.BuscaEspediente(IdFuncionario);
+            }
+            else
+                IdFuncionario = 0;
+
         }
 
     }
@@ -74,7 +81,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
             // Response.Write("<script>alert('Por favor verifique os campos incorretos')</script>");
             alerta.ShowMessager("Por favor corrija todos os campos  <strong>destacados em vermelho</strong>", StatusEnum.Info);
         }
-    }   
+    }
     private void Cadastrar()
     {
         if (ValidaCampos())
@@ -261,8 +268,10 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
 
         return Retorno;
     }
-    public void PreencheDados(Funcionario funcionario)
+    public bool PreencheDados(Funcionario funcionario)
     {
+        if (funcionario.Id == 0)
+            return false;
         txtNome.Text = funcionario.Nome;
         txtTelefone.Text = funcionario.Telefone;
         txtCelular.Text = funcionario.Celular;
@@ -286,6 +295,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
         txtSenha.Text = funcionario.Senha;
         txtSenha.TextMode = TextBoxMode.SingleLine;
         txtLogin.Text = funcionario.Login;
+        return true;
     }
 
     /// <summary>

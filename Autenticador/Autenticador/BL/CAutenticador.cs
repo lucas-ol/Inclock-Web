@@ -72,15 +72,14 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("ID", ponto.Data);
             MySqlAdicionaParametro("ID", ponto.Funcionario);
             MySqlAdicionaParametro("ID", ponto.Hora);
-            return JsonConvert.SerializeObject(MySqlLeitura("", System.Data.CommandType.Text), new JsonSerializerSettings() { Formatting = Formatting.Indented, DateFormatString = "dd/MM/yyyy", Culture = System.Globalization.CultureInfo.CurrentCulture });
+            return JsonConvert.SerializeObject(MySqlLeitura("", System.Data.CommandType.Text), new JsonSerializerSettings() { Formatting = Formatting.Indented, DateFormatString = "dd/MM/yyyy" });
 
         }
         public string GetExpediente(int semana,int funcionario_id)
         {
             MySqlAdicionaParametro("iSemana", semana);
-            MySqlAdicionaParametro("iFuncionario", funcionario_id);
-           
-            return JsonConvert.SerializeObject(MySqlLeitura("prd_se_expediente_semana", System.Data.CommandType.StoredProcedure), new JsonSerializerSettings() { Formatting = Formatting.Indented, DateTimeZoneHandling = DateTimeZoneHandling.Local, Culture = System.Globalization.CultureInfo.CurrentCulture });
+            MySqlAdicionaParametro("iFuncionario", funcionario_id);           
+            return JsonConvert.SerializeObject(MySqlLeitura("prd_se_expediente_semana", System.Data.CommandType.StoredProcedure), new JsonSerializerSettings() { Formatting = Formatting.Indented, DateTimeZoneHandling = DateTimeZoneHandling.Local});
         }
     }
 }
