@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Cadastrar.ascx.cs" Inherits="inc_expediente_Cadastrar" %>
+﻿ <%@ Control Language="C#" AutoEventWireup="true" CodeFile="Cadastrar.ascx.cs" Inherits="inc_expediente_Cadastrar" %>
 <link href="/Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
 <style>
    
@@ -145,8 +145,10 @@ function CarregaDados(Expediente) {
     $('#<% =txtTempoPausa.ClientID %>').val(Expediente["pausa"]);
     $('#<% =ddlDiaSemana.ClientID %>').val(Expediente["semana"]);
     $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", true);
-    $('#<% =ddlPeriodo.ClientID%>').selected = 1 ;//Expediente["periodo"];
-   // $('#<% =ddlPeriodo.ClientID%>').prop("disabled", true);
+    $('#<% =ddlPeriodo.ClientID%>').find('option[text="' + Expediente['periodo'] + '"]').attr("selected", true);
+    // $('#<% =ddlPeriodo.ClientID%>').prop("disabled", true);
+    var str = "option[text = " + Expediente['periodo'] + "]";
+    alert(str);
 
     }
     $('#cadastrar_expediente').on('hide.bs.modal', function (event) {

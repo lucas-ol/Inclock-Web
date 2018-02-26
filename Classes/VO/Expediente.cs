@@ -18,7 +18,10 @@ namespace Classes.VO
         public string Tempo_Pausa { get; set; }
         public int Periodo { get; set; }
         public int DiaSemana { get; set; }
-
+        public Expediente()
+        {
+            Tempo_Pausa = "00:00";
+        }
         public static string ConvertePeriodo(int periodo)
         {
             string szPeriodo = "";
