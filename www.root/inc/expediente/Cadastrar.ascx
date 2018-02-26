@@ -1,4 +1,4 @@
-﻿ <%@ Control Language="C#" AutoEventWireup="true" CodeFile="Cadastrar.ascx.cs" Inherits="inc_expediente_Cadastrar" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Cadastrar.ascx.cs" Inherits="inc_expediente_Cadastrar" %>
 <link href="/Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
 <style>
    
@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-inline pt-1">
                     <div class="col-sm-6">
-                        <asp:DropDownList runat="server" ID="ddlPeriodo" CssClass="form-control w-100">
+                        <asp:DropDownList runat="server" ID="ddlPeriodo" CssClass="form-control w-100" data-meber="expediente">
                             <asp:ListItem Text="Periodo" Value="0" />
                             <asp:ListItem Text="Manhã" Value="1" />
                             <asp:ListItem Text="Tarde" Value="2" />
@@ -41,7 +41,7 @@
                         </asp:DropDownList>
                     </div>
                     <div class="col-sm-6">
-                        <asp:DropDownList runat="server" CssClass="form-control w-100" ID="ddlDiaSemana" CausesValidation="true">
+                        <asp:DropDownList runat="server" CssClass="form-control w-100" ID="ddlDiaSemana" CausesValidation="true" data-meber="expediente">
                             <asp:ListItem Text="Dia da Semana" Value="0" />
                             <asp:ListItem Text="Segunda" Value="2" />
                             <asp:ListItem Text="Terça" Value="3" />
@@ -87,7 +87,7 @@
     }
     function ValidaPeriodo(oSrc, args) {
         var entrada = parseFloat($('#<% =txtEntrada.ClientID%>').val());
-        var iPeriodo = parseInt($("#<% =ddlPeriodo.ClientID %>").val());
+        var iPeriodo = parseInt($('#<% =ddlPeriodo.ClientID %>').val());
 
         if (!isNaN(entrada) && iPeriodo != 0) {
             var fim = parseInt("<% =ConfigurationManager.AppSettings["fimperiodo"] %>"); //fim expediente
@@ -137,23 +137,43 @@
     });
 
 function CarregaDados(Expediente) {
-
+    
     $('#cadastrar_expediente').modal('show');
     $('#<% =hhdIdExpediente.ClientID%>').val(Expediente["id"]);
     $('#<% =txtEntrada.ClientID%>').val(Expediente["entrada"]);
     $('#<% =txtSaida.ClientID %>').val(Expediente["saida"]);
     $('#<% =txtTempoPausa.ClientID %>').val(Expediente["pausa"]);
-    $('#<% =ddlDiaSemana.ClientID %>').val(Expediente["semana"]);
-    $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", true);
-    $('#<% =ddlPeriodo.ClientID%>').find('option[text="' + Expediente['periodo'] + '"]').attr("selected", true);
-    // $('#<% =ddlPeriodo.ClientID%>').prop("disabled", true);
-    var str = "option[text = " + Expediente['periodo'] + "]";
-    alert(str);
 
-    }
-    $('#cadastrar_expediente').on('hide.bs.modal', function (event) {
-        $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", false);
-        $('#<% =ddlPeriodo.ClientID%>').prop("disabled", false);
-    });
+    /*
+    $('#<% =ddlDiaSemana.ClientID %>').val($('option:contains("' + Expediente['semana'] + '")').val());    
+    $('#<% =ddlPeriodo.ClientID%>').val($('option:contains("'+Expediente['periodo']+'")').val());  */
+   
+
+  
+    $('option:contains("' + Expediente['semana'] + '")').prop('selected',true);
+//    $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", true);
+
+    $('option:contains("'+Expediente['periodo']+'")').prop('selected',true);
+  //  $('#<% =ddlPeriodo.ClientID%>').prop('disabled', true); 
+    $('select').trigger("chosen:updated");
+}
+
+
+$('#cadastrar_expediente').on('hide.bs.modal', function (event) {
+
+    $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", false);
+    $('#<% =ddlPeriodo.ClientID%>').prop("disabled",false );
+
+    $('#<% =hhdIdExpediente.ClientID%>').val(0);
+    $('#<% =txtEntrada.ClientID%>').val(0);
+    $('#<% =txtSaida.ClientID %>').val(0);
+    $('#<% =txtTempoPausa.ClientID %>').val(0);   
+     
+    $('#<% =ddlDiaSemana.ClientID %> option[value=0]').prop('selected',true);
+
+    $('#<% =ddlPeriodo.ClientID%> option[value=0]').prop('selected',true);
+     
+    $('select').trigger("chosen:updated")
+});
 
 </script>

@@ -32,6 +32,9 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
     public Expediente CriaObjeto()
     {
         Expediente expediente = new Expediente();
+        int id;
+        int.TryParse(hddIdFuncionario.Value, out id);
+        expediente.Id = id;
         expediente.Funcionario_id = Id_funcionario;
         if (!string.IsNullOrWhiteSpace(txtTempoPausa.Text))
             expediente.Tempo_Pausa = txtTempoPausa.Text;
@@ -58,6 +61,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
 
         if (HorasTrabalhada < 1)
             validade = false;
+        
 
         if (ddlDiaSemana.SelectedValue == "0")
             validade = false;
@@ -89,8 +93,8 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         if (ValidaDados())
         {
             Expedientes expedientes = new Expedientes();
-            FeedBack feed = new FeedBack { Status = false };
-            CriaObjeto();
+            FeedBack feed = new FeedBack { Status = true };
+             CriaObjeto();
             if (feed.Status)
                 Response.Write("<script>alert('Expediente Cadastrado com sucesso')</script>");
         }

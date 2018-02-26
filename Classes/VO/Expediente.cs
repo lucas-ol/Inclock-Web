@@ -51,19 +51,19 @@ namespace Classes.VO
                     szSemana = "Domingo";
                     break;
                 case 2:
-                    szSemana = "Segunda-Feira";
+                    szSemana = "Segunda";
                     break;
                 case 3:
-                    szSemana = "Terça-Feira";
+                    szSemana = "Terça";
                     break;
                 case 4:
-                    szSemana = "Quarta-Feira";
+                    szSemana = "Quarta";
                     break;
                 case 5:
-                    szSemana = "Quinta-Feira";
+                    szSemana = "Quinta";
                     break;
                 case 6:
-                    szSemana = "Sexta-Feira";
+                    szSemana = "Sexta";
                     break;
                 case 7:
                     szSemana = "Sabado";
