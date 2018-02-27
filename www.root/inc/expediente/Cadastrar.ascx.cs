@@ -23,19 +23,16 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
     {
 
     }
-
-    public void SetarFuncionario(string nome, string id)
-    {
-        hddIdFuncionario.Value = id.ToString();
-        lblFuncionario.Text = nome;
-    }
+    
     public Expediente CriaObjeto()
     {
-        Expediente expediente = new Expediente();
-        int id;
-        int.TryParse(hddIdFuncionario.Value, out id);
-        expediente.Id = id;
+
+
+        Expediente expediente = new Expediente();        
         expediente.Funcionario_id = Id_funcionario;
+        int id;
+        int.TryParse(hhdIdExpediente.Value, out id);
+        expediente.Id = id;
         if (!string.IsNullOrWhiteSpace(txtTempoPausa.Text))
             expediente.Tempo_Pausa = txtTempoPausa.Text;
         else
@@ -52,7 +49,9 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         bool validade = Page.IsValid;
         if (!string.IsNullOrEmpty(txtTempoPausa.Text))
         {
-            if (Convert.ToDateTime(txtTempoPausa.Text).TimeOfDay < new TimeSpan(0, 10, 0))
+            TimeSpan time ;
+            TimeSpan.TryParse(txtTempoPausa.Text,out time);
+            if (time < new TimeSpan(0, 10, 0) && time > new TimeSpan(0))
                 validade = false;
         }
         int Entrada = Convert.ToInt32(txtEntrada.Text.Substring(0, 2));
@@ -97,7 +96,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
             feed = expedientes.AtualizaExpediente(CriaObjeto());
             if (feed.Status)
             {
-                Response.Write("<script>alert('Expediente Cadastrado com sucesso'); window.href ='"+Request.Url.IsAbsoluteUri+"'</script>");
+                Response.Write("<script>alert('Expediente Cadastrado com sucesso'); window.location.href ='"+Request.Url.AbsoluteUri+"'</script>");
             }
             else
                 Response.Write("<script>alert('erro: " + feed.Mensagem + "')</script>");

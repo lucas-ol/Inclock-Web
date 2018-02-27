@@ -33,8 +33,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
 
     private void LvExpediente_ItemDataBound(object sender, ListViewItemEventArgs e)
     {
-        Expediente expediente = (Expediente)e.Item.DataItem;
-        Label ID = (Label)e.Item.FindControl("lblid");
+        Expediente expediente = (Expediente)e.Item.DataItem;    
         Label Entrada = (Label)e.Item.FindControl("txtEntrada");
         Label Saida = (Label)e.Item.FindControl("txtSaida");
         Label HorasTrabalhada = (Label)e.Item.FindControl("txtHosrasTrabalhada");
@@ -43,23 +42,17 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         Label Periodo = (Label)e.Item.FindControl("txtPeriodo");
 
         HtmlButton btnEditar = (HtmlButton)e.Item.FindControl("btnEditar");
-        Button btnExcluir = (Button)e.Item.FindControl("btnExcluir");
+        HtmlButton btnExcluir = (HtmlButton)e.Item.FindControl("btnExcluir");
         Panel painel = (Panel)e.Item.FindControl("pnlExpediente");
 
 
         painel.Attributes.Add("data-id", "id" + expediente.Id);
 
-
-        btnEditar.Attributes.Add("data-id", expediente.Id.ToString());
-        btnEditar.Attributes.Add("onclick", "");
-        btnExcluir.Attributes.Add("data-id", expediente.Id.ToString());
-
-
+        btnEditar.Attributes.Add("data-id", expediente.Id.ToString()); 
         btnEditar.Attributes.Add("onclick", "Editar(" + expediente.Id + ")");
+
         btnExcluir.Attributes.Add("onclick", "Excluir(" + expediente.Id + ")");
 
-
-        ID.Text = expediente.Id.ToString();
         Entrada.Text = expediente.Entrada.Substring(0, 5);
         Saida.Text = expediente.Saida.Substring(0, 5);
         HorasTrabalhada.Text = expediente.Horas_Trabalho.Substring(0,5);

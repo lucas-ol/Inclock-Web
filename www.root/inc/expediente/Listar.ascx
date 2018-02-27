@@ -8,7 +8,7 @@
             <asp:ListView runat="server" ID="lvExpediente">
                 <ItemTemplate>
                     <asp:Panel runat="server" ID="pnlExpediente" Style="border: 1px solid black" class="autowidth">
-                        <asp:Label runat="server" ID="lblid" data-id="id" />
+                     
                         <div style="text-align: center">
                             <asp:Label Text="text" runat="server" ID="txtDiaSemana" data-id="semana" />
                         </div>
@@ -41,18 +41,27 @@
                         </div>
                         <div class="form-group form-inline">
                             <button type="button" runat="server" class="btn btn-warning col-md-6" id="btnEditar" data-id="0" onclick="Editar(this)">Editar</button>
-                            <asp:Button Text="Excluir" runat="server" CssClass="btn btn-danger col-md-6" ID="btnExcluir" data-id="0" />
+                            <button Text="Excluir" runat="server" Class="btn btn-danger col-md-6" ID="btnExcluir" data-id="0" OnClientClick="Excluir(0)"></button>
                         </div>
 
                         <link href="../../Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
                     </asp:Panel>
                 </ItemTemplate>
             </asp:ListView>
-            <div class="modal fade" id="">
+            <div class="modal fade" id="expExclui">
                 <div class="modal-content">
                     <div class="modal-dialog">
                         <div class="modal-header">
+                            <asp:HiddenField runat="server" ID="hhdIdexpediente" />
                             <h4>Editar Expediente</h4>
+                            <button type="button"><span class="close" data-dismiss="modal">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            Deseja realmente excluir esse espediente?
+                        </div>
+                        <div class="modal-body">
+                            <asp:Button Text="Comfirmar" runat="server" ID="btnExcluirConfimar" CssClass="btn btn-success" />
+                            <button type="button" class="close btn btn-danger" data-dismiss="modal"></button>
                         </div>
                     </div>
                 </div>
@@ -74,6 +83,9 @@
             "periodo": elemeto.find('[data-id="periodo"]').text()
         }
         CarregaDados(Expediente);
-
+    }
+    function Excluir(id) {
+        $('expExclui').modal('show');
+        $('<% =hhdIdexpediente.ClientID%>').val(id);
     }
 </script>

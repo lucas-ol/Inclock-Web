@@ -5,10 +5,11 @@
 </style>
 
 <div class="modal fade" id="cadastrar_expediente">
-    <asp:HiddenField runat="server" ID="hhdIdExpediente" Value="0" />
+  
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                  <asp:HiddenField runat="server" ID="hhdIdExpediente" Value="0" />
                 <h4 class=" modal-title font-weight-bold">Cadastrar Expediente</h4>
                 <button type="button" data-dismiss="modal" class="close" aria-label="Fechar">&times;</button>
             </div>
@@ -139,29 +140,28 @@
     function CarregaDados(Expediente) {
 
         $('#cadastrar_expediente').modal('show');
-        $('#<% =hhdIdExpediente.ClientID%>').prop("Value", Expediente["id"]);
-    $('#<% =txtEntrada.ClientID%>').val(Expediente["entrada"]);
-    $('#<% =txtSaida.ClientID %>').val(Expediente["saida"]);
-    $('#<% =txtTempoPausa.ClientID %>').val(Expediente["pausa"]);
+        $('#<% =hhdIdExpediente.ClientID%>').val(Expediente["id"]);    
+        $('#<% =txtEntrada.ClientID%>').val(Expediente["entrada"]);
+        $('#<% =txtSaida.ClientID %>').val(Expediente["saida"]);
+        $('#<% =txtTempoPausa.ClientID %>').val(Expediente["pausa"]);
 
 
-    $('option:contains("' + Expediente['semana'] + '")').prop('selected', true);
+        $('option:contains("' + Expediente['semana'] + '")').prop('selected', true);
 //    $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", true);
 
     $('option:contains("' + Expediente['periodo'] + '")').prop('selected', true);
   //  $('#<% =ddlPeriodo.ClientID%>').prop('disabled', true); 
-   // $('select').trigger("chosen:updated");
+         $('select').trigger("chosen:updated");
     }
 
 
     $('#cadastrar_expediente').on('hide.bs.modal', function (event) {
 
         $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", false);
-    $('#<% =ddlPeriodo.ClientID%>').prop("disabled", false);
-
-    $('#<% =hhdIdExpediente.ClientID%>').prop("Value", 0);
-    $('#<% =txtEntrada.ClientID%>').val("00:00");
-    $('#<% =txtSaida.ClientID %>').val("00:00");
+        $('#<% =ddlPeriodo.ClientID%>').prop("disabled", false);
+        $('#<% =hhdIdExpediente.ClientID%>').prop("Value", 0);
+        $('#<% =txtEntrada.ClientID%>').val("00:00");
+        $('#<% =txtSaida.ClientID %>').val("00:00");
     $('#<% =txtTempoPausa.ClientID %>').val("00:00");
 
     $('#<% =ddlDiaSemana.ClientID %> option[value=0]').prop('selected', true);
