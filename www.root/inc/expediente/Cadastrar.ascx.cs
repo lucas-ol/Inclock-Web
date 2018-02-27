@@ -89,51 +89,51 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
     }
     public void EditaExpediente()
     {
-        lblmsg.Visible = true;
+        FeedBack feed = new FeedBack { Status = false };
         if (ValidaDados())
         {
             Expedientes expedientes = new Expedientes();
-            FeedBack feed = new FeedBack { Status = false };
             feed = expedientes.AtualizaExpediente(CriaObjeto());
             if (feed.Status)
             {
                 Response.Write("<script>alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "'</script>");
-                lblmsg.Visible = false;
             }
             else
-                lblmsg.GroupingText = feed.Mensagem;
+                lblmsg.Text = feed.Mensagem;
         }
         else if (Id_funcionario <= 0 || hhdIdExpediente.Value == "0")
-            lblmsg.GroupingText = "Erro inesperado";
+            lblmsg.Text = "Erro inesperado";
         else
-            lblmsg.GroupingText = "Preencha todos os campos corretamente";
-
+            lblmsg.Text = "Preencha todos os campos corretamente";
+        lblmsg.Visible = !feed.Status;
     }
     public void AdicionaExpediente()
     {
-        lblmsg.Visible = true;
+        FeedBack feed = new FeedBack { Status = false };
         if (ValidaDados())
         {
             Expedientes expedientes = new Expedientes();
-            FeedBack feed = expedientes.SalvaExpediente(CriaObjeto());
+            feed = expedientes.SalvaExpediente(CriaObjeto());
 
             if (feed.Status)
             {
                 Response.Write("<script>alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "'</script>");
-                lblmsg.Visible = false;
+              
             }
             else
             {
-                if (feed.Mensagem.ToLower().Contains("duplicate"))                
+                if (feed.Mensagem.ToLower().Contains("duplicate"))
                     feed.Mensagem = "Expediente ja esta cadastrado nesse periodo";
-                
-
-                lblmsg.GroupingText = feed.Mensagem;
+                lblmsg.Text = feed.Mensagem;
+               
             }
         }
         else if (Id_funcionario <= 0)
-            lblmsg.GroupingText = "Erro inesperado";
+            lblmsg.Text = "Erro inesperado";
         else
-            lblmsg.GroupingText = "Preencha todos os campos corretamente";
+            lblmsg.Text = "Preencha todos os campos corretamente";
+
+        lblmsg.Visible = !feed.Status;
+
     }
 }

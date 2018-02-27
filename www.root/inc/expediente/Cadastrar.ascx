@@ -5,81 +5,83 @@
 </style>
 
 <div class="modal fade" id="cadastrar_expediente">
-  
+
     <div class="modal-dialog">
         <div class="modal-content">
-            <asp:UpdatePanel runat="server" ID="updCadastrar" >               
+            <asp:UpdatePanel runat="server" ID="updCadastrar">
 
-                <ContentTemplate>                
-            <div class="modal-header">
-                  <asp:HiddenField runat="server" ID="hhdIdExpediente" Value="0" />
-                <h4 class=" modal-title font-weight-bold">Cadastrar Expediente</h4>
-                <button type="button" data-dismiss="modal" class="close" aria-label="Fechar">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-inline">
-                    <div class="col-sm-11">
-                        <asp:HiddenField runat="server" ID="hddIdFuncionario" />
-                        <asp:Label Text="Nome Funcionario" runat="server" ID="lblFuncionario" />
+                <ContentTemplate>
+                    <div class="modal-header">
+                        <asp:HiddenField runat="server" ID="hhdIdExpediente" Value="0" />
+                        <h4 class=" modal-title font-weight-bold">Cadastrar Expediente</h4>
+                        <button type="button" data-dismiss="modal" class="close" aria-label="Fechar">&times;</button>
                     </div>
-                    <div class="col-sm-1"></div>
-                </div>
-                <div class="form-inline pt-1">
-                    <div class="col-sm-2 font-weight-bold">Entra</div>
-                    <div class="col-sm-3">
-                        <asp:TextBox runat="server" TextMode="Time" CssClass="form-control" ID="txtEntrada" CausesValidation="true" />
-                    </div>
-                    <div class="col-sm-3 font-weight-bold">Saida</div>
-                    <div class="col-sm-4">
-                        <asp:TextBox runat="server" ID="txtSaida" CssClass="form-control" TextMode="Time" CausesValidation="true" />
-                    </div>
-                </div>
-                <div class="form-inline pt-1">
-                    <div class="col-sm-6">
-                        <asp:DropDownList runat="server" ID="ddlPeriodo" CssClass="form-control w-100" data-meber="expediente">
-                            <asp:ListItem Text="Periodo" Value="0" />
-                            <asp:ListItem Text="Manhã" Value="1" />
-                            <asp:ListItem Text="Tarde" Value="2" />
-                            <asp:ListItem Text="Noite" Value="3" />
-                            <asp:ListItem Text="Integral" Value="4" />
-                        </asp:DropDownList>
-                    </div>
-                    <div class="col-sm-6">
-                        <asp:DropDownList runat="server" CssClass="form-control w-100" ID="ddlDiaSemana" CausesValidation="true" data-meber="expediente">
-                            <asp:ListItem Text="Dia da Semana" Value="0" />
-                            <asp:ListItem Text="Segunda" Value="2" />
-                            <asp:ListItem Text="Terça" Value="3" />
-                            <asp:ListItem Text="Quarta" Value="4" />
-                            <asp:ListItem Text="Quinta" Value="5" />
-                            <asp:ListItem Text="Sexta" Value="6" />
-                            <asp:ListItem Text="Sabado" Value="7" />
-                            <asp:ListItem Text="Domingo" Value="1" />
-                        </asp:DropDownList>
-                    </div>
-                </div>
-                <div class="form-inline pt-1">
+                    <div class="modal-body">
+                        <div class="form-inline">
+                            <div class="col-sm-11">
+                                <asp:HiddenField runat="server" ID="hddIdFuncionario" />
+                                <asp:Label Text="Nome Funcionario" runat="server" ID="lblFuncionario" />
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <div class="form-inline pt-1">
+                            <div class="col-sm-2 font-weight-bold">Entra</div>
+                            <div class="col-sm-3">
+                                <asp:TextBox runat="server" TextMode="Time" CssClass="form-control" ID="txtEntrada" CausesValidation="true" />
+                            </div>
+                            <div class="col-sm-3 font-weight-bold">Saida</div>
+                            <div class="col-sm-4">
+                                <asp:TextBox runat="server" ID="txtSaida" CssClass="form-control" TextMode="Time" CausesValidation="true" />
+                            </div>
+                        </div>
+                        <div class="form-inline pt-1">
+                            <div class="col-sm-6">
+                                <asp:DropDownList runat="server" ID="ddlPeriodo" CssClass="form-control w-100" data-meber="expediente">
+                                    <asp:ListItem Text="Periodo" Value="0" />
+                                    <asp:ListItem Text="Manhã" Value="1" />
+                                    <asp:ListItem Text="Tarde" Value="2" />
+                                    <asp:ListItem Text="Noite" Value="3" />
+                                    <asp:ListItem Text="Integral" Value="4" />
+                                </asp:DropDownList>
+                            </div>
+                            <div class="col-sm-6">
+                                <asp:DropDownList runat="server" CssClass="form-control w-100" ID="ddlDiaSemana" CausesValidation="true" data-meber="expediente">
+                                    <asp:ListItem Text="Dia da Semana" Value="0" />
+                                    <asp:ListItem Text="Segunda" Value="2" />
+                                    <asp:ListItem Text="Terça" Value="3" />
+                                    <asp:ListItem Text="Quarta" Value="4" />
+                                    <asp:ListItem Text="Quinta" Value="5" />
+                                    <asp:ListItem Text="Sexta" Value="6" />
+                                    <asp:ListItem Text="Sabado" Value="7" />
+                                    <asp:ListItem Text="Domingo" Value="1" />
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="form-inline pt-1">
 
-                    <div class="col-sm-2 font-weight-bold">Pausa</div>
-                    <div class="col-sm-4">
-                        <asp:TextBox runat="server" ID="txtTempoPausa" TextMode="Time" CssClass="form-control" />
-                    </div>
-                </div>
-                <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Entrada Invalida" ControlToValidate="txtEntrada" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvEntrada" Display="Dynamic" EnableTheming="true" />
-                <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Saida Invalida" ControlToValidate="txtSaida" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvSaida" Display="Dynamic" EnableTheming="true" />
-                <span style="display: none; color: red" id="vlHoraInterval" runat="server"></span>
-                <asp:CustomValidator ErrorMessage="<br>Esse horario não pertence a esse Periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="ValidaPeriodo" Display="Dynamic" ForeColor="Red" EnableTheming="true" ID="vPeriodo" />
-                <asp:CustomValidator ErrorMessage="" ControlToValidate="txtEntrada" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="ValidaPeriodo" Display="None" ForeColor="Red" EnableTheming="true" />
+                            <div class="col-sm-2 font-weight-bold">Pausa</div>
+                            <div class="col-sm-4">
+                                <asp:TextBox runat="server" ID="txtTempoPausa" TextMode="Time" CssClass="form-control" />
+                            </div>
+                        </div>
+                        <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Entrada Invalida" ControlToValidate="txtEntrada" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvEntrada" Display="Dynamic" EnableTheming="true" />
+                        <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Saida Invalida" ControlToValidate="txtSaida" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvSaida" Display="Dynamic" EnableTheming="true" />
+                        <span style="display: none; color: red" id="vlHoraInterval" runat="server"></span>
+                        <asp:CustomValidator ErrorMessage="<br>Esse horario não pertence a esse Periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="ValidaPeriodo" Display="Dynamic" ForeColor="Red" EnableTheming="true" ID="vPeriodo" />
+                        <asp:CustomValidator ErrorMessage="" ControlToValidate="txtEntrada" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="ValidaPeriodo" Display="None" ForeColor="Red" EnableTheming="true" />
 
-                <asp:CustomValidator ErrorMessage="<br>Escolha o periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
-                <asp:CustomValidator ErrorMessage="<br>Escolha o Dia da Semana" ControlToValidate="ddlDiaSemana" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
-            </div>
-            <div class="modal-body">
-                <asp:Panel runat="server" id="lblmsg" CssClass="alert alert-info alert-dismissible fade" visible="false" >
-                    <a runat="server" class="close" data-dismiss="alert">x</a>
-                </asp:Panel>
-                <asp:Button Text="Salvar" runat="server" class="btn btn-outline-success" ID="btnInserir" ValidationGroup="ExpedienteCadastro" OnClick="btnInserir_Click" />
-                <input value="Cancelar" type="button" data-dismiss="modal" class="btn btn-outline-danger" />
-            </div> 
+                        <asp:CustomValidator ErrorMessage="<br>Escolha o periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
+                        <asp:CustomValidator ErrorMessage="<br>Escolha o Dia da Semana" ControlToValidate="ddlDiaSemana" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
+                    </div>
+                      <div class="modal-body">
+                        <asp:Label runat="server" ID="lblmsg" CssClass="alert alert-info w-100 text-center container" Visible="false" /></div>
+                    <div class="modal-body">
+                      
+                        <div class="col-md-12">
+                            <asp:Button Text="Salvar" runat="server" class="btn btn-outline-success" ID="btnInserir" ValidationGroup="ExpedienteCadastro" OnClick="btnInserir_Click" />
+                            <input value="Cancelar" type="button" data-dismiss="modal" class="btn btn-outline-danger" />
+                        </div>
+                    </div>
 
                 </ContentTemplate>
             </asp:UpdatePanel>
@@ -149,7 +151,7 @@
     function CarregaDados(Expediente) {
 
         $('#cadastrar_expediente').modal('show');
-        $('#<% =hhdIdExpediente.ClientID%>').val(Expediente["id"]);    
+        $('#<% =hhdIdExpediente.ClientID%>').val(Expediente["id"]);
         $('#<% =txtEntrada.ClientID%>').val(Expediente["entrada"]);
         $('#<% =txtSaida.ClientID %>').val(Expediente["saida"]);
         $('#<% =txtTempoPausa.ClientID %>').val(Expediente["pausa"]);
@@ -158,9 +160,9 @@
         $('option:contains("' + Expediente['semana'] + '")').prop('selected', true);
 //    $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", true);
 
-    $('option:contains("' + Expediente['periodo'] + '")').prop('selected', true);
+        $('option:contains("' + Expediente['periodo'] + '")').prop('selected', true);
   //  $('#<% =ddlPeriodo.ClientID%>').prop('disabled', true); 
-         $('select').trigger("chosen:updated");
+        //    $('select').trigger("chosen:updated");
     }
 
 
@@ -171,13 +173,13 @@
         $('#<% =hhdIdExpediente.ClientID%>').prop("Value", 0);
         $('#<% =txtEntrada.ClientID%>').val("00:00");
         $('#<% =txtSaida.ClientID %>').val("00:00");
-    $('#<% =txtTempoPausa.ClientID %>').val("00:00");
+        $('#<% =txtTempoPausa.ClientID %>').val("00:00");
 
-    $('#<% =ddlDiaSemana.ClientID %> option[value=0]').prop('selected', true);
+        $('#<% =ddlDiaSemana.ClientID %> option[value=0]').prop('selected', true);
 
     $('#<% =ddlPeriodo.ClientID%> option[value=0]').prop('selected', true);
 
-    $('select').trigger("chosen:updated")
+        //    $('select').trigger("chosen:updated")
     });
 
 </script>
