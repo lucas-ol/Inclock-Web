@@ -61,7 +61,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
 
         if (HorasTrabalhada < 1)
             validade = false;
-        
+
 
         if (ddlDiaSemana.SelectedValue == "0")
             validade = false;
@@ -93,10 +93,14 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         if (ValidaDados())
         {
             Expedientes expedientes = new Expedientes();
-            FeedBack feed = new FeedBack { Status = true };
-             CriaObjeto();
+            FeedBack feed = new FeedBack { Status = false };
+            feed = expedientes.AtualizaExpediente(CriaObjeto());
             if (feed.Status)
-                Response.Write("<script>alert('Expediente Cadastrado com sucesso')</script>");
+            {
+                Response.Write("<script>alert('Expediente Cadastrado com sucesso'); window.href ='"+Request.Url.IsAbsoluteUri+"'</script>");
+            }
+            else
+                Response.Write("<script>alert('erro: " + feed.Mensagem + "')</script>");
         }
         else if (Id_funcionario <= 0 || hhdIdExpediente.Value == "0")
             Response.Write("<script>alert('Erro inesperado')</script>");

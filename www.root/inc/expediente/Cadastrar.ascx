@@ -9,7 +9,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class=" modal-title font-weight-bold">Castrar Expediente</h4>
+                <h4 class=" modal-title font-weight-bold">Cadastrar Expediente</h4>
                 <button type="button" data-dismiss="modal" class="close" aria-label="Fechar">&times;</button>
             </div>
             <div class="modal-body">
@@ -131,49 +131,44 @@
                 $('#<% =vlHoraInterval.ClientID%>').html('<br>O intervalo da entrada e saida deve ser maior que 01:00');
             }
 
-    } catch (e) {
+        } catch (e) {
 
-    }
+        }
     });
 
-function CarregaDados(Expediente) {
-    
-    $('#cadastrar_expediente').modal('show');
-    $('#<% =hhdIdExpediente.ClientID%>').val(Expediente["id"]);
+    function CarregaDados(Expediente) {
+
+        $('#cadastrar_expediente').modal('show');
+        $('#<% =hhdIdExpediente.ClientID%>').prop("Value", Expediente["id"]);
     $('#<% =txtEntrada.ClientID%>').val(Expediente["entrada"]);
     $('#<% =txtSaida.ClientID %>').val(Expediente["saida"]);
     $('#<% =txtTempoPausa.ClientID %>').val(Expediente["pausa"]);
 
-    /*
-    $('#<% =ddlDiaSemana.ClientID %>').val($('option:contains("' + Expediente['semana'] + '")').val());    
-    $('#<% =ddlPeriodo.ClientID%>').val($('option:contains("'+Expediente['periodo']+'")').val());  */
-   
 
-  
-    $('option:contains("' + Expediente['semana'] + '")').prop('selected',true);
+    $('option:contains("' + Expediente['semana'] + '")').prop('selected', true);
 //    $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", true);
 
-    $('option:contains("'+Expediente['periodo']+'")').prop('selected',true);
+    $('option:contains("' + Expediente['periodo'] + '")').prop('selected', true);
   //  $('#<% =ddlPeriodo.ClientID%>').prop('disabled', true); 
-    $('select').trigger("chosen:updated");
-}
+   // $('select').trigger("chosen:updated");
+    }
 
 
-$('#cadastrar_expediente').on('hide.bs.modal', function (event) {
+    $('#cadastrar_expediente').on('hide.bs.modal', function (event) {
 
-    $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", false);
-    $('#<% =ddlPeriodo.ClientID%>').prop("disabled",false );
+        $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", false);
+    $('#<% =ddlPeriodo.ClientID%>').prop("disabled", false);
 
-    $('#<% =hhdIdExpediente.ClientID%>').val(0);
-    $('#<% =txtEntrada.ClientID%>').val(0);
-    $('#<% =txtSaida.ClientID %>').val(0);
-    $('#<% =txtTempoPausa.ClientID %>').val(0);   
-     
-    $('#<% =ddlDiaSemana.ClientID %> option[value=0]').prop('selected',true);
+    $('#<% =hhdIdExpediente.ClientID%>').prop("Value", 0);
+    $('#<% =txtEntrada.ClientID%>').val("00:00");
+    $('#<% =txtSaida.ClientID %>').val("00:00");
+    $('#<% =txtTempoPausa.ClientID %>').val("00:00");
 
-    $('#<% =ddlPeriodo.ClientID%> option[value=0]').prop('selected',true);
-     
+    $('#<% =ddlDiaSemana.ClientID %> option[value=0]').prop('selected', true);
+
+    $('#<% =ddlPeriodo.ClientID%> option[value=0]').prop('selected', true);
+
     $('select').trigger("chosen:updated")
-});
+    });
 
 </script>

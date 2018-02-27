@@ -39,12 +39,24 @@ namespace Library.Inclock.web.br.BL
             {
                 return expediente;
             }
-           
-                expediente = JsonConvert.DeserializeObject<List<Expediente>>(new Autenticador.AutenticadorClient().GetExpediente(semana, funcionario_Id));
-           
+
+            expediente = JsonConvert.DeserializeObject<List<Expediente>>(new Autenticador.AutenticadorClient().GetExpediente(semana, funcionario_Id));
+
             return expediente;
         }
-
+        public FeedBack AtualizaExpediente(Expediente expediente)
+        {
+            FeedBack feedBack = new FeedBack();
+            MySqlAdicionaParametro("_id", expediente.Id);
+            MySqlAdicionaParametro("_periodo", expediente.Periodo);
+            MySqlAdicionaParametro("_semana", expediente.DiaSemana);
+            MySqlAdicionaParametro("_entrada", expediente.Entrada);
+            MySqlAdicionaParametro("_saida", expediente.Saida);
+            MySqlAdicionaParametro("_pausa", expediente.Tempo_Pausa);
+            MySqlAdicionaParametro("_funcionario", expediente.Funcionario_id);
+            feedBack = MySqlExecutaComando("prd_updade_expediente", System.Data.CommandType.StoredProcedure);
+            return feedBack;
+        }
 
 
     }
