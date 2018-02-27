@@ -1,14 +1,13 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Listar.ascx.cs" Inherits="inc_expediente_Listar" %>
 <div>
-    <asp:ScriptManager runat="server" />
-
-    <asp:UpdatePanel runat="server">
+    
+    <asp:UpdatePanel runat="server" ID="updeditar">
         <ContentTemplate>
             <asp:Panel runat="server" ID="lblSemana" CssClass="autowidth " Style="transform: rotate(-90deg); padding: 0;" Text="Segunda">Segunda</asp:Panel>
             <asp:ListView runat="server" ID="lvExpediente">
                 <ItemTemplate>
                     <asp:Panel runat="server" ID="pnlExpediente" Style="border: 1px solid black" class="autowidth">
-                     
+
                         <div style="text-align: center">
                             <asp:Label Text="text" runat="server" ID="txtDiaSemana" data-id="semana" />
                         </div>
@@ -41,37 +40,38 @@
                         </div>
                         <div class="form-group form-inline">
                             <button type="button" runat="server" class="btn btn-warning col-md-6" id="btnEditar" data-id="0" onclick="Editar(this)">Editar</button>
-                            <button Text="Excluir" runat="server" Class="btn btn-danger col-md-6" ID="btnExcluir" data-id="0" OnClientClick="Excluir(0)"></button>
+                            <button type="button" runat="server" class="btn btn-danger col-md-6" id="btnExcluir" data-id="0">Excluir</button>
                         </div>
 
                         <link href="../../Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
                     </asp:Panel>
                 </ItemTemplate>
             </asp:ListView>
-            <div class="modal fade" id="expExclui">
-                <div class="modal-content">
-                    <div class="modal-dialog">
-                        <div class="modal-header">
-                            <asp:HiddenField runat="server" ID="hhdIdexpediente" />
-                            <h4>Editar Expediente</h4>
-                            <button type="button"><span class="close" data-dismiss="modal">&times;</span></button>
-                        </div>
-                        <div class="modal-body">
-                            Deseja realmente excluir esse espediente?
-                        </div>
-                        <div class="modal-body">
-                            <asp:Button Text="Comfirmar" runat="server" ID="btnExcluirConfimar" CssClass="btn btn-success" />
-                            <button type="button" class="close btn btn-danger" data-dismiss="modal"></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </ContentTemplate>
     </asp:UpdatePanel>
+    <div class="modal fade" id="expExclui">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <asp:HiddenField runat="server" ID="hhdIdexpediente" />
+                    <h4>Editar Expediente</h4>
+                    <button type="button" data-dismiss="modal" class="close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    Deseja realmente excluir esse espediente?
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-danger align-content-lg-start" data-dismiss="modal">Cancelar</button>
+                    <asp:Button Text="Comfirmar" runat="server" ID="btnExcluirConfimar" CssClass="btn btn-success" Style="display: inline-block; float: right" OnClick="btnExcluirConfimar_Click" />
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <script>
     function Editar(ele) {
-        var Expediete ;
+        var Expediete;
         var elemeto = $('div[data-id="id' + ele + '"]');
 
         Expediente = {
@@ -85,7 +85,7 @@
         CarregaDados(Expediente);
     }
     function Excluir(id) {
-        $('expExclui').modal('show');
-        $('<% =hhdIdexpediente.ClientID%>').val(id);
+        $('#expExclui').modal('show');
+        $('#<% =hhdIdexpediente.ClientID%>').val(id);
     }
 </script>

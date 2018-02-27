@@ -57,6 +57,11 @@ namespace Library.Inclock.web.br.BL
             feedBack = MySqlExecutaComando("prd_updade_expediente", System.Data.CommandType.StoredProcedure);
             return feedBack;
         }
+        public bool Excluir(int id)
+        {
+            MySqlAdicionaParametro("id", id);
+            return MySqlExecutaComando("delete from expediente where id = @id",System.Data.CommandType.Text).Status;
+        }
 
 
     }

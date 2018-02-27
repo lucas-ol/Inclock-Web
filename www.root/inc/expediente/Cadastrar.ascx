@@ -8,6 +8,9 @@
   
     <div class="modal-dialog">
         <div class="modal-content">
+            <asp:UpdatePanel runat="server" ID="updCadastrar" >               
+
+                <ContentTemplate>                
             <div class="modal-header">
                   <asp:HiddenField runat="server" ID="hhdIdExpediente" Value="0" />
                 <h4 class=" modal-title font-weight-bold">Cadastrar Expediente</h4>
@@ -71,9 +74,15 @@
                 <asp:CustomValidator ErrorMessage="<br>Escolha o Dia da Semana" ControlToValidate="ddlDiaSemana" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
             </div>
             <div class="modal-body">
-                <asp:Button Text="Cadastrar" runat="server" class="btn btn-outline-success" ID="btnInserir" ValidationGroup="ExpedienteCadastro" OnClick="btnInserir_Click" />
+                <asp:Panel runat="server" id="lblmsg" CssClass="alert alert-info alert-dismissible fade" visible="false" >
+                    <a runat="server" class="close" data-dismiss="alert">x</a>
+                </asp:Panel>
+                <asp:Button Text="Salvar" runat="server" class="btn btn-outline-success" ID="btnInserir" ValidationGroup="ExpedienteCadastro" OnClick="btnInserir_Click" />
                 <input value="Cancelar" type="button" data-dismiss="modal" class="btn btn-outline-danger" />
-            </div>
+            </div> 
+
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </div>
     </div>
 </div>

@@ -23,12 +23,12 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
     {
 
     }
-    
+
     public Expediente CriaObjeto()
     {
 
 
-        Expediente expediente = new Expediente();        
+        Expediente expediente = new Expediente();
         expediente.Funcionario_id = Id_funcionario;
         int id;
         int.TryParse(hhdIdExpediente.Value, out id);
@@ -49,8 +49,8 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         bool validade = Page.IsValid;
         if (!string.IsNullOrEmpty(txtTempoPausa.Text))
         {
-            TimeSpan time ;
-            TimeSpan.TryParse(txtTempoPausa.Text,out time);
+            TimeSpan time;
+            TimeSpan.TryParse(txtTempoPausa.Text, out time);
             if (time < new TimeSpan(0, 10, 0) && time > new TimeSpan(0))
                 validade = false;
         }
@@ -89,6 +89,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
     }
     public void EditaExpediente()
     {
+        lblmsg.Visible = true;
         if (ValidaDados())
         {
             Expedientes expedientes = new Expedientes();
@@ -96,39 +97,43 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
             feed = expedientes.AtualizaExpediente(CriaObjeto());
             if (feed.Status)
             {
-                Response.Write("<script>alert('Expediente Cadastrado com sucesso'); window.location.href ='"+Request.Url.AbsoluteUri+"'</script>");
+                Response.Write("<script>alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "'</script>");
+                lblmsg.Visible = false;
             }
             else
-                Response.Write("<script>alert('erro: " + feed.Mensagem + "')</script>");
+                lblmsg.GroupingText = feed.Mensagem;
         }
         else if (Id_funcionario <= 0 || hhdIdExpediente.Value == "0")
-            Response.Write("<script>alert('Erro inesperado')</script>");
+            lblmsg.GroupingText = "Erro inesperado";
         else
-            Response.Write("<script>alert('Preencha todos os campos corretamente')</script>");
+            lblmsg.GroupingText = "Preencha todos os campos corretamente";
 
     }
     public void AdicionaExpediente()
     {
-
+        lblmsg.Visible = true;
         if (ValidaDados())
         {
             Expedientes expedientes = new Expedientes();
             FeedBack feed = expedientes.SalvaExpediente(CriaObjeto());
 
             if (feed.Status)
-                Response.Write("<script>alert('Expediente Cadastrado com sucesso')</script>");
+            {
+                Response.Write("<script>alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "'</script>");
+                lblmsg.Visible = false;
+            }
             else
             {
-                if (feed.Mensagem.ToLower().Contains("duplicate"))
-                {
+                if (feed.Mensagem.ToLower().Contains("duplicate"))                
                     feed.Mensagem = "Expediente ja esta cadastrado nesse periodo";
-                }
-                Response.Write("<script>alert('" + feed.Mensagem + "')</script>");
+                
+
+                lblmsg.GroupingText = feed.Mensagem;
             }
         }
         else if (Id_funcionario <= 0)
-            Response.Write("<script>alert('Erro inesperado')</script>");
+            lblmsg.GroupingText = "Erro inesperado";
         else
-            Response.Write("<script>alert('Preencha todos os campos corretamente')</script>");
+            lblmsg.GroupingText = "Preencha todos os campos corretamente";
     }
 }

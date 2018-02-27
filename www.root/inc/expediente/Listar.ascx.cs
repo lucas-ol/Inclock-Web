@@ -22,7 +22,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+
     }
     public void BuscaEspediente(int id)
     {
@@ -33,7 +33,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
 
     private void LvExpediente_ItemDataBound(object sender, ListViewItemEventArgs e)
     {
-        Expediente expediente = (Expediente)e.Item.DataItem;    
+        Expediente expediente = (Expediente)e.Item.DataItem;
         Label Entrada = (Label)e.Item.FindControl("txtEntrada");
         Label Saida = (Label)e.Item.FindControl("txtSaida");
         Label HorasTrabalhada = (Label)e.Item.FindControl("txtHosrasTrabalhada");
@@ -48,16 +48,27 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
 
         painel.Attributes.Add("data-id", "id" + expediente.Id);
 
-        btnEditar.Attributes.Add("data-id", expediente.Id.ToString()); 
+        btnEditar.Attributes.Add("data-id", expediente.Id.ToString());
         btnEditar.Attributes.Add("onclick", "Editar(" + expediente.Id + ")");
 
         btnExcluir.Attributes.Add("onclick", "Excluir(" + expediente.Id + ")");
 
         Entrada.Text = expediente.Entrada.Substring(0, 5);
         Saida.Text = expediente.Saida.Substring(0, 5);
-        HorasTrabalhada.Text = expediente.Horas_Trabalho.Substring(0,5);
+        HorasTrabalhada.Text = expediente.Horas_Trabalho.Substring(0, 5);
         TempoPausa.Text = expediente.Tempo_Pausa.Substring(0, 5);
         Semanda.Text = Expediente.ConverteDiaSemana(expediente.DiaSemana);
         Periodo.Text = Expediente.ConvertePeriodo(expediente.Periodo);
+    }
+
+    protected void btnExcluirConfimar_Click(object sender, EventArgs e)
+    {
+        Expedientes exp = new Expedientes();
+        int id;
+        int.TryParse(hhdIdexpediente.Value, out id);
+        if (exp.Excluir(id))
+        {
+            Response.Write("<script>alert('Expediente excluido com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "'</script>");
+        }
     }
 }
