@@ -24,10 +24,8 @@
 </head>
 <body>
     <form id="form1" runat="server">
-       
-     
-        <div>
 
+        <div>
             <!-- Menu de Navegação -->
             <nav class="navbar navbar-expand-xl navbar-dark bg-dark  " role="navigation" id="menu">
                 <div class=" container-fluid">
@@ -40,13 +38,14 @@
                         <ul class="navbar-nav mr-auto ">
                             <li class=" nav-item"><a class="nav-link" href="/">Home</a></li>
                             <li class="nav-item dropdown">
-                                <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#">Funcionarios</a>
+                                <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="/Funcionario">Funcionarios</a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/Funcionario/cadastro/index.aspx">Cadastrar</a>
-                                    <a class="dropdown-item" href="/Funcionario/listar/listar.aspx">Listar</a>
+                                    <a class="dropdown-item" href="/Funcionario/cadastrar.aspx">Cadastrar</a>
+                                    <a class="dropdown-item" href="/Funcionario">Listar</a>
                                     <a class="dropdown-item " href="#">aqui</a>
                                 </div>
                             </li>
+                            <li class="nav-item"><a class="nav-link" href="/avisos?acao=1">Avisos</a></li>
                             <li class="nav-item"><a class=" nav-link" href="#contact">Contato</a></li>
                         </ul>
                         <uc:Logar runat="server" ID="ucLogar" />
@@ -59,7 +58,7 @@
             <!-- Navbar -->
         </div>
 
-            <asp:ScriptManager runat="server" ID="ds" EnablePartialRendering="true" />
+       
         <asp:ContentPlaceHolder runat="server" ID="Corpo">
         </asp:ContentPlaceHolder>
 

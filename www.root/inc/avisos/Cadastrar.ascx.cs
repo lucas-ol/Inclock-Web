@@ -42,7 +42,7 @@ public partial class inc_noticia_Cadastrar : System.Web.UI.UserControl
 
         if (feedBack.Status)
         {
-            ucAlerta.ShowMessager("Alerta Cadastrado com sucesso", StatusEnum.Success);
+            ucAlerta.ShowMessager("Aviso Cadastrado com sucesso", StatusEnum.Success);
             txtConteudo.Text = "";
             txtTitulo.Text = "";
         }

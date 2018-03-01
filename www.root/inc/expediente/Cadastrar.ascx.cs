@@ -2,6 +2,7 @@
 using Library.Inclock.web.br.BL;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -73,7 +74,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
 
     protected void btnInserir_Click(object sender, EventArgs e)
     {
-        if (hhdIdExpediente.Value == "0")
+        if (string.IsNullOrEmpty(hhdIdExpediente.Value) || hhdIdExpediente.Value == "0")
             AdicionaExpediente();
         else
             EditaExpediente();
@@ -87,6 +88,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         float.TryParse(hora, out fHora);
         return fHora;
     }
+
     public void EditaExpediente()
     {
         FeedBack feed = new FeedBack { Status = false };
@@ -96,7 +98,13 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
             feed = expedientes.AtualizaExpediente(CriaObjeto());
             if (feed.Status)
             {
-                Response.Write("<script>alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "'</script>");
+                    Response.Write("<script>alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "'</script>");
+                //   ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "function(){alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "}", true);
+
+                lblmsg.Text = "Haha";
+
+                // Response.Redirect("\\");
+                //  Clear();
             }
             else
                 lblmsg.Text = feed.Mensagem;
@@ -105,7 +113,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
             lblmsg.Text = "Erro inesperado";
         else
             lblmsg.Text = "Preencha todos os campos corretamente";
-        lblmsg.Visible = !feed.Status;
+        lblmsg.Visible = true;
     }
     public void AdicionaExpediente()
     {
@@ -118,22 +126,28 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
             if (feed.Status)
             {
                 Response.Write("<script>alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "'</script>");
-              
+
             }
             else
             {
                 if (feed.Mensagem.ToLower().Contains("duplicate"))
                     feed.Mensagem = "Expediente ja esta cadastrado nesse periodo";
                 lblmsg.Text = feed.Mensagem;
-               
+
             }
         }
         else if (Id_funcionario <= 0)
             lblmsg.Text = "Erro inesperado";
         else
             lblmsg.Text = "Preencha todos os campos corretamente";
-
         lblmsg.Visible = !feed.Status;
-
+    }
+    public void Clear()
+    {
+        txtEntrada.Text = string.Empty;
+        txtSaida.Text = string.Empty;
+        ddlDiaSemana.SelectedValue = "0";
+        ddlPeriodo.SelectedValue = "0";
+        txtTempoPausa.Text = string.Empty;
     }
 }

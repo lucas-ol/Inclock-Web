@@ -32,7 +32,7 @@ public partial class Funcionario_Default : System.Web.UI.Page
         Literal cpf = (Literal)e.Item.FindControl("cpf");
         Literal rg = (Literal)e.Item.FindControl("rg");
         HtmlTableRow link = (HtmlTableRow)e.Item.FindControl("link");
-        link.Attributes.Add("onclick", "window.location.href=' /Funcionario/Alterar.aspx?id=" + funcionario.Id + "'");
+        link.Attributes.Add("onclick", "window.location.href=' /Funcionario/cadastrar.aspx?id=" + funcionario.Id + "'");
 
         Literal linha = (Literal)e.Item.FindControl("linha");
         linha.Text = Convert.ToString(e.Item.DataItemIndex + 1);

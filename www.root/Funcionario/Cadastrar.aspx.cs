@@ -17,7 +17,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
     public int IdFuncionario
     {
         get
-        {
+        {           
             int.TryParse(Request.QueryString["id"], out idfuncionario);
             return idfuncionario;
         }
@@ -45,8 +45,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
         {
             if (PreencheDados(Controller.Pesquisa_Funcionario_ID(IdFuncionario)))
             {
-                btnCadastraExpediente.Visible = true;
-             
+                btnCadastraExpediente.Visible = true;             
                 ucExpCadastrar.Visible = true;
                 ucExpListar.Visible = true;
                 ucExpListar.BuscaEspediente(IdFuncionario);

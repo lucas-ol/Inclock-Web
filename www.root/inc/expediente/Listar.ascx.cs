@@ -46,7 +46,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         Panel painel = (Panel)e.Item.FindControl("pnlExpediente");
 
 
-        painel.Attributes.Add("data-id", "id" + expediente.Id);
+        painel.Attributes.Add("data-id",expediente.Id.ToString());
 
         btnEditar.Attributes.Add("data-id", expediente.Id.ToString());
         btnEditar.Attributes.Add("onclick", "Editar(" + expediente.Id + ")");

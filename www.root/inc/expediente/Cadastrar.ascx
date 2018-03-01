@@ -3,13 +3,14 @@
 <style>
    
 </style>
-
+<asp:ScriptManager runat="server" ID="ds" />
 <div class="modal fade" id="cadastrar_expediente">
-
     <div class="modal-dialog">
         <div class="modal-content">
             <asp:UpdatePanel runat="server" ID="updCadastrar">
-
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btnInserir"  />
+                </Triggers>
                 <ContentTemplate>
                     <div class="modal-header">
                         <asp:HiddenField runat="server" ID="hhdIdExpediente" Value="0" />
@@ -73,10 +74,11 @@
                         <asp:CustomValidator ErrorMessage="<br>Escolha o periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
                         <asp:CustomValidator ErrorMessage="<br>Escolha o Dia da Semana" ControlToValidate="ddlDiaSemana" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
                     </div>
-                      <div class="modal-body">
-                        <asp:Label runat="server" ID="lblmsg" CssClass="alert alert-info w-100 text-center container" Visible="false" /></div>
                     <div class="modal-body">
-                      
+                        <asp:Label runat="server" ID="lblmsg" CssClass="alert alert-info w-100 text-center container" Visible="false" />
+                    </div>
+                    <div class="modal-body">
+
                         <div class="col-md-12">
                             <asp:Button Text="Salvar" runat="server" class="btn btn-outline-success" ID="btnInserir" ValidationGroup="ExpedienteCadastro" OnClick="btnInserir_Click" />
                             <input value="Cancelar" type="button" data-dismiss="modal" class="btn btn-outline-danger" />
@@ -143,25 +145,25 @@
                 $('#<% =vlHoraInterval.ClientID%>').html('<br>O intervalo da entrada e saida deve ser maior que 01:00');
             }
 
-        } catch (e) {
+    } catch (e) {
 
-        }
+    }
     });
 
-    function CarregaDados(Expediente) {
+function CarregaDados(Expediente) {
 
-        $('#cadastrar_expediente').modal('show');
-        $('#<% =hhdIdExpediente.ClientID%>').val(Expediente["id"]);
+    $('#cadastrar_expediente').modal('show');
+    $('#<% =hhdIdExpediente.ClientID%>').val(Expediente["id"]);
         $('#<% =txtEntrada.ClientID%>').val(Expediente["entrada"]);
         $('#<% =txtSaida.ClientID %>').val(Expediente["saida"]);
         $('#<% =txtTempoPausa.ClientID %>').val(Expediente["pausa"]);
 
 
         $('option:contains("' + Expediente['semana'] + '")').prop('selected', true);
-//    $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", true);
+        //    $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", true);
 
         $('option:contains("' + Expediente['periodo'] + '")').prop('selected', true);
-  //  $('#<% =ddlPeriodo.ClientID%>').prop('disabled', true); 
+        //  $('#<% =ddlPeriodo.ClientID%>').prop('disabled', true); 
         //    $('select').trigger("chosen:updated");
     }
 
@@ -174,12 +176,10 @@
         $('#<% =txtEntrada.ClientID%>').val("00:00");
         $('#<% =txtSaida.ClientID %>').val("00:00");
         $('#<% =txtTempoPausa.ClientID %>').val("00:00");
-
         $('#<% =ddlDiaSemana.ClientID %> option[value=0]').prop('selected', true);
+        $('#<% =ddlPeriodo.ClientID%> option[value=0]').prop('selected', true);
+        $('#<% =lblmsg.ClientID%>').css('display','none')
 
-    $('#<% =ddlPeriodo.ClientID%> option[value=0]').prop('selected', true);
-
-        //    $('select').trigger("chosen:updated")
     });
 
 </script>

@@ -1,12 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Listar.ascx.cs" Inherits="inc_expediente_Listar" %>
 <div>
     
-    <asp:UpdatePanel runat="server" ID="updeditar">
-        <ContentTemplate>
-            <asp:Panel runat="server" ID="lblSemana" CssClass="autowidth " Style="transform: rotate(-90deg); padding: 0;" Text="Segunda">Segunda</asp:Panel>
+     
             <asp:ListView runat="server" ID="lvExpediente">
                 <ItemTemplate>
-                    <asp:Panel runat="server" ID="pnlExpediente" Style="border: 1px solid black" class="autowidth">
+                    <asp:Panel runat="server" ID="pnlExpediente" Style="border: 1px solid black" class="autowidth" >
 
                         <div style="text-align: center">
                             <asp:Label Text="text" runat="server" ID="txtDiaSemana" data-id="semana" />
@@ -47,8 +45,7 @@
                     </asp:Panel>
                 </ItemTemplate>
             </asp:ListView>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+    
     <div class="modal fade" id="expExclui">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -72,16 +69,17 @@
 <script>
     function Editar(ele) {
         var Expediete;
-        var elemeto = $('div[data-id="id' + ele + '"]');
-
+        var elemeto = $('div[data-id="' + ele + '"]');
+        
         Expediente = {
-            "id": elemeto.find('[data-id="id"]').text(),
+            "id": $(elemeto).attr("data-id"),
             "entrada": elemeto.find('[data-id="entrada"]').text(),
             "saida": elemeto.find('[data-id="saida"]').text(),
             "pausa": elemeto.find('[data-id="pausa"]').text(),
             "semana": elemeto.find('[data-id="semana"]').text(),
             "periodo": elemeto.find('[data-id="periodo"]').text()
         }
+        debugger;
         CarregaDados(Expediente);
     }
     function Excluir(id) {
