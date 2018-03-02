@@ -178,12 +178,12 @@
             <div class="form-inline">
                 <div class="col-md-12">
                     <asp:Button runat="server" ID="btnCadastrar" Text="Cadastrar" OnClick="btnCadastrar_Click" CssClass="btn btn-secondary btn-outline-success align-content-center" />
-                </div>
+                 <button data-target="#cadastrar_expediente" data-toggle="modal" type="button" class="btn btn-secondary btn-outline-danger float-right" runat="server" visible="false" id="btnCadastraExpediente">Cadastrar Expediente</button>
+                     </div>
                 <uc:alerta runat="server" ID="alerta"></uc:alerta>
             </div>
         </div>
-        <div>
-            <button data-target="#cadastrar_expediente" data-toggle="modal" type="button" class="btn btn-secondary btn-outline-danger" runat="server" visible="false" id="btnCadastraExpediente">Cadastrar Expediente</button>
+        <div>          
             <uc:ExpedienteCadastrar runat="server" ID="ucExpCadastrar" Visible="false"  />
             <uc:ExpedienteListar runat="server" ID="ucExpListar" Visible="false" />
             

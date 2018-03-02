@@ -20,6 +20,13 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
             return id;
         }
     }
+    public bool IsFunc
+    {
+        get
+        {
+            return false;
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -29,6 +36,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         lvExpediente.ItemDataBound += LvExpediente_ItemDataBound;
         lvExpediente.DataSource = new Expedientes().ListaExpediente(id);
         lvExpediente.DataBind();
+
     }
 
     private void LvExpediente_ItemDataBound(object sender, ListViewItemEventArgs e)
@@ -41,24 +49,27 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         Label Semanda = (Label)e.Item.FindControl("txtDiaSemana");
         Label Periodo = (Label)e.Item.FindControl("txtPeriodo");
 
-        HtmlButton btnEditar = (HtmlButton)e.Item.FindControl("btnEditar");
-        HtmlButton btnExcluir = (HtmlButton)e.Item.FindControl("btnExcluir");
-        Panel painel = (Panel)e.Item.FindControl("pnlExpediente");
-
-
-        painel.Attributes.Add("data-id",expediente.Id.ToString());
-
-        btnEditar.Attributes.Add("data-id", expediente.Id.ToString());
-        btnEditar.Attributes.Add("onclick", "Editar(" + expediente.Id + ")");
-
-        btnExcluir.Attributes.Add("onclick", "Excluir(" + expediente.Id + ")");
-
         Entrada.Text = expediente.Entrada.Substring(0, 5);
         Saida.Text = expediente.Saida.Substring(0, 5);
         HorasTrabalhada.Text = expediente.Horas_Trabalho.Substring(0, 5);
         TempoPausa.Text = expediente.Tempo_Pausa.Substring(0, 5);
         Semanda.Text = Expediente.ConverteDiaSemana(expediente.DiaSemana);
         Periodo.Text = Expediente.ConvertePeriodo(expediente.Periodo);
+
+        if (IsFunc)
+        {
+            HtmlControl pnlButtons = (HtmlControl)e.Item.FindControl("pnlButtons");
+            pnlButtons.Visible = false;
+        }
+        else
+        {
+            HtmlButton btnEditar = (HtmlButton)e.Item.FindControl("btnEditar");
+            HtmlButton btnExcluir = (HtmlButton)e.Item.FindControl("btnExcluir");
+            btnEditar.Attributes.Add("onclick", "Editar(" + expediente.Id + ")");
+            btnExcluir.Attributes.Add("onclick", "Excluir(" + expediente.Id + ")");
+            Panel painel = (Panel)e.Item.FindControl("pnlExpediente");
+            painel.Attributes.Add("data-id", expediente.Id.ToString());
+        }
     }
 
     protected void btnExcluirConfimar_Click(object sender, EventArgs e)

@@ -98,22 +98,21 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
             feed = expedientes.AtualizaExpediente(CriaObjeto());
             if (feed.Status)
             {
-
-                //   ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "function(){alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "}", true);
-
-                //     lblmsg.Text = "<script>$(function(){alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "' })</script>";
-                ScriptManager.RegisterStartupScript(Page,Page.GetType(),"","",true)
-                // Response.Redirect("\\");
-                //  Clear();
+                string comand = "$(function(){ alert('Expediente atualizado com sucesso'); window.location.href = '" + Request.Url.AbsoluteUri + "'})";
+                RegistraScript(comand, this.Page, true);
             }
             else
-                lblmsg.Text = feed.Mensagem;
+                lblmsg.InnerText = feed.Mensagem;
         }
         else if (Id_funcionario <= 0 || hhdIdExpediente.Value == "0")
-            lblmsg.Text = "Erro inesperado";
+            lblmsg.InnerText = "Erro inesperado";
         else
-            lblmsg.Text = "Preencha todos os campos corretamente";
-        lblmsg.Visible = true;
+            lblmsg.InnerText = "Preencha todos os campos corretamente";
+        if (!feed.Status)
+        {
+            lblmsg.Visible = true;
+            RegistraScript("  $('#" + lblmsg.ClientID + "').delay(5000).toggle(1000);", this.Page, true);
+        }
     }
     public void AdicionaExpediente()
     {
@@ -125,22 +124,26 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
 
             if (feed.Status)
             {
-                Response.Write("<script>alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "'</script>");
+                RegistraScript("<script>alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "'</script>", this.Page, false);
 
             }
             else
             {
                 if (feed.Mensagem.ToLower().Contains("duplicate"))
                     feed.Mensagem = "Expediente ja esta cadastrado nesse periodo";
-                lblmsg.Text = feed.Mensagem;
-
+                lblmsg.InnerText = feed.Mensagem;
             }
         }
         else if (Id_funcionario <= 0)
-            lblmsg.Text = "Erro inesperado";
+            lblmsg.InnerText = "Erro inesperado";
         else
-            lblmsg.Text = "Preencha todos os campos corretamente";
-        lblmsg.Visible = !feed.Status;
+            lblmsg.InnerText = "Preencha todos os campos corretamente";
+        if (!feed.Status)
+        {
+            lblmsg.Visible = true;
+            RegistraScript("  $('#"+lblmsg.ClientID+"').delay(5000).toggle(1000);", this.Page, true);
+        }
+
     }
     public void Clear()
     {
@@ -149,5 +152,9 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         ddlDiaSemana.SelectedValue = "0";
         ddlPeriodo.SelectedValue = "0";
         txtTempoPausa.Text = string.Empty;
+    }
+    private void RegistraScript(string script, Page pagina, bool ScriptTag)
+    {
+        ScriptManager.RegisterStartupScript(pagina, pagina.GetType(), "", script, ScriptTag);
     }
 }

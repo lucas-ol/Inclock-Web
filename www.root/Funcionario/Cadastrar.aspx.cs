@@ -92,7 +92,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
             if (feedback.Status)
             {
                 alerta.ShowMessager("Funcionario Cadastrado com sucesso", StatusEnum.Success);
-                LimpaCampos();
+                Clear();
                 return;
             }
             else
@@ -300,7 +300,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
     /// <summary>
     /// Metodo que vai zerar todos os campos 
     /// </summary>
-    private void LimpaCampos()
+    private void Clear()
     {
 
         txtSexoMasculino.Checked = false;

@@ -14,20 +14,9 @@
         }
     </style>
 </asp:Content>
-<asp:Content runat="server" ContentPlaceHolderID="Corpo">
-   
-    <div class="form-inline">
-        <div class="col-sm-4 p-0">
-            <input value="Adicionar" type="button" id="btnAdicionar" class="w-100 btn btn-success  rounded-0" data-target="#cadastrar_expediente" data-toggle="modal" />
-        </div>
-        <div class="col-sm-4 p-0">
-            <input value="Alterar" type="button" id="btnAlterar" class="w-100 btn btn-warning rounded-0" />
-        </div>
-        <div class="col-sm-4 p-0">
-            <input value="Excluir" type="button" id="btnExcluir" class="w-100 btn btn-danger rounded-0" />
-        </div>
-    </div>
-    <div class="col-12">
+<asp:Content runat="server" ContentPlaceHolderID="Corpo">  
+
+    <div class="col-12 pt-3">
         <div class="form-check-inline"></div>
         <div class="input-group">
             <asp:TextBox runat="server" ID="txtPesquisaFuncionario" CssClass="form-control w-100" />
@@ -35,7 +24,7 @@
         </div>
     </div>
     <div class="col-12">
-        <table class="table table-hover ">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>#</th>

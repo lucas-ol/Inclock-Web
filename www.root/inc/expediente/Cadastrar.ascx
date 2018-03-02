@@ -7,9 +7,10 @@
 <div class="modal fade" id="cadastrar_expediente">
     <div class="modal-dialog">
         <div class="modal-content">
+
             <asp:UpdatePanel runat="server" ID="updCadastrar">
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="btnInserir"  />
+                    <asp:AsyncPostBackTrigger ControlID="btnInserir" />
                 </Triggers>
                 <ContentTemplate>
                     <div class="modal-header">
@@ -20,8 +21,7 @@
                     <div class="modal-body">
                         <div class="form-inline">
                             <div class="col-sm-11">
-                                <asp:HiddenField runat="server" ID="hddIdFuncionario" />
-                                <asp:Label Text="Nome Funcionario" runat="server" ID="lblFuncionario" />
+                                <asp:HiddenField runat="server" ID="hddIdFuncionario" />                               
                             </div>
                             <div class="col-sm-1"></div>
                         </div>
@@ -75,13 +75,16 @@
                         <asp:CustomValidator ErrorMessage="<br>Escolha o Dia da Semana" ControlToValidate="ddlDiaSemana" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
                     </div>
                     <div class="modal-body">
-                        <asp:Label runat="server" ID="lblmsg" CssClass="alert alert-info w-100 text-center container" Visible="false" />
-                    </div>
-                    <div class="modal-body">
+                        <div runat="server" id="lblmsg" class="alert alert-info w-100 text-center container" visible="false"></div>
 
                         <div class="col-md-12">
                             <asp:Button Text="Salvar" runat="server" class="btn btn-outline-success" ID="btnInserir" ValidationGroup="ExpedienteCadastro" OnClick="btnInserir_Click" />
                             <input value="Cancelar" type="button" data-dismiss="modal" class="btn btn-outline-danger" />
+                            <asp:UpdateProgress runat="server" AssociatedUpdatePanelID="updCadastrar">
+                                <ProgressTemplate>
+                                    <img src="/img/ajaxBlack.gif" style="width: 20%; height: 100%; float: right" class="btn" />
+                                </ProgressTemplate>
+                            </asp:UpdateProgress>
                         </div>
                     </div>
 
@@ -91,7 +94,9 @@
     </div>
 </div>
 <script>
-
+    $('#<% =lblmsg.ClientID%>').resize(function () {
+        $('#<% =lblmsg.ClientID%>').delay(5000).toggle(1000);
+    })
     function OpenCadastrar() {
         $('#cadastrar_expediente').modal('show');
     }
@@ -154,18 +159,18 @@ function CarregaDados(Expediente) {
 
     $('#cadastrar_expediente').modal('show');
     $('#<% =hhdIdExpediente.ClientID%>').val(Expediente["id"]);
-        $('#<% =txtEntrada.ClientID%>').val(Expediente["entrada"]);
-        $('#<% =txtSaida.ClientID %>').val(Expediente["saida"]);
-        $('#<% =txtTempoPausa.ClientID %>').val(Expediente["pausa"]);
+    $('#<% =txtEntrada.ClientID%>').val(Expediente["entrada"]);
+    $('#<% =txtSaida.ClientID %>').val(Expediente["saida"]);
+    $('#<% =txtTempoPausa.ClientID %>').val(Expediente["pausa"]);
 
 
-        $('option:contains("' + Expediente['semana'] + '")').prop('selected', true);
-        //    $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", true);
+    $('option:contains("' + Expediente['semana'] + '")').prop('selected', true);
+    //    $('#<% =ddlDiaSemana.ClientID %>').prop("disabled", true);
 
-        $('option:contains("' + Expediente['periodo'] + '")').prop('selected', true);
-        //  $('#<% =ddlPeriodo.ClientID%>').prop('disabled', true); 
-        //    $('select').trigger("chosen:updated");
-    }
+    $('option:contains("' + Expediente['periodo'] + '")').prop('selected', true);
+    //  $('#<% =ddlPeriodo.ClientID%>').prop('disabled', true); 
+    //    $('select').trigger("chosen:updated");
+}
 
 
     $('#cadastrar_expediente').on('hide.bs.modal', function (event) {
@@ -178,7 +183,7 @@ function CarregaDados(Expediente) {
         $('#<% =txtTempoPausa.ClientID %>').val("00:00");
         $('#<% =ddlDiaSemana.ClientID %> option[value=0]').prop('selected', true);
         $('#<% =ddlPeriodo.ClientID%> option[value=0]').prop('selected', true);
-        $('#<% =lblmsg.ClientID%>').css('display','none')
+        $('#<% =lblmsg.ClientID%>').css('display', 'none')
 
     });
 
