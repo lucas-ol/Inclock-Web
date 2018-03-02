@@ -98,11 +98,11 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
             feed = expedientes.AtualizaExpediente(CriaObjeto());
             if (feed.Status)
             {
-                    Response.Write("<script>alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "'</script>");
+
                 //   ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "function(){alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "}", true);
 
-                lblmsg.Text = "Haha";
-
+                //     lblmsg.Text = "<script>$(function(){alert('Expediente Cadastrado com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "' })</script>";
+                ScriptManager.RegisterStartupScript(Page,Page.GetType(),"","",true)
                 // Response.Redirect("\\");
                 //  Clear();
             }
