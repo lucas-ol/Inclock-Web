@@ -9,6 +9,7 @@ using System.Web.UI;
 /// </summary>
 public class Autenticacao: Page
 {
+    public bool IsAuthenticate { get; set; }
     public Autenticacao()
     {
        

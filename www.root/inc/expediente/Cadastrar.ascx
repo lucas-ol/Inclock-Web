@@ -3,7 +3,7 @@
 <style>
    
 </style>
-<asp:ScriptManager runat="server" ID="ds" />
+
 <div class="modal fade" id="cadastrar_expediente">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -80,9 +80,9 @@
                         <div class="col-md-12">
                             <asp:Button Text="Salvar" runat="server" class="btn btn-outline-success" ID="btnInserir" ValidationGroup="ExpedienteCadastro" OnClick="btnInserir_Click" />
                             <input value="Cancelar" type="button" data-dismiss="modal" class="btn btn-outline-danger" />
-                            <asp:UpdateProgress runat="server" AssociatedUpdatePanelID="updCadastrar">
-                                <ProgressTemplate>
-                                    <img src="/img/ajaxBlack.gif" style="width: 20%; height: 100%; float: right" class="btn" />
+                            <asp:UpdateProgress runat="server" AssociatedUpdatePanelID="updCadastrar" DynamicLayout="true"  >                                
+                                <ProgressTemplate>                                    
+                                    <img src="/img/ajaxBlack.gif" style="width: 10%; height: 100%; padding: 0; float: right; display:inline; position:absolute; right:0; top:10px" class="btn" />
                                 </ProgressTemplate>
                             </asp:UpdateProgress>
                         </div>

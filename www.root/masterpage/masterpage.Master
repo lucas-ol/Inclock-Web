@@ -1,6 +1,4 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="masterpage.master.cs" Inherits="masterpage" %>
-
-<%@ Register TagPrefix="uc" TagName="Logar" Src="~/inc/Login/Logar.ascx" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -23,14 +21,16 @@
     </style>
 </head>
 <body>
-    <form id="form1" runat="server">
 
+    <form id="form1" runat="server">
+        <asp:ScriptManager runat="server" ID="scpManager" />
+      
         <div>
             <!-- Menu de Navegação -->
             <nav class="navbar navbar-expand-xl navbar-dark bg-dark  " role="navigation" id="menu">
                 <div class=" container-fluid">
                     <!-- Menu  -->
-                    <a class=" navbar-brand" href="/"><span class=" house"></span></a>
+                    <div class=" navbar-brand"></div>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class=" navbar-toggler-icon"></span>
                     </button>
@@ -47,8 +47,9 @@
                             </li>
                             <li class="nav-item"><a class="nav-link" href="/avisos?acao=1">Avisos</a></li>
                             <li class="nav-item"><a class=" nav-link" href="#contact">Contato</a></li>
+                              <li class="nav-item"><a class="nav-link" href="/">Login</a></li>
                         </ul>
-                        <uc:Logar runat="server" ID="ucLogar" />
+                       
                     </div>
 
                 </div>
@@ -58,7 +59,8 @@
             <!-- Navbar -->
         </div>
 
-       
+        
+        
         <asp:ContentPlaceHolder runat="server" ID="Corpo">
         </asp:ContentPlaceHolder>
 
