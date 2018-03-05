@@ -8,6 +8,7 @@
             <div class="modal-content">
                 <asp:UpdatePanel runat="server" ID="updLogin">
                     <ContentTemplate>
+
                         <div class="modal-header">
                             <h4 class="modal-title">Login</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-selected="true">&times;</button>
@@ -26,6 +27,7 @@
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
+                <!-- aqui-->
             </div>
         </div>
     </div>

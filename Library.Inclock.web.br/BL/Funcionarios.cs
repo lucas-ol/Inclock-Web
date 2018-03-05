@@ -159,7 +159,7 @@ namespace Library.Inclock.web.br.BL
                 
                 Autenticador.AutenticadorClient Client = new Autenticador.AutenticadorClient()
                 ;
-                var str = Client.GetUserById(ID);
+                var str = Client.GetUserById(ID.ToString());
                 func = JsonConvert.DeserializeObject<List<Funcionario>>(str).First();
                 return func;
             }

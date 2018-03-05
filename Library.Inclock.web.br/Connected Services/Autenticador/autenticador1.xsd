@@ -64,6 +64,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="InitialDate" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="FinalDate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="id_funcionario" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -91,7 +92,7 @@
   <xs:element name="GetUserById">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="id" type="xs:int" />
+        <xs:element minOccurs="0" name="id" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -131,8 +132,8 @@
   <xs:element name="GetExpediente">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="semana" type="xs:int" />
-        <xs:element minOccurs="0" name="funcionario_Id" type="xs:int" />
+        <xs:element minOccurs="0" name="semana" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="funcionario_Id" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

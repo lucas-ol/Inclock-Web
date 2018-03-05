@@ -19,6 +19,7 @@ public partial class inc_Login : System.Web.UI.UserControl
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        bool http = Request.RequestContext.HttpContext.Request.IsAuthenticated;
         if (HttpContext.Current.Request.IsAuthenticated)
         {
             RegistraScript("alert('bem vindo novamente')", this.Page, true);
@@ -27,18 +28,18 @@ public partial class inc_Login : System.Web.UI.UserControl
 
     protected void btnLogar_Click(object sender, EventArgs e)
     {
-        FeedBack feed = new FeedBack();
+        Funcionario funcionario = new Funcionario();
 
         Library.Inclock.web.br.BL.Login login = new Library.Inclock.web.br.BL.Login();
-        feed = login.Logar(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text });
+        funcionario = login.Logar(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text });
       
 
-        if (feed.Status)
+        if (funcionario != null)
         {
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, feed.Mensagem, DateTime.Now, DateTime.MaxValue, false, "", FormsAuthentication.FormsCookiePath);
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, funcionario.Nome, DateTime.Now, DateTime.MaxValue, false, funcionario.Login, FormsAuthentication.FormsCookiePath);
             string encrypt = FormsAuthentication.Encrypt(ticket);
             Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encrypt));
-            RegistraScript("alert('bem vindo " + feed.Mensagem + "URL: " + FormsAuthentication.GetRedirectUrl(ReturnUrl, false) +"');window.location.href='/'", this.Page, true);
+            RegistraScript("alert('bem vindo " + funcionario.Nome + "URL: " + FormsAuthentication.GetRedirectUrl(ReturnUrl, false) +"');window.location.href='/'", this.Page, true);
         }
         else
         {
