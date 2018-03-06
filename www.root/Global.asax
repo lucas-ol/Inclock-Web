@@ -1,11 +1,13 @@
 ﻿<%@ Application Language="C#" %>
 <%@ Import Namespace="System.Web.Routing" %>
+<%@ Import Namespace="System.Security.Principal"%>
 
 <script RunAt="server">
 
     void Application_Start(object sender, EventArgs e)
     {
-        // Code that runs on application startup       
+        // Code that runs on application startup    
+
     }
 
     void Application_End(object sender, EventArgs e)
@@ -35,37 +37,28 @@
     }
     void Application_BeginRequest(object sender, EventArgs e)
     {
-        var url = HttpContext.Current.Request.Url;     
+        var url = HttpContext.Current.Request.Url;
         // HttpContext.Current.RewritePath("/index.aspx");
         if (url.AbsolutePath.ToLower().Contains("/avisos"))
-        {            
-          //  HttpContext.Current.RewritePath(MakeUrl(url.Segments));
+        {
+            //  HttpContext.Current.RewritePath(MakeUrl(url.Segments));
         }
-
-
     }
 
+    void Application_PostAuthenticateRequest(object sender, EventArgs e)
+    {
+        HttpCookie Cookieticket = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
+        if (Cookieticket != null && HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(Cookieticket.Value);
+            GenericPrincipal identity = new GenericPrincipal(new GenericIdentity(ticket.Name), new string[] { "Home", "Login" });
+            HttpContext.Current.User = identity;
+        }
+
+    }
     void RegisterRoutes(RouteCollection routes)
     {
         //   routes.MapPageRoute("ExpenseReport/{locale}","~/",);
     }
 
-   /*  string MakeUrl(string[] url)
-    {
-       
-        if (url.Contains("cadastrar"))
-        {         
-            return string.Format("/{0}Default.aspx?acao=1", url[1].ToLower());
-        }
-        else if (url.Contains("alterar"))
-        {
-            return string.Format("/{0}Default.aspx?acao=2", url[1].ToLower());
-        }
-        else if (url.Contains("excluir"))
-        {
-            return string.Format("/{0}Default.aspx?acao=3", url[1].ToLower());
-        }
-        else
-            return "/";
-    }*/
 </script>

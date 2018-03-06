@@ -13,37 +13,30 @@ public partial class inc_Login : System.Web.UI.UserControl
     {
         get
         {
-            string str = string.IsNullOrEmpty(Request.QueryString["ReturnUrl"])? "" : Request.QueryString["ReturnUrl"].Split('?')[0];
+            string str = string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]) ? "/" : Request.QueryString["ReturnUrl"];
             return str;
         }
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-        bool http = Request.RequestContext.HttpContext.Request.IsAuthenticated;
-        if (HttpContext.Current.Request.IsAuthenticated)
-        {
-            RegistraScript("alert('bem vindo novamente')", this.Page, true);
-        }
+        
     }
 
     protected void btnLogar_Click(object sender, EventArgs e)
     {
-        Funcionario funcionario = new Funcionario();
 
+        string funcionarioJson;
         Library.Inclock.web.br.BL.Login login = new Library.Inclock.web.br.BL.Login();
-        funcionario = login.Logar(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text });
-      
-
-        if (funcionario != null)
+        funcionarioJson = login.Logar(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text });
+        if (funcionarioJson != "erro"  && string.IsNullOrEmpty(funcionarioJson))
         {
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, funcionario.Nome, DateTime.Now, DateTime.MaxValue, false, funcionario.Login, FormsAuthentication.FormsCookiePath);
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,"funcionario", DateTime.Now, DateTime.MaxValue, false, funcionarioJson, FormsAuthentication.FormsCookiePath);           
             string encrypt = FormsAuthentication.Encrypt(ticket);
-            Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encrypt));
-            RegistraScript("alert('bem vindo " + funcionario.Nome + "URL: " + FormsAuthentication.GetRedirectUrl(ReturnUrl, false) +"');window.location.href='/'", this.Page, true);
+            Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encrypt));  
+            Response.Redirect(FormsAuthentication.GetRedirectUrl(ReturnUrl, false), true);
         }
         else
         {
-
             lblMensagem.Visible = true;
             lblMensagem.InnerText = "Login ou senha não encontrado";
         }

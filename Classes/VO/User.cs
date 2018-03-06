@@ -26,5 +26,6 @@ namespace Classes.VO
             get { return senha; }
             set { senha = value; }
         }
+        public List<string> Roles { get; set; }
     }
 }

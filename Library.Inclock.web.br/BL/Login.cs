@@ -11,23 +11,17 @@ namespace Library.Inclock.web.br.BL
 {
     public class Login
     {
-        public Funcionario Logar(User user)
+        /// <summary>
+        /// Metodo que faz um login com senha e 
+        /// </summary>
+        /// <param name="user">Objeto User </param>
+        /// <returns>Retorna um Json do usuario</returns>
+        public string Logar(User user)
         {
-            Funcionario funcionario = new Funcionario();
-
-
-
+            string FuncionarioJson;
             Autenticador.AutenticadorClient cliente = new Autenticador.AutenticadorClient();
-            string str = cliente.Logar(user.Senha, user.Login);
-            if (!str.Contains("erro"))
-            {
-                 funcionario = JsonConvert.DeserializeObject<List<Funcionario>>(str).FirstOrDefault();
-               
-            }
-            else
-                funcionario = null;
-
-            return funcionario;
+            FuncionarioJson = cliente.Logar(user.Senha, user.Login);
+            return FuncionarioJson;
         }
     }
 }
