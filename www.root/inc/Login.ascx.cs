@@ -28,7 +28,7 @@ public partial class inc_Login : System.Web.UI.UserControl
         string funcionarioJson;
         Library.Inclock.web.br.BL.Login login = new Library.Inclock.web.br.BL.Login();
         funcionarioJson = login.Logar(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text });
-        if (funcionarioJson != "erro"  && string.IsNullOrEmpty(funcionarioJson))
+        if (funcionarioJson != "erro"  && !string.IsNullOrEmpty(funcionarioJson))
         {
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,"funcionario", DateTime.Now, DateTime.MaxValue, false, funcionarioJson, FormsAuthentication.FormsCookiePath);           
             string encrypt = FormsAuthentication.Encrypt(ticket);

@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Login.ascx.cs" Inherits="inc_Login" %>
 
 <link href="/Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
-
+<a href="#" class="login-button" data-target="#loginModal" data-toggle="modal">Logar</a>
 <asp:Panel runat="server" ID="pnlLogin" DefaultButton="btnLogar">
     <div class="modal fade" id="loginModal" data-modal="login">
         <div class="modal-dialog">
@@ -34,6 +34,6 @@
 </asp:Panel>
 <script>
     $(function () {
-        $('#loginModal').modal('show');
+     //   $('#loginModal').modal('show');
     });
 </script>

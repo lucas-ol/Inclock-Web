@@ -164,13 +164,14 @@
         <div class="form-group">
             <div class="form-inline">
                 <label for="Corpo_txtLogin" class="col-sm-1">Login</label>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <asp:TextBox runat="server" ID="txtLogin" CssClass="CampoOk form-control" data-valid="false" MaxLength="10"></asp:TextBox>
                 </div>
                 <label for="Corpo_txtSenha" class="col-sm-1">Senha</label>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <asp:TextBox runat="server" ID="txtSenha" CssClass="CampoOk form-control " data-valid="false" TextMode="Password" MaxLength="8"></asp:TextBox>
                 </div>
+                 <label for="Corpo_txtLogin" class="col-sm-1">Permições</label>
             </div>
         </div>
         <!--   <input type="button" id="btnCadastrar" value="Cadastrar" /> -->

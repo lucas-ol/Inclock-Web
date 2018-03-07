@@ -1,4 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="masterpage.master.cs" Inherits="masterpage" %>
+
+<%@ Register TagPrefix="uc" TagName="Login" Src="~/inc/Login.ascx" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -18,13 +20,17 @@
         .dropdown:hover .dropdown-menu {
             display: block;
         }
+
+        .login-button {
+            color: #B2B4B7;
+        }
     </style>
 </head>
 <body>
 
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server" ID="scpManager" />
-      
+
         <div>
             <!-- Menu de Navegação -->
             <nav class="navbar navbar-expand-xl navbar-dark bg-dark  " role="navigation" id="menu">
@@ -47,9 +53,10 @@
                             </li>
                             <li class="nav-item"><a class="nav-link" href="/avisos?acao=1">Avisos</a></li>
                             <li class="nav-item"><a class=" nav-link" href="#contact">Contato</a></li>
-                              <li class="nav-item"><a class="nav-link" href="/">Login</a></li>
                         </ul>
-                       
+                        <asp:LinkButton Text="Sair" runat="server" ID="btnLogout" OnClick="btnLogout_Click" CssClass=" login-button" /><uc:Login runat="server" ID="ucLogin" />
+
+
                     </div>
 
                 </div>
@@ -59,8 +66,8 @@
             <!-- Navbar -->
         </div>
 
-        
-        
+
+
         <asp:ContentPlaceHolder runat="server" ID="Corpo">
         </asp:ContentPlaceHolder>
 
