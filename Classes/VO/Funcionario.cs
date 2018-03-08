@@ -33,5 +33,6 @@ namespace Classes.VO
             //Preenchimento dos campos opicionais
             Bairro = "";
         }
+       
     }
 }

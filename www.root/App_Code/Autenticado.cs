@@ -11,12 +11,13 @@ using System.Web.Security;
 /// </summary>
 public class Autenticado
 {
-    private string Role { get;  set; }
-    public static Funcionario User
+
+    public Funcionario CurrentUser
     {
         get
         {
             Funcionario func = new Funcionario();
+            Newtonsoft.Json.JsonConvert.DeserializeObject<List<Funcionario>>(Ticket.UserData);
             return func;
         }
     }
@@ -31,22 +32,19 @@ public class Autenticado
                 ticket = FormsAuthentication.Decrypt(Cookieticket.Value);
             }
             else
-                ticket = null;
+                ticket = null; 
             return ticket;
         }
     }
     public Autenticado()
     {
 
-    }
-
-
-
+    }    
     public void Autenticar()
     {
         if (Ticket != null)
         {
-            GenericPrincipal identity = new GenericPrincipal(new GenericIdentity(Ticket.Name), Role.Split(';'));
+            GenericPrincipal identity = new GenericPrincipal(new GenericIdentity(Ticket.Name), CurrentUser.Roles.Split(';'));
             HttpContext.Current.User = identity;
         }
     }

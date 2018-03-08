@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Classes.Common;
 using Classes.VO;
 using Newtonsoft.Json;
+using System.Data;
 
 namespace Autenticador.BL
 {
@@ -13,9 +14,42 @@ namespace Autenticador.BL
     {
         public string Logar(string password, string login)
         {
-            MySqlAdicionaParametro("login", login);
-            MySqlAdicionaParametro("senha", password);
-            return JsonConvert.SerializeObject(MySqlLeitura("select * from funcionarios where login = @login and senha = @senha", System.Data.CommandType.Text));
+            MySqlAdicionaParametro("_login", login);
+            MySqlAdicionaParametro("_senha", password);
+            DataRow tb = MySqlLeitura("prd_se_login", System.Data.CommandType.StoredProcedure).Select().FirstOrDefault();
+            Funcionario func = null;
+            if (tb != null)
+            {
+                if (tb[0].ToString() != "erro")
+                    func = new Funcionario()
+                    {
+                        Id = Convert.ToInt32(tb["id"]),
+                        Nome = tb["nome"].ToString(),
+                        CPF = tb["cpf"].ToString(),
+                        RG = tb["rg"].ToString(),
+                        Telefone = tb["telefone"].ToString(),
+                        Celular = tb["celular"].ToString(),
+                        Email = tb["email"].ToString(),
+                        Endereco = tb["enderece"].ToString(),
+                        Numero = tb["numero"].ToString(),
+                        cargo_id = Convert.ToInt32(tb["cargo_id"]),
+                        Cargo = tb["cargo"].ToString(),
+                        Nascimento = tb["nascimento"].ToString(),
+                        Sexo = tb["sexo"].ToString(),
+                        Cidade = tb["cidade"].ToString(),
+                        Estado = tb["estado"].ToString(),
+                        CEP = tb["cep"].ToString(),
+                        Bairro = tb["bairro"].ToString(),
+                        Roles = tb["role"].ToString()
+                    };
+
+                return JsonConvert.SerializeObject(func, Formatting.Indented);
+            }
+            else
+            {
+                return "erro:true";
+            }
+
         }
 
         public string GetLogin(string Email)
@@ -75,11 +109,11 @@ namespace Autenticador.BL
             return JsonConvert.SerializeObject(MySqlLeitura("", System.Data.CommandType.Text), new JsonSerializerSettings() { Formatting = Formatting.Indented, DateFormatString = "dd/MM/yyyy" });
 
         }
-        public string GetExpediente(int semana,int funcionario_id)
+        public string GetExpediente(int semana, int funcionario_id)
         {
             MySqlAdicionaParametro("iSemana", semana);
-            MySqlAdicionaParametro("iFuncionario", funcionario_id);           
-            return JsonConvert.SerializeObject(MySqlLeitura("prd_se_expediente_semana", System.Data.CommandType.StoredProcedure), new JsonSerializerSettings() { Formatting = Formatting.Indented, DateTimeZoneHandling = DateTimeZoneHandling.Local});
+            MySqlAdicionaParametro("iFuncionario", funcionario_id);
+            return JsonConvert.SerializeObject(MySqlLeitura("prd_se_expediente_semana", System.Data.CommandType.StoredProcedure), new JsonSerializerSettings() { Formatting = Formatting.Indented, DateTimeZoneHandling = DateTimeZoneHandling.Local });
         }
     }
 }
