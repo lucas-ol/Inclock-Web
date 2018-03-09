@@ -17,7 +17,7 @@ public class Autenticado
         get
         {
             Funcionario func = new Funcionario();
-            Newtonsoft.Json.JsonConvert.DeserializeObject<List<Funcionario>>(Ticket.UserData);
+            new Library.Inclock.web.br.BL.Funcionarios().Pesquisa_Funcionario_ID(Ticket.UserData))
             return func;
         }
     }

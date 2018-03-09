@@ -99,6 +99,8 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\Classes.VO.Expediente.datasource" />
+    <None Include="Properties\DataSources\Classes.VO.Funcionario.datasource" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

@@ -12,12 +12,12 @@ namespace Autenticador.BL
 {
     public class CAutenticador : DataBase
     {
-        public string Logar(string password, string login)
+        public Classes.VO.Funcionario Logar(string password, string login)
         {
             MySqlAdicionaParametro("_login", login);
             MySqlAdicionaParametro("_senha", password);
             DataRow tb = MySqlLeitura("prd_se_login", System.Data.CommandType.StoredProcedure).Select().FirstOrDefault();
-            Funcionario func = null;
+            Funcionario func = new Funcionario();
             if (tb != null)
             {
                 if (tb[0].ToString() != "erro")
@@ -30,11 +30,11 @@ namespace Autenticador.BL
                         Telefone = tb["telefone"].ToString(),
                         Celular = tb["celular"].ToString(),
                         Email = tb["email"].ToString(),
-                        Endereco = tb["enderece"].ToString(),
+                        Endereco = tb["endereco"].ToString(),
                         Numero = tb["numero"].ToString(),
                         cargo_id = Convert.ToInt32(tb["cargo_id"]),
                         Cargo = tb["cargo"].ToString(),
-                        Nascimento = tb["nascimento"].ToString(),
+                        Nascimento = Convert.ToDateTime(tb["nascimento"]).ToString("dd/MM/yyyy"),
                         Sexo = tb["sexo"].ToString(),
                         Cidade = tb["cidade"].ToString(),
                         Estado = tb["estado"].ToString(),
@@ -42,14 +42,14 @@ namespace Autenticador.BL
                         Bairro = tb["bairro"].ToString(),
                         Roles = tb["role"].ToString()
                     };
+                //    return JsonConvert.SerializeObject(func).Replace("\"","'");
 
-                return JsonConvert.SerializeObject(func, Formatting.Indented);
             }
             else
             {
-                return "erro:true";
+                //   return "erro:true";
             }
-
+            return func;
         }
 
         public string GetLogin(string Email)
@@ -63,17 +63,7 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("login", Login);
             return JsonConvert.SerializeObject(MySqlLeitura("select nome, email from funcionarios where login = @login", System.Data.CommandType.Text));
         }
-
-        public string GetListUsers()
-        {
-            int totlinhas;
-            MySqlAdicionaParametro("@_TotalLinhas", 0);
-            MySqlAdicionaParametro("_nome", "");
-            MySqlAdicionaParametro("_pagina", 0);
-            MySqlAdicionaParametro("_quantidade", 0);
-            return JsonConvert.SerializeObject(MySqlLeitura("prd_se_pessoas", System.Data.CommandType.StoredProcedure, out totlinhas));
-        }
-        public string GetCheckPointById(int id)
+              public string GetCheckPointById(int id)
         {
             MySqlAdicionaParametro("id", id);
             return JsonConvert.SerializeObject(MySqlLeitura("select * from registro_pontos", System.Data.CommandType.Text));
@@ -93,10 +83,41 @@ namespace Autenticador.BL
             return JsonConvert.SerializeObject(MySqlLeitura("", System.Data.CommandType.Text));
         }
 
-        public string GetUserById(int id)
+        public Funcionario GetUserById(int id)
         {
             MySqlAdicionaParametro("_id", id);
-            return JsonConvert.SerializeObject(MySqlLeitura("prd_se_pessoa_id", System.Data.CommandType.StoredProcedure), new JsonSerializerSettings() { Formatting = Formatting.None, DateFormatString = "dd/MM/yyyy" });
+            DataRow tr = MySqlLeitura("prd_se_pessoa_id", System.Data.CommandType.StoredProcedure).Rows[0];
+            Funcionario funcionario = null;
+            if (tr != null)
+            {
+                if (tr[0].ToString() != "erro")
+                {
+                    funcionario = new Funcionario {
+                        Id = Convert.ToInt32(tr["id"]),
+                        Nome = tr["nome"].ToString(),
+                        CPF = tr["cpf"].ToString(),
+                        RG = tr["rg"].ToString(),
+                        Telefone = tr["telefone"].ToString(),
+                        Celular = tr["celular"].ToString(),
+                        Email = tr["email"].ToString(),
+                        Endereco = tr["endereco"].ToString(),
+                        Numero = tr["numero"].ToString(),
+                        cargo_id = Convert.ToInt32(tr["cargo_id"]),
+                        Cargo = tr["cargo"].ToString(),
+                        Nascimento = Convert.ToDateTime(tr["nascimento"]).ToString("dd/MM/yyyy"),
+                        Sexo = tr["sexo"].ToString(),
+                        Cidade = tr["cidade"].ToString(),
+                        Estado = tr["estado"].ToString(),
+                        CEP = tr["cep"].ToString(),
+                        Bairro = tr["bairro"].ToString(),
+                        Login = tr["login"].ToString(),
+                        Senha = tr["senha"].ToString(),
+                        Roles = tr["role"].ToString()
+                    };
+                }
+            }
+
+            return funcionario;
 
         }
 
@@ -109,11 +130,32 @@ namespace Autenticador.BL
             return JsonConvert.SerializeObject(MySqlLeitura("", System.Data.CommandType.Text), new JsonSerializerSettings() { Formatting = Formatting.Indented, DateFormatString = "dd/MM/yyyy" });
 
         }
-        public string GetExpediente(int semana, int funcionario_id)
+        public List<Expediente> GetExpediente(int semana, int funcionario_id)
         {
             MySqlAdicionaParametro("iSemana", semana);
             MySqlAdicionaParametro("iFuncionario", funcionario_id);
-            return JsonConvert.SerializeObject(MySqlLeitura("prd_se_expediente_semana", System.Data.CommandType.StoredProcedure), new JsonSerializerSettings() { Formatting = Formatting.Indented, DateTimeZoneHandling = DateTimeZoneHandling.Local });
+            List<Expediente> ExpedienteList = new List<Expediente>();
+            DataTable tb = MySqlLeitura("prd_se_expediente_semana", System.Data.CommandType.StoredProcedure);
+            if (tb.TableName != "erro")
+            {                
+                    foreach (DataRow linha in tb.Rows)
+                    {
+                        Expediente expediente = new Expediente
+                        {
+                            Id = Convert.ToInt32(linha["id"]),
+                            Entrada = ((TimeSpan)linha["entrada"]).ToString(),
+                            Saida = ((TimeSpan)linha["saida"]).ToString(),
+                            Horas_Trabalho = ((TimeSpan)linha["horas_trabalho"]).ToString(),
+                            Tempo_Pausa = ((TimeSpan)linha["tempo_pausa"]).ToString(),
+                            DiaSemana = Convert.ToInt32(linha["diasemana"]),
+                            Funcionario_id = Convert.ToInt32(linha["funcionario_id"]),
+                            Periodo = Convert.ToInt32(linha["periodo"])
+                        };
+                        ExpedienteList.Add(expediente);
+                    }              
+
+            }
+            return ExpedienteList;
         }
     }
 }

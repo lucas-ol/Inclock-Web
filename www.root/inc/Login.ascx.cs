@@ -25,12 +25,12 @@ public partial class inc_Login : System.Web.UI.UserControl
     protected void btnLogar_Click(object sender, EventArgs e)
     {
 
-        string funcionarioJson;
+        Funcionario funcionarioJson = new Funcionario();
         Library.Inclock.web.br.BL.Login login = new Library.Inclock.web.br.BL.Login();
         funcionarioJson = login.Logar(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text });
-        if (funcionarioJson != "erro"  && !string.IsNullOrEmpty(funcionarioJson))
+        if (funcionarioJson.Id > 0)
         {
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,"funcionario", DateTime.Now, DateTime.MaxValue, false, funcionarioJson, FormsAuthentication.FormsCookiePath);           
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,"funcionario", DateTime.Now, DateTime.MaxValue, false, funcionarioJson.Id.ToString(), FormsAuthentication.FormsCookiePath);           
             string encrypt = FormsAuthentication.Encrypt(ticket);
             Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encrypt));  
             Response.Redirect(FormsAuthentication.GetRedirectUrl(ReturnUrl, false), true);

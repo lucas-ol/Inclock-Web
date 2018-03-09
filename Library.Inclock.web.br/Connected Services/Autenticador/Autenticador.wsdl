@@ -49,12 +49,6 @@
   <wsdl:message name="IAutenticador_GetUserById_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetUserByIdResponse" />
   </wsdl:message>
-  <wsdl:message name="IAutenticador_GetListUsers_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetListUsers" />
-  </wsdl:message>
-  <wsdl:message name="IAutenticador_GetListUsers_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetListUsersResponse" />
-  </wsdl:message>
   <wsdl:message name="IAutenticador_CheckPoint_InputMessage">
     <wsdl:part name="parameters" element="tns:CheckPoint" />
   </wsdl:message>
@@ -95,10 +89,6 @@
     <wsdl:operation name="GetUserById">
       <wsdl:input wsaw:Action="http://tempuri.org/IAutenticador/GetUserById" message="tns:IAutenticador_GetUserById_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAutenticador/GetUserByIdResponse" message="tns:IAutenticador_GetUserById_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetListUsers">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAutenticador/GetListUsers" message="tns:IAutenticador_GetListUsers_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAutenticador/GetListUsersResponse" message="tns:IAutenticador_GetListUsers_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CheckPoint">
       <wsdl:input wsaw:Action="http://tempuri.org/IAutenticador/CheckPoint" message="tns:IAutenticador_CheckPoint_InputMessage" />
@@ -167,15 +157,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetUserById">
       <soap:operation soapAction="http://tempuri.org/IAutenticador/GetUserById" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetListUsers">
-      <soap:operation soapAction="http://tempuri.org/IAutenticador/GetListUsers" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

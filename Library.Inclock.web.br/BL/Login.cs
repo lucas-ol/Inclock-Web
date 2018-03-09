@@ -16,12 +16,12 @@ namespace Library.Inclock.web.br.BL
         /// </summary>
         /// <param name="user">Objeto User </param>
         /// <returns>Retorna um Json do usuario</returns>
-        public string Logar(User user)
+        public Funcionario Logar(User user)
         {
-            string FuncionarioJson;
+            Funcionario funcionario;
             Autenticador.AutenticadorClient cliente = new Autenticador.AutenticadorClient();
-            FuncionarioJson = cliente.Logar(user.Senha, user.Login);
-            return FuncionarioJson;
+            funcionario = cliente.Logar(user.Senha, user.Login);
+            return funcionario;
         }
     }
 }

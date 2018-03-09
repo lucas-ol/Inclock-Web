@@ -156,11 +156,10 @@ namespace Library.Inclock.web.br.BL
             Funcionario func = new Funcionario();
             try
             {
-                
-                Autenticador.AutenticadorClient Client = new Autenticador.AutenticadorClient()
-                ;
-                var str = Client.GetUserById(ID.ToString());
-                func = JsonConvert.DeserializeObject<List<Funcionario>>(str).First();
+
+                Autenticador.AutenticadorClient Client = new Autenticador.AutenticadorClient();
+                object str;
+                func = Client.GetUserById(ID.ToString());
                 return func;
             }
             catch (Exception ex)

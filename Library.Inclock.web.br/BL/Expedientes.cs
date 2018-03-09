@@ -39,8 +39,8 @@ namespace Library.Inclock.web.br.BL
             {
                 return expediente;
             }
-
-            expediente = JsonConvert.DeserializeObject<List<Expediente>>(new Autenticador.AutenticadorClient().GetExpediente(semana.ToString(), funcionario_Id.ToString()));
+            object obj = new Autenticador.AutenticadorClient().GetExpediente(semana.ToString(), funcionario_Id.ToString());
+            expediente = obj as List<Expediente>;
 
             return expediente;
         }

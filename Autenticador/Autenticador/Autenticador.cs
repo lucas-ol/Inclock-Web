@@ -15,22 +15,18 @@ namespace Autenticador
         public string GetLogin(string Email)
         {
             return new BL.CAutenticador().GetLogin(Email);
-        }
-        public string GetListUsers()
-        {
-            return nameof(GetListUsers);
-        }
-        public string GetUserById(string id)
+        }     
+        public Funcionario GetUserById(string id)
         {
             int iId;
             int.TryParse(id,out iId);
             if (iId == 0)
-                return "erro";
+                throw new Exception("Parametro Incorreto");
             else
                 return new BL.CAutenticador().GetUserById(iId);
         }
 
-        public string Logar(string password, string login)
+        public Classes.VO.Funcionario Logar(string password, string login)
         {
             return new BL.CAutenticador().Logar(password, login);
         }
@@ -60,13 +56,13 @@ namespace Autenticador
             return nameof(CheckPoint);
         }
 
-        public string GetExpediente(string semana, string funcionario_Id)
+        public List<Expediente> GetExpediente(string semana, string funcionario_Id)
         {
             int isemana, ifuncionario_Id;
             int.TryParse(semana, out isemana);
             int.TryParse(funcionario_Id, out ifuncionario_Id);
-            if ( ifuncionario_Id == 0)
-                return "Paramentros incorretos";
+            if (ifuncionario_Id == 0)
+                throw new Exception("Parametros incorretos");
             else
                 return new BL.CAutenticador().GetExpediente(isemana, ifuncionario_Id);
         }

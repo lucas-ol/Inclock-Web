@@ -14,7 +14,7 @@ namespace Autenticador
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json
             , UriTemplate = "logar/{password}/{login}")]
-        string Logar(string password, string login);
+        Funcionario Logar(string password, string login);
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
@@ -43,16 +43,14 @@ namespace Autenticador
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate ="getuser/{id}")]
-        string GetUserById(string id);
+        Funcionario GetUserById(string id);       
 
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        string GetListUsers();
-        [OperationContract]
-        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
+        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json ,Method ="POST")]
         string CheckPoint(Ponto ponto);
+
         [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "GET",
            UriTemplate = "getexpediente/{semana}/{funcionario_Id}")]
-        string GetExpediente(string semana, string funcionario_Id);
+        List<Expediente> GetExpediente(string semana, string funcionario_Id);
     }
 }
