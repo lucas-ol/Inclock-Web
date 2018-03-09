@@ -17,7 +17,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
     public int IdFuncionario
     {
         get
-        {           
+        {
             int.TryParse(Request.QueryString["id"], out idfuncionario);
             return idfuncionario;
         }
@@ -39,13 +39,20 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
             txtCargo.DataValueField = "id";
             txtCargo.DataBind();
             txtCargo.Items.Insert(0, new ListItem("Selecione o Cargo", "0") { Selected = true });
+            
+            ckListRoles.DataSource = Controller.GetRoles();
+            ckListRoles.DataValueField = "valor";
+            ckListRoles.DataTextField = "texto";
+            ckListRoles.DataBind();
+
+
         }
 
         if (IdFuncionario > 0)
         {
             if (PreencheDados(Controller.Pesquisa_Funcionario_ID(IdFuncionario)))
             {
-                btnCadastraExpediente.Visible = true;             
+                btnCadastraExpediente.Visible = true;
                 ucExpCadastrar.Visible = true;
                 ucExpListar.Visible = true;
                 ucExpListar.BuscaEspediente(IdFuncionario);
@@ -56,6 +63,8 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
         }
 
     }
+
+    
 
     protected void btnCadastrar_Click(object sender, EventArgs e)
     {

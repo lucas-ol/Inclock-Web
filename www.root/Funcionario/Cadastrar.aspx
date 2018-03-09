@@ -171,7 +171,9 @@
                 <div class="col-md-3">
                     <asp:TextBox runat="server" ID="txtSenha" CssClass="CampoOk form-control " data-valid="false" TextMode="Password" MaxLength="8"></asp:TextBox>
                 </div>
-                 <label for="Corpo_txtLogin" class="col-sm-1">Permições</label>
+                <asp:Panel runat="server" CssClass="col-sm-1" GroupingText="Roles">
+                    <asp:CheckBoxList ID="ckListRoles" runat="server">                       
+                    </asp:CheckBoxList></asp:Panel>
             </div>
         </div>
         <!--   <input type="button" id="btnCadastrar" value="Cadastrar" /> -->
@@ -179,15 +181,15 @@
             <div class="form-inline">
                 <div class="col-md-12">
                     <asp:Button runat="server" ID="btnCadastrar" Text="Cadastrar" OnClick="btnCadastrar_Click" CssClass="btn btn-secondary btn-outline-success align-content-center" />
-                 <button data-target="#cadastrar_expediente" data-toggle="modal" type="button" class="btn btn-secondary btn-outline-danger float-right" runat="server" visible="false" id="btnCadastraExpediente">Cadastrar Expediente</button>
-                     </div>
+                    <button data-target="#cadastrar_expediente" data-toggle="modal" type="button" class="btn btn-secondary btn-outline-danger float-right" runat="server" visible="false" id="btnCadastraExpediente">Cadastrar Expediente</button>
+                </div>
                 <uc:alerta runat="server" ID="alerta"></uc:alerta>
             </div>
         </div>
-        <div>          
-            <uc:ExpedienteCadastrar runat="server" ID="ucExpCadastrar" Visible="false"  />
+        <div>
+            <uc:ExpedienteCadastrar runat="server" ID="ucExpCadastrar" Visible="false" />
             <uc:ExpedienteListar runat="server" ID="ucExpListar" Visible="false" />
-            
+
         </div>
 
     </div>

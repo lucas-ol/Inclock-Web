@@ -24,17 +24,18 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
     {
         get
         {
-            return false;
+
+            return new Autenticado().CurrentUser.Roles.Contains("FUNCIONARIO");
         }
     }
     protected void Page_Load(object sender, EventArgs e)
     {
 
     }
-    public void BuscaEspediente(int id)
+    public void BuscaEspediente(int funcionarioId)
     {
         lvExpediente.ItemDataBound += LvExpediente_ItemDataBound;
-        lvExpediente.DataSource = new Expedientes().ListaExpediente(id);
+        lvExpediente.DataSource = new Expedientes().ListaExpediente(funcionarioId);
         lvExpediente.DataBind();
 
     }

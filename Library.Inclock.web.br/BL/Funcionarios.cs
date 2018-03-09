@@ -166,7 +166,22 @@ namespace Library.Inclock.web.br.BL
             {
                 return func;
             }
+        }
+        public List<Role> GetRoles()
+        {
+            List<Role> RoleGroup = new List<Role>();
 
+            DataTable tb = MySqlLeitura("select * from roles", CommandType.Text);
+            foreach (DataRow linha in tb.Rows)
+            {
+                Role role = new Role
+                {
+                    Valor = linha["role"].ToString(),
+                    Texto = linha["texto"].ToString()
+                };
+                RoleGroup.Add(role);
+            }
+            return RoleGroup;
         }
     }
 }

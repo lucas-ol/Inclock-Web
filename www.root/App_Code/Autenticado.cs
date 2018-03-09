@@ -17,7 +17,7 @@ public class Autenticado
         get
         {
             Funcionario func = new Funcionario();
-            new Library.Inclock.web.br.BL.Funcionarios().Pesquisa_Funcionario_ID(Ticket.UserData))
+            func = Newtonsoft.Json.JsonConvert.DeserializeObject<Funcionario>(Ticket.UserData);
             return func;
         }
     }
@@ -32,14 +32,14 @@ public class Autenticado
                 ticket = FormsAuthentication.Decrypt(Cookieticket.Value);
             }
             else
-                ticket = null; 
+                ticket = null;
             return ticket;
         }
     }
     public Autenticado()
     {
 
-    }    
+    }
     public void Autenticar()
     {
         if (Ticket != null)

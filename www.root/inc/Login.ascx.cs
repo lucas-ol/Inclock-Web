@@ -30,7 +30,7 @@ public partial class inc_Login : System.Web.UI.UserControl
         funcionarioJson = login.Logar(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text });
         if (funcionarioJson.Id > 0)
         {
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,"funcionario", DateTime.Now, DateTime.MaxValue, false, funcionarioJson.Id.ToString(), FormsAuthentication.FormsCookiePath);           
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,"funcionario", DateTime.Now, DateTime.MaxValue, false, Newtonsoft.Json.JsonConvert.SerializeObject(funcionarioJson), FormsAuthentication.FormsCookiePath);           
             string encrypt = FormsAuthentication.Encrypt(ticket);
             Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encrypt));  
             Response.Redirect(FormsAuthentication.GetRedirectUrl(ReturnUrl, false), true);

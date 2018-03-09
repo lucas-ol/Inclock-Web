@@ -82,6 +82,7 @@
     <Compile Include="VO\FeedBack.cs" />
     <Compile Include="VO\Funcionario.cs" />
     <Compile Include="VO\Ponto.cs" />
+    <Compile Include="VO\Role.cs" />
     <Compile Include="VO\User.cs" />
   </ItemGroup>
   <ItemGroup>
