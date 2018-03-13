@@ -65,6 +65,7 @@ namespace Library.Inclock.web.br.BL
             MySqlAdicionaParametro("_rg", funcionario.RG);
             MySqlAdicionaParametro("_senha", funcionario.Senha);
             MySqlAdicionaParametro("_login", funcionario.Login);
+            MySqlAdicionaParametro("_role", funcionario.Roles);
             feedBack = MySqlExecutaComando("prd_insere_func", CommandType.StoredProcedure);
 
             string mensagem = "";
@@ -82,7 +83,7 @@ namespace Library.Inclock.web.br.BL
             }
             else if (feedBack.Mensagem.ToLower().Contains("email"))
             {
-                mensagem += "<strong>email</strong>  ";
+                mensagem += "<strong>email</strong>";
             }
             feedBack.Mensagem = String.Format("Os campo {0} a já existe no banco ", mensagem);
             return feedBack;

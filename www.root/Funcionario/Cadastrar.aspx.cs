@@ -39,7 +39,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
             txtCargo.DataValueField = "id";
             txtCargo.DataBind();
             txtCargo.Items.Insert(0, new ListItem("Selecione o Cargo", "0") { Selected = true });
-            
+
             ckListRoles.DataSource = Controller.GetRoles();
             ckListRoles.DataValueField = "valor";
             ckListRoles.DataTextField = "texto";
@@ -64,7 +64,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
 
     }
 
-    
+
 
     protected void btnCadastrar_Click(object sender, EventArgs e)
     {
@@ -72,9 +72,6 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
             Cadastrar();
         else
             AlterarFuncionario();
-
-
-
     }
     public void AlterarFuncionario()
     {
@@ -115,6 +112,8 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
 
         }
     }
+
+
     private Funcionario CriaIbjeto()
     {
         Funcionario funcionario = new Funcionario();
@@ -135,6 +134,14 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
         funcionario.RG = txtRg.Text;
         funcionario.Senha = txtSenha.Text;
         funcionario.Login = txtLogin.Text;
+        foreach (ListItem item in ckListRoles.Items)
+        {
+            if (item.Selected)
+            {
+                funcionario.Roles += item.Value + ";";
+            }
+        }
+
         return funcionario;
     }
     /// <summary>

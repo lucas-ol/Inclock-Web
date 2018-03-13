@@ -3,6 +3,7 @@
 <%@ Register TagName="alerta" TagPrefix="uc" Src="~/inc/AlertaGenerico.ascx" %>
 <%@ Register TagName="ExpedienteCadastrar" TagPrefix="uc" Src="~/inc/expediente/Cadastrar.ascx" %>
 <%@ Register TagName="ExpedienteListar" TagPrefix="uc" Src="~/inc/expediente/Listar.ascx" %>
+
 <asp:Content ContentPlaceHolderID="Head" runat="server">
     <style>
         body {
@@ -11,6 +12,15 @@
         label {
             padding: 0 !important;
         }
+
+        .ckGroup {
+            padding:10px;
+            display: inline-flex !important;
+            width: auto !important;
+        }
+            .ckGroup > input {
+                margin:5px
+            }
     </style>
     <link href="/Scripts/jqueryUI/jquery-ui.css" rel="stylesheet" />
     <script src="/Scripts/jqueryUI/jquery-ui.js"></script>
@@ -164,20 +174,24 @@
         <div class="form-group">
             <div class="form-inline">
                 <label for="Corpo_txtLogin" class="col-sm-1">Login</label>
-                <div class="col-md-3">
+                <div class="col-md-5">
                     <asp:TextBox runat="server" ID="txtLogin" CssClass="CampoOk form-control" data-valid="false" MaxLength="10"></asp:TextBox>
                 </div>
                 <label for="Corpo_txtSenha" class="col-sm-1">Senha</label>
-                <div class="col-md-3">
+                <div class="col-md-5">
                     <asp:TextBox runat="server" ID="txtSenha" CssClass="CampoOk form-control " data-valid="false" TextMode="Password" MaxLength="8"></asp:TextBox>
                 </div>
-                <asp:Panel runat="server" CssClass="col-sm-1" GroupingText="Roles">
-                    <asp:CheckBoxList ID="ckListRoles" runat="server">                       
-                    </asp:CheckBoxList></asp:Panel>
+
+            </div>
+            <div class="form-inline">
+                <asp:Panel runat="server" CssClass="col-md-12" GroupingText="Roles">
+                    <asp:CheckBoxList ID="ckListRoles" runat="server" CssClass="ckGroup form-control custom-checkbox" RepeatDirection="Horizontal" RepeatLayout="Flow" CellSpacing="2" CellPadding="2">
+                    </asp:CheckBoxList>
+                </asp:Panel>
             </div>
         </div>
-        <!--   <input type="button" id="btnCadastrar" value="Cadastrar" /> -->
-        <div class=" form-group">
+
+        <div class="">
             <div class="form-inline">
                 <div class="col-md-12">
                     <asp:Button runat="server" ID="btnCadastrar" Text="Cadastrar" OnClick="btnCadastrar_Click" CssClass="btn btn-secondary btn-outline-success align-content-center" />

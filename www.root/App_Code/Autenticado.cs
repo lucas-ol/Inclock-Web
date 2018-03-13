@@ -44,7 +44,8 @@ public class Autenticado
     {
         if (Ticket != null)
         {
-            GenericPrincipal identity = new GenericPrincipal(new GenericIdentity(Ticket.Name), CurrentUser.Roles.Split(';'));
+           
+            GenericPrincipal identity = new GenericPrincipal(new GenericIdentity(Ticket.Name), CurrentUser.Roles.Split(';').Where(x => x != "").ToArray());
             HttpContext.Current.User = identity;
         }
     }
