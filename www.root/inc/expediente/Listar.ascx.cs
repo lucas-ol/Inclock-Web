@@ -24,8 +24,12 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
     {
         get
         {
-
-            return new Autenticado().CurrentUser.Roles.Contains("FUNCIONARIO");
+            bool bt = false;
+            if (new Autenticado().Ticket != null)
+            {
+                 bt = new Autenticado().CurrentUser.Roles.Contains("FUNCIONARIO");
+            }
+            return bt;
         }
     }
     protected void Page_Load(object sender, EventArgs e)

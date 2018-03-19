@@ -17,11 +17,15 @@ public class Autenticado
         get
         {
             Funcionario func = new Funcionario();
-            func = Newtonsoft.Json.JsonConvert.DeserializeObject<Funcionario>(Ticket.UserData);
+
+            if (Ticket != null)
+            {
+                func = Newtonsoft.Json.JsonConvert.DeserializeObject<Funcionario>(Ticket.UserData);
+            }
             return func;
         }
     }
-    private FormsAuthenticationTicket Ticket
+    public FormsAuthenticationTicket Ticket
     {
         get
         {
@@ -44,7 +48,6 @@ public class Autenticado
     {
         if (Ticket != null)
         {
-           
             GenericPrincipal identity = new GenericPrincipal(new GenericIdentity(Ticket.Name), CurrentUser.Roles.Split(';').Where(x => x != "").ToArray());
             HttpContext.Current.User = identity;
         }
