@@ -46,8 +46,7 @@ namespace Library.Inclock.web.br.BL
         public FeedBack Cadastrar_Funcionario(Funcionario funcionario)
         {
             FeedBack feedBack = new FeedBack();
-            feedBack.Status = false;
-
+            feedBack.Status = false;     
             MySqlAdicionaParametro("_nome", funcionario.Nome);
             MySqlAdicionaParametro("_telefone", funcionario.Telefone);
             MySqlAdicionaParametro("_celular", funcionario.Celular);
@@ -65,8 +64,53 @@ namespace Library.Inclock.web.br.BL
             MySqlAdicionaParametro("_rg", funcionario.RG);
             MySqlAdicionaParametro("_senha", funcionario.Senha);
             MySqlAdicionaParametro("_login", funcionario.Login);
-            MySqlAdicionaParametro("_role", funcionario.Roles);
+            MySqlAdicionaParametro("_role", string.Join("", funcionario.Roles).Replace(',', ';'));
             feedBack = MySqlExecutaComando("prd_insere_func", CommandType.StoredProcedure);
+
+            string mensagem = "";
+            if (feedBack.Mensagem.ToLower().Contains("cpf"))
+            {
+                mensagem += "<strong>CPF</strong> ";
+            }
+            else if (feedBack.Mensagem.ToLower().Contains("rg"))
+            {
+                mensagem += "<strong>RG</strong> ";
+            }
+            else if (feedBack.Mensagem.ToLower().Contains("login"))
+            {
+                mensagem += "<strong>login</strong> ";
+            }
+            else if (feedBack.Mensagem.ToLower().Contains("email"))
+            {
+                mensagem += "<strong>email</strong>";
+            }
+            feedBack.Mensagem = String.Format("Os campo {0} a já existe no banco ", mensagem);
+            return feedBack;
+        }
+        public FeedBack Altera_Funcionario(Funcionario funcionario)
+        {
+            FeedBack feedBack = new FeedBack();
+            feedBack.Status = false;
+            MySqlAdicionaParametro("_id", funcionario.Id);
+            MySqlAdicionaParametro("_nome", funcionario.Nome);
+            MySqlAdicionaParametro("_telefone", funcionario.Telefone);
+            MySqlAdicionaParametro("_celular", funcionario.Celular);
+            MySqlAdicionaParametro("_email", funcionario.Email);
+            MySqlAdicionaParametro("_endereco", funcionario.Endereco);
+            MySqlAdicionaParametro("_cpf", funcionario.CPF);
+            MySqlAdicionaParametro("_fk_cargo", funcionario.cargo_id);
+            MySqlAdicionaParametro("_nascimento", funcionario.Nascimento);
+            MySqlAdicionaParametro("_sexo", funcionario.Sexo);
+            MySqlAdicionaParametro("_cidade", funcionario.Cidade);
+            MySqlAdicionaParametro("_estado", funcionario.Estado);
+            MySqlAdicionaParametro("_cep", funcionario.CEP);
+            MySqlAdicionaParametro("_numero", funcionario.Numero);
+            MySqlAdicionaParametro("_bairro", funcionario.Bairro);
+            MySqlAdicionaParametro("_rg", funcionario.RG);
+            MySqlAdicionaParametro("_senha", funcionario.Senha);
+            MySqlAdicionaParametro("_login", funcionario.Login);
+            MySqlAdicionaParametro("_role", string.Join("", funcionario.Roles));
+            feedBack = MySqlExecutaComando("prd_update_func", CommandType.StoredProcedure);
 
             string mensagem = "";
             if (feedBack.Mensagem.ToLower().Contains("cpf"))
@@ -167,21 +211,6 @@ namespace Library.Inclock.web.br.BL
                 return func;
             }
         }
-        public List<Role> GetRoles()
-        {
-            List<Role> RoleGroup = new List<Role>();
-
-            DataTable tb = MySqlLeitura("select * from roles", CommandType.Text);
-            foreach (DataRow linha in tb.Rows)
-            {
-                Role role = new Role
-                {
-                    Valor = linha["role"].ToString(),
-                    Texto = linha["texto"].ToString()
-                };
-                RoleGroup.Add(role);
-            }
-            return RoleGroup;
-        }
+        
     }
 }

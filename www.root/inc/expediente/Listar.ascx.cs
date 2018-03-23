@@ -19,19 +19,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
             int.TryParse(Request.QueryString["id"], out id);
             return id;
         }
-    }
-    public bool IsFunc
-    {
-        get
-        {
-            bool bt = false;
-            if (new Autenticado().Ticket != null)
-            {
-                 bt = new Autenticado().CurrentUser.Roles.Contains("FUNCIONARIO");
-            }
-            return bt;
-        }
-    }
+    }    
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -61,7 +49,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         Semanda.Text = Expediente.ConverteDiaSemana(expediente.DiaSemana);
         Periodo.Text = Expediente.ConvertePeriodo(expediente.Periodo);
 
-        if (IsFunc)
+        if (Autenticado.IsFunc)
         {
             HtmlControl pnlButtons = (HtmlControl)e.Item.FindControl("pnlButtons");
             pnlButtons.Visible = false;

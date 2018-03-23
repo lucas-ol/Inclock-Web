@@ -27,12 +27,7 @@ public partial class inc_Login : System.Web.UI.UserControl
     {
         Funcionario funcionarioJson = new Funcionario();
         Library.Inclock.web.br.BL.Login login = new Library.Inclock.web.br.BL.Login();
-        if (txtLogin.Text == "root")
-            funcionarioJson = new Funcionario { Id = 1, Nome = "ADM", Roles = "ADM" };
-        else
-            funcionarioJson = login.Logar(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text });
-
-
+        funcionarioJson = login.Logar(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text });
         if (funcionarioJson.Id > 0)
         {
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, "funcionario", DateTime.Now, DateTime.MaxValue, false, Newtonsoft.Json.JsonConvert.SerializeObject(funcionarioJson), FormsAuthentication.FormsCookiePath);

@@ -39,8 +39,8 @@ namespace Library.Inclock.web.br.BL
             {
                 return expediente;
             }
-            object obj = new Autenticador.AutenticadorClient().GetExpediente(semana.ToString(), funcionario_Id.ToString());
-            expediente = obj as List<Expediente>;
+            expediente.AddRange(new Autenticador.AutenticadorClient().GetExpediente(semana.ToString(), funcionario_Id.ToString()));
+            
 
             return expediente;
         }

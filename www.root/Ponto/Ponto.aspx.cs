@@ -12,7 +12,7 @@ public partial class Ponto_Ponto : System.Web.UI.Page
     {
         if (!Page.IsPostBack)
         {
-            ucExpediente.BuscaEspediente(new Autenticado().CurrentUser.Id);
+            ucExpediente.BuscaEspediente( Autenticado.CurrentUser.Id);
         }
     }
 }

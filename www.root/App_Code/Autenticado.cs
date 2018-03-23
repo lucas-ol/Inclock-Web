@@ -11,21 +11,32 @@ using System.Web.Security;
 /// </summary>
 public class Autenticado
 {
-
-    public Funcionario CurrentUser
+    public static bool IsFunc
+    {
+        get
+        {
+            bool bt = false;
+            if (new Autenticado().Ticket != null)
+            {
+                bt = CurrentUser.Roles.Equals("FUNCIONARIO");
+            }
+            return bt;
+        }
+    }
+   public static Funcionario CurrentUser
     {
         get
         {
             Funcionario func = new Funcionario();
-
-            if (Ticket != null)
+            var ticket = new Autenticado().Ticket;
+            if (ticket != null)
             {
-                func = Newtonsoft.Json.JsonConvert.DeserializeObject<Funcionario>(Ticket.UserData);
+                func = Newtonsoft.Json.JsonConvert.DeserializeObject<Funcionario>(ticket.UserData);
             }
             return func;
         }
     }
-    public FormsAuthenticationTicket Ticket
+    private FormsAuthenticationTicket Ticket
     {
         get
         {
@@ -48,7 +59,7 @@ public class Autenticado
     {
         if (Ticket != null)
         {
-            GenericPrincipal identity = new GenericPrincipal(new GenericIdentity(Ticket.Name), CurrentUser.Roles.Split(';').Where(x => x != "").ToArray());
+            GenericPrincipal identity = new GenericPrincipal(new GenericIdentity(Ticket.Name), CurrentUser.Roles.ToArray());
             HttpContext.Current.User = identity;
         }
     }

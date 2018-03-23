@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Listar.ascx.cs" Inherits="inc_expediente_Listar" %>
 
 <div>
-    <link href="../../Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
+
     <asp:ListView runat="server" ID="lvExpediente">
         <ItemTemplate>
             <asp:Panel runat="server" ID="pnlExpediente" Style="border: 1px solid black" class="autowidth mt-2 mb-2">
@@ -43,7 +43,7 @@
         </ItemTemplate>
     </asp:ListView>
 </div>
-<% if (!IsFunc)%>
+<% if (!Autenticado.IsFunc)%>
 <%{%>
 <div class="modal fade" id="expExclui" runat="server">
     <div class="modal-dialog">

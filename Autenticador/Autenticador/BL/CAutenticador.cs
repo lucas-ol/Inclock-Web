@@ -7,6 +7,7 @@ using Classes.Common;
 using Classes.VO;
 using Newtonsoft.Json;
 using System.Data;
+using System.Collections;
 
 namespace Autenticador.BL
 {
@@ -40,10 +41,10 @@ namespace Autenticador.BL
                         Estado = tb["estado"].ToString(),
                         CEP = tb["cep"].ToString(),
                         Bairro = tb["bairro"].ToString(),
-                        Roles = tb["role"].ToString()
+                        Senha ="123"
                     };
-                //    return JsonConvert.SerializeObject(func).Replace("\"","'");
-
+                foreach (var item in tb["role"].ToString().Split(new char[] { ';' }))
+                    func.Roles.Add(item);
             }
             else
             {
@@ -63,7 +64,7 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("login", Login);
             return JsonConvert.SerializeObject(MySqlLeitura("select nome, email from funcionarios where login = @login", System.Data.CommandType.Text));
         }
-              public string GetCheckPointById(int id)
+        public string GetCheckPointById(int id)
         {
             MySqlAdicionaParametro("id", id);
             return JsonConvert.SerializeObject(MySqlLeitura("select * from registro_pontos", System.Data.CommandType.Text));
@@ -92,7 +93,8 @@ namespace Autenticador.BL
             {
                 if (tr[0].ToString() != "erro")
                 {
-                    funcionario = new Funcionario {
+                    funcionario = new Funcionario
+                    {
                         Id = Convert.ToInt32(tr["id"]),
                         Nome = tr["nome"].ToString(),
                         CPF = tr["cpf"].ToString(),
@@ -112,8 +114,9 @@ namespace Autenticador.BL
                         Bairro = tr["bairro"].ToString(),
                         Login = tr["login"].ToString(),
                         Senha = tr["senha"].ToString(),
-                        Roles = tr["role"].ToString()
                     };
+                    foreach (var item in tr["role"].ToString().Split(new char[] { ';' }))
+                        funcionario.Roles.Add(item);
                 }
             }
 
@@ -137,22 +140,22 @@ namespace Autenticador.BL
             List<Expediente> ExpedienteList = new List<Expediente>();
             DataTable tb = MySqlLeitura("prd_se_expediente_semana", System.Data.CommandType.StoredProcedure);
             if (tb.TableName != "erro")
-            {                
-                    foreach (DataRow linha in tb.Rows)
+            {
+                foreach (DataRow linha in tb.Rows)
+                {
+                    Expediente expediente = new Expediente
                     {
-                        Expediente expediente = new Expediente
-                        {
-                            Id = Convert.ToInt32(linha["id"]),
-                            Entrada = ((TimeSpan)linha["entrada"]).ToString(),
-                            Saida = ((TimeSpan)linha["saida"]).ToString(),
-                            Horas_Trabalho = ((TimeSpan)linha["horas_trabalho"]).ToString(),
-                            Tempo_Pausa = ((TimeSpan)linha["tempo_pausa"]).ToString(),
-                            DiaSemana = Convert.ToInt32(linha["diasemana"]),
-                            Funcionario_id = Convert.ToInt32(linha["funcionario_id"]),
-                            Periodo = Convert.ToInt32(linha["periodo"])
-                        };
-                        ExpedienteList.Add(expediente);
-                    }              
+                        Id = Convert.ToInt32(linha["id"]),
+                        Entrada = ((TimeSpan)linha["entrada"]).ToString(),
+                        Saida = ((TimeSpan)linha["saida"]).ToString(),
+                        Horas_Trabalho = ((TimeSpan)linha["horas_trabalho"]).ToString(),
+                        Tempo_Pausa = ((TimeSpan)linha["tempo_pausa"]).ToString(),
+                        DiaSemana = Convert.ToInt32(linha["diasemana"]),
+                        Funcionario_id = Convert.ToInt32(linha["funcionario_id"]),
+                        Periodo = Convert.ToInt32(linha["periodo"])
+                    };
+                    ExpedienteList.Add(expediente);
+                }
 
             }
             return ExpedienteList;

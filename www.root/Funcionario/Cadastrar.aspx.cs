@@ -27,6 +27,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
     #region Metodos
     protected void Page_Load(object sender, EventArgs e)
     {
+
         Funcionarios Controller = new Funcionarios();
 
         //Carrega os dados do estado 
@@ -40,26 +41,25 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
             txtCargo.DataBind();
             txtCargo.Items.Insert(0, new ListItem("Selecione o Cargo", "0") { Selected = true });
 
-            ckListRoles.DataSource = Controller.GetRoles();
-            ckListRoles.DataValueField = "valor";
-            ckListRoles.DataTextField = "texto";
+            ckListRoles.DataSource = Role.GetRoles(Server.MapPath("/config/Roles.json"));
+            ckListRoles.DataValueField = "value";
+            ckListRoles.DataTextField = "text";
             ckListRoles.DataBind();
 
-
-        }
-
-        if (IdFuncionario > 0)
-        {
-            if (PreencheDados(Controller.Pesquisa_Funcionario_ID(IdFuncionario)))
+            if (IdFuncionario > 0)
             {
-                btnCadastraExpediente.Visible = true;
-                ucExpCadastrar.Visible = true;
-                ucExpListar.Visible = true;
-                ucExpListar.BuscaEspediente(IdFuncionario);
-            }
-            else
-                IdFuncionario = 0;
+                if (PreencheDados(Controller.Pesquisa_Funcionario_ID(IdFuncionario)))
+                {
 
+                    btnCadastraExpediente.Visible = true;
+                    ucExpCadastrar.Visible = true;
+                    ucExpListar.Visible = true;
+                    ucExpListar.BuscaEspediente(IdFuncionario);
+                }
+                else
+                    IdFuncionario = 0;
+
+            }
         }
 
     }
@@ -79,11 +79,17 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
         {
             Funcionarios Controller = new Funcionarios();
             Funcionario funcionario = CriaIbjeto();
-
+            FeedBack feed = Controller.Altera_Funcionario(funcionario);
+            if (feed.Status)
+            {
+                alerta.ShowMessager("Cadastro atualizado com sucesso", StatusEnum.Success);
+                return;
+            }
+            else
+                alerta.ShowMessager(feed.Mensagem, StatusEnum.Failure);
         }
         else
         {
-            // Response.Write("<script>alert('Por favor verifique os campos incorretos')</script>");
             alerta.ShowMessager("Por favor corrija todos os campos  <strong>destacados em vermelho</strong>", StatusEnum.Info);
         }
     }
@@ -108,15 +114,15 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
         {
             // Response.Write("<script>alert('Por favor verifique os campos incorretos')</script>");
             alerta.ShowMessager("Por favor corrija todos os campos  <strong>destacados em vermelho</strong>", StatusEnum.Info);
-
-
         }
     }
 
 
     private Funcionario CriaIbjeto()
     {
+
         Funcionario funcionario = new Funcionario();
+        funcionario.Id = IdFuncionario;
         funcionario.Nome = txtNome.Text;
         funcionario.Telefone = txtTelefone.Text;
         funcionario.Celular = txtCelular.Text;
@@ -138,7 +144,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
         {
             if (item.Selected)
             {
-                funcionario.Roles += item.Value + ";";
+                funcionario.Roles.Add(item.Value + ";");
             }
         }
 
@@ -310,6 +316,12 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
         txtSenha.Text = funcionario.Senha;
         txtSenha.TextMode = TextBoxMode.SingleLine;
         txtLogin.Text = funcionario.Login;
+        foreach (ListItem item in ckListRoles.Items)
+        {
+            if (funcionario.Roles.Contains(item.Value))
+                item.Selected = true;
+        }
+        ClearChildViewState();
         return true;
     }
 

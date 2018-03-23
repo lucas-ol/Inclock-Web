@@ -12,7 +12,7 @@ namespace Classes.VO
     {
         public int Id { get; set; }
         public string CPF { get; set; }
-        public string RG { get; set; }     
+        public string RG { get; set; }
         public string Telefone { get; set; }
         public string Celular { get; set; }
         public string Email { get; set; }
@@ -26,13 +26,12 @@ namespace Classes.VO
         public string Estado { get; set; }
         public string CEP { get; set; }
         public string Bairro { get; set; }
-
-    
+        
         public Funcionario()
         {
             //Preenchimento dos campos opicionais
             Bairro = "";
         }
-       
+
     }
 }
