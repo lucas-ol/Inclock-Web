@@ -25,10 +25,15 @@ public partial class inc_Login : System.Web.UI.UserControl
 
     protected void btnLogar_Click(object sender, EventArgs e)
     {
-        Funcionario funcionarioJson = new Funcionario();
+        Funcionario funcionarioJson = new Funcionario { Id = 0 };
         Library.Inclock.web.br.BL.Login login = new Library.Inclock.web.br.BL.Login();
+        // vai buscar no banco de dados      
         funcionarioJson = login.Logar(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text });
-        if (funcionarioJson.Id > 0)
+
+        if (funcionarioJson.Id == 0) // se for nulo ele vai verificar no arquivo de dados local
+            funcionarioJson = login.LoginForms(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text }, Server.MapPath("/config/users.json"));
+
+        if (funcionarioJson != null)
         {
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, "funcionario", DateTime.Now, DateTime.MaxValue, false, Newtonsoft.Json.JsonConvert.SerializeObject(funcionarioJson), FormsAuthentication.FormsCookiePath);
             string encrypt = FormsAuthentication.Encrypt(ticket);
@@ -40,10 +45,7 @@ public partial class inc_Login : System.Web.UI.UserControl
             lblMensagem.Visible = true;
             lblMensagem.InnerText = "Login ou senha não encontrado";
         }
-
     }
-
-
 
     private void RegistraScript(string script, Page pagina, bool AdicionaTag)
     {

@@ -18,5 +18,18 @@ namespace Classes.Common
         {
             return File.Exists(Diretorio);
         }
+
+        public static string FileStringReader(string Diretorio)
+        {
+            try
+            {
+                using (StreamReader st = new StreamReader(Diretorio))
+                    return st.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro acessar o aquivo", ex.InnerException);
+            }
+        }
     }
 }

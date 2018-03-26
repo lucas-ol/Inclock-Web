@@ -1,5 +1,6 @@
 ﻿using Classes.Common;
 using Classes.VO;
+using Classes.Common;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,10 +27,22 @@ namespace Library.Inclock.web.br.BL
             }
             catch (Exception ex)
             {
-
                 throw new Exception(ex.Message);
             }
             return funcionario;
+        }
+        public Funcionario LoginForms(User user, string configPath)
+        {
+            try
+            {
+                var dici = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Funcionario>>(UtilFile.FileStringReader(configPath));               
+                return dici.Find(x => x.Senha == user.Senha && x.Login == user.Login);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
         }
     }
 }

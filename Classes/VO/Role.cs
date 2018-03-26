@@ -22,13 +22,12 @@ namespace Classes.VO
         {
             List<Role> RoleGroup = new List<Role>();
             try
-            {
-                using (System.IO.StreamReader st = new System.IO.StreamReader(PathRoles))
-                    RoleGroup = JsonConvert.DeserializeObject<List<Role>>(st.ReadToEnd());
+            {               
+                    RoleGroup = JsonConvert.DeserializeObject<List<Role>>(Common.UtilFile.FileStringReader(PathRoles));
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Erro ao acessar o aquivo de roles",ex.InnerException);
             }
             return RoleGroup;
         }

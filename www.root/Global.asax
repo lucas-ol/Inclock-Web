@@ -46,14 +46,7 @@
     }
 
     void Application_PostAuthenticateRequest(object sender, EventArgs e)
-    {
-        /*    HttpCookie Cookieticket = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
-            if (Cookieticket != null && !HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(Cookieticket.Value);
-                GenericPrincipal identity = new GenericPrincipal(new GenericIdentity(ticket.Name), new string[] { "Home", "Login" });
-                HttpContext.Current.User = identity;
-            }*/
+    {        
         new Autenticado().Autenticar();
     }
     void RegisterRoutes(RouteCollection routes)
