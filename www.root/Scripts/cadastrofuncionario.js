@@ -11,7 +11,7 @@
         nextText: 'Proximo',
         prevText: 'Anterior',
         yearRange: "-100:+0",
-        dateFormat: "d/m/yy"
+        dateFormat: "dd/mm/yy"
     });
     $("#Corpo_txtAniversario").keypress(function () {
         $(this).mask("00/00/0000", { placeholder: "__/__/____" });

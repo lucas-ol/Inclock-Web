@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Funcionario_Default" MasterPageFile="~/masterpage/masterpage.Master" %>
 
-<%@ Register TagName="Cadastrar" TagPrefix="uc" Src="~/inc/expediente/Cadastrar.ascx" %>
-
 <asp:Content runat="server" ContentPlaceHolderID="Head">
    
     <style>

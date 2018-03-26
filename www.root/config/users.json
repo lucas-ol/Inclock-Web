@@ -14,7 +14,7 @@
     "Nome": "Lucas De ",
     "Numero": "11",
     "RG": "22.222.222-2",
-    "Roles": ["ADM"],
+    "Roles": ["ROOT"],
     "Sexo": "M",
     "Telefone": "(11) 1111-1111",
     "Cargo_id": "0",
