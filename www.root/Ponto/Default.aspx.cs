@@ -46,7 +46,7 @@ public partial class Ponto_Default : System.Web.UI.Page
     protected void btnBuscarPontos_Click(object sender, EventArgs e)
     {
         lblPeriodoHeader.Text = "De " + txtDataInicio.Text + " ate " + txtDataFim.Text;
-        //lvPontos.DataSource = new Pontos().GetPontos(txtDataInicio.Text, txtDataFim.Text);
+        lvPontos.DataSource = new Pontos().GetPontos(txtDataInicio.Text, txtDataFim.Text);
         lvPontos.DataBind();
     }
 }

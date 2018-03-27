@@ -77,8 +77,7 @@
                 </Fields>
             </asp:DataPager>
         </div>
-    </div>
-    <uc:Cadastrar runat="server" ID="ucCadastrar" />
+    </div>   
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="footer">
     <script>

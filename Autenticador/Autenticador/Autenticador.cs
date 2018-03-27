@@ -36,14 +36,14 @@ namespace Autenticador
             return new BL.CAutenticador().GetPassword(Login);
         }
 
-        public string GetCheckPointDateInterval(string InitialDate, string FinalDate)
+        public List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate)
         {
-            return nameof(GetCheckPointDateInterval);
+            return new List<Ponto>();
         }
 
-        public string GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario)
+        public List<Ponto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario)
         {
-            return nameof(GetCheckPointByDate);
+            return new List<Ponto>();
         }
 
         public string GetCheckPointById(int id)
@@ -51,9 +51,9 @@ namespace Autenticador
             return nameof(GetCheckPointById);
         }
 
-        public string CheckPoint(Ponto ponto)
+        public FeedBack CheckPoint(Ponto ponto)
         {
-            return nameof(CheckPoint);
+            return new BL.CAutenticador().CheckPoint(ponto);
         }
 
         public List<Expediente> GetExpediente(string semana, string funcionario_Id)
@@ -66,9 +66,5 @@ namespace Autenticador
             else
                 return new BL.CAutenticador().GetExpediente(isemana, ifuncionario_Id);
         }
-
-      
-
-
     }
 }

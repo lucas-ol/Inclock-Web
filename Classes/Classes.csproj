@@ -78,8 +78,11 @@
     <Compile Include="Common\Mail.cs" />
     <Compile Include="Common\QrCode.cs" />
     <Compile Include="Common\UtilCep.cs" />
+    <Compile Include="Common\UtilDate.cs" />
     <Compile Include="Common\UtilFile.cs" />
+    <Compile Include="Enumeradores\DateEnum.cs" />
     <Compile Include="Enumeradores\StatusEnum.cs" />
+    <Compile Include="Enumeradores\StatusExpediente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VO\Aviso.cs" />
     <Compile Include="VO\Expediente.cs" />

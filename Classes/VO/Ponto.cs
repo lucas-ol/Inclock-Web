@@ -18,6 +18,17 @@ namespace Classes.VO
         public int Periodo { get; set; }
         public string EntradaPausa { get; set; }
         public string SaidaPausa { get; set; }
-        public string Status { get; set; }
+        private List<string> status = new List<string>();
+        public List<string> Status
+        {
+            get
+            {
+                return status;
+            }
+            set
+            {
+                status = value;
+            }
+        }
     }
 }

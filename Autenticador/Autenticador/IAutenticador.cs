@@ -29,11 +29,11 @@ namespace Autenticador
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        string GetCheckPointDateInterval(string InitialDate, string FinalDate);
+        List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate);
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        string GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario);
+        List<Ponto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario);
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
@@ -47,7 +47,7 @@ namespace Autenticador
 
         [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json ,Method ="POST")]
-        string CheckPoint(Ponto ponto);
+        FeedBack CheckPoint(Ponto ponto);
 
         [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "GET",
            UriTemplate = "getexpediente/{semana}/{funcionario_Id}")]

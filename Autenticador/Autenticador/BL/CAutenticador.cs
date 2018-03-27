@@ -8,6 +8,7 @@ using Classes.VO;
 using Newtonsoft.Json;
 using System.Data;
 using System.Collections;
+using Classes.Enumeradores;
 
 namespace Autenticador.BL
 {
@@ -41,7 +42,7 @@ namespace Autenticador.BL
                         Estado = tb["estado"].ToString(),
                         CEP = tb["cep"].ToString(),
                         Bairro = tb["bairro"].ToString(),
-                        Senha ="123"
+                        Senha = "123"
                     };
                 foreach (var item in tb["role"].ToString().Split(new char[] { ';' }))
                     func.Roles.Add(item);
@@ -123,16 +124,6 @@ namespace Autenticador.BL
             return funcionario;
 
         }
-
-        public string CheckPoint(Ponto ponto)
-        {
-            MySqlAdicionaParametro("ID", ponto.Id);
-            MySqlAdicionaParametro("ID", ponto.Data);
-            MySqlAdicionaParametro("ID", ponto.Funcionario);
-            MySqlAdicionaParametro("ID", ponto.Hora);
-            return JsonConvert.SerializeObject(MySqlLeitura("", System.Data.CommandType.Text), new JsonSerializerSettings() { Formatting = Formatting.Indented, DateFormatString = "dd/MM/yyyy" });
-
-        }
         public List<Expediente> GetExpediente(int semana, int funcionario_id)
         {
             MySqlAdicionaParametro("iSemana", semana);
@@ -159,6 +150,82 @@ namespace Autenticador.BL
 
             }
             return ExpedienteList;
+        }
+        public FeedBack CheckPoint(Ponto ponto)
+        {
+            FeedBack feed = new FeedBack { Status = false };
+            Expediente expediente = GetExpediente(ponto.Funcionario, Convert.ToInt32(Convert.ToDateTime(ponto.Data).DayOfWeek), ponto.Periodo);
+            if (expediente ==  null)
+            {
+                feed.Mensagem = "Você não pode bater o ponto hoje";
+                return feed;
+            }
+            // Primeiro vai verificar qual vai ser o tipo do ponto se vai ser entrada, saida, pausa etc...
+            TimeSpan Tolerancia = new TimeSpan(0, 15, 0); // ele tem 15 minutos de tolerancia, para entrada ou saida 
+            TimeSpan hora = Convert.ToDateTime(ponto.Entrada).TimeOfDay;
+
+            if (Convert.ToDateTime(ponto.Entrada).TimeOfDay - Tolerancia <= Convert.ToDateTime(expediente.Entrada).TimeOfDay)
+            {
+                if (Convert.ToDateTime(ponto.Entrada).TimeOfDay - Tolerancia > Convert.ToDateTime(expediente.Entrada).TimeOfDay)
+                {
+                    ponto.Status.Add(Convert.ToInt32(StatusExpediente.Entrada_Com_Atraso) + ";");
+                }
+                feed = NovoPonto(ponto);
+            }
+            else if (Convert.ToDateTime(expediente.Entrada).TimeOfDay - Tolerancia >= hora)
+                feed = AlteraPonto(ponto);
+            return feed;
+        }
+
+
+        public FeedBack NovoPonto(Ponto ponto)
+        {
+            MySqlAdicionaParametro("_funcionario", ponto.Funcionario);
+            MySqlAdicionaParametro("_dia", Convert.ToDateTime(ponto.Data));
+            MySqlAdicionaParametro("_hora", ponto.Entrada);
+            MySqlAdicionaParametro("_periodo", ponto.Periodo);
+            MySqlAdicionaParametro("_logitude", ponto.Logitude);
+            MySqlAdicionaParametro("_latitude", ponto.Latitude);
+            MySqlAdicionaParametro("_status", string.Join(";", ponto.Status));
+            return MySqlExecutaComando("prd_insert_ponto", CommandType.StoredProcedure);
+        }
+        public FeedBack AlteraPonto(Ponto ponto)
+        {
+            MySqlAdicionaParametro("_funcionario", ponto.Data);
+            MySqlAdicionaParametro("_dia", ponto.Data);
+            MySqlAdicionaParametro("_hora", ponto.Entrada);
+            MySqlAdicionaParametro("_periodo", ponto.Periodo);
+            MySqlAdicionaParametro("_logitude", ponto.Logitude);
+            MySqlAdicionaParametro("_latitude", ponto.Latitude);
+            MySqlExecutaComando("prd_insert_ponto", CommandType.StoredProcedure);
+            return new FeedBack();
+        }
+
+
+        public Expediente GetExpediente(int funcionario, int semana, int periodo)
+        {
+            MySqlAdicionaParametro("_funcionario", funcionario);
+            MySqlAdicionaParametro("_semana", semana);
+            MySqlAdicionaParametro("_periodo", periodo);
+            try
+            {
+                DataRow dr = MySqlLeitura("select * from expediente where funcionario_id = @_funcionario and diasemana = @_semana and periodo = @_periodo", CommandType.Text).Rows[0];
+                return new Expediente
+                {
+                    Id = Convert.ToInt32(dr["id"]),
+                    Funcionario_id = Convert.ToInt32(dr["funcionario_id"]),
+                    Entrada = dr["entrada"].ToString(),
+                    Saida = dr["saida"].ToString(),
+                    Horas_Trabalho = dr["horas_trabalho"].ToString(),
+                    Tempo_Pausa = dr["tempo_pausa"].ToString(),
+                    Periodo = Convert.ToInt32(dr["periodo"]),
+                    DiaSemana = Convert.ToInt32(dr["diasemana"])
+                };
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }
