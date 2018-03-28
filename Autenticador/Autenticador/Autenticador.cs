@@ -53,7 +53,7 @@ namespace Autenticador
 
         public FeedBack CheckPoint(Ponto ponto)
         {
-            return new BL.CAutenticador().CheckPoint(ponto);
+            return new BL.CheckPoint(ponto).BaterPonto();
         }
 
         public List<Expediente> GetExpediente(string semana, string funcionario_Id)
@@ -64,7 +64,7 @@ namespace Autenticador
             if (ifuncionario_Id == 0)
                 throw new Exception("Parametros incorretos");
             else
-                return new BL.CAutenticador().GetExpediente(isemana, ifuncionario_Id);
+                return new BL.ExpedienteController().GetExpediente(isemana, ifuncionario_Id);
         }
     }
 }

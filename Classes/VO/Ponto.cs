@@ -30,5 +30,6 @@ namespace Classes.VO
                 status = value;
             }
         }
+        public string Obs { get; set; }
     }
 }

@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\CAutenticador.cs" />
+    <Compile Include="BL\CheckPoint.cs" />
+    <Compile Include="BL\ExpedienteController.cs" />
     <Compile Include="IAutenticador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Autenticador.cs" />
