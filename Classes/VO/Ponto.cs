@@ -8,7 +8,7 @@ namespace Classes.VO
 {
     public class Ponto
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public int Funcionario { get; set; }
         public string Data { get; set; }
         public string Entrada { get; set; }
