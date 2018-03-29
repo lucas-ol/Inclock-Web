@@ -31,5 +31,14 @@ namespace Classes.VO
             }
         }
         public string Obs { get; set; }
+
+        enum TypePoint
+        {
+            Entrada,
+            Saida,
+            Pausa,
+            Retorno_Pausa
+        }
     }
+
 }

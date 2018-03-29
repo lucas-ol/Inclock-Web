@@ -11,9 +11,33 @@ namespace Autenticador.BL
 {
     public class CheckPoint : DataBase
     {
-        public bool Saida { get; private set; }
-        public bool Entrada { get; private set; }
+
+        public int MyProperty { get; set; }
+        /// <summary>
+        ///Propriedade que vai verificar se o ponto vai ser de saida 
+        /// </summary>
+        public bool Saida
+        {
+            get
+            {
+                return true;
+            }
+        }
+        /// <summary>
+        /// Propriedade que vai verificar se o ponto vai ser de Entrada 
+        /// </summary>
+        public bool Entrada { get; }
         public Ponto ponto { get; set; }
+        private Ponto Last_Point { get; set; }
+        private Expediente expediente_Hoje;
+        public Expediente Expediente_Hoje
+        {
+            get
+            {
+                return expediente_Hoje;
+            }
+            set { expediente_Hoje = value; }
+        }
         public DateTime Hoje
         {
             get
@@ -27,6 +51,7 @@ namespace Autenticador.BL
         public CheckPoint()
         {
             ponto = new Ponto();
+            expediente_Hoje = expediente_Hoje = new ExpedienteController().GetExpediente(ponto.Funcionario, Convert.ToInt32(Hoje.DayOfWeek) + 1, ponto.Periodo);
         }
         /// <summary>
         /// Contrutor 
@@ -35,14 +60,19 @@ namespace Autenticador.BL
         public CheckPoint(Ponto ponto)
         {
             this.ponto = ponto;
+            expediente_Hoje = expediente_Hoje = new ExpedienteController().GetExpediente(ponto.Funcionario, Convert.ToInt32(Hoje.DayOfWeek) + 1, ponto.Periodo);
+            Last_Point = GetLastPoint(ponto.Funcionario, ponto.Periodo);
         }
-
+        /// <summary>
+        /// metodo que vai realizar o ponto dependendo do horario
+        /// </summary>
+        /// <returns></returns>
         public FeedBack BaterPonto()
         {
             FeedBack feed = new FeedBack { Status = false };
-            Expediente expediente = new ExpedienteController().GetExpediente(ponto.Funcionario, Convert.ToInt32(DateTime.Now.DayOfWeek) + 1, ponto.Periodo);
-            Ponto PontoAgora = GetCheckPoint(ponto.Funcionario, ponto.Periodo);
-            if (expediente == null)
+            Ponto PontoAgora = GetLastPoint(ponto.Funcionario, ponto.Periodo);
+
+            if (Expediente_Hoje == null)
             {
                 feed.Mensagem = "Você não pode bater o ponto hoje";
                 return feed;
@@ -51,22 +81,19 @@ namespace Autenticador.BL
             TimeSpan Tolerancia = new TimeSpan(0, 59, 0); // ele tem 15 minutos de tolerancia, para entrada ou saida 
             TimeSpan hora = Convert.ToDateTime("28/03/2018 20:50:00").TimeOfDay; //DateTime.Now.TimeOfDay;// pega o horario do servidor para bater o ponto
             ponto.Saida = ponto.Entrada = hora.ToString();//seta no objeto o horario do ponto
-
-
-
-            if (hora >= Convert.ToDateTime(expediente.Entrada).TimeOfDay - Tolerancia && hora - Tolerancia <= Convert.ToDateTime(expediente.Entrada).TimeOfDay && string.IsNullOrEmpty(PontoAgora.Entrada))
+            if (hora >= Convert.ToDateTime(Expediente_Hoje.Entrada).TimeOfDay - Tolerancia && hora - Tolerancia <= Convert.ToDateTime(Expediente_Hoje.Entrada).TimeOfDay && string.IsNullOrEmpty(PontoAgora.Entrada))
             {
-                if (hora - Tolerancia > Convert.ToDateTime(expediente.Entrada).TimeOfDay)// verifica se ele esta atrasado 
+                if (hora - Tolerancia > Convert.ToDateTime(Expediente_Hoje.Entrada).TimeOfDay)// verifica se ele esta atrasado 
                 {
                     ponto.Status.Add(StatusExpediente.Entrada_Com_Atraso + ";");
                     feed.Mensagem = Convert.ToInt32(StatusExpediente.Entrada_Com_Atraso) + ";";
                 }
-                if (hora < Convert.ToDateTime(expediente.Entrada).TimeOfDay - Tolerancia)// verifica  o horario minimo para bater o ponto 
+                if (hora < Convert.ToDateTime(Expediente_Hoje.Entrada).TimeOfDay - Tolerancia)// verifica  o horario minimo para bater o ponto 
                     feed.Mensagem = Convert.ToInt32(StatusExpediente.Horario_Minimo) + ";";
                 else
                     feed.Status = NovoPonto(ponto).Status;
             }
-            else if (Convert.ToDateTime(expediente.Entrada).TimeOfDay - Tolerancia >= hora)
+            else if (Convert.ToDateTime(Expediente_Hoje.Entrada).TimeOfDay - Tolerancia >= hora)
                 feed = AlteraPonto(ponto);
             return feed;
         }
@@ -122,31 +149,31 @@ namespace Autenticador.BL
             List<Expediente> ListExpediente = new List<Expediente>();
             return ListExpediente;
         }
-        public Ponto GetCheckPoint(int Funcionario, int Periodo)
+        public Ponto GetLastPoint(int Funcionario, int Periodo)
         {
             MySqlAdicionaParametro("_funcionario", Funcionario);
-            MySqlAdicionaParametro("_dia", Hoje.ToString("yyyy-MM-dd"));
+            MySqlAdicionaParametro("_dia", Hoje.Date);
             MySqlAdicionaParametro("_periodo", Periodo);
             try
             {
-                DataRow tr = MySqlLeitura("prd_se_ponto", CommandType.StoredProcedure).Rows[0];
-
+                DataRow tr = MySqlLeitura("prd_se_last_point", CommandType.StoredProcedure).Rows[0];
                 IEnumerable<string> list = tr["status"].ToString().Split(";".ToCharArray());
-                Ponto point = new Ponto();
-
-                point.Id = tr["id"].ToString();
-                point.Data = Convert.ToDateTime(tr["data_ponto"]).ToString("dd/MM/yyyy");
-                point.Entrada = tr["entrada"].ToString();
-                point.Saida = tr["saida"].ToString();
-                point.Funcionario = Convert.ToInt32(tr["funcionario_id"]);
-                point.Latitude = tr["latitude"].ToString();
-                point.Logitude = tr["logitude"].ToString();
-                point.Periodo = Convert.ToInt32(tr["periodo"]);
-                point.SaidaPausa = tr["saida_pausa"].ToString();
-                point.EntradaPausa = tr["entrada_pausa"].ToString();
-                point.Obs = tr["obs"].ToString();
-                point.Status = list as List<string>;
-                return point;
+                Ponto pointer = new Ponto
+                {
+                    Id = tr["id"].ToString(),
+                    Data = Convert.ToDateTime(tr["data_ponto"]).ToString("dd/MM/yyyy"),
+                    Entrada = tr["entrada"].ToString(),
+                    Saida = tr["saida"].ToString(),
+                    Funcionario = Convert.ToInt32(tr["funcionario_id"]),
+                    Latitude = tr["latitude"].ToString(),
+                    Logitude = tr["logitude"].ToString(),
+                    Periodo = Convert.ToInt32(tr["periodo"]),
+                    SaidaPausa = tr["saida_pausa"].ToString(),
+                    EntradaPausa = tr["entrada_pausa"].ToString(),
+                    Obs = tr["obs"].ToString(),
+                    Status = list as List<string>
+                };
+                return pointer;
             }
             catch (Exception ex)
             {

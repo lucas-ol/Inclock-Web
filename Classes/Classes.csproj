@@ -77,7 +77,6 @@
     <Compile Include="Common\DataBase.cs" />
     <Compile Include="Common\Mail.cs" />
     <Compile Include="Common\QrCode.cs" />
-    <Compile Include="Common\Util.cs" />
     <Compile Include="Common\UtilCep.cs" />
     <Compile Include="Common\UtilDate.cs" />
     <Compile Include="Common\UtilFile.cs" />
