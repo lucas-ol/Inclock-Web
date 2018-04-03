@@ -58,7 +58,7 @@ namespace Autenticador.BL
                     DiaSemana = Convert.ToInt32(dr["diasemana"])
                 };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }

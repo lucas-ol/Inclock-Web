@@ -21,6 +21,26 @@ namespace Classes.VO
         public Expediente()
         {
             Tempo_Pausa = "00:00";
-        }       
+        }
+
+        public TimeSpan TimeEntrada
+        {
+            get
+            {
+                DateTime time;
+                DateTime.TryParse(Entrada, out time);
+                return time.TimeOfDay;
+            }
+        }
+        public TimeSpan TimeSaida
+        {
+            get
+            {
+                DateTime time;
+                DateTime.TryParse(Saida, out time);
+                return time.TimeOfDay;
+            }
+        }
+        
     }
 }

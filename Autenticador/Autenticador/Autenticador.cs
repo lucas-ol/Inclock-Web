@@ -36,9 +36,15 @@ namespace Autenticador
             return new BL.CAutenticador().GetPassword(Login);
         }
 
-        public List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate)
+        public List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario)
         {
-            return new List<Ponto>();
+            int funcionario;
+            if (int.TryParse(id_funcionario, out funcionario))
+            {
+                return new BL.CheckPoint().GetListCheckPoint(InitialDate, FinalDate, funcionario);
+            }
+            else
+                throw new Exception("Parametros incorretos");
         }
 
         public List<Ponto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario)

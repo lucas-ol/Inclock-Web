@@ -32,13 +32,43 @@ namespace Classes.VO
         }
         public string Obs { get; set; }
 
-        enum TypePoint
+        public TimeSpan TimeEntrada
         {
-            Entrada,
-            Saida,
-            Pausa,
-            Retorno_Pausa
+            get
+            {
+                DateTime time;
+                DateTime.TryParse(Entrada, out time);
+                return time.TimeOfDay;
+            }
         }
+        public TimeSpan TimeSaida
+        {
+            get
+            {
+                DateTime time;
+                DateTime.TryParse(Saida, out time);
+                return time.TimeOfDay;
+            }
+        }
+        public TimeSpan TimeSaidaPausa
+        {
+            get
+            {
+                DateTime time;
+                DateTime.TryParse(SaidaPausa, out time);
+                return time.TimeOfDay;
+            }
+        }
+        public TimeSpan TimeEntradaPausa
+        {
+            get
+            {
+                DateTime time;
+                DateTime.TryParse(EntradaPausa, out time);
+                return time.TimeOfDay;
+            }
+        }
+
     }
 
 }
