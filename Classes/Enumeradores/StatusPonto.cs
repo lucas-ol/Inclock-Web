@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Classes.VO
 {
-  public  enum StatusExpediente
+  public  enum StatusPonto
     {
         Falta_Injustificada,
         Falta_Justificada,
