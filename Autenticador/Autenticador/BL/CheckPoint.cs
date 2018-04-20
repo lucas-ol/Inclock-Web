@@ -201,6 +201,7 @@ namespace Autenticador.BL
 
         private Classes.VO.StatusPonto VerificaEntrada()
         {
+            FeedBack feed = new FeedBack();
             if (Hoje.TimeOfDay >= expediente_Hoje.TimeEntrada - Tolerancia && Hoje.TimeOfDay - Tolerancia <= expediente_Hoje.TimeEntrada)
             {
 

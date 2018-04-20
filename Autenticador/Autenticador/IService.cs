@@ -5,11 +5,12 @@ using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Autenticador
 {
     [ServiceContract]
-    public interface IAutenticador
+    public interface IService
     {
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json
@@ -23,13 +24,12 @@ namespace Autenticador
         [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json,
             Method = "GET",
-            UriTemplate = "GetPassword/{Login}"
-            )]
+            UriTemplate = "GetPassword/{Login}")]
         string GetPassword(string Login);
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate,string id_funcionario);
+        List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario);
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
@@ -42,13 +42,14 @@ namespace Autenticador
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
-            UriTemplate ="getuser/{id}")]
-        Funcionario GetUserById(string id);       
+            UriTemplate = "getuser/{id}")]
+        Funcionario GetUserById(string id);
 
         [OperationContract]
-        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json ,Method ="POST")]
+        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "POST",UriTemplate ="baterponto")]
         FeedBack CheckPoint(Ponto ponto);
 
+        [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "GET",
            UriTemplate = "getexpediente/{semana}/{funcionario_Id}")]
         List<Expediente> GetExpediente(string semana, string funcionario_Id);

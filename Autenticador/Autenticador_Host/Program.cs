@@ -12,12 +12,12 @@ namespace Autenticador_Host
     {
         static void Main(string[] args)
         {
-            ServiceHost host = new ServiceHost(typeof(Autenticador.Autenticador));
+            ServiceHost host = new ServiceHost(typeof(Autenticador.Service));
 
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Hospedagem De serviço {0}\n{1}", nameof(Autenticador.Autenticador), host.BaseAddresses.FirstOrDefault());
+                Console.WriteLine("Hospedagem De serviço {0}\n{1}", nameof(Autenticador.Service), host.BaseAddresses.FirstOrDefault());
                 Console.WriteLine("Opçoes");
                 Console.WriteLine("I - Iniciar Servidor");
                 Console.WriteLine("F - Fecha Servidor");
