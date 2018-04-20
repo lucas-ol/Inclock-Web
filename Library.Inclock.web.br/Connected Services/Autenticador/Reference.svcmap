@@ -19,14 +19,15 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8733/inclock/autenticador" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://inclock.gearhostpreview.com/Service.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="autenticador.disco" MetadataType="Disco" ID="9b91663a-62d9-422b-984a-659c6e1f547a" SourceId="1" SourceUrl="http://localhost:8733/inclock/autenticador?disco" />
-    <MetadataFile FileName="autenticador.xsd" MetadataType="Schema" ID="2836659d-fe26-4a99-b6ff-4e3c73078f80" SourceId="1" SourceUrl="http://localhost:8733/inclock/autenticador?xsd=xsd1" />
-    <MetadataFile FileName="autenticador1.xsd" MetadataType="Schema" ID="bc8e5505-d07e-4b08-99fa-be84d15481bf" SourceId="1" SourceUrl="http://localhost:8733/inclock/autenticador?xsd=xsd0" />
-    <MetadataFile FileName="Autenticador.wsdl" MetadataType="Wsdl" ID="100ed7f9-99f1-4439-862c-04c03dc25408" SourceId="1" SourceUrl="http://localhost:8733/inclock/autenticador?wsdl" />
-    <MetadataFile FileName="autenticador2.xsd" MetadataType="Schema" ID="b390fedd-5eaa-49cc-bb10-585f39a22180" SourceId="1" SourceUrl="http://localhost:8733/inclock/autenticador?xsd=xsd2" />
+    <MetadataFile FileName="Service.disco" MetadataType="Disco" ID="d17afb0c-5cd7-4fa8-aaee-71232511a91b" SourceId="1" SourceUrl="http://inclock.gearhostpreview.com/Service.svc?disco" />
+    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="8382776b-e8c5-4721-964f-6da631692ff9" SourceId="1" SourceUrl="http://inclock.gearhostpreview.com/Service.svc?wsdl" />
+    <MetadataFile FileName="Service2.xsd" MetadataType="Schema" ID="869d7510-4a01-45d3-855f-41a6f5d00f55" SourceId="1" SourceUrl="http://inclock.gearhostpreview.com/Service.svc?xsd=xsd1" />
+    <MetadataFile FileName="Service3.xsd" MetadataType="Schema" ID="9c341e07-7fd5-40ea-b187-3561f640ed26" SourceId="1" SourceUrl="http://inclock.gearhostpreview.com/Service.svc?xsd=xsd2" />
+    <MetadataFile FileName="Service4.xsd" MetadataType="Schema" ID="8d130268-b771-4cdf-a865-4c8f42d8b57a" SourceId="1" SourceUrl="http://inclock.gearhostpreview.com/Service.svc?xsd=xsd3" />
+    <MetadataFile FileName="Service5.xsd" MetadataType="Schema" ID="b1732b8d-9c74-4bfd-b6c2-94c587d3f254" SourceId="1" SourceUrl="http://inclock.gearhostpreview.com/Service.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

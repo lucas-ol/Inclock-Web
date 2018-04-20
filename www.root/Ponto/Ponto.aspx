@@ -5,7 +5,7 @@
 <asp:Content runat="server" ContentPlaceHolderID="Corpo">
     <div class="form-inline">
         <div class="col-md-6 p-0 m-0">
-            <asp:Button Text="Registrar Entrada" runat="server" ID="btnEntrada" CssClass="btn btn-success" />
+            <asp:Button Text="Registrar Entrada" runat="server" ID="btnEntrada" CssClass="btn btn-success"    />
         </div>
         <div class="col-md-6 p-0 m-0">
             <asp:Button Text="Registrar Saida" runat="server" ID="btnSaida" CssClass="btn btn-info" />

@@ -202,7 +202,7 @@ namespace Library.Inclock.web.br.BL
             try
             {
 
-                Autenticador.AutenticadorClient Client = new Autenticador.AutenticadorClient();
+                Autenticador.ServiceClient Client = new Autenticador.ServiceClient();
                 func = Client.GetUserById(ID.ToString());
                 return func;
             }

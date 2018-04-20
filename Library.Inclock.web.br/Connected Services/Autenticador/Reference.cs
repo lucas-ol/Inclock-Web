@@ -12,88 +12,88 @@ namespace Library.Inclock.web.br.Autenticador {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Autenticador.IAutenticador")]
-    public interface IAutenticador {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Autenticador.IService")]
+    public interface IService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/Logar", ReplyAction="http://tempuri.org/IAutenticador/LogarResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/Logar", ReplyAction="http://tempuri.org/IService/LogarResponse")]
         Classes.VO.Funcionario Logar(string password, string login);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/Logar", ReplyAction="http://tempuri.org/IAutenticador/LogarResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/Logar", ReplyAction="http://tempuri.org/IService/LogarResponse")]
         System.Threading.Tasks.Task<Classes.VO.Funcionario> LogarAsync(string password, string login);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetLogin", ReplyAction="http://tempuri.org/IAutenticador/GetLoginResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetLogin", ReplyAction="http://tempuri.org/IService/GetLoginResponse")]
         string GetLogin(string Email);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetLogin", ReplyAction="http://tempuri.org/IAutenticador/GetLoginResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetLogin", ReplyAction="http://tempuri.org/IService/GetLoginResponse")]
         System.Threading.Tasks.Task<string> GetLoginAsync(string Email);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetPassword", ReplyAction="http://tempuri.org/IAutenticador/GetPasswordResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetPassword", ReplyAction="http://tempuri.org/IService/GetPasswordResponse")]
         string GetPassword(string Login);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetPassword", ReplyAction="http://tempuri.org/IAutenticador/GetPasswordResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetPassword", ReplyAction="http://tempuri.org/IService/GetPasswordResponse")]
         System.Threading.Tasks.Task<string> GetPasswordAsync(string Login);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetCheckPointDateInterval", ReplyAction="http://tempuri.org/IAutenticador/GetCheckPointDateIntervalResponse")]
-        string GetCheckPointDateInterval(string InitialDate, string FinalDate);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointDateInterval", ReplyAction="http://tempuri.org/IService/GetCheckPointDateIntervalResponse")]
+        Classes.VO.Ponto[] GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetCheckPointDateInterval", ReplyAction="http://tempuri.org/IAutenticador/GetCheckPointDateIntervalResponse")]
-        System.Threading.Tasks.Task<string> GetCheckPointDateIntervalAsync(string InitialDate, string FinalDate);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointDateInterval", ReplyAction="http://tempuri.org/IService/GetCheckPointDateIntervalResponse")]
+        System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointDateIntervalAsync(string InitialDate, string FinalDate, string id_funcionario);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetCheckPointByDate", ReplyAction="http://tempuri.org/IAutenticador/GetCheckPointByDateResponse")]
-        string GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointByDate", ReplyAction="http://tempuri.org/IService/GetCheckPointByDateResponse")]
+        Classes.VO.Ponto[] GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetCheckPointByDate", ReplyAction="http://tempuri.org/IAutenticador/GetCheckPointByDateResponse")]
-        System.Threading.Tasks.Task<string> GetCheckPointByDateAsync(string InitialDate, string FinalDate, string id_funcionario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointByDate", ReplyAction="http://tempuri.org/IService/GetCheckPointByDateResponse")]
+        System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointByDateAsync(string InitialDate, string FinalDate, string id_funcionario);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetCheckPointById", ReplyAction="http://tempuri.org/IAutenticador/GetCheckPointByIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointById", ReplyAction="http://tempuri.org/IService/GetCheckPointByIdResponse")]
         string GetCheckPointById(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetCheckPointById", ReplyAction="http://tempuri.org/IAutenticador/GetCheckPointByIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointById", ReplyAction="http://tempuri.org/IService/GetCheckPointByIdResponse")]
         System.Threading.Tasks.Task<string> GetCheckPointByIdAsync(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetUserById", ReplyAction="http://tempuri.org/IAutenticador/GetUserByIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetUserById", ReplyAction="http://tempuri.org/IService/GetUserByIdResponse")]
         Classes.VO.Funcionario GetUserById(string id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetUserById", ReplyAction="http://tempuri.org/IAutenticador/GetUserByIdResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetUserById", ReplyAction="http://tempuri.org/IService/GetUserByIdResponse")]
         System.Threading.Tasks.Task<Classes.VO.Funcionario> GetUserByIdAsync(string id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/CheckPoint", ReplyAction="http://tempuri.org/IAutenticador/CheckPointResponse")]
-        string CheckPoint(Classes.VO.Ponto ponto);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/CheckPoint", ReplyAction="http://tempuri.org/IService/CheckPointResponse")]
+        Classes.VO.FeedBack CheckPoint(Classes.VO.Ponto ponto);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/CheckPoint", ReplyAction="http://tempuri.org/IAutenticador/CheckPointResponse")]
-        System.Threading.Tasks.Task<string> CheckPointAsync(Classes.VO.Ponto ponto);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/CheckPoint", ReplyAction="http://tempuri.org/IService/CheckPointResponse")]
+        System.Threading.Tasks.Task<Classes.VO.FeedBack> CheckPointAsync(Classes.VO.Ponto ponto);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetExpediente", ReplyAction="http://tempuri.org/IAutenticador/GetExpedienteResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetExpediente", ReplyAction="http://tempuri.org/IService/GetExpedienteResponse")]
         Classes.VO.Expediente[] GetExpediente(string semana, string funcionario_Id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticador/GetExpediente", ReplyAction="http://tempuri.org/IAutenticador/GetExpedienteResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetExpediente", ReplyAction="http://tempuri.org/IService/GetExpedienteResponse")]
         System.Threading.Tasks.Task<Classes.VO.Expediente[]> GetExpedienteAsync(string semana, string funcionario_Id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IAutenticadorChannel : Library.Inclock.web.br.Autenticador.IAutenticador, System.ServiceModel.IClientChannel {
+    public interface IServiceChannel : Library.Inclock.web.br.Autenticador.IService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class AutenticadorClient : System.ServiceModel.ClientBase<Library.Inclock.web.br.Autenticador.IAutenticador>, Library.Inclock.web.br.Autenticador.IAutenticador {
+    public partial class ServiceClient : System.ServiceModel.ClientBase<Library.Inclock.web.br.Autenticador.IService>, Library.Inclock.web.br.Autenticador.IService {
         
-        public AutenticadorClient() {
+        public ServiceClient() {
         }
         
-        public AutenticadorClient(string endpointConfigurationName) : 
+        public ServiceClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
         }
         
-        public AutenticadorClient(string endpointConfigurationName, string remoteAddress) : 
+        public ServiceClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public AutenticadorClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public ServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public AutenticadorClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public ServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
@@ -121,19 +121,19 @@ namespace Library.Inclock.web.br.Autenticador {
             return base.Channel.GetPasswordAsync(Login);
         }
         
-        public string GetCheckPointDateInterval(string InitialDate, string FinalDate) {
-            return base.Channel.GetCheckPointDateInterval(InitialDate, FinalDate);
+        public Classes.VO.Ponto[] GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario) {
+            return base.Channel.GetCheckPointDateInterval(InitialDate, FinalDate, id_funcionario);
         }
         
-        public System.Threading.Tasks.Task<string> GetCheckPointDateIntervalAsync(string InitialDate, string FinalDate) {
-            return base.Channel.GetCheckPointDateIntervalAsync(InitialDate, FinalDate);
+        public System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointDateIntervalAsync(string InitialDate, string FinalDate, string id_funcionario) {
+            return base.Channel.GetCheckPointDateIntervalAsync(InitialDate, FinalDate, id_funcionario);
         }
         
-        public string GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario) {
+        public Classes.VO.Ponto[] GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario) {
             return base.Channel.GetCheckPointByDate(InitialDate, FinalDate, id_funcionario);
         }
         
-        public System.Threading.Tasks.Task<string> GetCheckPointByDateAsync(string InitialDate, string FinalDate, string id_funcionario) {
+        public System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointByDateAsync(string InitialDate, string FinalDate, string id_funcionario) {
             return base.Channel.GetCheckPointByDateAsync(InitialDate, FinalDate, id_funcionario);
         }
         
@@ -153,11 +153,11 @@ namespace Library.Inclock.web.br.Autenticador {
             return base.Channel.GetUserByIdAsync(id);
         }
         
-        public string CheckPoint(Classes.VO.Ponto ponto) {
+        public Classes.VO.FeedBack CheckPoint(Classes.VO.Ponto ponto) {
             return base.Channel.CheckPoint(ponto);
         }
         
-        public System.Threading.Tasks.Task<string> CheckPointAsync(Classes.VO.Ponto ponto) {
+        public System.Threading.Tasks.Task<Classes.VO.FeedBack> CheckPointAsync(Classes.VO.Ponto ponto) {
             return base.Channel.CheckPointAsync(ponto);
         }
         

@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using Library.Inclock.web.br.BL;
 using System.Globalization;
 using System.Web.UI.HtmlControls;
+using Classes.Common;
 
 public partial class inc_expediente_Listar : System.Web.UI.UserControl
 {
@@ -46,8 +47,13 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         Saida.Text = expediente.Saida.Substring(0, 5);
         HorasTrabalhada.Text = expediente.Horas_Trabalho.Substring(0, 5);
         TempoPausa.Text = expediente.Tempo_Pausa.Substring(0, 5);
-        Semanda.Text = Expediente.ConverteDiaSemana(expediente.DiaSemana);
-        Periodo.Text = Expediente.ConvertePeriodo(expediente.Periodo);
+        Semanda.Text = UtilDate.ConverteSemanaExtenso(expediente.DiaSemana);
+        Periodo.Text = UtilDate.ConvertePeriodo(expediente.Periodo);
+        if (expediente.DiaSemana == Convert.ToInt32(DateTime.Now.DayOfWeek))
+        {
+            var headerExpediente = (HtmlElement)e.Item.FindControl("headerExpediente");
+            headerExpediente.Style.Add(HtmlTextWriterStyle.BackgroundColor, "LightGreen");
+        }
 
         if (Autenticado.IsFunc)
         {

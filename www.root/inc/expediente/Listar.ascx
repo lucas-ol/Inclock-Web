@@ -6,7 +6,7 @@
         <ItemTemplate>
             <asp:Panel runat="server" ID="pnlExpediente" Style="border: 1px solid black" class="autowidth mt-2 mb-2">
 
-                <div style="text-align: center">
+                <div style="text-align: center" id="headerExpediente" runat="server">
                     <asp:Label Text="text" runat="server" ID="txtDiaSemana" data-id="semana" />
                 </div>
                 <div class="form-group">

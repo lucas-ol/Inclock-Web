@@ -33,7 +33,7 @@ public partial class _Default : System.Web.UI.Page
 
     private void LvCarousel_ItemDataBound(object sender, ListViewItemEventArgs e)
     {
-         Aviso Aviso = ( Aviso)e.Item.DataItem;
+        Aviso Aviso = (Aviso)e.Item.DataItem;
         Panel Painel = (Panel)e.Item.FindControl("CarouselItem");
         Image carouselImg = (Image)e.Item.FindControl("imgCarousel");
         Literal CarrouselTitulo = (Literal)e.Item.FindControl("txtTitulo");

@@ -20,7 +20,7 @@ namespace Library.Inclock.web.br.BL
         public Funcionario Logar(User user)
         {
             Funcionario funcionario;
-            Autenticador.AutenticadorClient cliente = new Autenticador.AutenticadorClient();
+            var cliente = new Autenticador.ServiceClient();
             try
             {
                 funcionario = cliente.Logar(user.Senha, user.Login);

@@ -11,7 +11,7 @@ namespace Library.Inclock.web.br.BL
     {
         public List<Ponto> GetPontos(string InitialDate, string FinalDate)
         {
-            Autenticador.AutenticadorClient autenticador = new Autenticador.AutenticadorClient();
+            var autenticador = new Autenticador.ServiceClient();
             //return autenticador.GetCheckPointDateInterval(InitialDate, FinalDate);
             return new List<Ponto>();
         }

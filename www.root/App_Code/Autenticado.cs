@@ -18,7 +18,7 @@ public class Autenticado
             bool bt = false;
             if (new Autenticado().Ticket != null)
             {
-                bt = CurrentUser.Roles.Equals("FUNCIONARIO");
+                bt = CurrentUser.Roles.Equals("FUNC");
             }
             return bt;
         }
@@ -61,6 +61,7 @@ public class Autenticado
         {
             GenericPrincipal identity = new GenericPrincipal(new GenericIdentity(Ticket.Name), CurrentUser.Roles.ToArray());
             HttpContext.Current.User = identity;
+            
         }
     }
 }

@@ -87,21 +87,26 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Autenticador\Autenticador.wsdl" />
-    <None Include="Connected Services\Autenticador\autenticador.xsd">
+    <None Include="Connected Services\Autenticador\Service1.wsdl" />
+    <None Include="Connected Services\Autenticador\Service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Autenticador\autenticador1.xsd">
+    <None Include="Connected Services\Autenticador\Service3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Autenticador\autenticador2.xsd">
+    <None Include="Connected Services\Autenticador\Service4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\Autenticador\Service5.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\DataSources\Classes.VO.Expediente.datasource" />
+    <None Include="Properties\DataSources\Classes.VO.FeedBack.datasource" />
     <None Include="Properties\DataSources\Classes.VO.Funcionario.datasource" />
+    <None Include="Properties\DataSources\Classes.VO.Ponto.datasource" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -116,9 +121,6 @@
     <WCFMetadataStorage Include="Connected Services\Autenticador\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\Autenticador\autenticador.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Connected Services\Autenticador\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +131,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Autenticador\Service.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

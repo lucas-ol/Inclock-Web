@@ -40,7 +40,7 @@ public partial class Ponto_Default : System.Web.UI.Page
         txtEntradaPausa.Text = ponto.EntradaPausa;
         txtSaidaPausa.Text = ponto.SaidaPausa;
         txtSaida.Text = ponto.Saida;
-        txtStatus.Text = ponto.Status;
+        txtStatus.Text = string.Join(" ,", ponto.Status);
     }
 
     protected void btnBuscarPontos_Click(object sender, EventArgs e)
