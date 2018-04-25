@@ -27,17 +27,11 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
 
     public Expediente CriaObjeto()
     {
-
-
         Expediente expediente = new Expediente();
         expediente.Funcionario_id = Id_funcionario;
         int id;
         int.TryParse(hhdIdExpediente.Value, out id);
         expediente.Id = id;
-        if (!string.IsNullOrWhiteSpace(txtTempoPausa.Text))
-            expediente.Tempo_Pausa = txtTempoPausa.Text;
-        else
-            expediente.Tempo_Pausa = "00:00";
 
         expediente.Entrada = txtEntrada.Text;
         expediente.Saida = txtSaida.Text;
@@ -48,13 +42,6 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
     public bool ValidaDados()
     {
         bool validade = Page.IsValid;
-        if (!string.IsNullOrEmpty(txtTempoPausa.Text))
-        {
-            TimeSpan time;
-            TimeSpan.TryParse(txtTempoPausa.Text, out time);
-            if (time < new TimeSpan(0, 10, 0) && time > new TimeSpan(0))
-                validade = false;
-        }
         int Entrada = Convert.ToInt32(txtEntrada.Text.Substring(0, 2));
         int Saida = Convert.ToInt32(txtSaida.Text.Substring(0, 2));
         int HorasTrabalhada = Math.Abs(Entrada - Saida);
@@ -141,7 +128,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         if (!feed.Status)
         {
             lblmsg.Visible = true;
-            RegistraScript("  $('#"+lblmsg.ClientID+"').delay(5000).toggle(1000);", this.Page, true);
+            RegistraScript("  $('#" + lblmsg.ClientID + "').delay(5000).toggle(1000);", this.Page, true);
         }
 
     }
@@ -151,7 +138,6 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         txtSaida.Text = string.Empty;
         ddlDiaSemana.SelectedValue = "0";
         ddlPeriodo.SelectedValue = "0";
-        txtTempoPausa.Text = string.Empty;
     }
     private void RegistraScript(string script, Page pagina, bool ScriptTag)
     {

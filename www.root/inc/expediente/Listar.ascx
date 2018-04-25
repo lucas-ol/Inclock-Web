@@ -23,11 +23,7 @@
                     <div class="">
                         Horas Trabalhada
                     <asp:Label Text="text" runat="server" ID="txtHosrasTrabalhada" />
-                    </div>
-                    <div class="">
-                        Tempo Pausa:
-                <asp:Label Text="text" runat="server" ID="txtTempoPausa" data-id="pausa" />
-                    </div>
+                   
                 </div>
                 <div class="form-group">
                     <div class="">
@@ -73,7 +69,6 @@
             "id": $(elemeto).attr("data-id"),
             "entrada": elemeto.find('[data-id="entrada"]').text(),
             "saida": elemeto.find('[data-id="saida"]').text(),
-            "pausa": elemeto.find('[data-id="pausa"]').text(),
             "semana": elemeto.find('[data-id="semana"]').text(),
             "periodo": elemeto.find('[data-id="periodo"]').text()
         }

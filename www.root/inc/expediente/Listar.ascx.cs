@@ -20,7 +20,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
             int.TryParse(Request.QueryString["id"], out id);
             return id;
         }
-    }    
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -39,14 +39,14 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         Label Entrada = (Label)e.Item.FindControl("txtEntrada");
         Label Saida = (Label)e.Item.FindControl("txtSaida");
         Label HorasTrabalhada = (Label)e.Item.FindControl("txtHosrasTrabalhada");
-        Label TempoPausa = (Label)e.Item.FindControl("txtTempoPausa");
         Label Semanda = (Label)e.Item.FindControl("txtDiaSemana");
         Label Periodo = (Label)e.Item.FindControl("txtPeriodo");
 
         Entrada.Text = expediente.Entrada.Substring(0, 5);
         Saida.Text = expediente.Saida.Substring(0, 5);
-        HorasTrabalhada.Text = expediente.Horas_Trabalho.Substring(0, 5);
-        TempoPausa.Text = expediente.Tempo_Pausa.Substring(0, 5);
+        
+        HorasTrabalhada.Text = System.Math.Abs(Convert.ToDecimal((Convert.ToDateTime(expediente.Entrada).TimeOfDay - Convert.ToDateTime(expediente.Saida).TimeOfDay))).ToString();
+
         Semanda.Text = UtilDate.ConverteSemanaExtenso(expediente.DiaSemana);
         Periodo.Text = UtilDate.ConvertePeriodo(expediente.Periodo);
         if (expediente.DiaSemana == Convert.ToInt32(DateTime.Now.DayOfWeek))

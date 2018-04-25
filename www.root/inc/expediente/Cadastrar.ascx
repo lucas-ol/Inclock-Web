@@ -58,13 +58,7 @@
                                 </asp:DropDownList>
                             </div>
                         </div>
-                        <div class="form-inline pt-1">
-
-                            <div class="col-sm-2 font-weight-bold">Pausa</div>
-                            <div class="col-sm-4">
-                                <asp:TextBox runat="server" ID="txtTempoPausa" TextMode="Time" CssClass="form-control" />
-                            </div>
-                        </div>
+                        
                         <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Entrada Invalida" ControlToValidate="txtEntrada" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvEntrada" Display="Dynamic" EnableTheming="true" />
                         <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Saida Invalida" ControlToValidate="txtSaida" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvSaida" Display="Dynamic" EnableTheming="true" />
                         <span style="display: none; color: red" id="vlHoraInterval" runat="server"></span>
@@ -161,7 +155,7 @@ function CarregaDados(Expediente) {
     $('#<% =hhdIdExpediente.ClientID%>').val(Expediente["id"]);
     $('#<% =txtEntrada.ClientID%>').val(Expediente["entrada"]);
     $('#<% =txtSaida.ClientID %>').val(Expediente["saida"]);
-    $('#<% =txtTempoPausa.ClientID %>').val(Expediente["pausa"]);
+  
 
 
     $('option:contains("' + Expediente['semana'] + '")').prop('selected', true);
@@ -180,7 +174,6 @@ function CarregaDados(Expediente) {
         $('#<% =hhdIdExpediente.ClientID%>').prop("Value", 0);
         $('#<% =txtEntrada.ClientID%>').val("00:00");
         $('#<% =txtSaida.ClientID %>').val("00:00");
-        $('#<% =txtTempoPausa.ClientID %>').val("00:00");
         $('#<% =ddlDiaSemana.ClientID %> option[value=0]').prop('selected', true);
         $('#<% =ddlPeriodo.ClientID%> option[value=0]').prop('selected', true);
         $('#<% =lblmsg.ClientID%>').css('display', 'none')
