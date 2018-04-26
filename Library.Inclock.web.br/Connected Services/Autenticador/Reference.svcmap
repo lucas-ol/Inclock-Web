@@ -19,15 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://inclock.gearhostpreview.com/Service.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8733/Autenticador/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Service.disco" MetadataType="Disco" ID="d17afb0c-5cd7-4fa8-aaee-71232511a91b" SourceId="1" SourceUrl="http://inclock.gearhostpreview.com/Service.svc?disco" />
-    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="8382776b-e8c5-4721-964f-6da631692ff9" SourceId="1" SourceUrl="http://inclock.gearhostpreview.com/Service.svc?wsdl" />
-    <MetadataFile FileName="Service2.xsd" MetadataType="Schema" ID="869d7510-4a01-45d3-855f-41a6f5d00f55" SourceId="1" SourceUrl="http://inclock.gearhostpreview.com/Service.svc?xsd=xsd1" />
-    <MetadataFile FileName="Service3.xsd" MetadataType="Schema" ID="9c341e07-7fd5-40ea-b187-3561f640ed26" SourceId="1" SourceUrl="http://inclock.gearhostpreview.com/Service.svc?xsd=xsd2" />
-    <MetadataFile FileName="Service4.xsd" MetadataType="Schema" ID="8d130268-b771-4cdf-a865-4c8f42d8b57a" SourceId="1" SourceUrl="http://inclock.gearhostpreview.com/Service.svc?xsd=xsd3" />
-    <MetadataFile FileName="Service5.xsd" MetadataType="Schema" ID="b1732b8d-9c74-4bfd-b6c2-94c587d3f254" SourceId="1" SourceUrl="http://inclock.gearhostpreview.com/Service.svc?xsd=xsd0" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="8e89c19c-73d7-43c4-8d94-28639b866619" SourceId="1" SourceUrl="http://localhost:8733/Autenticador/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="8bbba9bb-115c-4738-b181-f8d42dbe58a6" SourceId="1" SourceUrl="http://localhost:8733/Autenticador/mex" />
+    <MetadataFile FileName="service3.xsd" MetadataType="Schema" ID="0c7cfc2d-afce-4892-afe1-123bc53ede54" SourceId="1" SourceUrl="http://localhost:8733/Autenticador/mex" />
+    <MetadataFile FileName="Classes.VO1.xsd" MetadataType="Schema" ID="d6c2ae8d-8e09-4456-a561-a2a88ca1c919" SourceId="1" SourceUrl="http://localhost:8733/Autenticador/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="c214d22a-247d-4f80-ba0f-4371e4531706" SourceId="1" SourceUrl="http://localhost:8733/Autenticador/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

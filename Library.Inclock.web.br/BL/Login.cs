@@ -19,11 +19,12 @@ namespace Library.Inclock.web.br.BL
         /// <returns>Retorna um Json do usuario</returns>
         public Funcionario Logar(User user)
         {
-            Funcionario funcionario;
+            dynamic funcionario;
             var cliente = new Autenticador.ServiceClient();
             try
             {
-                funcionario = cliente.Logar(user.Senha, user.Login);
+                
+                funcionario = cliente.Logar(user.Senha, user.Login) ;
             }
             catch (Exception ex)
             {

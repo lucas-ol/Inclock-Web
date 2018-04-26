@@ -39,7 +39,8 @@ namespace Library.Inclock.web.br.BL
             {
                 return expediente;
             }
-            expediente.AddRange(new Autenticador.ServiceClient().GetExpediente(semana.ToString(), funcionario_Id.ToString()));
+            dynamic responce = new Autenticador.ServiceClient().GetExpediente(semana.ToString(), funcionario_Id.ToString());
+            expediente.AddRange(responce);
             
 
             return expediente;

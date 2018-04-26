@@ -46,7 +46,7 @@ namespace Library.Inclock.web.br.BL
         public FeedBack Cadastrar_Funcionario(Funcionario funcionario)
         {
             FeedBack feedBack = new FeedBack();
-            feedBack.Status = false;     
+            feedBack.Status = false;
             MySqlAdicionaParametro("_nome", funcionario.Nome);
             MySqlAdicionaParametro("_telefone", funcionario.Telefone);
             MySqlAdicionaParametro("_celular", funcionario.Celular);
@@ -198,7 +198,7 @@ namespace Library.Inclock.web.br.BL
         }
         public Funcionario Pesquisa_Funcionario_ID(int ID)
         {
-            Funcionario func = new Funcionario();
+            dynamic func = new Autenticador.Funcionario();
             try
             {
 
@@ -211,6 +211,6 @@ namespace Library.Inclock.web.br.BL
                 return func;
             }
         }
-        
+
     }
 }
