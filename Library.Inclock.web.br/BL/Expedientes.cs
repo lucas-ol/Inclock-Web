@@ -14,11 +14,10 @@ namespace Library.Inclock.web.br.BL
         public FeedBack SalvaExpediente(Classes.VO.Expediente expediente)
         {
             FeedBack feedback = new FeedBack() { Status = false };
-
             MySqlAdicionaParametro("_saida", expediente.Saida);
-            MySqlAdicionaParametro("_entrada", expediente.Entrada);
-            MySqlAdicionaParametro("_tempo_pausa", expediente.Tempo_Pausa);
-            MySqlAdicionaParametro("_diasemana", expediente.DiaSemana);
+            MySqlAdicionaParametro("_entrada", expediente.Entrada);        
+            MySqlAdicionaParametro("_diasemanaEntrada", expediente.DiaSemana);
+            MySqlAdicionaParametro("_diasemanaSaida", CheckSaida(expediente));
             MySqlAdicionaParametro("_periodo", expediente.Periodo);
             MySqlAdicionaParametro("_funcionario_id", expediente.Funcionario_id);
             feedback = MySqlExecutaComando("prd_insert_expediente", System.Data.CommandType.StoredProcedure);
@@ -63,7 +62,15 @@ namespace Library.Inclock.web.br.BL
             MySqlAdicionaParametro("id", id);
             return MySqlExecutaComando("delete from expediente where id = @id",System.Data.CommandType.Text).Status;
         }
-
+        private int CheckSaida(Expediente expediente)
+        {
+            TimeSpan saida = Convert.ToDateTime(expediente.Saida).TimeOfDay;
+            TimeSpan entrada = Convert.ToDateTime(expediente.Entrada).TimeOfDay;
+            TimeSpan ht = entrada - saida;
+            DateTime hora = DateTime.Now;
+            hora.Add(ht);
+            return Convert.ToInt32(hora.DayOfWeek);
+        }
 
     }
 }

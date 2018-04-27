@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Autenticador.BL
 {
-    public class ExpedienteController:DataBase
+    public class ExpedienteController : DataBase
     {
         public List<Expediente> GetExpediente(int semana, int funcionario_id)
         {
@@ -26,8 +26,6 @@ namespace Autenticador.BL
                         Id = Convert.ToInt32(linha["id"]),
                         Entrada = ((TimeSpan)linha["entrada"]).ToString(),
                         Saida = ((TimeSpan)linha["saida"]).ToString(),
-                        Horas_Trabalho = ((TimeSpan)linha["horas_trabalho"]).ToString(),
-                        Tempo_Pausa = ((TimeSpan)linha["tempo_pausa"]).ToString(),
                         DiaSemana = Convert.ToInt32(linha["diasemana"]),
                         Funcionario_id = Convert.ToInt32(linha["funcionario_id"]),
                         Periodo = Convert.ToInt32(linha["periodo"])
@@ -45,15 +43,13 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("_periodo", periodo);
             try
             {
-                DataRow dr = MySqlLeitura("select * from expediente where funcionario_id = @_funcionario and diasemana = @_semana and periodo = @_periodo", CommandType.Text).Rows[0];
+                DataRow dr = MySqlLeitura("procedure a ser criada ", CommandType.Text).Rows[0];
                 return new Expediente
                 {
                     Id = Convert.ToInt32(dr["id"]),
                     Funcionario_id = Convert.ToInt32(dr["funcionario_id"]),
                     Entrada = dr["entrada"].ToString(),
                     Saida = dr["saida"].ToString(),
-                    Horas_Trabalho = dr["horas_trabalho"].ToString(),
-                    Tempo_Pausa = dr["tempo_pausa"].ToString(),
                     Periodo = Convert.ToInt32(dr["periodo"]),
                     DiaSemana = Convert.ToInt32(dr["diasemana"])
                 };
@@ -63,5 +59,6 @@ namespace Autenticador.BL
                 return null;
             }
         }
+        
     }
 }

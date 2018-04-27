@@ -201,7 +201,6 @@ namespace Library.Inclock.web.br.BL
             dynamic func = new Autenticador.Funcionario();
             try
             {
-
                 Autenticador.ServiceClient Client = new Autenticador.ServiceClient();
                 func = Client.GetUserById(ID.ToString());
                 return func;

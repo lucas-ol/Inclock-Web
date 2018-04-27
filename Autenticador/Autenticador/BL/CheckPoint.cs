@@ -6,19 +6,13 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Classes.VO.Ponto;
 
 namespace Autenticador.BL
 {
     public class CheckPoint : DataBase
     {
-        enum TypePoint
-        {
-            Entrada,
-            Saida,
-            Pausa,
-            Retorno_Pausa
-        }
-
+      
         #region  Ponto
         private Ponto ponto = new Ponto();
         public Ponto Ponto
@@ -32,15 +26,8 @@ namespace Autenticador.BL
         public Ponto Last_Point { get { return last_Point; } set { last_Point = value; } }
         #endregion
         #region Expediente_Hoje
-        private Expediente expediente_Hoje;
-        public Expediente Expediente_Hoje
-        {
-            get
-            {
-                return expediente_Hoje;
-            }
-            set { expediente_Hoje = value; }
-        }
+      
+       
         #endregion
         private TimeSpan Tolerancia = new TimeSpan(0, 59, 0); // ele tem 15 minutos de tolerancia, para entrada ou saida 
         public DateTime Hoje
@@ -67,9 +54,11 @@ namespace Autenticador.BL
         /// metodo que vai realizar o ponto dependendo do horario
         /// </summary>
         /// <returns></returns>
-        public FeedBack BaterPonto()
+        public FeedBack BaterPonto(Ponto ponto)
         {
             FeedBack feed = new FeedBack { Status = false };
+            var Expediente_Hoje = new Expediente();
+
             if (Expediente_Hoje == null)
             {
                 feed.Mensagem = "Você não pode bater o ponto hoje";
@@ -77,31 +66,17 @@ namespace Autenticador.BL
             }
             // Primeiro vai verificar qual vai ser o tipo do ponto se vai ser entrada, saida, pausa etc...            
 
-            TypePoint typePoint = VerificaTipoPonto();
-            if (typePoint == TypePoint.Entrada)
-            {
-                
-
+            if (ponto.Type_Point == TypePoint.Entrada)
+            {             
                 feed.Status = BaterEntrada().Status;
             } // fim entrada
-            else if (typePoint == TypePoint.Saida)
+            else if (ponto.Type_Point == TypePoint.Saida)
             {
                 AlteraPonto(last_Point);
             }
 
             return feed;
-        }
-
-        /// <summary>
-        /// metodo que vai Pegar o expediente do dia anterior, o expediente atual deve esta setado
-        /// </summary>
-        private void TrocaExpediente()
-        {
-            if (!String.IsNullOrEmpty(Expediente_Hoje.DiaSemana.ToString()))
-            {
-                expediente_Hoje = new ExpedienteController().GetExpediente(Hoje.DayOfWeek - DayOfWeek.Monday, Ponto.Funcionario, Ponto.Periodo);
-            }
-        }
+        }      
         public FeedBack BaterEntrada()
         {
             MySqlAdicionaParametro("_funcionario", ponto.Funcionario);
@@ -185,28 +160,21 @@ namespace Autenticador.BL
         /// </summary>
         private void GetExpedienteHoje()
         {
-            expediente_Hoje = new ExpedienteController().GetExpediente(ponto.Funcionario, Convert.ToInt32(Hoje.DayOfWeek) + 1, ponto.Periodo);
+          //  expediente_Hoje = new ExpedienteController().GetExpediente(ponto.Funcionario, Convert.ToInt32(Hoje.DayOfWeek) + 1, ponto.Periodo);
         }
 
 
-        private TypePoint VerificaTipoPonto()
-        {            
-             if (VerificaSaida())
-                return TypePoint.Saida;
-            else if (VerificaPausa())
-                return TypePoint.Pausa;
-            else
-                return VerificaTipoPonto();
-        }
+     
 
         private Classes.VO.StatusPonto VerificaEntrada()
         {
+            var expediente_Hoje = new Ponto();
             FeedBack feed = new FeedBack();
             if (Hoje.TimeOfDay >= expediente_Hoje.TimeEntrada - Tolerancia && Hoje.TimeOfDay - Tolerancia <= expediente_Hoje.TimeEntrada)
             {
 
             }
-            TimeSpan entrada = Convert.ToDateTime(Expediente_Hoje.Entrada).TimeOfDay;
+            TimeSpan entrada = Convert.ToDateTime(expediente_Hoje.Entrada).TimeOfDay;
 
             if (Hoje.TimeOfDay < entrada - Tolerancia)// verifica  o horario minimo para bater o ponto 
                 feed.Mensagem = Convert.ToInt32(StatusPonto.Horario_Minimo) + ";";
@@ -216,19 +184,8 @@ namespace Autenticador.BL
                 feed.Mensagem = Convert.ToInt32(StatusPonto.Entrada_Com_Atraso) + ";";
             }
             return Classes.VO.StatusPonto.Entrada_Com_Atraso;
-        }
-        private bool VerificaSaida()
-        {
+        }     
 
-            if (string.IsNullOrEmpty(Last_Point.Saida))
-            {
-                return false;
-            }
-            return false;
-        }
-        private bool VerificaPausa()
-        {
-            return false;
-        }
+
     }
 }

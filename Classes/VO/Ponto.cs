@@ -18,20 +18,12 @@ namespace Classes.VO
         public int Periodo { get; set; }
         public string EntradaPausa { get; set; }
         public string SaidaPausa { get; set; }
-        private List<string> status = new List<string>();
-        public List<string> Status
-        {
-            get
-            {
-                return status;
-            }
-            set
-            {
-                status = value;
-            }
-        }
+        public TypePoint Type_Point { get; set; }
+
+        public List<string> Status { get; set; } = new List<string>();
         public string Obs { get; set; }
 
+        #region Conversores
         public TimeSpan TimeEntrada
         {
             get
@@ -67,6 +59,16 @@ namespace Classes.VO
                 DateTime.TryParse(EntradaPausa, out time);
                 return time.TimeOfDay;
             }
+        }
+        #endregion
+
+
+       public  enum TypePoint
+        {
+            Entrada,
+            Saida,
+            Pausa,
+            Retorno_Pausa
         }
 
     }
