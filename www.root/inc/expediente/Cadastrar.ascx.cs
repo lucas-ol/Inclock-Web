@@ -42,11 +42,11 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
     public bool ValidaDados()
     {
         bool validade = Page.IsValid;
-        int Entrada = Convert.ToInt32(txtEntrada.Text.Substring(0, 2));
-        int Saida = Convert.ToInt32(txtSaida.Text.Substring(0, 2));
-        int HorasTrabalhada = Math.Abs(Entrada - Saida);
+        TimeSpan Entrada = Convert.ToDateTime(txtEntrada.Text.Substring(0, 2)).TimeOfDay;
+        TimeSpan Saida = Convert.ToDateTime(txtSaida.Text.Substring(0, 2)).TimeOfDay; ;
+        TimeSpan HorasTrabalhada = Entrada - Saida;
 
-        if (HorasTrabalhada < 1)
+        if (HorasTrabalhada.Hours < 1)
             validade = false;
 
 
