@@ -25,8 +25,8 @@
     <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="8e89c19c-73d7-43c4-8d94-28639b866619" SourceId="1" SourceUrl="http://localhost:8733/Autenticador/mex" />
     <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="8bbba9bb-115c-4738-b181-f8d42dbe58a6" SourceId="1" SourceUrl="http://localhost:8733/Autenticador/mex" />
     <MetadataFile FileName="service3.xsd" MetadataType="Schema" ID="0c7cfc2d-afce-4892-afe1-123bc53ede54" SourceId="1" SourceUrl="http://localhost:8733/Autenticador/mex" />
-    <MetadataFile FileName="Classes.VO1.xsd" MetadataType="Schema" ID="d6c2ae8d-8e09-4456-a561-a2a88ca1c919" SourceId="1" SourceUrl="http://localhost:8733/Autenticador/mex" />
-    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="c214d22a-247d-4f80-ba0f-4371e4531706" SourceId="1" SourceUrl="http://localhost:8733/Autenticador/mex" />
+    <MetadataFile FileName="Classes.VO1.xsd" MetadataType="Schema" ID="419db533-2f93-464a-ae20-65a0b0ef0bf5" SourceId="1" SourceUrl="http://localhost:8733/Autenticador/mex" />
+    <MetadataFile FileName="Arrays1.xsd" MetadataType="Schema" ID="be8bc43c-3dbe-423e-8c83-72a1de4685ed" SourceId="1" SourceUrl="http://localhost:8733/Autenticador/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

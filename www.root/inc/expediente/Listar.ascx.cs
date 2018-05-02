@@ -38,24 +38,23 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         Expediente expediente = (Expediente)e.Item.DataItem;
         Label Entrada = (Label)e.Item.FindControl("txtEntrada");
         Label Saida = (Label)e.Item.FindControl("txtSaida");
-        Label HorasTrabalhada = (Label)e.Item.FindControl("txtHosrasTrabalhada");
         Label Semanda = (Label)e.Item.FindControl("txtDiaSemana");
         Label Periodo = (Label)e.Item.FindControl("txtPeriodo");
 
         Entrada.Text = expediente.Entrada.Substring(0, 5);
         Saida.Text = expediente.Saida.Substring(0, 5);
         
-        HorasTrabalhada.Text = System.Math.Abs(Convert.ToDecimal((Convert.ToDateTime(expediente.Entrada).TimeOfDay - Convert.ToDateTime(expediente.Saida).TimeOfDay))).ToString();
+       
 
         Semanda.Text = UtilDate.ConverteSemanaExtenso(expediente.DiaSemana);
         Periodo.Text = UtilDate.ConvertePeriodo(expediente.Periodo);
         if (expediente.DiaSemana == Convert.ToInt32(DateTime.Now.DayOfWeek))
         {
-            var headerExpediente = (HtmlElement)e.Item.FindControl("headerExpediente");
+            var headerExpediente = (HtmlControl)e.Item.FindControl("headerExpediente");
             headerExpediente.Style.Add(HtmlTextWriterStyle.BackgroundColor, "LightGreen");
         }
 
-        if (Autenticado.IsFunc)
+        if (Visitante.IsFunc)
         {
             HtmlControl pnlButtons = (HtmlControl)e.Item.FindControl("pnlButtons");
             pnlButtons.Visible = false;

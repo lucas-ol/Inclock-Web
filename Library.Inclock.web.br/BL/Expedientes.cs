@@ -16,8 +16,8 @@ namespace Library.Inclock.web.br.BL
             FeedBack feedback = new FeedBack() { Status = false };
             MySqlAdicionaParametro("_saida", expediente.Saida);
             MySqlAdicionaParametro("_entrada", expediente.Entrada);        
-            MySqlAdicionaParametro("_diasemanaEntrada", expediente.DiaSemana);
-            MySqlAdicionaParametro("_diasemanaSaida", CheckSaida(expediente));
+            MySqlAdicionaParametro("_semanaEntrada", expediente.DiaSemana);
+            MySqlAdicionaParametro("_semanaSaida", CheckSaida(expediente));
             MySqlAdicionaParametro("_periodo", expediente.Periodo);
             MySqlAdicionaParametro("_funcionario_id", expediente.Funcionario_id);
             feedback = MySqlExecutaComando("prd_insert_expediente", System.Data.CommandType.StoredProcedure);
@@ -38,29 +38,27 @@ namespace Library.Inclock.web.br.BL
             {
                 return expediente;
             }
-            dynamic responce = new Autenticador.ServiceClient().GetExpediente(semana.ToString(), funcionario_Id.ToString());
+            var responce = new Autenticador.ServiceClient().GetExpediente(semana.ToString(), funcionario_Id.ToString());
             expediente.AddRange(responce);
-            
-
             return expediente;
         }
         public FeedBack AtualizaExpediente(Expediente expediente)
         {
             FeedBack feedBack = new FeedBack();
             MySqlAdicionaParametro("_id", expediente.Id);
-            MySqlAdicionaParametro("_periodo", expediente.Periodo);
-            MySqlAdicionaParametro("_semana", expediente.DiaSemana);
-            MySqlAdicionaParametro("_entrada", expediente.Entrada);
             MySqlAdicionaParametro("_saida", expediente.Saida);
-            MySqlAdicionaParametro("_pausa", expediente.Tempo_Pausa);
-            MySqlAdicionaParametro("_funcionario", expediente.Funcionario_id);
+            MySqlAdicionaParametro("_entrada", expediente.Entrada);
+            MySqlAdicionaParametro("_semanaEntrada", expediente.DiaSemana);
+            MySqlAdicionaParametro("_semanaSaida", CheckSaida(expediente));
+            MySqlAdicionaParametro("_periodo", expediente.Periodo);
+            MySqlAdicionaParametro("_funcionario_id", expediente.Funcionario_id);
             feedBack = MySqlExecutaComando("prd_updade_expediente", System.Data.CommandType.StoredProcedure);
             return feedBack;
         }
         public bool Excluir(int id)
         {
             MySqlAdicionaParametro("id", id);
-            return MySqlExecutaComando("delete from expediente where id = @id",System.Data.CommandType.Text).Status;
+            return MySqlExecutaComando("delete from expediente_id where id = @id",System.Data.CommandType.Text).Status;
         }
         private int CheckSaida(Expediente expediente)
         {
@@ -69,7 +67,7 @@ namespace Library.Inclock.web.br.BL
             TimeSpan ht = entrada - saida;
             DateTime hora = DateTime.Now;
             hora.Add(ht);
-            return Convert.ToInt32(hora.DayOfWeek);
+            return Convert.ToInt32(hora.DayOfWeek)+1;
         }
 
     }

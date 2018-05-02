@@ -42,8 +42,8 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
     public bool ValidaDados()
     {
         bool validade = Page.IsValid;
-        TimeSpan Entrada = Convert.ToDateTime(txtEntrada.Text.Substring(0, 2)).TimeOfDay;
-        TimeSpan Saida = Convert.ToDateTime(txtSaida.Text.Substring(0, 2)).TimeOfDay; ;
+        TimeSpan Entrada = Convert.ToDateTime(txtEntrada.Text).TimeOfDay;
+        TimeSpan Saida = Convert.ToDateTime(txtSaida.Text).TimeOfDay; ;
         TimeSpan HorasTrabalhada = Entrada - Saida;
 
         if (HorasTrabalhada.Hours < 1)

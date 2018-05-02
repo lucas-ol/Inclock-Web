@@ -41,16 +41,6 @@ namespace Autenticador.BL
         public CheckPoint()
         { }
         /// <summary>
-        /// Contrutor 
-        /// </summary>
-        /// <param name="ponto">Ponto que vai ser batido</param>
-        public CheckPoint(Ponto ponto)
-        {
-            this.Ponto = ponto;
-            GetExpedienteHoje();
-            GetLastPoint();
-        }
-        /// <summary>
         /// metodo que vai realizar o ponto dependendo do horario
         /// </summary>
         /// <returns></returns>

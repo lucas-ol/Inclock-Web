@@ -14,7 +14,7 @@ public partial class Ponto_Default : System.Web.UI.Page
         lvPontos.ItemDataBound += LvPontos_ItemDataBound;
         if (!this.Page.IsPostBack)
         {
-            Funcionario funcionario = Autenticado.CurrentUser;
+            Funcionario funcionario = Visitante.CurrentUser;
             lblCargo.Text = funcionario.Cargo;
             lblId.Text = funcionario.Id.ToString();
             lblNome.Text = funcionario.Nome;

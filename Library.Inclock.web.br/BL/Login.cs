@@ -1,7 +1,6 @@
-﻿using Classes.Common;
+﻿using System;
 using Classes.VO;
 using Classes.Common;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -19,12 +18,11 @@ namespace Library.Inclock.web.br.BL
         /// <returns>Retorna um Json do usuario</returns>
         public Funcionario Logar(User user)
         {
-            dynamic funcionario;
-            var cliente = new Autenticador.ServiceClient();
+            Funcionario funcionario = new Funcionario();          
             try
             {
-                
-                funcionario = cliente.Logar(user.Senha, user.Login) ;
+                var cliente = new Autenticador.ServiceClient();
+                funcionario = cliente.Logar(user.Senha, user.Login);
             }
             catch (Exception ex)
             {
@@ -36,7 +34,7 @@ namespace Library.Inclock.web.br.BL
         {
             try
             {
-                var dici = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Funcionario>>(UtilFile.FileStringReader(configPath));               
+                var dici = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Funcionario>>(UtilFile.FileStringReader(configPath));
                 return dici.Find(x => x.Senha == user.Senha && x.Login == user.Login);
             }
             catch (Exception)

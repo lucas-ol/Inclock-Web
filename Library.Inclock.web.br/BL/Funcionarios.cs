@@ -181,7 +181,8 @@ namespace Library.Inclock.web.br.BL
             MySqlAdicionaParametro("_nome", strNome);
             DataTable dt = MySqlLeitura("prd_se_pessoas_expediente_nome", CommandType.StoredProcedure);
             List<Funcionario> user = new List<Funcionario>();
-
+            if (dt.TableName == "erro")
+                return user;
             foreach (DataRow item in dt.Rows)
             {
                 user.Add(new Funcionario()
@@ -198,7 +199,7 @@ namespace Library.Inclock.web.br.BL
         }
         public Funcionario Pesquisa_Funcionario_ID(int ID)
         {
-            dynamic func = new Autenticador.Funcionario();
+            var func = new Funcionario();
             try
             {
                 Autenticador.ServiceClient Client = new Autenticador.ServiceClient();

@@ -46,8 +46,8 @@
     }
 
     void Application_PostAuthenticateRequest(object sender, EventArgs e)
-    {        
-        new Autenticado().Autenticar();
+    {
+        new Visitante().Autenticar();
     }
     void RegisterRoutes(RouteCollection routes)
     {
