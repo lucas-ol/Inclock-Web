@@ -15,7 +15,7 @@ namespace Library.Inclock.web.br.BL
         {
             FeedBack feedback = new FeedBack() { Status = false };
             MySqlAdicionaParametro("_saida", expediente.Saida);
-            MySqlAdicionaParametro("_entrada", expediente.Entrada);        
+            MySqlAdicionaParametro("_entrada", expediente.Entrada);
             MySqlAdicionaParametro("_semanaEntrada", expediente.DiaSemana);
             MySqlAdicionaParametro("_semanaSaida", CheckSaida(expediente));
             MySqlAdicionaParametro("_periodo", expediente.Periodo);
@@ -58,16 +58,23 @@ namespace Library.Inclock.web.br.BL
         public bool Excluir(int id)
         {
             MySqlAdicionaParametro("id", id);
-            return MySqlExecutaComando("delete from expediente_id where id = @id",System.Data.CommandType.Text).Status;
+            return MySqlExecutaComando("delete from expediente_id where id = @id", System.Data.CommandType.Text).Status;
         }
+        TimeSpan saida;
+        TimeSpan entrada;
+        TimeSpan ht;
+        DateTime hora;
         private int CheckSaida(Expediente expediente)
         {
-            TimeSpan saida = Convert.ToDateTime(expediente.Saida).TimeOfDay;
-            TimeSpan entrada = Convert.ToDateTime(expediente.Entrada).TimeOfDay;
-            TimeSpan ht = entrada - saida;
-            DateTime hora = DateTime.Now;
-            hora.Add(ht);
-            return Convert.ToInt32(hora.DayOfWeek)+1;
+            saida = Convert.ToDateTime(expediente.Saida).TimeOfDay;
+            entrada = Convert.ToDateTime(expediente.Entrada).TimeOfDay;
+            ht = entrada - saida;
+            hora = DateTime.Now;
+            hora = hora.Add(ht);
+            if (hora.Day > DateTime.Now.Day)  // Se virar o dia, quer dizer que o func vai bater a saida no outro dia         
+                expediente.DiaSemana++;
+
+            return expediente.DiaSemana;
         }
 
     }

@@ -46,7 +46,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         TimeSpan Saida = Convert.ToDateTime(txtSaida.Text).TimeOfDay; ;
         TimeSpan HorasTrabalhada = Entrada - Saida;
 
-        if (HorasTrabalhada.Hours < 1)
+        if (Math.Abs(HorasTrabalhada.Hours) < 1)
             validade = false;
 
 

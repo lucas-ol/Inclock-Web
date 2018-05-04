@@ -5,7 +5,6 @@
     <asp:ListView runat="server" ID="lvExpediente">
         <ItemTemplate>
             <asp:Panel runat="server" ID="pnlExpediente" Style="border: 1px solid black" class="autowidth mt-2 mb-2">
-
                 <div style="text-align: center" id="headerExpediente" runat="server">
                     <asp:Label Text="text" runat="server" ID="txtDiaSemana" data-id="semana" />
                 </div>
@@ -23,17 +22,17 @@
                     <div class="">
                         Horas Trabalhada
                     <asp:Label Text="text" runat="server" ID="txtHosrasTrabalhada" />
-                   
-                </div>
-                <div class="form-group">
-                    <div class="">
-                        Periodo:
-                    <asp:Label Text="text" runat="server" ID="txtPeriodo" data-id="periodo" />
                     </div>
-                </div>
-                <div class="form-group form-inline" runat="server" id="pnlButtons">
-                    <button type="button" runat="server" class="btn btn-warning col-md-6" id="btnEditar" data-id="0" onclick="Editar(this)">Editar</button>
-                    <button type="button" runat="server" class="btn btn-danger col-md-6" id="btnExcluir" data-id="0">Excluir</button>
+                    <div class="form-group">
+                        <div class="">
+                            Periodo:
+                    <asp:Label Text="text" runat="server" ID="txtPeriodo" data-id="periodo" />
+                        </div>
+                    </div>
+                    <div class="form-group form-inline" runat="server" id="pnlButtons">
+                        <button type="button" runat="server" class="btn btn-warning col-md-6" id="btnEditar" data-id="0" onclick="Editar(this)">Editar</button>
+                        <button type="button" runat="server" class="btn btn-danger col-md-6" id="btnExcluir" data-id="0">Excluir</button>
+                    </div>
                 </div>
             </asp:Panel>
         </ItemTemplate>
