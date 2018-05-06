@@ -60,12 +60,13 @@ namespace Library.Inclock.web.br.BL
             MySqlAdicionaParametro("id", id);
             return MySqlExecutaComando("delete from expediente_id where id = @id", System.Data.CommandType.Text).Status;
         }
-        TimeSpan saida;
-        TimeSpan entrada;
-        TimeSpan ht;
-        DateTime hora;
+
         private int CheckSaida(Expediente expediente)
         {
+            TimeSpan saida;
+            TimeSpan entrada;
+            TimeSpan ht;
+            DateTime hora;
             saida = Convert.ToDateTime(expediente.Saida).TimeOfDay;
             entrada = Convert.ToDateTime(expediente.Entrada).TimeOfDay;
             ht = entrada - saida;
