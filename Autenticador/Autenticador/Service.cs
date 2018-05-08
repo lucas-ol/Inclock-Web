@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Autenticador
 {
-    public class Service: IService
+    public class Service : IService
     {
 
         public string GetLogin(string Email)
         {
-            return new CAutenticador().GetLogin(Email);
+            return new BL.Autenticador().GetLogin(Email);
         }
         public Funcionario GetUserById(string id)
         {
@@ -22,17 +22,17 @@ namespace Autenticador
             if (iId == 0)
                 throw new Exception("Parametro Incorreto");
             else
-                return new CAutenticador().GetUserById(iId);
+                return new BL.Autenticador().GetUserById(iId);
         }
 
         public Classes.VO.Funcionario Logar(string password, string login)
         {
-            return new CAutenticador().Logar(password, login);
+            return new BL.Autenticador().Logar(password, login);
         }
 
         public string GetPassword(string Login)
         {
-            return new CAutenticador().GetPassword(Login);
+            return new BL.Autenticador().GetPassword(Login);
         }
 
         public List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario)
@@ -70,6 +70,13 @@ namespace Autenticador
                 throw new Exception("Parametros incorretos");
             else
                 return new ExpedienteController().GetExpediente(isemana, ifuncionario_Id);
+        }
+
+        public List<Aviso> GetAvisos(string qtde)
+        {
+            if (string.IsNullOrEmpty(qtde))
+                qtde = "10";
+            return new BL.Autenticador().getAvisos(qtde);
         }
     }
 }

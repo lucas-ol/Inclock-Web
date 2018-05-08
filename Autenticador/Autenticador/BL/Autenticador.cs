@@ -12,7 +12,7 @@ using Classes.Enumeradores;
 
 namespace Autenticador.BL
 {
-    public class CAutenticador : DataBase
+    public class Autenticador : DataBase
     {
         public Classes.VO.Funcionario Logar(string password, string login)
         {
@@ -124,6 +124,32 @@ namespace Autenticador.BL
             return funcionario;
 
         }
-   
+        public List<Aviso> getAvisos(string qted)
+        {
+            List<Aviso> avisos = new List<Aviso>();
+            string command = "select * from avisos order by data_noticia desc limit " + qted;
+            var obj = MySqlLeitura(command, CommandType.Text);
+            try
+            {
+                foreach (DataRow tr in obj.Rows)
+                {
+                    string str = tr["id"].ToString();
+                    avisos.Add(new Aviso
+                    {
+                        ID = Convert.ToInt32(tr["id"]),
+                        Titulo = tr["titulo"].ToString(),
+                        Conteudo = tr["conteudo"].ToString(),
+                        Imagem = tr["imagem"].ToString(),
+                        DataNoticia = Convert.ToDateTime(tr["data_noticia"]).ToString("dd/MM/yyyy hh:mm")
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return avisos;
+        }
     }
 }

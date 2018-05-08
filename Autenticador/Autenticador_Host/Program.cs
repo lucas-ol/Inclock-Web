@@ -20,8 +20,7 @@ namespace Autenticador_Host
                 Console.WriteLine("Hospedagem De serviço {0}\n{1}", nameof(Autenticador.Service), host.BaseAddresses.FirstOrDefault());
                 Console.WriteLine("Opçoes");
                 Console.WriteLine("I - Iniciar Servidor");
-                Console.WriteLine("F - Fecha Servidor");
-                Console.WriteLine("C - Configurar Servidor");
+                Console.WriteLine("F - Fecha Servidor");             
                 Console.WriteLine("S - Sair");
 
                 ConsoleKey Opcao = Console.ReadKey().Key;
@@ -43,28 +42,12 @@ namespace Autenticador_Host
                         }
                         break;
                     case ConsoleKey.F:
-
                         try
                         {
                             Console.Clear();
                             host.Close();
                             Console.WriteLine("Servidor encerrado");
                             Thread.Sleep(5000);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.Clear();
-                            Console.WriteLine("Erro: " + ex.Message);
-                            Thread.Sleep(5000);
-                        }
-                        break;
-                    case ConsoleKey.C:
-                        try
-                        {
-                            Console.Clear();
-                            Console.Write("não implementado");
-                            Console.Write("Infome A URL");
-                            String url = Console.ReadLine();
                         }
                         catch (Exception ex)
                         {

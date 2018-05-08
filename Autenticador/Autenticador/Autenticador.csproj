@@ -58,7 +58,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BL\CAutenticador.cs" />
+    <Compile Include="BL\Autenticador.cs" />
     <Compile Include="BL\CheckPoint.cs" />
     <Compile Include="BL\ExpedienteController.cs" />
     <Compile Include="IService.cs" />

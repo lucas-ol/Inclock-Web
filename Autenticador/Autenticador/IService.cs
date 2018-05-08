@@ -53,5 +53,10 @@ namespace Autenticador
         [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "GET",
            UriTemplate = "getexpediente/{semana}/{funcionario_Id}")]
         List<Expediente> GetExpediente(string semana, string funcionario_Id);
+
+
+        [OperationContract]
+        [WebGet(ResponseFormat = WebMessageFormat.Json,RequestFormat = WebMessageFormat.Json,UriTemplate ="getaviso/{qtde}")]
+        List<Aviso> GetAvisos(string qtde);
     }
 }

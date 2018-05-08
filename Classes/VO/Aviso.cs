@@ -12,5 +12,6 @@ namespace Classes.VO
         public string Imagem { get; set; }
         public string Titulo { get; set; }
         public string Conteudo { get; set; }
+        public string DataNoticia { get; set; }
     }
 }
