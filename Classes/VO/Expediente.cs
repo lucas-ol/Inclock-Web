@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using static Classes.VO.Ponto;
 
 namespace Classes.VO
 {
@@ -14,35 +15,12 @@ namespace Classes.VO
         public int Funcionario_id { get; set; }
         public string Entrada { get; set; }
         public string Saida { get; set; }
-        public string Horas_Trabalho { get; set; }
-        public string Tempo_Pausa { get; set; }
         public int Periodo { get; set; }
         public int DiaSemana { get; set; }
+        public char Type {get;set;}
         public Expediente()
         {
-            Tempo_Pausa = "00:00";
+           
         }
-
-        public TimeSpan TimeEntrada
-        {
-            get
-            {
-                DateTime time;
-                DateTime.TryParse(Entrada, out time);
-                return time.TimeOfDay;
-            }
-        }
-        public TimeSpan TimeSaida
-        {
-            get
-            {
-                DateTime time;
-                DateTime.TryParse(Saida, out time);
-                return time.TimeOfDay;
-            }
-        }
-        
-
-
     }
 }

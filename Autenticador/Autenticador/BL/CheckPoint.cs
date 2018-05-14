@@ -12,7 +12,7 @@ namespace Autenticador.BL
 {
     public class CheckPoint : DataBase
     {
-      
+
         #region  Ponto
         private Ponto ponto = new Ponto();
         public Ponto Ponto
@@ -26,8 +26,8 @@ namespace Autenticador.BL
         public Ponto Last_Point { get { return last_Point; } set { last_Point = value; } }
         #endregion
         #region Expediente_Hoje
-      
-       
+
+
         #endregion
         private TimeSpan Tolerancia = new TimeSpan(0, 59, 0); // ele tem 15 minutos de tolerancia, para entrada ou saida 
         public DateTime Hoje
@@ -57,17 +57,17 @@ namespace Autenticador.BL
             // Primeiro vai verificar qual vai ser o tipo do ponto se vai ser entrada, saida, pausa etc...            
 
             if (ponto.Type_Point == TypePoint.Entrada)
-            {             
-                feed.Status = BaterEntrada().Status;
+            {
+                feed = Entrada(ponto);
             } // fim entrada
             else if (ponto.Type_Point == TypePoint.Saida)
             {
-                AlteraPonto(last_Point);
+               feed = Saida(ponto);
             }
 
             return feed;
-        }      
-        public FeedBack BaterEntrada()
+        }
+        public FeedBack Entrada(Ponto ponto)
         {
             MySqlAdicionaParametro("_funcionario", ponto.Funcionario);
             MySqlAdicionaParametro("_dia", Convert.ToDateTime(ponto.Data));
@@ -78,10 +78,18 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("_status", string.Join(";", ponto.Status));
             return MySqlExecutaComando("prd_insert_ponto", CommandType.StoredProcedure);
         }
-        public FeedBack BaterSaida()
+        public FeedBack Saida(Ponto ponto)
         {
             FeedBack feed = new FeedBack();
-            return feed;
+            MySqlAdicionaParametro("_funcionario", ponto.Funcionario);
+            MySqlAdicionaParametro("_dia", Convert.ToDateTime(ponto.Data));
+            MySqlAdicionaParametro("_hora", Hoje.ToString("HH:mm:ss"));
+            MySqlAdicionaParametro("_periodo", ponto.Periodo);
+            MySqlAdicionaParametro("_logitude", ponto.Logitude);
+            MySqlAdicionaParametro("_latitude", ponto.Latitude);
+            MySqlAdicionaParametro("_status", string.Join(";", ponto.Status));
+            return MySqlExecutaComando("prd_insert_ponto", CommandType.StoredProcedure);
+
         }
 
         /// <summary>
@@ -145,37 +153,5 @@ namespace Autenticador.BL
                 return new Ponto();
             }
         }
-        /// <summary>
-        /// procedimento que vai pegar o expediente do dia ocorrente
-        /// </summary>
-        private void GetExpedienteHoje()
-        {
-          //  expediente_Hoje = new ExpedienteController().GetExpediente(ponto.Funcionario, Convert.ToInt32(Hoje.DayOfWeek) + 1, ponto.Periodo);
-        }
-
-
-     
-
-        private Classes.VO.StatusPonto VerificaEntrada()
-        {
-            var expediente_Hoje = new Ponto();
-            FeedBack feed = new FeedBack();
-            if (Hoje.TimeOfDay >= expediente_Hoje.TimeEntrada - Tolerancia && Hoje.TimeOfDay - Tolerancia <= expediente_Hoje.TimeEntrada)
-            {
-
-            }
-            TimeSpan entrada = Convert.ToDateTime(expediente_Hoje.Entrada).TimeOfDay;
-
-            if (Hoje.TimeOfDay < entrada - Tolerancia)// verifica  o horario minimo para bater o ponto 
-                feed.Mensagem = Convert.ToInt32(StatusPonto.Horario_Minimo) + ";";
-            else if (Hoje.TimeOfDay - Tolerancia > entrada)// verifica se ele esta atrasado 
-            {
-                ponto.Status.Add(StatusPonto.Entrada_Com_Atraso + ";");
-                feed.Mensagem = Convert.ToInt32(StatusPonto.Entrada_Com_Atraso) + ";";
-            }
-            return Classes.VO.StatusPonto.Entrada_Com_Atraso;
-        }     
-
-
     }
 }

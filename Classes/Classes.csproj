@@ -81,6 +81,7 @@
     <Compile Include="Common\UtilDate.cs" />
     <Compile Include="Common\UtilFile.cs" />
     <Compile Include="Enumeradores\DateEnum.cs" />
+    <Compile Include="Enumeradores\Periodo.cs" />
     <Compile Include="Enumeradores\StatusEnum.cs" />
     <Compile Include="Enumeradores\StatusPonto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

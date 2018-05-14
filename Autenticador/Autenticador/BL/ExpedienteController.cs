@@ -56,9 +56,33 @@ namespace Autenticador.BL
             }
             catch (Exception ex)
             {
-                return null;
+                return new Expediente();
             }
         }
-        
+        public Expediente GetExpediente(int funcionario, int semana, Classes.Enumeradores.Periodo periodo, Char tp)
+        {
+            Expediente exp = new Expediente();
+
+            MySqlAdicionaParametro("_funcionario", funcionario);
+            MySqlAdicionaParametro("_semana", semana);
+            MySqlAdicionaParametro("_periodo", Convert.ToInt32(periodo));
+            MySqlAdicionaParametro("_type", tp);
+            DataTable tb = MySqlLeitura("prd_se_expediente", CommandType.StoredProcedure);
+
+            if (tb.Rows.Count > 0 || tb.TableName != "erro")
+            {
+                exp.Id = Convert.ToInt32(tb.Rows[0]["expediente_id"]);
+                exp.Periodo = Convert.ToInt32(tb.Rows[0]["periodo"]);
+                exp.Type = Convert.ToChar(tb.Rows[0]["type_point"]);
+                exp.Funcionario_id = Convert.ToInt32(tb.Rows[0]["funcionario_id"]);
+                exp.Entrada = tb.Rows[0]["hora"].ToString();
+                exp.Saida = tb.Rows[0]["hora"].ToString();
+                exp.DiaSemana = Convert.ToInt32(tb.Rows[0]["diasemana"]); 
+
+
+            }
+            return exp;
+        }
+
     }
 }
