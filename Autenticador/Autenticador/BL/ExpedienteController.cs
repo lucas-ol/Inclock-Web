@@ -59,6 +59,14 @@ namespace Autenticador.BL
                 return new Expediente();
             }
         }
+        /// <summary>
+        /// Sobrecarga de metodo, Busca o expediente de entrada ou saida
+        /// </summary>
+        /// <param name="funcionario">Id do funcionario</param>
+        /// <param name="semana">semana do expediente</param>
+        /// <param name="periodo">periodo do expediente</param>
+        /// <param name="tp">Tipo do expediente se vai se E para entrada ou S para saida</param>
+        /// <returns></returns>
         public Expediente GetExpediente(int funcionario, int semana, Classes.Enumeradores.Periodo periodo, Char tp)
         {
             Expediente exp = new Expediente();
