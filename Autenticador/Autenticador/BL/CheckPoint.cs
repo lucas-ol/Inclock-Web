@@ -13,22 +13,15 @@ namespace Autenticador.BL
     public class CheckPoint : DataBase
     {
 
-        #region  Ponto
-        private Ponto ponto = new Ponto();
-        public Ponto Ponto
+
+        private Expediente Expediente_Hoje
         {
-            get { return ponto; }
-            private set { ponto = value; }
+            get
+            {
+                return new ExpedienteController().GetExpediente(this.Ponto.Funcionario, DateTime.Now.DayOfWeek, this.Ponto.Periodo, this.Ponto.Type_Point);
+            }
         }
-        #endregion
-        #region Last_point
-        private Ponto last_Point = new Ponto();
-        public Ponto Last_Point { get { return last_Point; } set { last_Point = value; } }
-        #endregion
-        #region Expediente_Hoje
-
-
-        #endregion
+        private Ponto Ponto { get; set; } = new Ponto();
         private TimeSpan Tolerancia = new TimeSpan(0, 59, 0); // ele tem 15 minutos de tolerancia, para entrada ou saida 
         public DateTime Hoje
         {
@@ -38,8 +31,10 @@ namespace Autenticador.BL
             }
         }
 
-        public CheckPoint()
-        { }
+        public CheckPoint(Ponto Ponto)
+        {
+
+        }
         /// <summary>
         /// metodo que vai realizar o ponto dependendo do horario
         /// </summary>
@@ -47,27 +42,25 @@ namespace Autenticador.BL
         public FeedBack BaterPonto(Ponto ponto)
         {
             FeedBack feed = new FeedBack { Status = false };
-            var Expediente_Hoje = new Expediente();
 
             if (Expediente_Hoje == null)
             {
                 feed.Mensagem = "Você não pode bater o ponto hoje";
                 return feed;
             }
-            // Primeiro vai verificar qual vai ser o tipo do ponto se vai ser entrada, saida, pausa etc...            
-
-            if (ponto.Type_Point == TypePoint.Entrada)
+            // Primeiro vai verificar qual vai ser o tipo do ponto se vai ser entrada, saida, pausa etc...    
+            else if (ponto.Type_Point == TypePoint.Entrada)
             {
-                feed = Entrada(ponto);
+                feed = InsertDataBase(ponto);
             } // fim entrada
             else if (ponto.Type_Point == TypePoint.Saida)
             {
-               feed = Saida(ponto);
+                feed = InsertDataBase(ponto);
             }
 
             return feed;
         }
-        public FeedBack Entrada(Ponto ponto)
+        private FeedBack InsertDataBase(Ponto ponto)
         {
             MySqlAdicionaParametro("_funcionario", ponto.Funcionario);
             MySqlAdicionaParametro("_dia", Convert.ToDateTime(ponto.Data));
@@ -78,7 +71,12 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("_status", string.Join(";", ponto.Status));
             return MySqlExecutaComando("prd_insert_ponto", CommandType.StoredProcedure);
         }
-        public FeedBack Saida(Ponto ponto)
+        /// <summary>
+        /// Metodo que vai verificar se sele pode bater o ponto e vai ver se ele possui alguma pendencia
+        /// </summary>
+        /// <param name="ponto"></param>
+        /// <returns></returns>
+        public string ValidaPonto(Ponto ponto)
         {
             FeedBack feed = new FeedBack();
             MySqlAdicionaParametro("_funcionario", ponto.Funcionario);
@@ -88,7 +86,7 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("_logitude", ponto.Logitude);
             MySqlAdicionaParametro("_latitude", ponto.Latitude);
             MySqlAdicionaParametro("_status", string.Join(";", ponto.Status));
-            return MySqlExecutaComando("prd_insert_ponto", CommandType.StoredProcedure);
+            return MySqlExecutaComando("prd_insert_ponto", CommandType.StoredProcedure).Mensagem;
 
         }
 
@@ -120,7 +118,7 @@ namespace Autenticador.BL
         /// </summary>
         public void GetLastPoint()
         {
-            Last_Point = GetLastPoint(ponto.Funcionario, ponto.Periodo);
+           // Last_Point = GetLastPoint(ponto.Funcionario, ponto.Periodo);
         }
         public Ponto GetLastPoint(int Funcionario, int Periodo)
         {

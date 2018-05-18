@@ -63,12 +63,12 @@ namespace Classes.VO
         #endregion
 
 
-       public  enum TypePoint
+        public enum TypePoint
         {
-            Entrada,
-            Saida,
-            Pausa,
-            Retorno_Pausa
+            Entrada = 'E',
+            Saida = 'S',
+            Pausa = 'P',
+            Retorno_Pausa = 'R'
         }
 
     }
