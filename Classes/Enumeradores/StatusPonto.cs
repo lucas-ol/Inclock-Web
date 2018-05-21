@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Classes.VO
+namespace Classes.Enumeradores
 {
   public  enum StatusPonto
     {

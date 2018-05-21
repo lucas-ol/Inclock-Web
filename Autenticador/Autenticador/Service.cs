@@ -58,7 +58,7 @@ namespace Autenticador
 
         public FeedBack CheckPoint(Ponto ponto)
         {
-            return new CheckPoint().BaterPonto(ponto);
+            return new CheckPoint(ponto).BaterPonto();
         }
 
         public List<Expediente> GetExpediente(string semana, string funcionario_Id)

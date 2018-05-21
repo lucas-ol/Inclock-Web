@@ -20,7 +20,7 @@ namespace Classes.VO
         public string SaidaPausa { get; set; }
         public TypePoint Type_Point { get; set; }
 
-        public List<string> Status { get; set; } = new List<string>();
+        public List<int> Status { get; set; } = new List<int>();
         public string Obs { get; set; }
 
         #region Conversores
