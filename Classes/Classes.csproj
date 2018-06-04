@@ -79,6 +79,7 @@
     <Compile Include="Common\QrCode.cs" />
     <Compile Include="Common\UtilCep.cs" />
     <Compile Include="Common\UtilDate.cs" />
+    <Compile Include="Common\UtilEmail.cs" />
     <Compile Include="Common\UtilFile.cs" />
     <Compile Include="Enumeradores\DateEnum.cs" />
     <Compile Include="Enumeradores\StatusEnum.cs" />
@@ -93,6 +94,9 @@
     <Compile Include="VO\User.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="config\Roles.json" />
     <None Include="packages.config" />
   </ItemGroup>

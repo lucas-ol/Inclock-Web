@@ -24,30 +24,38 @@ namespace Autenticador.BL.Quartz
         }
         public async void StartInstance()
         {
-            Schenduler = await StdSchedulerFactory.GetDefaultScheduler();
+            Servidor = await StdSchedulerFactory.GetDefaultScheduler();
         }
-        private IScheduler Schenduler { get; set; }
+        private IScheduler Servidor { get; set; }
         private const string EXPRESSAO = "0 */2 * ? * *";// Cron Expressions para o Job
         public async void Start()
         {
-            Schenduler = await StdSchedulerFactory.GetDefaultScheduler();
-            await Schenduler.Start();
+            Servidor = await StdSchedulerFactory.GetDefaultScheduler();
+            await Servidor.Start();
 
-            IJobDetail job = JobBuilder.Create<JobPoint>().Build();
+            JobDetailImpl job = new JobDetailImpl("JobPoint", typeof(JobPoint));
 
             ITrigger trigger = TriggerBuilder.Create().WithIdentity("Quartz Point").StartNow()
-                .WithSchedule(CronScheduleBuilder.CronSchedule(EXPRESSAO)).ForJob("UltimoDiaDoMes").Build();
-            Schenduler.ScheduleJob(job, trigger).Wait();
+              .WithSchedule(CronScheduleBuilder.CronSchedule(new CronExpression(EXPRESSAO))).ForJob("JobPoint").Build();
+            try
+            {
+                await Servidor.ScheduleJob(job, trigger);
+                await Servidor.Start();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
 
         }
         public async void DeleteAll()
         {
 
-            var processos = await Schenduler.GetCurrentlyExecutingJobs();
+            var processos = await Servidor.GetCurrentlyExecutingJobs();
             foreach (var item in processos)
             {
-                await Schenduler.DeleteJob(item.JobDetail.Key);
+                await Servidor.DeleteJob(item.JobDetail.Key);
             }
         }
     }

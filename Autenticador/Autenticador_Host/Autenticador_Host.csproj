@@ -65,6 +65,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Classes\Classes.csproj">
+      <Project>{4d7fb94c-7235-4847-9435-51f84ce6f381}</Project>
+      <Name>Classes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Autenticador\Autenticador.csproj">
       <Project>{b38807b2-64e4-403b-ba86-72f20c28353c}</Project>
       <Name>Autenticador</Name>

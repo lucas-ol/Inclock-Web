@@ -218,12 +218,12 @@ namespace Classes.Common
 
             }
         }
-        protected virtual async Task<object> MySqlExecutaComandoAssincrono(string szCommand, CommandType TypeCommand)
+        protected async Task MySqlExecutaComandoAssincrono(string szCommand, CommandType TypeCommand)
         {
 
             MySqlCommand Command = new MySqlCommand();// Objeto de Commando 
             MySqlConnection Connection = new MySqlConnection(szConnexao); // Objeto de connexão
-            Task task = null;//new Task(,this);
+            Task<object> task;
             Command.Connection = Connection;
             Command.CommandType = TypeCommand;
             Command.CommandText = szCommand;
@@ -233,15 +233,18 @@ namespace Classes.Common
             try
             {
                 await Connection.OpenAsync();
-                ObjetoRetorno = await Command.ExecuteScalarAsync();
-                task = await Command.ExecuteScalarAsync() as Task;
+                var obj = await Command.ExecuteScalarAsync();
+               
             }
             catch (Exception)
             {
-                ObjetoRetorno = 0;
+                await Task.FromCanceled(new System.Threading.CancellationToken(true));
             }
-            MySqlZeraParametro();
-            return task;
+            finally
+            {
+                MySqlZeraParametro();
+            }
+           
         }
         #endregion
     }

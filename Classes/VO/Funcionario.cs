@@ -10,7 +10,6 @@ namespace Classes.VO
     /// </summary>
     public class Funcionario : User
     {
-        public int Id { get; set; }
         public string CPF { get; set; }
         public string RG { get; set; }
         public string Telefone { get; set; }
