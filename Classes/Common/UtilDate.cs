@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Classes.Common
 {
+
     public class UtilDate
     {
+
         /// <summary>
         /// Converte um numero em um periodo
         /// </summary>
@@ -68,5 +70,58 @@ namespace Classes.Common
             }
             return szSemana;
         }
+        public struct StDiasSemana
+        {
+            public IDictionary<DayOfWeek, IList<DateTime>> Semanas { get; private set; }
+            public static StDiasSemana GetInstance()
+            {
+                var Instance = new StDiasSemana();
+                Instance.Semanas.Add(DayOfWeek.Sunday, new List<DateTime>());
+                Instance.Semanas.Add(DayOfWeek.Monday, new List<DateTime>());
+                Instance.Semanas.Add(DayOfWeek.Tuesday, new List<DateTime>());
+                Instance.Semanas.Add(DayOfWeek.Wednesday, new List<DateTime>());
+                Instance.Semanas.Add(DayOfWeek.Thursday, new List<DateTime>());
+                Instance.Semanas.Add(DayOfWeek.Friday, new List<DateTime>());
+                Instance.Semanas.Add(DayOfWeek.Saturday, new List<DateTime>());
+                return Instance;
+            }
+        }
+        public static StDiasSemana GetDiasSemanas(int ano, int mes)
+        {
+            int qtdeMes = DateTime.DaysInMonth(ano, mes);
+            var Dias = StDiasSemana.GetInstance();
+            var Data = new DateTime(ano, mes, 1);
+            for (int i = 1; i <= qtdeMes; i++)
+            {
+                switch (Data.DayOfWeek)
+                {
+                    case DayOfWeek.Sunday:
+                        Dias.Semanas[DayOfWeek.Sunday].Add(Data);
+                        break;
+                    case DayOfWeek.Monday:
+                        Dias.Semanas[DayOfWeek.Monday].Add(Data);
+                        break;
+                    case DayOfWeek.Tuesday:
+                        Dias.Semanas[DayOfWeek.Tuesday].Add(Data);
+                        break;
+                    case DayOfWeek.Wednesday:
+                        Dias.Semanas[DayOfWeek.Wednesday].Add(Data);
+                        break;
+                    case DayOfWeek.Thursday:
+                        Dias.Semanas[DayOfWeek.Tuesday].Add(Data);
+                        break;
+                    case DayOfWeek.Friday:
+                        Dias.Semanas[DayOfWeek.Friday].Add(Data);
+                        break;
+                    case DayOfWeek.Saturday:
+                        Dias.Semanas[DayOfWeek.Saturday].Add(Data);
+                        break;
+                }
+                Data.AddDays(1);
+            }
+            return Dias;
+        }
+
+
     }
 }

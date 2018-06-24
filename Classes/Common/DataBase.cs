@@ -18,10 +18,11 @@ namespace Classes.Common
         /// Tabela usada para receber os dados do de algum metodo assyscrono 
         /// </summary>
         protected DataTable MySqlTabela_Asyncrona = new DataTable();
+        private string szConnexao;
         /// <summary>
         /// string de conexão com o Banco
         /// </summary>
-        private string szConnexao { get; set; }// = "server=localhost;user=root;password=root;database=inclock;port=3306;";
+        public string SzConnexao { get { return System.Configuration.ConfigurationManager.ConnectionStrings["sql"].ConnectionString; ; } private set { szConnexao = value; } }// = "server=localhost;user=root;password=root;database=inclock;port=3306;";
 
         /// <summary>
         /// Coleção de parametro Generica
@@ -31,11 +32,11 @@ namespace Classes.Common
         #region Construtor
         public DataBase()
         {
-            szConnexao = System.Configuration.ConfigurationManager.ConnectionStrings["sql"].ConnectionString;
+
         }
         public DataBase(string Endereco)
         {
-            szConnexao = Endereco;
+            SzConnexao = Endereco;
         }
         #endregion
         #region Metodos 
@@ -66,7 +67,7 @@ namespace Classes.Common
         {
             DataTable TabelaDeRetorno = new DataTable();
             MySqlCommand Command = new MySqlCommand();// Objeto de Commando 
-            MySqlConnection Connection = new MySqlConnection(szConnexao); // Objeto de connexão
+            MySqlConnection Connection = new MySqlConnection(SzConnexao); // Objeto de connexão
             MySqlDataAdapter Adapter;
             // Configuração do objeto Command
             Command.Connection = Connection;
@@ -109,7 +110,7 @@ namespace Classes.Common
         {
             FeedBack feedBack = new FeedBack();
             MySqlCommand Command = new MySqlCommand();// Objeto de Commando 
-            MySqlConnection Connection = new MySqlConnection(szConnexao); // Objeto de connexão
+            MySqlConnection Connection = new MySqlConnection(SzConnexao); // Objeto de connexão
 
             Command.Connection = Connection;
             Command.CommandType = TypeCommand;
@@ -144,7 +145,7 @@ namespace Classes.Common
         {
             DataTable TabelaDeRetorno = new DataTable();
             MySqlCommand Command = new MySqlCommand();// Objeto de Commando 
-            MySqlConnection Connection = new MySqlConnection(szConnexao); // Objeto de connexão
+            MySqlConnection Connection = new MySqlConnection(SzConnexao); // Objeto de connexão
             MySqlDataAdapter Adapter;
             // Configuração do objeto Command
             Command.Connection = Connection;
@@ -192,7 +193,7 @@ namespace Classes.Common
         protected virtual async void MySqlAssincronoLeitura(string szCommand, CommandType TypeCommand)
         {
             MySqlDataAdapter Adapter = new MySqlDataAdapter();
-            MySqlConnection Connection = new MySqlConnection(szConnexao); // Objeto de connexão
+            MySqlConnection Connection = new MySqlConnection(SzConnexao); // Objeto de connexão
             MySqlCommand Command = new MySqlCommand();// Objeto de Commando 
             Command.Connection = Connection;
             Command.CommandTimeout = 2000; // se passar de 2 mim tentando se conectar ele interrompe o comando 
@@ -222,7 +223,7 @@ namespace Classes.Common
         {
 
             MySqlCommand Command = new MySqlCommand();// Objeto de Commando 
-            MySqlConnection Connection = new MySqlConnection(szConnexao); // Objeto de connexão
+            MySqlConnection Connection = new MySqlConnection(SzConnexao); // Objeto de connexão
             Task<object> task;
             Command.Connection = Connection;
             Command.CommandType = TypeCommand;
@@ -234,7 +235,7 @@ namespace Classes.Common
             {
                 await Connection.OpenAsync();
                 var obj = await Command.ExecuteScalarAsync();
-               
+
             }
             catch (Exception)
             {
@@ -244,7 +245,7 @@ namespace Classes.Common
             {
                 MySqlZeraParametro();
             }
-           
+
         }
         #endregion
     }

@@ -62,18 +62,7 @@ namespace Autenticador.BL
             return MySqlExecutaComando("update pontos set entrada = @entrada", CommandType.Text);
 
         }
-        private FeedBack InsertDataBase(Ponto ponto)
-        {
-            MySqlAdicionaParametro("_funcionario", ponto.Funcionario);
-            MySqlAdicionaParametro("_dia", Convert.ToDateTime(ponto.Data));
-            MySqlAdicionaParametro("_hora", DateTime.Now.ToString("HH:mm:ss"));
-            MySqlAdicionaParametro("_periodo", ponto.Periodo);
-            MySqlAdicionaParametro("_logitude", ponto.Logitude);
-            MySqlAdicionaParametro("_latitude", ponto.Latitude);
-            MySqlAdicionaParametro("_status", string.Join(";", ponto.Status));
-            return MySqlExecutaComando("prd_insert_ponto", CommandType.StoredProcedure);
-        }
-
+        
         /// <summary>
         /// Metodo não esta completo
         /// </summary>

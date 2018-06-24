@@ -1,10 +1,12 @@
 ﻿using Classes;
 using Classes.Common;
 using Classes.VO;
+using MySql.Data.MySqlClient;
 using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,21 +18,7 @@ namespace Autenticador.BL.Quartz
 
         public Task Execute(IJobExecutionContext context)
         {
-            var vrf = true;
-            do
-            {
-                try
-                {
-                    Adiciona_Pontos();
-                    vrf = false;
-                }
-                catch (Exception ex)
-                {
-                    Classes.Common.UtilEmail.ErroMail(ex); //manda um email de erro 
-                    System.Threading.Thread.Sleep(1000 * 60 * 15);
-                }
-            } while (vrf);
-
+            Adiciona_Pontos();
             return Task.CompletedTask;
         }
 
@@ -39,23 +27,32 @@ namespace Autenticador.BL.Quartz
             DateTime dtPrxMes;
             if (GetLastInsertPoint(out dtPrxMes))
             {
-                var qtdeDiasMes = DateTime.DaysInMonth(dtPrxMes.Year, dtPrxMes.Month + 1);
+                var Datas = UtilDate.GetDiasSemanas(dtPrxMes.Year, dtPrxMes.Month);
                 DataTable tb = MySqlLeitura("select id from funcionarios", System.Data.CommandType.Text);
-                for (int i = 1; i < qtdeDiasMes; i++)
+                foreach (DataRow func in tb.Rows)
                 {
-                    foreach (DataRow func in tb.Rows)
+                    int id = Convert.ToInt32(func["id"]);
+                    foreach (var week in Datas.Semanas)
                     {
-                        List<Expediente> expedientes = new ExpedienteController().GetExpediente(Convert.ToInt32(dtPrxMes.DayOfWeek) + 1, Convert.ToInt32(func["id"]));
-                        foreach (Expediente exp in expedientes)
+                        var exp = new ExpedienteController().GetExpediente(id, Convert.ToInt32(week.Key) + 1);
+                        foreach (var dia in week.Value)
                         {
-                            MySqlAdicionaParametro("date", dtPrxMes.ToString("yyyy-MM-dd"));
-                            MySqlAdicionaParametro("func", func["id"]);
-                            MySqlAdicionaParametro("expId", exp.Id);
-                            MySqlExecutaComando("INSERT INTO pontos(data_ponto,funcionario_id,expediente_id)VALUES(@date,@func,@expId);", CommandType.Text);
+                            foreach (var item in exp)
+                            {
+                                var parameter = new MySqlCommand().Parameters;
+                                parameter.AddWithValue("_funcionario", id);
+                                parameter.AddWithValue("_entrada", item.Entrada);
+                                parameter.AddWithValue("_dataEntrada", dia);
+                                parameter.AddWithValue("_expEntrada", "");
+                                parameter.AddWithValue("_saida", item.Saida);
+                                parameter.AddWithValue("_dataSaida", );
+                                parameter.AddWithValue("_expSaida", "");
+
+                            }
                         }
                     }
-                    dtPrxMes = dtPrxMes.AddDays(1);
                 }
+
             }
         }
         private bool GetLastInsertPoint(out DateTime dateTime)
@@ -68,6 +65,28 @@ namespace Autenticador.BL.Quartz
             return
               dateTime.Month - DateTime.Now.Month <= 1;
         }
+        private async void InsertNullPoit(MySqlParameterCollection parameters)
+        {
+            var command = new MySqlCommand();
+            var connection = new MySqlConnection(SzConnexao);
 
+            command.CommandTimeout = 1000 * 60 * 2; // Vai esperar ate 2 min para fazer a inserçao 
+            command.Connection = connection;
+            foreach (MySqlParameter param in parameters)
+                command.Parameters.AddWithValue(param.ParameterName, param.Value);
+            command.CommandText = "prd_in_point_null";
+            command.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                await connection.OpenAsync();
+                await command.ExecuteScalarAsync();
+            }
+            catch (Exception ex)
+            {
+                Classes.Common.UtilEmail.ErroMail(ex); //manda um email de erro 
+            }
+
+
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("iSemana", semana);
             MySqlAdicionaParametro("iFuncionario", funcionario_id);
             List<Expediente> ExpedienteList = new List<Expediente>();
-            DataTable tb = MySqlLeitura("prd_se_expediente_semana", System.Data.CommandType.StoredProcedure);
+            DataTable tb = MySqlLeitura("prd_se_expediente_semana", CommandType.StoredProcedure);
             if (tb.TableName != "erro")
             {
                 foreach (DataRow linha in tb.Rows)
