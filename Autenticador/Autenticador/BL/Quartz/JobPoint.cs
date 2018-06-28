@@ -34,7 +34,7 @@ namespace Autenticador.BL.Quartz
                     int id = Convert.ToInt32(func["id"]);
                     foreach (var week in Datas.Semanas)
                     {
-                        var exp = new ExpedienteController().GetExpediente(id, Convert.ToInt32(week.Key) + 1);
+                        var exp = new ExpedienteController().GetExpediente(Convert.ToInt32(week.Key) + 1, id);
                         foreach (var dia in week.Value)
                         {
                             foreach (var item in exp)
@@ -43,11 +43,10 @@ namespace Autenticador.BL.Quartz
                                 parameter.AddWithValue("_funcionario", id);
                                 parameter.AddWithValue("_entrada", item.Entrada);
                                 parameter.AddWithValue("_dataEntrada", dia);
-                                parameter.AddWithValue("_expEntrada", "");
+                                parameter.AddWithValue("_expediente", item.Id);
                                 parameter.AddWithValue("_saida", item.Saida);
-                                parameter.AddWithValue("_dataSaida", );
-                                parameter.AddWithValue("_expSaida", "");
-
+                                parameter.AddWithValue("_dataSaida", dia.AddDays(CheckSaida(item)).Date);
+                                InsertNullPoit(parameter);
                             }
                         }
                     }
@@ -86,7 +85,28 @@ namespace Autenticador.BL.Quartz
                 Classes.Common.UtilEmail.ErroMail(ex); //manda um email de erro 
             }
 
-
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="expediente"></param>
+        /// <returns></returns>
+        private int CheckSaida(Expediente expediente)
+        {
+            TimeSpan saida;
+            TimeSpan entrada;
+            TimeSpan ht;
+            DateTime hora;
+            saida = Convert.ToDateTime(expediente.Saida).TimeOfDay;
+            entrada = Convert.ToDateTime(expediente.Entrada).TimeOfDay;
+            ht = entrada - saida;
+            hora = DateTime.Now;
+            hora = hora.Add(ht);
+            if (hora.Day > DateTime.Now.Day)  // Se virar o dia, quer dizer que o func vai bater a saida no outro dia         
+                expediente.DiaSemana++;
+
+            return expediente.DiaSemana;
+        }
+
     }
 }

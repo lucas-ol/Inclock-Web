@@ -76,6 +76,7 @@ namespace Classes.Common
             public static StDiasSemana GetInstance()
             {
                 var Instance = new StDiasSemana();
+                Instance.Semanas = new Dictionary<DayOfWeek, IList<DateTime>>();
                 Instance.Semanas.Add(DayOfWeek.Sunday, new List<DateTime>());
                 Instance.Semanas.Add(DayOfWeek.Monday, new List<DateTime>());
                 Instance.Semanas.Add(DayOfWeek.Tuesday, new List<DateTime>());
@@ -117,7 +118,7 @@ namespace Classes.Common
                         Dias.Semanas[DayOfWeek.Saturday].Add(Data);
                         break;
                 }
-                Data.AddDays(1);
+                Data = Data.AddDays(1);
             }
             return Dias;
         }
