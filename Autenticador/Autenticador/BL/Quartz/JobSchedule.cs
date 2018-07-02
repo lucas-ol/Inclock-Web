@@ -20,7 +20,7 @@ namespace Autenticador.BL.Quartz
 
         public JobSchedule()
         {
-            StartInstance();
+          
         }
         public async void StartInstance()
         {

@@ -52,17 +52,22 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("entrada", entrada.ToString("hh:MM:ss"));
             MySqlAdicionaParametro("status", string.Join(";", ponto.Status));
             MySqlAdicionaParametro("id", GetIdPoint(ponto.Funcionario, expediente.Id));
-            return MySqlExecutaComando("update pontos set entrada = @entrada, status = @status where id = @id", CommandType.Text);
+            return MySqlExecutaComando("update pontos set hora = @entrada, status = @status where id = @id", CommandType.Text);
 
 
         }
         private FeedBack BaterSaida(Ponto ponto)
         {
+            var expediente = GetExpedienteHoje(ponto.Funcionario, ponto.Periodo, ponto.Type_Point);
+
             MySqlAdicionaParametro("entrada", DateTime.Now.ToString("HH:mm:ss"));
-            return MySqlExecutaComando("update pontos set entrada = @entrada", CommandType.Text);
+            MySqlAdicionaParametro("status", string.Join(";", ponto.Status));
+            MySqlAdicionaParametro("id", GetIdPoint(ponto.Funcionario, expediente.Id));
+            return MySqlExecutaComando("update pontos set hora = @entrada, status = @status where id = @id", CommandType.Text);
+         
 
         }
-        
+
         /// <summary>
         /// Metodo não esta completo
         /// </summary>
@@ -102,12 +107,11 @@ namespace Autenticador.BL
         private int GetIdPoint(int Funcionario, int expedienteId)
         {
             MySqlAdicionaParametro("func", Funcionario);
-        
             MySqlAdicionaParametro("exp", expedienteId);
-
+            MySqlAdicionaParametro("data", DateTime.Now.Date.ToString("yyyy-MM-dd"));
             try
             {
-                var tr = MySqlLeitura("select id from where data_ponto = @data and funcionario_id = @func and expediente_id = @exp", CommandType.StoredProcedure);
+                var tr = MySqlLeitura("select id from where data_ponto = @data and funcionario_id = @func and expediente_id = @exp", CommandType.Text);
                 int id = Convert.ToInt32(tr.Rows[0]["id"]);
                 return id;
             }
