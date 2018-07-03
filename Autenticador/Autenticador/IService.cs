@@ -32,21 +32,13 @@ namespace Autenticador
         List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario);
 
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        List<Ponto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario);
-
-        [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        string GetCheckPointById(int id);
-
-        [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "getuser/{id}")]
         Funcionario GetUserById(string id);
 
         [OperationContract]
-        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "POST",UriTemplate ="baterponto")]
+        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "POST", UriTemplate = "baterponto")]
         FeedBack CheckPoint(Ponto ponto);
 
         [OperationContract]
@@ -56,7 +48,19 @@ namespace Autenticador
 
 
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json,RequestFormat = WebMessageFormat.Json,UriTemplate ="getaviso/{qtde}")]
+        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getaviso/{qtde}")]
         List<Aviso> GetAvisos(string qtde);
+
+        [OperationContract]
+        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getpoint/{month}/{funcionario}")]
+        List<Ponto> GetCheckPoint(string month, string funcionario);
+
+        [OperationContract]
+        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getpoint/{InitialDate}/{FinalDate}/{id_funcionario}")]
+        List<Ponto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario);
+
+        [OperationContract]
+        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getpoint/{id}")]
+        Ponto GetCheckPointById(string id);
     }
 }

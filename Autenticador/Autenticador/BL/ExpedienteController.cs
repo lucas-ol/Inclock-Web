@@ -67,7 +67,7 @@ namespace Autenticador.BL
         /// <param name="periodo">periodo do expediente</param>
         /// <param name="tp">Tipo do expediente se vai se E para entrada ou S para saida</param>
         /// <returns></returns>
-        public Expediente GetExpediente(int funcionario, DayOfWeek semana, int periodo, Ponto.TypePoint tp)
+        public Expediente GetExpediente(int funcionario, DayOfWeek semana, int periodo, char tp)
         {
             Expediente exp = new Expediente();
 

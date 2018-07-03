@@ -10,17 +10,16 @@ namespace Classes.VO
     {
         public string Id { get; set; }
         public int Funcionario { get; set; }
-        public string Data { get; set; }
+        public string DataEntrada { get; set; }
         public string Entrada { get; set; }
+        public string DataSaida { get; set; }
         public string Saida { get; set; }
         public string Logitude { get; set; }
         public string Latitude { get; set; }
         public int Periodo { get; set; }
-        public string EntradaPausa { get; set; }
-        public string SaidaPausa { get; set; }
-        public TypePoint Type_Point { get; set; }
+       
 
-        public List<int> Status { get; set; } = new List<int>();
+        public string Status { get; set; }
         public string Obs { get; set; }
 
         #region Conversores
@@ -63,13 +62,7 @@ namespace Classes.VO
         #endregion
 
 
-        public enum TypePoint
-        {
-            Entrada = 'E',
-            Saida = 'S',
-            Pausa = 'P',
-            Retorno_Pausa = 'R'
-        }
+       
 
     }
 

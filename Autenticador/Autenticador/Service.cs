@@ -46,21 +46,6 @@ namespace Autenticador
                 throw new Exception("Parametros incorretos");
         }
 
-        public List<Ponto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario)
-        {
-            return new List<Ponto>();
-        }
-
-        public string GetCheckPointById(int id)
-        {
-            return nameof(GetCheckPointById);
-        }
-
-        public FeedBack CheckPoint(Ponto ponto)
-        {
-            return new CheckPoint().BaterPonto(ponto);
-        }
-
         public List<Expediente> GetExpediente(string semana, string funcionario_Id)
         {
             int isemana, ifuncionario_Id;
@@ -77,6 +62,43 @@ namespace Autenticador
             if (string.IsNullOrEmpty(qtde))
                 qtde = "10";
             return new BL.Autenticador().getAvisos(qtde);
+        }
+        public List<Ponto> GetCheckPoint(string month, string funcionario)
+        {
+            int iMonth, iFuncionario;
+            int.TryParse(month, out iMonth);
+            if (iMonth == 0)
+                throw new Exception("Parametros incorretos");
+            int.TryParse(funcionario, out iFuncionario);
+            if (iFuncionario == 0)
+                throw new Exception("Parametros incorretos");
+            return new CheckPoint().GetCheckPointByMonth(iMonth, iFuncionario);
+        }
+        public List<Ponto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario)
+        {
+            int iFuncionario;
+            if (string.IsNullOrEmpty(InitialDate) || string.IsNullOrEmpty(FinalDate))
+                throw new Exception("Parametros incorretos");
+
+            int.TryParse(id_funcionario, out iFuncionario);
+            if (iFuncionario == 0)
+                throw new Exception("Parametros incorretos");
+            return new CheckPoint().GetListCheckPoint(InitialDate, FinalDate, iFuncionario);
+        }
+
+        public Ponto GetCheckPointById(string id)
+        {
+            int idd;
+            int.TryParse(id, out idd);
+            if (idd == 0)
+                throw new Exception("Parametros incorretos");
+
+            return new CheckPoint().GetPoint(idd);
+        }
+
+        public FeedBack CheckPoint(Ponto ponto)
+        {
+            return new CheckPoint().BaterPonto(ponto);
         }
     }
 }
