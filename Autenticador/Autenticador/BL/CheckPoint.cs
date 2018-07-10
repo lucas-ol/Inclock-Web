@@ -26,24 +26,17 @@ namespace Autenticador.BL
         /// metodo que vai realizar o ponto dependendo do horario
         /// </summary>
         /// <returns></returns>
-        public FeedBack BaterPonto(Ponto ponto)
+        public FeedBack BaterPonto(Ponto pt)
         {
-            int id;
-            char type;
-            if (GetIdPoint(ponto.Funcionario, out id, out type))
-            {
-
-            }
-
-            if (type == 'E')
-                return BaterEntrada(ponto, id);
+            if (!string.IsNullOrEmpty(pt.Entrada))
+                return BaterEntrada(pt);
             else
-                return BaterSaida(ponto, id);
+                return BaterSaida(pt);
 
         }
-        private FeedBack BaterEntrada(Ponto ponto, int id)
+        private FeedBack BaterEntrada(Ponto ponto)
         {
-
+            GetIdPoint(ponto.Funcionario, out int id, 'E');
             var expediente = GetExpedienteHoje(ponto.Funcionario, ponto.Periodo, 'E');
             if (expediente == null)
                 return new FeedBack { Mensagem = "Você não pode bater o ponto", Status = false };
@@ -55,6 +48,7 @@ namespace Autenticador.BL
             {
                 return new FeedBack() { Status = false, Mensagem = "horario minimo para bater o ponto" + entrada };
             }
+           
 
             MySqlAdicionaParametro("hora", entrada.ToString("hh:MM:ss"));
             MySqlAdicionaParametro("status", string.Join(";", ponto.Status));
@@ -63,7 +57,7 @@ namespace Autenticador.BL
 
 
         }
-        private FeedBack BaterSaida(Ponto ponto, int id)
+        private FeedBack BaterSaida(Ponto ponto)
         {
             var expediente = GetExpedienteHoje(ponto.Funcionario, ponto.Periodo, 'S');
             if (expediente == null)
@@ -73,6 +67,8 @@ namespace Autenticador.BL
                 return new FeedBack { Mensagem = "horario minimo para bater o ponto " + (saida - Tolerancia).ToString("hh:MM"), Status = false };
             else if (saida + Tolerancia > DateTime.Now.TimeOfDay)
                 ponto.Status = "Hora extra;";
+
+            GetIdPoint(ponto.Funcionario, out int id, 'S');
 
             MySqlAdicionaParametro("hora", DateTime.Now.ToString("HH:mm:ss"));
             MySqlAdicionaParametro("status", ponto.Status);
@@ -106,7 +102,8 @@ namespace Autenticador.BL
             var tb = MySqlLeitura("procedure aqui", CommandType.StoredProcedure);
             if (tb.TableName == "erro")
                 throw new Exception("erro desconhecido");
-            else {
+            else
+            {
                 foreach (DataRow item in tb.Rows)
                 {
                     Ponto ponto = new Ponto();
@@ -130,7 +127,8 @@ namespace Autenticador.BL
             var tb = MySqlLeitura("procedure aqui", CommandType.StoredProcedure);
             if (tb.TableName == "erro")
                 throw new Exception("erro desconhecido");
-            else {
+            else
+            {
                 foreach (DataRow item in tb.Rows)
                 {
                     Ponto ponto = new Ponto();
@@ -178,21 +176,19 @@ namespace Autenticador.BL
         /// <param name="Funcionario"></param>
         /// <param name="expedienteId"></param>
         /// <returns></returns>
-        private bool GetIdPoint(int Funcionario, out int id, out char type)
+        private bool GetIdPoint(int Funcionario, out int id, char type)
         {
+            id = 0;
             MySqlAdicionaParametro("func", Funcionario);
-            // MySqlAdicionaParametro("exp", expedienteId);
-            //  MySqlAdicionaParametro("data", DateTime.Now.Date.ToString("yyyy-MM-dd"));
-            string command = "select id, type_point from where data_ponto = {0} and funcionario_id = {1} type_point = {}";
+            string command = "select id, type_point from where data_ponto = {0} and funcionario_id = {1} type_point = {2}";
             try
             {
                 //       var tr = MySqlLeitura("select id, type_point from where data_ponto = @data and funcionario_id = @func and expediente_id = @exp", CommandType.Text);
-                var tr = MySqlLeitura(string.Format(command, DataHoje.Date.ToString("yyyy-MM-dd")), CommandType.Text);
+                var tr = MySqlLeitura(string.Format(command, DataHoje.Date.ToString("yyyy-MM-dd"), Funcionario, type), CommandType.Text);
                 if (tr.Rows.Count <= 0 || tr.TableName == "erro")
-                    tr = MySqlLeitura(string.Format(command, DataHoje.Date.ToString("yyyy-MM-dd")), CommandType.Text);
+                    return false;
 
                 id = Convert.ToInt32(tr.Rows[0]["id"]);
-                type = Convert.ToChar(tr.Rows[0]["type_point "]);
                 return true;
             }
             catch (Exception ex)

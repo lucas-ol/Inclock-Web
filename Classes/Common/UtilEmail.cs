@@ -28,7 +28,7 @@ namespace Classes.Common
 
         public static async void ErroMail(Exception ex)
         {
-            MailMessage mail = new MailMessage(new MailAddress(ConfigurationManager.AppSettings.Get("EmailPadrao")), new MailAddress(""));
+            MailMessage mail = new MailMessage(new MailAddress(ConfigurationManager.AppSettings.Get("EmailPadrao")), new MailAddress(ConfigurationManager.AppSettings.Get("ErroEmail")));
             foreach (string item in ConfigurationManager.AppSettings.Get("ErroEmail").Split(';'))
             {
                 mail.ReplyToList.Add(new MailAddress(item));

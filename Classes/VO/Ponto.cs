@@ -17,8 +17,6 @@ namespace Classes.VO
         public string Logitude { get; set; }
         public string Latitude { get; set; }
         public int Periodo { get; set; }
-       
-
         public string Status { get; set; }
         public string Obs { get; set; }
 
@@ -41,28 +39,8 @@ namespace Classes.VO
                 return time.TimeOfDay;
             }
         }
-        public TimeSpan TimeSaidaPausa
-        {
-            get
-            {
-                DateTime time;
-                DateTime.TryParse(SaidaPausa, out time);
-                return time.TimeOfDay;
-            }
-        }
-        public TimeSpan TimeEntradaPausa
-        {
-            get
-            {
-                DateTime time;
-                DateTime.TryParse(EntradaPausa, out time);
-                return time.TimeOfDay;
-            }
-        }
+
         #endregion
-
-
-       
 
     }
 
