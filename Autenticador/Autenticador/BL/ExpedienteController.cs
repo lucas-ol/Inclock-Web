@@ -76,7 +76,6 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("_periodo", periodo);
             MySqlAdicionaParametro("_type", tp);
             DataTable tb = MySqlLeitura("prd_se_expediente", CommandType.StoredProcedure);
-
             if (tb.Rows.Count > 0 || tb.TableName != "erro")
             {
                 exp.Id = Convert.ToInt32(tb.Rows[0]["expediente_id"]);
@@ -86,12 +85,9 @@ namespace Autenticador.BL
                 exp.Entrada = tb.Rows[0]["hora"].ToString();
                 exp.Saida = tb.Rows[0]["hora"].ToString();
                 exp.DiaSemana = Convert.ToInt32(tb.Rows[0]["diasemana"]);
-
-
             }
             return exp;
         }
-
 
     }
 }

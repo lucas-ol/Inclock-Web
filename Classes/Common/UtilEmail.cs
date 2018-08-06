@@ -21,21 +21,23 @@ namespace Classes.Common
                     Port = Convert.ToInt32(ConfigurationManager.AppSettings.Get("port")),
                     EnableSsl = true,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(ConfigurationManager.AppSettings.Get("EmailPadrao"), ConfigurationManager.AppSettings.Get("passwordPadrao"))
+                    Credentials = new NetworkCredential(ConfigurationManager.AppSettings.Get("smtpLoginPadrao"), ConfigurationManager.AppSettings.Get("passwordPadrao"))
                 };
             }
         }
 
-        public static async void ErroMail(Exception ex)
+        public static void ErroMail(Exception ex)
         {
-            MailMessage mail = new MailMessage(new MailAddress(ConfigurationManager.AppSettings.Get("EmailPadrao")), new MailAddress(ConfigurationManager.AppSettings.Get("ErroEmail")));
-            foreach (string item in ConfigurationManager.AppSettings.Get("ErroEmail").Split(';'))
+            MailMessage mail = new MailMessage(ConfigurationManager.AppSettings.Get("EmailPadrao"), ConfigurationManager.AppSettings.Get("EmailPadrao"))
             {
-                mail.ReplyToList.Add(new MailAddress(item));
-            }
-            mail.IsBodyHtml = true;
-            mail.Body = "Erro: " + ex.Message + "<br />Inner Exception: " + ex.InnerException + "<br />Source: " + ex.Source;
-            await Client.SendMailAsync(mail);
+                Subject = "Erro no autenticador Inclock",
+                IsBodyHtml = true,
+                Body = "Erro: " + ex.Message + "<br />Inner Exception: " + ex.InnerException + "<br />Source: " + ex.Source + "Stack: " + ex.StackTrace
+            };
+            foreach (string item in ConfigurationManager.AppSettings.Get("ErroEmail").Split(';'))            
+                mail.ReplyToList.Add(item);            
+
+            Client.Send(mail);
         }
     }
 }

@@ -23,13 +23,15 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
         }
         private set { idfuncionario = value; }
     }
-
+    private Funcionario User {
+        get {
+            return Visitante.CurrentUser;
+        }
+    }
     #region Metodos
     protected void Page_Load(object sender, EventArgs e)
     {
-
         Funcionarios Controller = new Funcionarios();
-
         //Carrega os dados do estado 
         if (!IsPostBack)
         {
@@ -48,9 +50,10 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
 
             if (IdFuncionario > 0)
             {
+                if (!User.Roles.Contains("ADM"))
+                    Response.Write("<script>alert('Opa, voce não tem permição para ver esse login');window.location.href = '/'</script>");
                 if (PreencheDados(Controller.Pesquisa_Funcionario_ID(IdFuncionario)))
                 {
-
                     btnCadastraExpediente.Visible = true;
                     ucExpCadastrar.Visible = true;
                     ucExpListar.Visible = true;
@@ -58,10 +61,19 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
                 }
                 else
                     IdFuncionario = 0;
-
+            }
+            else if (Visitante.Instance.Ticket != null)
+            {
+                if (PreencheDados(Controller.Pesquisa_Funcionario_ID(User.Id)))
+                {
+                    ckListRoles.Visible = User.Roles.Contains("ADM"); 
+                    btnCadastraExpediente.Visible = true;
+                    ucExpCadastrar.Visible = true;
+                    ucExpListar.Visible = true;
+                    ucExpListar.BuscaEspediente(User.Id);
+                }
             }
         }
-
     }
 
 
@@ -121,25 +133,27 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
     private Funcionario CriaIbjeto()
     {
 
-        Funcionario funcionario = new Funcionario();
-        funcionario.Id = IdFuncionario;
-        funcionario.Nome = txtNome.Text;
-        funcionario.Telefone = txtTelefone.Text;
-        funcionario.Celular = txtCelular.Text;
-        funcionario.Email = txtEmail.Text;
-        funcionario.Endereco = txtEndereco.Text;
-        funcionario.CPF = txtCpf.Text;
-        funcionario.cargo_id = Convert.ToInt32(txtCargo.SelectedValue);
-        funcionario.Nascimento = Convert.ToDateTime(txtAniversario.Text).ToString("yyyy-MM-dd");
-        funcionario.Sexo = txtSexoFeminino.Checked ? "F" : "M";
-        funcionario.Cidade = txtCidade.Text;
-        funcionario.Estado = txtEstado.SelectedValue;
-        funcionario.CEP = txtCep.Text.Replace(".", "").Replace("-", "");
-        funcionario.Numero = txtNumeroCasa.Text;
-        funcionario.Bairro = txtBairro.Text;
-        funcionario.RG = txtRg.Text;
-        funcionario.Senha = txtSenha.Text;
-        funcionario.Login = txtLogin.Text;
+        Funcionario funcionario = new Funcionario
+        {
+            Id = IdFuncionario,
+            Nome = txtNome.Text,
+            Telefone = txtTelefone.Text,
+            Celular = txtCelular.Text,
+            Email = txtEmail.Text,
+            Endereco = txtEndereco.Text,
+            CPF = txtCpf.Text,
+            cargo_id = Convert.ToInt32(txtCargo.SelectedValue),
+            Nascimento = Convert.ToDateTime(txtAniversario.Text).ToString("yyyy-MM-dd"),
+            Sexo = rdaSexo.SelectedValue,
+            Cidade = txtCidade.Text,
+            Estado = txtEstado.SelectedValue,
+            CEP = txtCep.Text.Replace(".", "").Replace("-", ""),
+            Numero = txtNumeroCasa.Text,
+            Bairro = txtBairro.Text,
+            RG = txtRg.Text,
+            Senha = txtSenha.Text,
+            Login = txtLogin.Text
+        };
         foreach (ListItem item in ckListRoles.Items)
         {
             if (item.Selected)
@@ -158,14 +172,6 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
 
         const string ClassErro = " erro ";
         bool Retorno = true;
-        bool asdf = !txtSexoFeminino.Checked && !txtSexoMasculino.Checked;
-        if (!txtSexoFeminino.Checked && !txtSexoMasculino.Checked)
-        {
-            pnlsexo.CssClass += ClassErro;
-            Retorno = false;
-        }
-        else
-            pnlsexo.CssClass = pnlsexo.CssClass.Replace(ClassErro, "");
 
         if (txtCargo.SelectedValue == "0")
         {
@@ -300,12 +306,10 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
         txtEndereco.Text = funcionario.Endereco;
         txtCpf.Text = funcionario.CPF;
         txtCargo.SelectedValue = funcionario.cargo_id.ToString();
-
         txtAniversario.Text = funcionario.Nascimento;
-        if (funcionario.Sexo == "F")
-            txtSexoFeminino.Checked = true;
-        else
-            txtSexoMasculino.Checked = true;
+
+        rdaSexo.SelectedValue = funcionario.Sexo;
+
 
         txtCidade.Text = funcionario.Cidade;
         txtEstado.SelectedValue = funcionario.Estado;
@@ -331,8 +335,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
     private void Clear()
     {
 
-        txtSexoMasculino.Checked = false;
-        txtSexoFeminino.Checked = false;
+        rdaSexo.SelectedValue = "";
         txtCargo.SelectedValue = "0";
 
         txtEstado.SelectedValue = "0";

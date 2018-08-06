@@ -106,14 +106,16 @@ namespace Autenticador.BL
             {
                 foreach (DataRow item in tb.Rows)
                 {
-                    Ponto ponto = new Ponto();
-                    ponto.Id = item[""].ToString();
-                    ponto.Entrada = item[""].ToString();
-                    ponto.DataEntrada = item[""].ToString();
-                    ponto.Saida = item[""].ToString();
-                    ponto.DataSaida = item[""].ToString();
-                    ponto.Status = item[""].ToString();
-                    ponto.Obs = item[""].ToString();
+                    Ponto ponto = new Ponto
+                    {
+                        Id = item[""].ToString(),
+                        Entrada = item[""].ToString(),
+                        DataEntrada = item[""].ToString(),
+                        Saida = item[""].ToString(),
+                        DataSaida = item[""].ToString(),
+                        Status = item[""].ToString(),
+                        Obs = item[""].ToString()
+                    };
                     ListExpediente.Add(ponto);
                 }
             }
@@ -131,14 +133,16 @@ namespace Autenticador.BL
             {
                 foreach (DataRow item in tb.Rows)
                 {
-                    Ponto ponto = new Ponto();
-                    ponto.Id = item[""].ToString();
-                    ponto.Entrada = item[""].ToString();
-                    ponto.DataEntrada = item[""].ToString();
-                    ponto.Saida = item[""].ToString();
-                    ponto.DataSaida = item[""].ToString();
-                    ponto.Status = item[""].ToString();
-                    ponto.Obs = item[""].ToString();
+                    Ponto ponto = new Ponto
+                    {
+                        Id = item[""].ToString(),
+                        Entrada = item[""].ToString(),
+                        DataEntrada = item[""].ToString(),
+                        Saida = item[""].ToString(),
+                        DataSaida = item[""].ToString(),
+                        Status = item[""].ToString(),
+                        Obs = item[""].ToString()
+                    };
                     ListExpediente.Add(ponto);
                 }
             }

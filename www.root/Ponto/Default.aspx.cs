@@ -34,11 +34,9 @@ public partial class Ponto_Default : System.Web.UI.Page
         Label txtSaida = (Label)e.Item.FindControl("txtSaida");
         Label txtStatus = (Label)e.Item.FindControl("txtStatus");
 
-        txtData.Text = ponto.Data;
+        txtData.Text = ponto.Entrada;
         txtTurno.Text = ponto.Periodo.ToString();
-        txtEntrada.Text = ponto.Entrada;
-        txtEntradaPausa.Text = ponto.EntradaPausa;
-        txtSaidaPausa.Text = ponto.SaidaPausa;
+        txtEntrada.Text = ponto.Entrada;       
         txtSaida.Text = ponto.Saida;
         txtStatus.Text = string.Join(" ,", ponto.Status);
     }

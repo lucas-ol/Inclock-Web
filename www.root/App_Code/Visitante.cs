@@ -10,7 +10,7 @@ using System.Web.Security;
 /// </summary>
 public class Visitante
 {
-
+    public static readonly Visitante Instance = new Visitante();
     public Visitante()
     {
         //
@@ -24,13 +24,13 @@ public class Visitante
             return !Visitante.CurrentUser.Roles.Contains("ADM");
         }
     }
-    private FormsAuthenticationTicket Ticket
+    public FormsAuthenticationTicket Ticket
     {
         get
         {
             FormsAuthenticationTicket ticket;
             HttpCookie Cookieticket = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
-            if (Cookieticket != null )
+            if (Cookieticket != null)
             {
                 ticket = FormsAuthentication.Decrypt(Cookieticket.Value);
             }
@@ -44,11 +44,11 @@ public class Visitante
         get
         {
             Funcionario func = new Funcionario();
-            var ticket = new Visitante().Ticket;
+            var ticket = Instance.Ticket;
             if (ticket != null)
             {
                 func = Newtonsoft.Json.JsonConvert.DeserializeObject<Funcionario>(ticket.UserData);
-            }
+            }         
             return func;
         }
     }
