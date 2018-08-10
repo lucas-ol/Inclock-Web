@@ -26,16 +26,16 @@ namespace Classes.Common
             }
         }
 
-        public static void ErroMail(Exception ex)
+        public static void ErroMail(Exception ex, string obs = "")
         {
             MailMessage mail = new MailMessage(ConfigurationManager.AppSettings.Get("EmailPadrao"), ConfigurationManager.AppSettings.Get("EmailPadrao"))
             {
                 Subject = "Erro no autenticador Inclock",
                 IsBodyHtml = true,
-                Body = "Erro: " + ex.Message + "<br />Inner Exception: " + ex.InnerException + "<br />Source: " + ex.Source + "Stack: " + ex.StackTrace
+                Body = "Erro: " + ex.Message + "<br />Inner Exception: " + ex.InnerException + "<br />Source: " + ex.Source + "Stack: " + ex.StackTrace + "<br />" + obs
             };
-            foreach (string item in ConfigurationManager.AppSettings.Get("ErroEmail").Split(';'))            
-                mail.ReplyToList.Add(item);            
+            foreach (string item in ConfigurationManager.AppSettings.Get("ErroEmail").Split(';'))
+                mail.ReplyToList.Add(item);
 
             Client.Send(mail);
         }
