@@ -12,7 +12,7 @@ namespace Autenticador_Host
     {
         static void Main(string[] args)
         {
-
+         
             ServiceHost host = new ServiceHost(typeof(Autenticador.Service));
             //Autenticador.BL.Quartz.JobSchedule.Instance.Start();
             new Autenticador.BL.Quartz.JobPoint().Adiciona_Pontos();
