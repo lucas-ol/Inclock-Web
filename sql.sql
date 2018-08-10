@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `inclock` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-USE `inclock`;
 -- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: inclock
@@ -205,18 +203,19 @@ DROP TABLE IF EXISTS `pontos`;
 CREATE TABLE `pontos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data_ponto` date NOT NULL,
-  `entrada` time DEFAULT NULL,
-  `saida` time DEFAULT NULL,
+  `hora` time DEFAULT NULL,
   `ponto_status` varchar(100) DEFAULT NULL,
   `obs` text,
-  `funcionario_id` int(11) DEFAULT NULL,
   `expediente_id` int(11) DEFAULT NULL,
+  `entrada_saida` char(1) DEFAULT NULL,
+  `sequence_id` int(11) DEFAULT NULL,
+  `registrado` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `FK_Expediente_pontos` (`expediente_id`),
-  KEY `FK_pontos_funcionarios` (`funcionario_id`),
-  CONSTRAINT `FK_pontos_expediente` FOREIGN KEY (`expediente_id`) REFERENCES `expediente_id` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `FK_pontos_funcionarios` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=308 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `FK_Expediente_pontos` (`expediente_id`,`sequence_id`),
+  KEY `FK_pontos_funcionarios_pontos` (`sequence_id`),
+  CONSTRAINT `FK_pontos_expediente` FOREIGN KEY (`expediente_id`) REFERENCES `expediente` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `FK_pontos_funcionarios_pontos` FOREIGN KEY (`sequence_id`) REFERENCES `pontos_funcionarios` (`id_ponto`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,8 +224,34 @@ CREATE TABLE `pontos` (
 
 LOCK TABLES `pontos` WRITE;
 /*!40000 ALTER TABLE `pontos` DISABLE KEYS */;
-INSERT INTO `pontos` VALUES (260,'2018-06-03',NULL,NULL,NULL,NULL,5,58),(261,'2018-06-04',NULL,NULL,NULL,NULL,5,43),(262,'2018-06-04',NULL,NULL,NULL,NULL,5,45),(263,'2018-06-04',NULL,NULL,NULL,NULL,5,46),(264,'2018-06-04',NULL,NULL,NULL,NULL,5,47),(265,'2018-06-04',NULL,NULL,NULL,NULL,5,49),(266,'2018-06-04',NULL,NULL,NULL,NULL,5,50),(267,'2018-06-04',NULL,NULL,NULL,NULL,5,51),(268,'2018-06-04',NULL,NULL,NULL,NULL,5,53),(269,'2018-06-05',NULL,NULL,NULL,NULL,5,38),(270,'2018-06-05',NULL,NULL,NULL,NULL,5,57),(271,'2018-06-06',NULL,NULL,NULL,NULL,5,48),(272,'2018-06-10',NULL,NULL,NULL,NULL,5,58),(273,'2018-06-11',NULL,NULL,NULL,NULL,5,43),(274,'2018-06-11',NULL,NULL,NULL,NULL,5,45),(275,'2018-06-11',NULL,NULL,NULL,NULL,5,46),(276,'2018-06-11',NULL,NULL,NULL,NULL,5,47),(277,'2018-06-11',NULL,NULL,NULL,NULL,5,49),(278,'2018-06-11',NULL,NULL,NULL,NULL,5,50),(279,'2018-06-11',NULL,NULL,NULL,NULL,5,51),(280,'2018-06-11',NULL,NULL,NULL,NULL,5,53),(281,'2018-06-12',NULL,NULL,NULL,NULL,5,38),(282,'2018-06-12',NULL,NULL,NULL,NULL,5,57),(283,'2018-06-13',NULL,NULL,NULL,NULL,5,48),(284,'2018-06-17',NULL,NULL,NULL,NULL,5,58),(285,'2018-06-18',NULL,NULL,NULL,NULL,5,43),(286,'2018-06-18',NULL,NULL,NULL,NULL,5,45),(287,'2018-06-18',NULL,NULL,NULL,NULL,5,46),(288,'2018-06-18',NULL,NULL,NULL,NULL,5,47),(289,'2018-06-18',NULL,NULL,NULL,NULL,5,49),(290,'2018-06-18',NULL,NULL,NULL,NULL,5,50),(291,'2018-06-18',NULL,NULL,NULL,NULL,5,51),(292,'2018-06-18',NULL,NULL,NULL,NULL,5,53),(293,'2018-06-19',NULL,NULL,NULL,NULL,5,38),(294,'2018-06-19',NULL,NULL,NULL,NULL,5,57),(295,'2018-06-20',NULL,NULL,NULL,NULL,5,48),(296,'2018-06-24',NULL,NULL,NULL,NULL,5,58),(297,'2018-06-25',NULL,NULL,NULL,NULL,5,43),(298,'2018-06-25',NULL,NULL,NULL,NULL,5,45),(299,'2018-06-25',NULL,NULL,NULL,NULL,5,46),(300,'2018-06-25',NULL,NULL,NULL,NULL,5,47),(301,'2018-06-25',NULL,NULL,NULL,NULL,5,49),(302,'2018-06-25',NULL,NULL,NULL,NULL,5,50),(303,'2018-06-25',NULL,NULL,NULL,NULL,5,51),(304,'2018-06-25',NULL,NULL,NULL,NULL,5,53),(305,'2018-06-26',NULL,NULL,NULL,NULL,5,38),(306,'2018-06-26',NULL,NULL,NULL,NULL,5,57),(307,'2018-06-27',NULL,NULL,NULL,NULL,5,48);
+INSERT INTO `pontos` VALUES (1,'2018-08-10',NULL,NULL,NULL,50,'E',1,0),(2,'2018-08-11','15:34:50',NULL,NULL,51,'S',1,1),(4,'2018-08-12',NULL,NULL,NULL,51,'S',2,0),(5,'2018-08-11',NULL,NULL,NULL,50,'E',2,0);
 /*!40000 ALTER TABLE `pontos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pontos_funcionarios`
+--
+
+DROP TABLE IF EXISTS `pontos_funcionarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `pontos_funcionarios` (
+  `id_ponto` int(11) NOT NULL AUTO_INCREMENT,
+  `idfuncionario` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_ponto`),
+  KEY `FKFuncionarioPonto` (`idfuncionario`),
+  CONSTRAINT `FKFuncionarioPonto` FOREIGN KEY (`idfuncionario`) REFERENCES `funcionarios` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pontos_funcionarios`
+--
+
+LOCK TABLES `pontos_funcionarios` WRITE;
+/*!40000 ALTER TABLE `pontos_funcionarios` DISABLE KEYS */;
+INSERT INTO `pontos_funcionarios` VALUES (1,5),(2,5);
+/*!40000 ALTER TABLE `pontos_funcionarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -899,4 +924,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-06 18:05:26
+-- Dump completed on 2018-08-10 18:53:00
