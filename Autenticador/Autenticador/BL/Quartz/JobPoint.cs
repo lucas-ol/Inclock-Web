@@ -24,8 +24,7 @@ namespace Autenticador.BL.Quartz
 
         public void Adiciona_Pontos()
         {
-            DateTime dtPrxMes;
-            if (GetLastInsertPoint(out dtPrxMes))
+            if (GetLastInsertPoint(out DateTime dtPrxMes))
             {
                 var Datas = UtilDate.GetDiasSemanas(dtPrxMes.Year, dtPrxMes.Month);
                 DataTable tb = MySqlLeitura("select id from funcionarios", System.Data.CommandType.Text);
@@ -38,7 +37,7 @@ namespace Autenticador.BL.Quartz
                         foreach (var dia in week.Value)
                         {
                             foreach (var item in exp)
-                            {
+                            { 
                                 var parameter = new MySqlCommand().Parameters;
                                 parameter.AddWithValue("_funcionario", id);
                                 parameter.AddWithValue("_entrada", item.Entrada);
@@ -53,6 +52,11 @@ namespace Autenticador.BL.Quartz
                 }
 
             }
+        }
+        private bool CriaArquivo(string linha)
+        {
+            
+            return true;
         }
         private bool GetLastInsertPoint(out DateTime dateTime)
         {
@@ -82,7 +86,7 @@ namespace Autenticador.BL.Quartz
             }
             catch (Exception ex)
             {
-                Classes.Common.UtilEmail.ErroMail(ex); //manda um email de erro 
+                Classes.Common.UtilEmail.ErroMail(ex, "id - " + parameters[0].Value); //manda um email de erro 
             }
 
         }
@@ -104,7 +108,6 @@ namespace Autenticador.BL.Quartz
             hora = hora.Add(ht);
             if (hora.Day > DateTime.Now.Day)  // Se virar o dia, quer dizer que o func vai bater a saida no outro dia         
                 expediente.DiaSemana++;
-
             return expediente.DiaSemana;
         }
 

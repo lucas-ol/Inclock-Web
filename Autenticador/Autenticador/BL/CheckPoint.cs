@@ -54,8 +54,6 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("status", string.Join(";", ponto.Status));
             MySqlAdicionaParametro("id", id);
             return MySqlExecutaComando("update pontos set hora = @entrada, status = @status where id = @id", CommandType.Text);
-
-
         }
         private FeedBack BaterSaida(Ponto ponto)
         {
@@ -207,7 +205,5 @@ namespace Autenticador.BL
         {
             return new ExpedienteController().GetExpediente(funcionario, DateTime.Now.DayOfWeek, periodo, type);
         }
-
-
     }
 }
