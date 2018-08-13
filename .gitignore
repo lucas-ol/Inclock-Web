@@ -3,3 +3,9 @@
 ################################################################################
 
 /.vs
+/Library.Inclock.web.br/obj/Release
+/Classes/obj/Release
+/Classes/obj/Debug
+/Autenticador/Autenticador_Host/obj/Debug
+/Autenticador/Autenticador/obj/Debug
+/Autenticador/.vs
