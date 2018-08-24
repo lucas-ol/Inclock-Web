@@ -30,22 +30,24 @@ namespace Autenticador.BL.Quartz
                 DataTable tb = MySqlLeitura("select id from funcionarios", System.Data.CommandType.Text);
                 foreach (DataRow func in tb.Rows)
                 {
-                    int id = Convert.ToInt32(func["id"]);
+                    int funcionario_id = Convert.ToInt32(func["id"]);
                     foreach (var week in Datas.Semanas)
                     {
-                        var exp = new ExpedienteController().GetExpediente(Convert.ToInt32(week.Key) + 1, id);
+                        var exp = new ExpedienteController().GetExpediente(Convert.ToInt32(week.Key) + 1, funcionario_id);
                         foreach (var dia in week.Value)
                         {
                             foreach (var item in exp)
-                            { 
-                                var parameter = new MySqlCommand().Parameters;
-                                parameter.AddWithValue("_funcionario", id);
-                                parameter.AddWithValue("_entrada", item.Entrada);
-                                parameter.AddWithValue("_dataEntrada", dia);
-                                parameter.AddWithValue("_expediente", item.Id);
-                                parameter.AddWithValue("_saida", item.Saida);
-                                parameter.AddWithValue("_dataSaida", dia.AddDays(CheckSaida(item)).Date);
-                                InsertNullPoit(parameter);
+                            {
+                                int ponto_id = InsertID(funcionario_id);
+                                /* var parameter = new MySqlCommand().Parameters;
+                                 parameter.AddWithValue("_funcionario", id);
+                                 parameter.AddWithValue("_entrada", item.Entrada);
+                                 parameter.AddWithValue("_dataEntrada", dia);
+                                 parameter.AddWithValue("_expediente", item.Id);
+                                 parameter.AddWithValue("_saida", item.Saida);
+                                 parameter.AddWithValue("_dataSaida", dia.AddDays(CheckSaida(item)).Date);*/
+                                RealizaExportacao("");
+
                             }
                         }
                     }
@@ -53,9 +55,8 @@ namespace Autenticador.BL.Quartz
 
             }
         }
-        private bool CriaArquivo(string linha)
+        private bool RealizaExportacao(string linha)
         {
-            
             return true;
         }
         private bool GetLastInsertPoint(out DateTime dateTime)
@@ -110,6 +111,33 @@ namespace Autenticador.BL.Quartz
                 expediente.DiaSemana++;
             return expediente.DiaSemana;
         }
+        public int InsertID(int funcionario)
+        {
 
+            var command = new MySqlCommand();
+            var connection = new MySqlConnection(SzConnexao);
+
+            command.CommandTimeout = 1000 * 60 * 2; // Vai esperar ate 2 min para fazer a inserçao 
+            command.Connection = connection;
+
+            command.Parameters.AddWithValue("id", funcionario);
+            command.CommandText = "prd_in_point_null";
+            command.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                connection.Open();
+                var rd = command.ExecuteReader();
+                while (rd.Read())
+                {
+                    return rd.GetInt32(0);
+                }
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Classes.Common.UtilEmail.ErroMail(ex, "id - " + funcionario); //manda um email de erro 
+                throw ex;
+            }
+        }
     }
 }

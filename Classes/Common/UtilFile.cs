@@ -9,6 +9,7 @@ namespace Classes.Common
 {
     public class UtilFile
     {
+        public string AplicationDirectory { get { return AppDomain.CurrentDomain.BaseDirectory; } }
         /// <summary>
         /// metodo que verifica se um Aquivo ja existe 
         /// </summary>
@@ -30,6 +31,34 @@ namespace Classes.Common
             {
                 throw new Exception("Erro acessar o aquivo", ex.InnerException);
             }
+        }
+        public FileStream CreateOrOpenFile(string filename, string diretorio = "c:\\")
+        {
+            try
+            {
+                FileStream fs = new FileStream(CreateFolder(diretorio).FullName + filename, FileMode.Append, FileAccess.ReadWrite, FileShare.Delete);
+                return fs;
+            }
+            catch (Exception ex)
+            {
+                UtilEmail.ErroMail(ex); //envia um email com o erro gerado
+                throw ex;
+            }
+        }
+        public void FileWrite(string conteudo, FileStream arquivo)
+        {
+            using (StreamWriter sw = new StreamWriter(arquivo))
+            {
+                sw.Write(conteudo);
+            }
+        }
+        public DirectoryInfo CreateFolder(string nomePasta, string diretorio = "")
+        {
+            // string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            if (Directory.Exists(diretorio + nomePasta))
+                return new DirectoryInfo(diretorio + nomePasta);
+            //  diretorio = diretorio.Remove(diretorio.LastIndexOf("//"));
+            return Directory.CreateDirectory(diretorio + nomePasta);
         }
     }
 }
