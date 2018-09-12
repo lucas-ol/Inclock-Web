@@ -47,7 +47,6 @@ namespace Autenticador.BL.Quartz
                                  parameter.AddWithValue("_saida", item.Saida);
                                  parameter.AddWithValue("_dataSaida", dia.AddDays(CheckSaida(item)).Date);*/
                                 RealizaExportacao("");
-
                             }
                         }
                     }

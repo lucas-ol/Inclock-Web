@@ -96,9 +96,15 @@ namespace Autenticador
             return new CheckPoint().GetPoint(idd);
         }
 
-        public FeedBack CheckPoint(Ponto ponto)
+        public FeedBack CheckPoint(string funcionario, string type, string periodo)
         {
-            return new CheckPoint().BaterPonto(ponto);
+            if (!int.TryParse(funcionario, out int func))
+                return new FeedBack() { Status = false, Mensagem = "funcionario invalido" };
+            if (!int.TryParse(periodo, out int peri))
+                return new FeedBack() { Status = false, Mensagem = "periodo invalido" };
+            if (!char.TryParse(type, out char tp))
+                return new FeedBack() { Status = false, Mensagem = "tipo invalido" };
+            return new CheckPoint().BaterPonto(func, peri, tp);
         }
     }
 }

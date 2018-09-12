@@ -12,48 +12,45 @@ namespace Autenticador.BL
 {
     public class CheckPoint : DataBase
     {
-
-
-        private TimeSpan Tolerancia = new TimeSpan(0, 59, 0); // ele tem 15 minutos de tolerancia, para entrada ou saida       
-        public DateTime DataHoje { get; set; }
+        private TimeSpan Tolerancia = new TimeSpan(23, 59, 0); // ele tem 15 minutos de tolerancia, para entrada ou saida            
 
         public CheckPoint()
         {
-            DataHoje = DateTime.Now;
         }
-
-        /// <summary>
-        /// metodo que vai realizar o ponto dependendo do horario
-        /// </summary>
-        /// <returns></returns>
-        public FeedBack BaterPonto(Ponto pt)
+        public FeedBack BaterPonto(int funcionario, int periodo, char type)
         {
-            if (!string.IsNullOrEmpty(pt.Entrada))
-                return BaterEntrada(pt);
+            if (char.ToUpper(type) == 'E')
+                return BaterEntrada(funcionario, periodo);
             else
-                return BaterSaida(pt);
+                return BaterSaida(null);
 
         }
-        private FeedBack BaterEntrada(Ponto ponto)
+        private FeedBack BaterEntrada(int funcionario, int periodo)
         {
-            GetIdPoint(ponto.Funcionario, out int id, 'E');
-            var expediente = GetExpedienteHoje(ponto.Funcionario, ponto.Periodo, 'E');
+            try
+            {
+                var vt = GetIdPoint(funcionario, out int id, 'E');
+            }
+            catch (Exception ex)
+            {
+                Console.Out.Write(ex.Message);
+            }
+            var expediente = GetExpedienteHoje(funcionario, periodo, 'E');
             if (expediente == null)
                 return new FeedBack { Mensagem = "Você não pode bater o ponto", Status = false };
-
+            int status = 0;
             TimeSpan entrada = Convert.ToDateTime(expediente.Entrada).TimeOfDay;
             if (entrada - Tolerancia >= DateTime.Now.TimeOfDay)
-                ponto.Status = "Entrada em atraso";
+                status = 1;
             else if (entrada + Tolerancia < DateTime.Now.TimeOfDay)
             {
-                return new FeedBack() { Status = false, Mensagem = "horario minimo para bater o ponto" + entrada };
+                return new FeedBack() { Status = false, Mensagem = "horario minimo para bater o ponto" + (entrada - Tolerancia) };
             }
-           
-
-            MySqlAdicionaParametro("hora", entrada.ToString("hh:MM:ss"));
-            MySqlAdicionaParametro("status", string.Join(";", ponto.Status));
-            MySqlAdicionaParametro("id", id);
-            return MySqlExecutaComando("update pontos set hora = @entrada, status = @status where id = @id", CommandType.Text);
+            MySqlAdicionaParametro("func", funcionario);
+            MySqlAdicionaParametro("hora", DateTime.Now);
+            MySqlAdicionaParametro("status", status);
+            MySqlAdicionaParametro("exp", expediente.Id);
+            return MySqlExecutaComando("INSERT INTO pontos(funcionario_id,data_hora,expediente_id,status) VALUES(,@func,@hora,@exp,@status);", CommandType.Text);
         }
         private FeedBack BaterSaida(Ponto ponto)
         {
@@ -186,7 +183,7 @@ namespace Autenticador.BL
             try
             {
                 //       var tr = MySqlLeitura("select id, type_point from where data_ponto = @data and funcionario_id = @func and expediente_id = @exp", CommandType.Text);
-                var tr = MySqlLeitura(string.Format(command, DataHoje.Date.ToString("yyyy-MM-dd"), Funcionario, type), CommandType.Text);
+                var tr = MySqlLeitura(string.Format(command, DateTime.Now.ToString("yyyy-MM-dd"), Funcionario, type), CommandType.Text);
                 if (tr.Rows.Count <= 0 || tr.TableName == "erro")
                     return false;
 

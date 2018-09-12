@@ -15,7 +15,7 @@ namespace Autenticador_Host
          
             ServiceHost host = new ServiceHost(typeof(Autenticador.Service));
             //Autenticador.BL.Quartz.JobSchedule.Instance.Start();
-            new Autenticador.BL.Quartz.JobPoint().Adiciona_Pontos();
+           // new Autenticador.BL.Quartz.JobPoint().Adiciona_Pontos();
             while (true)
             {
                 Console.Clear();

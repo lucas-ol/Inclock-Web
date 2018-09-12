@@ -69,24 +69,27 @@ namespace Autenticador.BL
         /// <returns></returns>
         public Expediente GetExpediente(int funcionario, DayOfWeek semana, int periodo, char tp)
         {
-            Expediente exp = new Expediente();
+
 
             MySqlAdicionaParametro("_funcionario", funcionario);
             MySqlAdicionaParametro("_semana", Convert.ToInt32(semana) + 1);
             MySqlAdicionaParametro("_periodo", periodo);
             MySqlAdicionaParametro("_type", tp);
             DataTable tb = MySqlLeitura("prd_se_expediente", CommandType.StoredProcedure);
-            if (tb.Rows.Count > 0 || tb.TableName != "erro")
+            if (tb.Rows.Count > 0 && tb.TableName != "erro")
             {
-                exp.Id = Convert.ToInt32(tb.Rows[0]["expediente_id"]);
-                exp.Periodo = Convert.ToInt32(tb.Rows[0]["periodo"]);
-                exp.Type = Convert.ToChar(tb.Rows[0]["type_point"]);
-                exp.Funcionario_id = Convert.ToInt32(tb.Rows[0]["funcionario_id"]);
-                exp.Entrada = tb.Rows[0]["hora"].ToString();
-                exp.Saida = tb.Rows[0]["hora"].ToString();
-                exp.DiaSemana = Convert.ToInt32(tb.Rows[0]["diasemana"]);
+                return new Expediente
+                {
+                    Id = Convert.ToInt32(tb.Rows[0]["expediente_id"]),
+                    Periodo = Convert.ToInt32(tb.Rows[0]["periodo"]),
+                    Type = Convert.ToChar(tb.Rows[0]["type_point"]),
+                    Funcionario_id = Convert.ToInt32(tb.Rows[0]["funcionario_id"]),
+                    Entrada = tb.Rows[0]["hora"].ToString(),
+                    Saida = tb.Rows[0]["hora"].ToString(),
+                    DiaSemana = Convert.ToInt32(tb.Rows[0]["diasemana"])
+                };
             }
-            return exp;
+            return null;
         }
 
     }
