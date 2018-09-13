@@ -14,61 +14,61 @@ namespace Autenticador.BL
     {
         private TimeSpan Tolerancia = new TimeSpan(23, 59, 0); // ele tem 15 minutos de tolerancia, para entrada ou saida            
 
+        DateTime Data_Hoje
+        {
+            get { return Convert.ToDateTime("21/09/2018"); }
+        }
         public CheckPoint()
         {
         }
-        public FeedBack BaterPonto(int funcionario, int periodo, char type)
+        public FeedBack BaterPonto(int funcionario, char type)
         {
             if (char.ToUpper(type) == 'E')
-                return BaterEntrada(funcionario, periodo);
+                return BaterEntrada(funcionario);
+            else if (char.ToUpper(type) == 'S')
+                return BaterSaida(funcionario);
             else
-                return BaterSaida(null);
-
+                return new FeedBack { Status = false, Mensagem = "Opção invalida" };
         }
-        private FeedBack BaterEntrada(int funcionario, int periodo)
+        private FeedBack BaterEntrada(int funcionario)
         {
-            try
-            {
-                var vt = GetIdPoint(funcionario, out int id, 'E');
-            }
-            catch (Exception ex)
-            {
-                Console.Out.Write(ex.Message);
-            }
+            int status = 0;
+            int periodo = Data.ConvertePeriodo(Data_Hoje.ToString("HH:mm:ss"));
             var expediente = GetExpedienteHoje(funcionario, periodo, 'E');
             if (expediente == null)
                 return new FeedBack { Mensagem = "Você não pode bater o ponto", Status = false };
-            int status = 0;
-            TimeSpan entrada = Convert.ToDateTime(expediente.Entrada).TimeOfDay;
-            if (entrada - Tolerancia >= DateTime.Now.TimeOfDay)
+
+            if (GetPoint(funcionario, expediente.Id, "E", Data_Hoje.Date.ToString("yyyy-MM-dd")) != null)
+                return new FeedBack { Mensagem = "Voce ja bateu o ponto entrada", Status = false };
+
+
+            TimeSpan entrada = Convert.ToDateTime(Data_Hoje.ToString("dd/MM/yyyy ")+expediente.Entrada).TimeOfDay;
+            if (entrada - Tolerancia >= Data_Hoje.TimeOfDay)
                 status = 1;
-            else if (entrada + Tolerancia < DateTime.Now.TimeOfDay)
+            else if (entrada + Tolerancia < Data_Hoje.TimeOfDay)
             {
                 return new FeedBack() { Status = false, Mensagem = "horario minimo para bater o ponto" + (entrada - Tolerancia) };
             }
-            MySqlAdicionaParametro("func", funcionario);
-            MySqlAdicionaParametro("hora", DateTime.Now);
-            MySqlAdicionaParametro("status", status);
-            MySqlAdicionaParametro("exp", expediente.Id);
-            return MySqlExecutaComando("INSERT INTO pontos(funcionario_id,data_hora,expediente_id,status) VALUES(,@func,@hora,@exp,@status);", CommandType.Text);
+            return SalvaPonto(funcionario, status, expediente.Id, "E");
         }
-        private FeedBack BaterSaida(Ponto ponto)
+        private FeedBack BaterSaida(int funcionario)
         {
-            var expediente = GetExpedienteHoje(ponto.Funcionario, ponto.Periodo, 'S');
+            int status = 0;
+            int periodo = Data.ConvertePeriodo(Data_Hoje.ToString("HH:mm:ss"));
+            var expediente = GetExpedienteHoje(funcionario, periodo, 'S');
             if (expediente == null)
                 return new FeedBack { Mensagem = "Você não pode bater o ponto", Status = false };
-            TimeSpan saida = Convert.ToDateTime(expediente.Entrada).TimeOfDay;
-            if (saida - Tolerancia <= DateTime.Now.TimeOfDay)
-                return new FeedBack { Mensagem = "horario minimo para bater o ponto " + (saida - Tolerancia).ToString("hh:MM"), Status = false };
-            else if (saida + Tolerancia > DateTime.Now.TimeOfDay)
-                ponto.Status = "Hora extra;";
 
-            GetIdPoint(ponto.Funcionario, out int id, 'S');
+            if (GetPoint(funcionario, expediente.Id, "S", Data_Hoje.Date.ToString("yyyy-MM-dd")) != null)
+                return new FeedBack { Mensagem = "Voce ja bateu o ponto de saida", Status = false };
 
-            MySqlAdicionaParametro("hora", DateTime.Now.ToString("HH:mm:ss"));
-            MySqlAdicionaParametro("status", ponto.Status);
-            MySqlAdicionaParametro("id", id);
-            return MySqlExecutaComando("update pontos set hora = @entrada, status = @status where id = @id", CommandType.Text);
+
+            DateTime saida = Convert.ToDateTime(Data_Hoje.ToString("dd/MM/yyyy ")+expediente.Entrada);
+            if (saida <= Data_Hoje - Tolerancia)
+                return new FeedBack { Mensagem = "horario minimo para bater o ponto " + saida.TimeOfDay, Status = false };
+            else if ((saida - Tolerancia) > Data_Hoje)
+                status = 2;
+            return SalvaPonto(funcionario, status, expediente.Id, "S");
         }
 
         /// <summary>
@@ -80,17 +80,42 @@ namespace Autenticador.BL
         {
             MySqlAdicionaParametro("_id", ponto.Id);
             MySqlAdicionaParametro("_funcionario", ponto.Funcionario);
-            MySqlAdicionaParametro("_hora", ponto.Entrada);
-            MySqlAdicionaParametro("_periodo", ponto.Periodo);
-            MySqlAdicionaParametro("_logitude", ponto.Logitude);
-            MySqlAdicionaParametro("_latitude", ponto.Latitude);
-
+            MySqlAdicionaParametro("_hora", ponto.Hora);
             MySqlExecutaComando("procedure não feita", CommandType.StoredProcedure);
             return new FeedBack();
         }
-        public List<Ponto> GetListCheckPoint(string initialDate, string finalDate, int funcionario)
+        public Ponto GetPoint(int id)
         {
-            List<Ponto> ListExpediente = new List<Ponto>();
+            return null;
+        }
+        public Ponto GetPoint(int funcionario, int exp, string type, string dia)
+        {
+            var comand = " SELECT id_ponto, funcionario_id, data, hora, expediente_id, obs, status FROM pontos " +
+                         "WHERE funcionario_id = @func AND expediente_id = @exp AND tipo = @tipo AND data = @dia";
+            MySqlAdicionaParametro("func", funcionario);
+            MySqlAdicionaParametro("exp", exp);
+            MySqlAdicionaParametro("tipo", type);
+            MySqlAdicionaParametro("dia", dia);
+            DataTable tb = MySqlLeitura(comand, CommandType.Text);
+            if (tb.Rows.Count > 0 && tb.TableName != "erro")
+            {
+                return new Ponto
+                {
+                    Id = Convert.ToInt32(tb.Rows[0]["id_ponto"]),
+                    Hora = tb.Rows[0]["hora"].ToString(),
+                    Data = Convert.ToDateTime(tb.Rows[0]["data"]).ToString("dd/MM/yyyy"),
+                    Expediente = Convert.ToInt32(tb.Rows[0]["expediente_id"]),
+                    Status = Convert.ToInt32(tb.Rows[0]["status"]),
+                    Obs = tb.Rows[0]["obs"].ToString(),
+                    Tipo = type,
+                    Funcionario = funcionario
+                };
+            }
+            return null;
+        }
+        public List<EspelhoPonto> GetListCheckPoint(string initialDate, string finalDate, int funcionario)
+        {
+            List<EspelhoPonto> ListExpediente = new List<EspelhoPonto>();
             MySqlAdicionaParametro("_InitialDade", initialDate);
             MySqlAdicionaParametro("_FinalDade", finalDate);
             MySqlAdicionaParametro("funcionario", funcionario);
@@ -101,9 +126,9 @@ namespace Autenticador.BL
             {
                 foreach (DataRow item in tb.Rows)
                 {
-                    Ponto ponto = new Ponto
+                    EspelhoPonto ponto = new EspelhoPonto
                     {
-                        Id = item[""].ToString(),
+                        Id = Convert.ToInt32(item[""]),
                         Entrada = item[""].ToString(),
                         DataEntrada = item[""].ToString(),
                         Saida = item[""].ToString(),
@@ -116,9 +141,9 @@ namespace Autenticador.BL
             }
             return ListExpediente;
         }
-        public List<Ponto> GetCheckPointByMonth(int month, int funcionario)
+        public List<EspelhoPonto> GetCheckPointByMonth(int month, int funcionario)
         {
-            List<Ponto> ListExpediente = new List<Ponto>();
+            List<EspelhoPonto> ListExpediente = new List<EspelhoPonto>();
             MySqlAdicionaParametro("_month", month);
             MySqlAdicionaParametro("_funcionario", funcionario);
             var tb = MySqlLeitura("procedure aqui", CommandType.StoredProcedure);
@@ -128,9 +153,9 @@ namespace Autenticador.BL
             {
                 foreach (DataRow item in tb.Rows)
                 {
-                    Ponto ponto = new Ponto
+                    EspelhoPonto ponto = new EspelhoPonto
                     {
-                        Id = item[""].ToString(),
+                        Id = Convert.ToInt32(item[""]),
                         Entrada = item[""].ToString(),
                         DataEntrada = item[""].ToString(),
                         Saida = item[""].ToString(),
@@ -143,64 +168,24 @@ namespace Autenticador.BL
             }
             return ListExpediente;
         }
-        public Ponto GetPoint(int id)
-        {
-            Ponto ponto = new Ponto();
-            MySqlAdicionaParametro("_id", id);
-            var tb = MySqlLeitura("procedure aqui ", CommandType.StoredProcedure);
-            if (tb.TableName == "erro")
-                throw new Exception("erro desconhecido");
-            foreach (DataRow item in tb.Rows)
-            {
-                ponto.Id = item[""].ToString();
-                ponto.Entrada = item[""].ToString();
-                ponto.DataEntrada = item[""].ToString();
-                ponto.Saida = item[""].ToString();
-                ponto.DataSaida = item[""].ToString();
-                ponto.Status = item[""].ToString();
-                ponto.Obs = item[""].ToString();
-            }
-            return ponto;
-        }
-        /// <summary>
-        ///Sobrecarga, que vai setar a clase con o ultimo ponto
-        /// </summary>
-        public void GetLastPoint()
-        {
-            // Last_Point = GetLastPoint(ponto.Funcionario, ponto.Periodo);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Funcionario"></param>
-        /// <param name="expedienteId"></param>
-        /// <returns></returns>
-        private bool GetIdPoint(int Funcionario, out int id, char type)
-        {
-            id = 0;
-            MySqlAdicionaParametro("func", Funcionario);
-            string command = "select id, type_point from where data_ponto = {0} and funcionario_id = {1} type_point = {2}";
-            try
-            {
-                //       var tr = MySqlLeitura("select id, type_point from where data_ponto = @data and funcionario_id = @func and expediente_id = @exp", CommandType.Text);
-                var tr = MySqlLeitura(string.Format(command, DateTime.Now.ToString("yyyy-MM-dd"), Funcionario, type), CommandType.Text);
-                if (tr.Rows.Count <= 0 || tr.TableName == "erro")
-                    return false;
 
-                id = Convert.ToInt32(tr.Rows[0]["id"]);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                id = 0;
-                type = 'a';
-                return false;
-            }
+        private FeedBack SalvaPonto(int funcionario, int status, int expediente, string tipo)
+        {
+            MySqlAdicionaParametro("func", funcionario);
+            MySqlAdicionaParametro("data", Data_Hoje.ToString("yyyy-MM-dd"));
+            MySqlAdicionaParametro("hora", Data_Hoje.ToString("hh:mm:ss"));
+            MySqlAdicionaParametro("status", status);
+            MySqlAdicionaParametro("exp", expediente);
+            MySqlAdicionaParametro("tipo", tipo);
+            return MySqlExecutaComando("INSERT INTO pontos(funcionario_id,data,hora,expediente_id,tipo,status) VALUES(@func,@data,@hora,@exp,@tipo,@status);", CommandType.Text);
         }
-
         private Expediente GetExpedienteHoje(int funcionario, int periodo, char type)
         {
-            return new ExpedienteController().GetExpediente(funcionario, DateTime.Now.DayOfWeek, periodo, type);
+            var exp = new Expediente();
+            exp = new ExpedienteController().GetExpediente(funcionario, Data_Hoje.DayOfWeek, periodo, type);
+            if (exp == null)
+                exp = new ExpedienteController().GetExpediente(funcionario, Data_Hoje.DayOfWeek, 4, type);  // pequisa pelo periodo integral 
+            return exp;
         }
     }
 }

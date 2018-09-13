@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `inclock` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-USE `inclock`;
 -- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: inclock
@@ -43,7 +41,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `expediente` WRITE;
 /*!40000 ALTER TABLE `expediente` DISABLE KEYS */;
-INSERT INTO `expediente` VALUES (50,38,'10:00:00',3,1,'E'),(51,38,'01:00:00',4,1,'S'),(60,43,'00:00:00',2,4,'E'),(61,43,'02:01:00',5,4,'S'),(64,45,'01:00:00',2,4,'E'),(65,45,'02:00:00',5,4,'S'),(66,46,'01:01:00',2,4,'E'),(67,46,'00:00:00',5,4,'S'),(68,47,'23:00:00',2,4,'E'),(69,47,'00:00:00',2,4,'S'),(70,48,'06:00:00',4,1,'E'),(71,48,'01:00:00',5,1,'S'),(72,49,'01:00:00',2,4,'E'),(73,49,'00:00:00',2,4,'S'),(74,50,'01:00:00',2,4,'E'),(75,50,'00:00:00',2,4,'S'),(76,51,'10:00:00',2,4,'E'),(77,51,'10:00:00',2,4,'S'),(80,53,'10:00:00',2,4,'E'),(81,53,'10:00:00',2,4,'S'),(88,57,'12:00:00',3,2,'E'),(89,57,'01:00:00',4,2,'S'),(90,58,'10:15:00',1,4,'E'),(91,58,'14:00:00',1,4,'S');
+INSERT INTO `expediente` VALUES (50,38,'10:00:00',6,1,'E'),(51,38,'01:00:00',7,3,'S'),(88,57,'12:00:00',5,4,'E'),(89,57,'01:00:00',5,4,'S'),(90,58,'10:15:00',6,0,'E'),(91,58,'14:00:00',6,0,'S');
 /*!40000 ALTER TABLE `expediente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,7 +51,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `expediente_id` WRITE;
 /*!40000 ALTER TABLE `expediente_id` DISABLE KEYS */;
-INSERT INTO `expediente_id` VALUES (38,5),(43,5),(45,5),(46,5),(47,5),(48,5),(49,5),(50,5),(51,5),(53,5),(57,5),(58,5);
+INSERT INTO `expediente_id` VALUES (38,5),(57,5),(58,5);
 /*!40000 ALTER TABLE `expediente_id` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +61,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `funcionarios` WRITE;
 /*!40000 ALTER TABLE `funcionarios` DISABLE KEYS */;
-INSERT INTO `funcionarios` VALUES (5,'Lucas ','(17) 7711-1111','(17) 77711-1111','blublucas@gmail.com','Rua Vera Lúcia Pinto da Silva','177.711.111-11',3,'1996-10-10','M','Suzano','SP','08690215','90809','Cidade Miguel Badra','11.111.111-1','12345','12345','ADM;FUNC;');
+INSERT INTO `funcionarios` VALUES (5,'Lucas ','(17) 7711-1111','(17) 77711-1111','blublucas@gmail.com','Rua Vera Lúcia Pinto da Silva','177.711.111-11',3,'1996-10-10','M','Suzano','SP','08690215','90809','Cidade Miguel Badra','11.111.111-1','123','123','ADM;FUNC;');
 /*!40000 ALTER TABLE `funcionarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,6 +80,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `pontos` WRITE;
 /*!40000 ALTER TABLE `pontos` DISABLE KEYS */;
+INSERT INTO `pontos` VALUES (7,5,'2018-09-21','12:00:00',38,'E',NULL,0),(8,5,'2018-09-21','12:00:00',38,'S',NULL,0),(5,5,'2018-09-20','12:00:00',57,'E',NULL,0),(6,5,'2018-09-20','12:00:00',57,'S',NULL,0),(1,5,'2018-09-13','04:00:13',58,'E',NULL,0),(2,5,'2018-09-13','04:00:27',58,'S',NULL,0);
 /*!40000 ALTER TABLE `pontos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +204,8 @@ in _saida time,
 in _semanaEntrada int,
 in _semanaSaida int, 
 in _funcionario_id int,
-in _periodo int
+in _periodo int,
+in _periodo_sda int
  )
 begin
 
@@ -267,7 +267,7 @@ begin
 				(
 				_saida ,
 				_semanaSaida ,		
-				_periodo,
+				_periodo_sda,
 				'S',          
 				last_id);        
 				select last_id;        
@@ -380,7 +380,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `prd_se_expediente`(
 ,in _type char(1)
 )
 begin
-	select ex.expediente_id,ex.hora,ex.diasemana,ex.periodo,ex.type_point,exi.funcionario_id
+	select ex.expediente_id as id,ex.hora,ex.diasemana,ex.periodo,ex.type_point,exi.funcionario_id
     from expediente ex inner join expediente_id exi on exi.id =  ex.expediente_id 
     where exi.funcionario_id = _funcionario and ex.diasemana = _semana and ex.periodo = _periodo and ex.type_point = _type ;  
 end ;;
@@ -641,7 +641,8 @@ in _saida time,
 in _semanaEntrada int,
 in _semanaSaida int, 
 in _funcionario_id int,
-in _periodo int
+in _periodo int,
+in _periodo_sda int
 )
 begin 
 
@@ -690,7 +691,7 @@ declare exit handler for sqlexception
 				set
 				hora = _saida
 				,diasemana = _semanaSaida
-				,periodo = _periodo
+				,periodo = _periodo_sda
 				where  expediente_id = _id and  type_point ='S';
 				select _id;  
 				commit;
@@ -775,4 +776,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-12 19:15:33
+-- Dump completed on 2018-09-13 19:07:25

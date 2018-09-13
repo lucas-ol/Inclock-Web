@@ -44,9 +44,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 6.7.7\Assemblies\v4.5\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\Autenticador\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
@@ -87,7 +86,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Autenticador\Arrays1.xsd">
+    <None Include="Connected Services\Autenticador\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\Autenticador\Classes.VO1.xsd">
@@ -112,9 +111,9 @@
     <None Include="Connected Services\Autenticador\service3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\Classes.VO.Aviso.datasource" />
+    <None Include="Properties\DataSources\Classes.VO.EspelhoPonto.datasource" />
     <None Include="Properties\DataSources\Classes.VO.Expediente.datasource" />
     <None Include="Properties\DataSources\Classes.VO.FeedBack.datasource" />
     <None Include="Properties\DataSources\Classes.VO.Funcionario.datasource" />

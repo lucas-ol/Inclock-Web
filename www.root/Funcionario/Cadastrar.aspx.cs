@@ -42,7 +42,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
             txtCargo.DataValueField = "id";
             txtCargo.DataBind();
             txtCargo.Items.Insert(0, new ListItem("Selecione o Cargo", "0") { Selected = true });
-
+            var vt = Server.MapPath("/config/Roles.json");
             ckListRoles.DataSource = Role.GetRoles(Server.MapPath("/config/Roles.json"));
             ckListRoles.DataValueField = "value";
             ckListRoles.DataTextField = "text";

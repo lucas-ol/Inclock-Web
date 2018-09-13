@@ -36,7 +36,6 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         expediente.Entrada = txtEntrada.Text;
         expediente.Saida = txtSaida.Text;
         expediente.DiaSemana = Convert.ToInt32(ddlDiaSemana.SelectedValue);
-        expediente.Periodo = Convert.ToInt32(ddlPeriodo.SelectedValue);
         return expediente;
     }
     public bool ValidaDados()
@@ -49,11 +48,10 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         if (Math.Abs(HorasTrabalhada.Hours) < 1)
             validade = false;
 
-
-        if (ddlDiaSemana.SelectedValue == "0")
+        else if (ddlDiaSemana.SelectedValue == "0")
             validade = false;
 
-        if (ddlPeriodo.SelectedValue == "0")
+        else if (Id_funcionario <= 0 || hhdIdExpediente.Value == "0")
             validade = false;
 
         return validade;
@@ -91,10 +89,9 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
             else
                 lblmsg.InnerText = feed.Mensagem;
         }
-        else if (Id_funcionario <= 0 || hhdIdExpediente.Value == "0")
-            lblmsg.InnerText = "Erro inesperado";
         else
             lblmsg.InnerText = "Preencha todos os campos corretamente";
+
         if (!feed.Status)
         {
             lblmsg.Visible = true;

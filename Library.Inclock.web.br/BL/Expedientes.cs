@@ -13,12 +13,15 @@ namespace Library.Inclock.web.br.BL
     {
         public FeedBack SalvaExpediente(Classes.VO.Expediente expediente)
         {
+
             FeedBack feedBack = new FeedBack() { Status = false };
+            RecuperaPeriodo(ref expediente);
             MySqlAdicionaParametro("_saida", expediente.Saida);
             MySqlAdicionaParametro("_entrada", expediente.Entrada);
             MySqlAdicionaParametro("_semanaEntrada", expediente.DiaSemana);
             MySqlAdicionaParametro("_semanaSaida", CheckSaida(expediente));
             MySqlAdicionaParametro("_periodo", expediente.Periodo);
+            MySqlAdicionaParametro("_periodo_sda", expediente.PeriodoSaida);
             MySqlAdicionaParametro("_funcionario_id", expediente.Funcionario_id);
             feedBack = MySqlExecutaComando("prd_insert_expediente", System.Data.CommandType.StoredProcedure);
             if (feedBack.Mensagem.Contains("integral"))
@@ -55,16 +58,18 @@ namespace Library.Inclock.web.br.BL
             expediente.AddRange(responce);
             return expediente;
         }
-        
+
         public FeedBack AtualizaExpediente(Expediente expediente)
         {
             FeedBack feedBack = new FeedBack();
+            RecuperaPeriodo(ref expediente);
             MySqlAdicionaParametro("_id", expediente.Id);
             MySqlAdicionaParametro("_saida", expediente.Saida);
             MySqlAdicionaParametro("_entrada", expediente.Entrada);
             MySqlAdicionaParametro("_semanaEntrada", expediente.DiaSemana);
             MySqlAdicionaParametro("_semanaSaida", CheckSaida(expediente));
             MySqlAdicionaParametro("_periodo", expediente.Periodo);
+            MySqlAdicionaParametro("_periodo_sda", expediente.PeriodoSaida);
             MySqlAdicionaParametro("_funcionario_id", expediente.Funcionario_id);
             feedBack = MySqlExecutaComando("prd_updade_expediente", System.Data.CommandType.StoredProcedure);
 
@@ -93,6 +98,8 @@ namespace Library.Inclock.web.br.BL
 
         private int CheckSaida(Expediente expediente)
         {
+            DateTime data = Convert.ToDateTime("2018, 07, 01");             
+          
             TimeSpan saida;
             TimeSpan entrada;
             TimeSpan ht;
@@ -105,6 +112,14 @@ namespace Library.Inclock.web.br.BL
             if (hora.Day > DateTime.Now.Day)  // Se virar o dia, quer dizer que o func vai bater a saida no outro dia         
                 expediente.DiaSemana++;
             return expediente.DiaSemana;
+        }
+        private void RecuperaPeriodo(ref Expediente exp)
+        {
+            using (Autenticador.ServiceClient client = new Autenticador.ServiceClient())
+            {
+                exp.Periodo = client.ConvertePeriodo(exp.Entrada);
+                exp.PeriodoSaida = client.ConvertePeriodo(exp.Saida);
+            }
         }
 
     }

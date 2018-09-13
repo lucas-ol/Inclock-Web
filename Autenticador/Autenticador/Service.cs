@@ -35,17 +35,6 @@ namespace Autenticador
             return new BL.Autenticador().GetPassword(Login);
         }
 
-        public List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario)
-        {
-            int funcionario;
-            if (int.TryParse(id_funcionario, out funcionario))
-            {
-                return new CheckPoint().GetListCheckPoint(InitialDate, FinalDate, funcionario);
-            }
-            else
-                throw new Exception("Parametros incorretos");
-        }
-
         public List<Expediente> GetExpediente(string semana, string funcionario_Id)
         {
             int isemana, ifuncionario_Id;
@@ -63,7 +52,7 @@ namespace Autenticador
                 qtde = "10";
             return new BL.Autenticador().getAvisos(qtde);
         }
-        public List<Ponto> GetCheckPoint(string month, string funcionario)
+        public List<EspelhoPonto> GetCheckPoint(string month, string funcionario)
         {
             int iMonth, iFuncionario;
             int.TryParse(month, out iMonth);
@@ -74,7 +63,7 @@ namespace Autenticador
                 throw new Exception("Parametros incorretos");
             return new CheckPoint().GetCheckPointByMonth(iMonth, iFuncionario);
         }
-        public List<Ponto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario)
+        public List<EspelhoPonto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario)
         {
             int iFuncionario;
             if (string.IsNullOrEmpty(InitialDate) || string.IsNullOrEmpty(FinalDate))
@@ -85,7 +74,16 @@ namespace Autenticador
                 throw new Exception("Parametros incorretos");
             return new CheckPoint().GetListCheckPoint(InitialDate, FinalDate, iFuncionario);
         }
-
+        public List<EspelhoPonto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario)
+        {
+            int funcionario;
+            if (int.TryParse(id_funcionario, out funcionario))
+            {
+                return new CheckPoint().GetListCheckPoint(InitialDate, FinalDate, funcionario);
+            }
+            else
+                throw new Exception("Parametros incorretos");
+        }
         public Ponto GetCheckPointById(string id)
         {
             int idd;
@@ -96,15 +94,18 @@ namespace Autenticador
             return new CheckPoint().GetPoint(idd);
         }
 
-        public FeedBack CheckPoint(string funcionario, string type, string periodo)
+        public FeedBack CheckPoint(string funcionario, string type)
         {
             if (!int.TryParse(funcionario, out int func))
-                return new FeedBack() { Status = false, Mensagem = "funcionario invalido" };
-            if (!int.TryParse(periodo, out int peri))
-                return new FeedBack() { Status = false, Mensagem = "periodo invalido" };
+                return new FeedBack() { Status = false, Mensagem = "funcionario invalido" };           
             if (!char.TryParse(type, out char tp))
                 return new FeedBack() { Status = false, Mensagem = "tipo invalido" };
-            return new CheckPoint().BaterPonto(func, peri, tp);
+            return new CheckPoint().BaterPonto(func, tp);
+        }
+
+        public int ConvertePeriodo(string hora)
+        {
+            return Data.ConvertePeriodo(hora);
         }
     }
 }

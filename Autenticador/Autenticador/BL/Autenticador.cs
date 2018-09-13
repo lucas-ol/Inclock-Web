@@ -88,37 +88,35 @@ namespace Autenticador.BL
         public Funcionario GetUserById(int id)
         {
             MySqlAdicionaParametro("_id", id);
-            DataRow tr = MySqlLeitura("prd_se_pessoa_id", System.Data.CommandType.StoredProcedure).Rows[0];
+            DataTable tr = MySqlLeitura("prd_se_pessoa_id", System.Data.CommandType.StoredProcedure);
             Funcionario funcionario = null;
-            if (tr != null)
+            if (tr.TableName != "erro" && tr.Rows.Count > 0)
             {
-                if (tr[0].ToString() != "erro")
+                funcionario = new Funcionario
                 {
-                    funcionario = new Funcionario
-                    {
-                        Id = Convert.ToInt32(tr["id"]),
-                        Nome = tr["nome"].ToString(),
-                        CPF = tr["cpf"].ToString(),
-                        RG = tr["rg"].ToString(),
-                        Telefone = tr["telefone"].ToString(),
-                        Celular = tr["celular"].ToString(),
-                        Email = tr["email"].ToString(),
-                        Endereco = tr["endereco"].ToString(),
-                        Numero = tr["numero"].ToString(),
-                        cargo_id = Convert.ToInt32(tr["cargo_id"]),
-                        Cargo = tr["cargo"].ToString(),
-                        Nascimento = Convert.ToDateTime(tr["nascimento"]).ToString("dd/MM/yyyy"),
-                        Sexo = tr["sexo"].ToString(),
-                        Cidade = tr["cidade"].ToString(),
-                        Estado = tr["estado"].ToString(),
-                        CEP = tr["cep"].ToString(),
-                        Bairro = tr["bairro"].ToString(),
-                        Login = tr["login"].ToString(),
-                        Senha = tr["senha"].ToString(),
-                    };
-                    foreach (var item in tr["role"].ToString().Split(new char[] { ';' }))
-                        funcionario.Roles.Add(item);
-                }
+                    Id = Convert.ToInt32(tr.Rows[0]["id"]),
+                    Nome = tr.Rows[0]["nome"].ToString(),
+                    CPF = tr.Rows[0]["cpf"].ToString(),
+                    RG = tr.Rows[0]["rg"].ToString(),
+                    Telefone = tr.Rows[0]["telefone"].ToString(),
+                    Celular = tr.Rows[0]["celular"].ToString(),
+                    Email = tr.Rows[0]["email"].ToString(),
+                    Endereco = tr.Rows[0]["endereco"].ToString(),
+                    Numero = tr.Rows[0]["numero"].ToString(),
+                    cargo_id = Convert.ToInt32(tr.Rows[0]["cargo_id"]),
+                    Cargo = tr.Rows[0]["cargo"].ToString(),
+                    Nascimento = Convert.ToDateTime(tr.Rows[0]["nascimento"]).ToString("dd/MM/yyyy"),
+                    Sexo = tr.Rows[0]["sexo"].ToString(),
+                    Cidade = tr.Rows[0]["cidade"].ToString(),
+                    Estado = tr.Rows[0]["estado"].ToString(),
+                    CEP = tr.Rows[0]["cep"].ToString(),
+                    Bairro = tr.Rows[0]["bairro"].ToString(),
+                    Login = tr.Rows[0]["login"].ToString(),
+                    Senha = tr.Rows[0]["senha"].ToString(),
+                };
+                foreach (var item in tr.Rows[0]["role"].ToString().Split(new char[] { ';' }))
+                    funcionario.Roles.Add(item);
+
             }
 
             return funcionario;

@@ -7,7 +7,6 @@
 <div class="modal fade" id="cadastrar_expediente">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <asp:UpdatePanel runat="server" ID="updCadastrar">
                 <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="btnInserir" />
@@ -37,7 +36,7 @@
                         </div>
                         <div class="form-inline pt-1">
                             <div class="col-sm-6">
-                                <asp:DropDownList runat="server" ID="ddlPeriodo" CssClass="form-control w-100" data-meber="expediente">
+                                <asp:DropDownList runat="server" ID="ddlPeriodo" CssClass="form-control w-100" data-meber="expediente" Enabled="false">
                                     <asp:ListItem Text="Periodo" Value="0" />
                                     <asp:ListItem Text="Manhã" Value="1" />
                                     <asp:ListItem Text="Tarde" Value="2" />
@@ -62,9 +61,7 @@
                         <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Entrada Invalida" ControlToValidate="txtEntrada" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvEntrada" Display="Dynamic" EnableTheming="true" />
                         <asp:RequiredFieldValidator ValidationGroup="ExpedienteCadastro" ErrorMessage="<br>Saida Invalida" ControlToValidate="txtSaida" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled" ForeColor="Red" ID="rqvSaida" Display="Dynamic" EnableTheming="true" />
                         <span style="display: none; color: red" id="vlHoraInterval" runat="server"></span>
-                        <asp:CustomValidator ErrorMessage="<br>Esse horario não pertence a esse Periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="ValidaPeriodo" Display="Dynamic" ForeColor="Red" EnableTheming="true" ID="vPeriodo" />
-                        <asp:CustomValidator ErrorMessage="" ControlToValidate="txtEntrada" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="ValidaPeriodo" Display="None" ForeColor="Red" EnableTheming="true" />
-
+                        
                         <asp:CustomValidator ErrorMessage="<br>Escolha o periodo" ControlToValidate="ddlPeriodo" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
                         <asp:CustomValidator ErrorMessage="<br>Escolha o Dia da Semana" ControlToValidate="ddlDiaSemana" runat="server" ValidationGroup="ExpedienteCadastro" ClientValidationFunction="validateCamp" Display="Dynamic" ForeColor="Red" EnableTheming="true" />
                     </div>
@@ -98,39 +95,7 @@
     function validateCamp(oSrc, args) {
         args.IsValid = (args.Value != '0');
     }
-    function ValidaPeriodo(oSrc, args) {
-        var entrada = parseFloat($('#<% =txtEntrada.ClientID%>').val());
-        var iPeriodo = parseInt($('#<% =ddlPeriodo.ClientID %>').val());
-
-        if (!isNaN(entrada) && iPeriodo != 0) {
-            var fim = parseInt("<% =ConfigurationManager.AppSettings["fimperiodo"] %>"); //fim expediente
-            var manha = parseInt("<% =ConfigurationManager.AppSettings["manha"] %>");
-            var tarde = parseFloat("<% =(ConfigurationManager.AppSettings["tarde"]) %>");
-            var noite = parseInt("<% =(ConfigurationManager.AppSettings["noite"]) %>");
-            switch (iPeriodo) {
-                case 1:
-                    args.IsValid = entrada >= manha && manha < tarde;
-
-                    break;
-                case 2:
-                    args.IsValid = entrada >= tarde && tarde < noite;
-
-                    break;
-                case 3:
-                    args.IsValid = entrada >= noite && noite < fim;
-
-                    break;
-                case 4:
-                    args.IsValid = true
-                    break;
-            }
-            if (!args.IsValid)
-                $("#<% =vPeriodo.ClientID%>").css("display", "inline");
-            else
-                $("#<% =vPeriodo.ClientID%>").css("display", "none");
-
-        }
-    }
+ 
     $('#<% =txtEntrada.ClientID%>, #<% =txtSaida.ClientID%>').change(function () {
         try {
             var saida = parseInt($('#<% =txtSaida.ClientID%>').val());

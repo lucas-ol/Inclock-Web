@@ -16,11 +16,12 @@ namespace Classes.VO
         public string Entrada { get; set; }
         public string Saida { get; set; }
         public int Periodo { get; set; }
+        public int PeriodoSaida { get; set; }
         public int DiaSemana { get; set; }
-        public char Type {get;set;}
+        public char Type { get; set; }
         public Expediente()
         {
-           
+
         }
     }
 }
