@@ -48,7 +48,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
 
         Semanda.Text = UtilDate.ConverteSemanaExtenso(expediente.DiaSemana);
         Periodo.Text = UtilDate.ConvertePeriodo(expediente.Periodo);
-        if (expediente.DiaSemana == Convert.ToInt32(DateTime.Now.DayOfWeek))
+        if (expediente.DiaSemana == Convert.ToInt32(DateTime.Now.DayOfWeek)+1)
         {
             var headerExpediente = (HtmlControl)e.Item.FindControl("headerExpediente");
             headerExpediente.Style.Add(HtmlTextWriterStyle.BackgroundColor, "LightGreen");

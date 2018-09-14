@@ -98,19 +98,31 @@ namespace Library.Inclock.web.br.BL
 
         private int CheckSaida(Expediente expediente)
         {
-            DateTime data = Convert.ToDateTime("2018, 07, 01");             
-          
-            TimeSpan saida;
-            TimeSpan entrada;
-            TimeSpan ht;
+            DateTime etr = Convert.ToDateTime(string.Format("2018/07/{0} {1}", expediente.DiaSemana, expediente.Entrada));
+
+            decimal entrada;
+            decimal horasTrabalhada;
             DateTime hora;
-            saida = Convert.ToDateTime(expediente.Saida).TimeOfDay;
-            entrada = Convert.ToDateTime(expediente.Entrada).TimeOfDay;
-            ht = entrada - saida;
-            hora = DateTime.Now;
-            hora = hora.Add(ht);
-            if (hora.Day > DateTime.Now.Day)  // Se virar o dia, quer dizer que o func vai bater a saida no outro dia         
-                expediente.DiaSemana++;
+            decimal saida = Convert.ToDecimal(expediente.Saida.Replace(":", ","));
+            entrada = Convert.ToDecimal(expediente.Entrada.Replace(":", ","));
+            var vt = (saida - entrada).ToString().Replace(":", ",").Substring(0,6);
+            var vtr = Convert.ToDecimal(vt);
+
+         //   if (entrada > saida)
+                horasTrabalhada = saida - entrada;
+    ///        else
+        //        horasTrabalhada = entrada.Subtract(saida);
+
+         //   if (horasTrabalhada < new TimeSpan(0))
+        //        horasTrabalhada = horasTrabalhada.Negate();
+           etr = etr.Add(Convert.ToDateTime(horasTrabalhada).TimeOfDay);
+
+            var peri = Convert.ToInt32(etr.DayOfWeek) + 1;
+
+            //      hora = DateTime.Now;
+            //      hora = hora.Add(horasTrabalhada);
+            //        if (hora.Day > DateTime.Now.Day)  // Se virar o dia, quer dizer que o func vai bater a saida no outro dia         
+            //         expediente.DiaSemana++;
             return expediente.DiaSemana;
         }
         private void RecuperaPeriodo(ref Expediente exp)
