@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `inclock` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+USE `inclock`;
 -- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: inclock
@@ -16,6 +18,23 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `avisos`
+--
+
+DROP TABLE IF EXISTS `avisos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `avisos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(50) DEFAULT NULL,
+  `conteudo` varchar(300) DEFAULT NULL,
+  `imagem` varchar(200) DEFAULT NULL,
+  `data_noticia` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `avisos`
 --
 
@@ -24,6 +43,20 @@ LOCK TABLES `avisos` WRITE;
 INSERT INTO `avisos` VALUES (1,'','','02.jpg','2018-05-02 01:04:04');
 /*!40000 ALTER TABLE `avisos` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `cargo`
+--
+
+DROP TABLE IF EXISTS `cargo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `cargo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=965 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `cargo`
@@ -36,6 +69,26 @@ INSERT INTO `cargo` VALUES (3,'Desenvolvedor'),(964,'schandule');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `expediente`
+--
+
+DROP TABLE IF EXISTS `expediente`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `expediente` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `expediente_id` int(11) NOT NULL,
+  `hora` time DEFAULT NULL,
+  `diasemana` int(11) NOT NULL,
+  `periodo` int(11) NOT NULL,
+  `type_point` char(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_expediente_id` (`expediente_id`),
+  CONSTRAINT `FK_expediente_id` FOREIGN KEY (`expediente_id`) REFERENCES `expediente_id` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `expediente`
 --
 
@@ -44,6 +97,22 @@ LOCK TABLES `expediente` WRITE;
 INSERT INTO `expediente` VALUES (50,38,'13:00:00',3,1,'E'),(51,38,'22:00:00',3,3,'S'),(88,57,'12:00:00',5,4,'E'),(89,57,'01:00:00',5,4,'S'),(90,58,'10:15:00',1,1,'E'),(91,58,'14:00:00',1,2,'S');
 /*!40000 ALTER TABLE `expediente` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `expediente_id`
+--
+
+DROP TABLE IF EXISTS `expediente_id`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `expediente_id` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `funcionario_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_expediente_funcionarios` (`funcionario_id`),
+  CONSTRAINT `FK_expediente_funcionarios` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `expediente_id`
@@ -56,6 +125,43 @@ INSERT INTO `expediente_id` VALUES (38,5),(57,5),(58,5);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `funcionarios`
+--
+
+DROP TABLE IF EXISTS `funcionarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `funcionarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  `telefone` varchar(16) DEFAULT NULL,
+  `celular` varchar(17) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `endereco` varchar(50) NOT NULL,
+  `cpf` varchar(15) NOT NULL,
+  `cargo_id` int(11) NOT NULL,
+  `nascimento` date NOT NULL,
+  `sexo` char(2) NOT NULL,
+  `cidade` varchar(30) NOT NULL,
+  `estado` char(2) NOT NULL,
+  `cep` varchar(15) NOT NULL,
+  `numero` varchar(5) NOT NULL,
+  `bairro` varchar(45) DEFAULT NULL,
+  `rg` varchar(14) NOT NULL,
+  `senha` varchar(8) NOT NULL,
+  `login` varchar(15) NOT NULL,
+  `role` varchar(15) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cpf_UNIQUE` (`cpf`),
+  UNIQUE KEY `login_UNIQUE` (`login`),
+  UNIQUE KEY `rg_UNIQUE` (`rg`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `FK_Funcionarios_Cargos` (`cargo_id`),
+  CONSTRAINT `FK_Funcionarios_Cargos` FOREIGN KEY (`cargo_id`) REFERENCES `cargo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `funcionarios`
 --
 
@@ -66,6 +172,21 @@ INSERT INTO `funcionarios` VALUES (5,'Lucas ','(17) 7711-1111','(17) 77711-1111'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `log_codes`
+--
+
+DROP TABLE IF EXISTS `log_codes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `log_codes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code_qr` varchar(25) NOT NULL,
+  `expirado` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `log_codes`
 --
 
@@ -73,6 +194,30 @@ LOCK TABLES `log_codes` WRITE;
 /*!40000 ALTER TABLE `log_codes` DISABLE KEYS */;
 /*!40000 ALTER TABLE `log_codes` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `pontos`
+--
+
+DROP TABLE IF EXISTS `pontos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `pontos` (
+  `id_ponto` int(11) NOT NULL AUTO_INCREMENT,
+  `funcionario_id` int(11) NOT NULL,
+  `data` date NOT NULL,
+  `hora` time NOT NULL,
+  `expediente_id` int(11) NOT NULL,
+  `tipo` char(2) NOT NULL,
+  `obs` text,
+  `status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`funcionario_id`,`expediente_id`,`data`,`tipo`),
+  UNIQUE KEY `id_ponto_UNIQUE` (`id_ponto`),
+  KEY `FK_exp` (`expediente_id`),
+  CONSTRAINT `FK_exp` FOREIGN KEY (`expediente_id`) REFERENCES `expediente_id` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_funcionarios` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `pontos`
@@ -776,4 +921,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-14 18:59:13
+-- Dump completed on 2018-09-18 19:08:22

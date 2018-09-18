@@ -95,36 +95,37 @@ namespace Library.Inclock.web.br.BL
             MySqlAdicionaParametro("id", id);
             return MySqlExecutaComando("delete from expediente_id where id = @id", System.Data.CommandType.Text).Status;
         }
-
+        public double GetHorasTrabalhada(Expediente expediente)
+        {
+            double entrada;
+            double horasTrabalhada;
+            double saida = Convert.ToDouble(expediente.Saida.Replace(":", ","));
+            entrada = Convert.ToDouble(expediente.Entrada.Replace(":", ","));
+            horasTrabalhada = (Math.Abs((entrada - saida) - 24));
+            //se for mais que 24 indica que que ele entrou em um dia e saiu no outro
+            return horasTrabalhada > 24 ? Math.Abs(entrada - saida) : horasTrabalhada;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="expediente"></param>
+        /// <returns></returns>
         private int CheckSaida(Expediente expediente)
         {
             DateTime etr = Convert.ToDateTime(string.Format("2018/07/{0} {1}", expediente.DiaSemana, expediente.Entrada));
 
             decimal entrada;
-            decimal horasTrabalhada;
-            DateTime hora;
+            decimal horasTrabalhada;            
             decimal saida = Convert.ToDecimal(expediente.Saida.Replace(":", ","));
             entrada = Convert.ToDecimal(expediente.Entrada.Replace(":", ","));
-            var vt = (saida - entrada).ToString().Replace(":", ",").Substring(0,6);
-            var vtr = Convert.ToDecimal(vt);
+            horasTrabalhada = (Math.Abs((entrada - saida) - 24));
 
-         //   if (entrada > saida)
-                horasTrabalhada = saida - entrada;
-    ///        else
-        //        horasTrabalhada = entrada.Subtract(saida);
-
-         //   if (horasTrabalhada < new TimeSpan(0))
-        //        horasTrabalhada = horasTrabalhada.Negate();
-           etr = etr.Add(Convert.ToDateTime(horasTrabalhada).TimeOfDay);
-
-            var peri = Convert.ToInt32(etr.DayOfWeek) + 1;
-
-            //      hora = DateTime.Now;
-            //      hora = hora.Add(horasTrabalhada);
-            //        if (hora.Day > DateTime.Now.Day)  // Se virar o dia, quer dizer que o func vai bater a saida no outro dia         
-            //         expediente.DiaSemana++;
-            return expediente.DiaSemana;
+            if (horasTrabalhada > 24)
+                horasTrabalhada = Math.Abs(entrada - saida);      
+            etr = etr.AddMilliseconds(Convert.ToDouble(GetHorasTrabalhada(expediente)) * 60 * 60 * 1000);  
+            return Convert.ToInt32(etr.DayOfWeek) +1;
         }
+        
         private void RecuperaPeriodo(ref Expediente exp)
         {
             using (Autenticador.ServiceClient client = new Autenticador.ServiceClient())
