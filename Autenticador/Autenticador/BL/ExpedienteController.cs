@@ -54,7 +54,7 @@ namespace Autenticador.BL
                     DiaSemana = Convert.ToInt32(dr["diasemana"])
                 };
             }
-            catch (Exception ex)
+            catch
             {
                 return new Expediente();
             }
@@ -69,8 +69,6 @@ namespace Autenticador.BL
         /// <returns></returns>
         public Expediente GetExpediente(int funcionario, DayOfWeek semana, int periodo, char tp)
         {
-
-
             MySqlAdicionaParametro("_funcionario", funcionario);
             MySqlAdicionaParametro("_semana", Convert.ToInt32(semana) + 1);
             MySqlAdicionaParametro("_periodo", periodo);
@@ -90,6 +88,114 @@ namespace Autenticador.BL
                 };
             }
             return null;
+        }
+
+        public FeedBack SalvaExpediente(Expediente expediente)
+        {
+            FeedBack feedBack = new FeedBack() { Status = false };
+            MySqlAdicionaParametro("_saida", expediente.Saida);
+            MySqlAdicionaParametro("_entrada", expediente.Entrada);
+            MySqlAdicionaParametro("_semanaEntrada", expediente.DiaSemana);
+            MySqlAdicionaParametro("_semanaSaida", CheckSaida(expediente));
+            MySqlAdicionaParametro("_periodo", Data.ConvertePeriodo(expediente.Entrada));
+            MySqlAdicionaParametro("_periodo_sda", Data.ConvertePeriodo(expediente.Saida));
+            MySqlAdicionaParametro("_funcionario_id", expediente.Funcionario_id);
+            feedBack = MySqlExecutaComando("prd_insert_expediente", CommandType.StoredProcedure);
+            if (feedBack.Mensagem.Contains("integral"))
+            {
+                feedBack.Mensagem = "Nesse expediente tem um periodo integral";
+                feedBack.Status = false;
+            }
+            else if (feedBack.Mensagem.Contains("duplicate"))
+            {
+                feedBack.Status = false;
+                feedBack.Mensagem = "Expediente ja cadastrado";
+            }
+            else if (feedBack.Mensagem.Contains("expediente"))
+            {
+                feedBack.Status = false;
+                feedBack.Mensagem = "Você não pode cadastrar um expediente integral no dia que ja tem outros expedientes cadastrados";
+            }
+
+            return feedBack; ;
+        }
+
+        public FeedBack AtualizaExpediente(Expediente expediente)
+        {
+            FeedBack feedBack = new FeedBack();
+
+            MySqlAdicionaParametro("_id", expediente.Id);
+            MySqlAdicionaParametro("_saida", expediente.Saida);
+            MySqlAdicionaParametro("_entrada", expediente.Entrada);
+            MySqlAdicionaParametro("_semanaEntrada", expediente.DiaSemana);
+            MySqlAdicionaParametro("_semanaSaida", CheckSaida(expediente));
+            MySqlAdicionaParametro("_periodo", Data.ConvertePeriodo(expediente.Entrada));
+            MySqlAdicionaParametro("_periodo_sda", Data.ConvertePeriodo(expediente.Saida));
+            MySqlAdicionaParametro("_funcionario_id", expediente.Funcionario_id);
+            feedBack = MySqlExecutaComando("prd_updade_expediente", CommandType.StoredProcedure);
+
+            if (feedBack.Mensagem.Contains("integral"))
+            {
+                feedBack.Mensagem = "Nesse expediente tem um periodo integral";
+                feedBack.Status = false;
+            }
+            else if (feedBack.Mensagem.Contains("duplicate"))
+            {
+                feedBack.Status = false;
+                feedBack.Mensagem = "Expediente ja cadastrado";
+            }
+            else if (feedBack.Mensagem.Contains("expediente"))
+            {
+                feedBack.Status = false;
+                feedBack.Mensagem = "Você não pode cadastrar um expediente integral no dia que ja tem outros expedientes cadastrados";
+            }
+            return feedBack;
+        }
+        public FeedBack Excluir(int id)
+        {
+            MySqlAdicionaParametro("id", id);
+            return MySqlExecutaComando("delete from expediente_id where id = @id", System.Data.CommandType.Text);
+        }
+        public double GetHorasTrabalhada(Expediente expediente)
+        {
+            double entrada;
+            double horasTrabalhada;
+            double saida = Convert.ToDouble(expediente.Saida.Replace(":", ","));
+            entrada = Convert.ToDouble(expediente.Entrada.Replace(":", ","));
+            horasTrabalhada = (Math.Abs((entrada - saida) - 24));
+            //se for mais que 24 indica que que ele entrou em um dia e saiu no outro
+            return horasTrabalhada > 24 ? Math.Abs(entrada - saida) : horasTrabalhada;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="expediente"></param>
+        /// <returns></returns>
+        private int CheckSaida(Expediente expediente)
+        {
+            /* dia onde o dia da semana é o mesmo do dia do mes */
+            DateTime etr = Convert.ToDateTime(string.Format("2018/07/{0} {1}", expediente.DiaSemana, expediente.Entrada));
+            var horasTrabalhada = GetHorasTrabalhada(expediente);
+            etr = etr.AddMinutes(Convert.ToDouble(GetHorasTrabalhada(expediente)) * 60);
+            return Convert.ToInt32(etr.DayOfWeek) + 1;
+        }
+        public bool ValidaDados(Expediente ex)
+        {
+            bool validade = true;
+            TimeSpan Entrada = Convert.ToDateTime(ex.Entrada).TimeOfDay;
+            TimeSpan Saida = Convert.ToDateTime(ex.Saida).TimeOfDay; ;
+            TimeSpan HorasTrabalhada = Entrada - Saida;
+
+            if (Math.Abs(HorasTrabalhada.Hours) < 1)
+                validade = false;
+
+            else if (ex.DiaSemana == 0)
+                validade = false;
+
+            else if (ex.Funcionario_id <= 0 || ex.Id == 0)
+                validade = false;
+
+            return validade;
         }
 
     }

@@ -43,8 +43,6 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
 
         Entrada.Text = expediente.Entrada.Substring(0, 5);
         Saida.Text = expediente.Saida.Substring(0, 5);
-        
-       
 
         Semanda.Text = UtilDate.ConverteSemanaExtenso(expediente.DiaSemana);
         Periodo.Text = UtilDate.ConvertePeriodo(expediente.Periodo);
@@ -68,16 +66,5 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
             Panel painel = (Panel)e.Item.FindControl("pnlExpediente");
             painel.Attributes.Add("data-id", expediente.Id.ToString());
         }
-    }
-
-    protected void btnExcluirConfimar_Click(object sender, EventArgs e)
-    {
-        Expedientes exp = new Expedientes();
-        int id;
-        int.TryParse(hhdIdexpediente.Value, out id);
-        if (exp.Excluir(id))
-        {
-            Response.Write("<script>alert('Expediente excluido com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "'</script>");
-        }
-    }
+    }    
 }

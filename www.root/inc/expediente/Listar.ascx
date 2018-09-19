@@ -53,7 +53,7 @@
             </div>
             <div class="modal-body">
                 <button type="button" class="btn btn-danger align-content-lg-start" data-dismiss="modal">Cancelar</button>
-                <asp:Button Text="Comfirmar" runat="server" ID="btnExcluirConfimar" CssClass="btn btn-success" Style="display: inline-block; float: right" OnClick="btnExcluirConfimar_Click" />
+                <asp:Button Text="Comfirmar" runat="server" ID="btnExcluirConfimar" CssClass="btn btn-success" Style="display: inline-block; float: right" />
             </div>
         </div>
     </div>

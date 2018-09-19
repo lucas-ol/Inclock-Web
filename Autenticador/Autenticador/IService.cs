@@ -68,5 +68,15 @@ namespace Autenticador
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "periodo/{hora}")]
         int ConvertePeriodo(string hora);
+
+        /*Expediente*/
+        [OperationContract]
+        [WebInvoke(Method = "DELETE", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
+        FeedBack ExcluitExpediente(int id);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
+        FeedBack AlteraExpediente(Expediente exp);
+
     }
 }

@@ -10,9 +10,7 @@
 /Autenticador/Autenticador/obj/Debug
 /Autenticador/.vs
 
-/Autenticador/packages
-/Autenticador/Autenticador_IIS/Bin
-/Autenticador/Autenticador/bin/Debug
+
 /packages
 
 ########Classes 
@@ -24,3 +22,8 @@
 #######wwwroot
 www.root/Bin
 
+###### Autenticador
+/Autenticador/packages
+/Autenticador/Autenticador_IIS/Bin
+/Autenticador/Autenticador/bin/
+/Autenticador/Autenticador_Host/bin/

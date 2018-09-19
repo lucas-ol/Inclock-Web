@@ -107,5 +107,15 @@ namespace Autenticador
         {
             return Data.ConvertePeriodo(hora);
         }
+
+        public FeedBack AlteraExpediente(Expediente exp)
+        {
+            return new FeedBack() { Mensagem ="Sucesso"};
+        }
+
+        public FeedBack ExcluitExpediente(int id)
+        {
+            return new ExpedienteController().Excluir(id);
+        }
     }
 }

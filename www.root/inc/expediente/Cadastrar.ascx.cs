@@ -38,31 +38,14 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         expediente.DiaSemana = Convert.ToInt32(ddlDiaSemana.SelectedValue);
         return expediente;
     }
-    public bool ValidaDados()
-    {
-        bool validade = Page.IsValid;
-        TimeSpan Entrada = Convert.ToDateTime(txtEntrada.Text).TimeOfDay;
-        TimeSpan Saida = Convert.ToDateTime(txtSaida.Text).TimeOfDay; ;
-        TimeSpan HorasTrabalhada = Entrada - Saida;
-
-        if (Math.Abs(HorasTrabalhada.Hours) < 1)
-            validade = false;
-
-        else if (ddlDiaSemana.SelectedValue == "0")
-            validade = false;
-
-        else if (Id_funcionario <= 0 || hhdIdExpediente.Value == "0")
-            validade = false;
-
-        return validade;
-    }
+   
 
     protected void btnInserir_Click(object sender, EventArgs e)
     {
-        if (string.IsNullOrEmpty(hhdIdExpediente.Value) || hhdIdExpediente.Value == "0")
-            AdicionaExpediente();
-        else
-            EditaExpediente();
+     // if (string.IsNullOrEmpty(hhdIdExpediente.Value) || hhdIdExpediente.Value == "0")
+   //         AdicionaExpediente();
+   //     else
+   //         EditaExpediente();
 
 
     }
@@ -73,7 +56,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
         float.TryParse(hora, out fHora);
         return fHora;
     }
-
+    /*
     public void EditaExpediente()
     {
         FeedBack feed = new FeedBack { Status = false };
@@ -97,7 +80,8 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
             lblmsg.Visible = true;
             RegistraScript("  $('#" + lblmsg.ClientID + "').delay(5000).toggle(1000);", this.Page, true);
         }
-    }
+    }*/
+    /*
     public void AdicionaExpediente()
     {
         FeedBack feed = new FeedBack { Status = false };
@@ -128,7 +112,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
             RegistraScript("  $('#" + lblmsg.ClientID + "').delay(5000).toggle(1000);", this.Page, true);
         }
 
-    }
+    }*/
     public void Clear()
     {
         txtEntrada.Text = string.Empty;
