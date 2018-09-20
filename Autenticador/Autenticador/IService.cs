@@ -13,6 +13,10 @@ namespace Autenticador
     public interface IService
     {
         [OperationContract]
+        [WebInvoke(Method = "OPTIONS", UriTemplate = "*")]
+        void GetOptions();
+      
+        [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json
             , UriTemplate = "logar/{password}/{login}")]
         Funcionario Logar(string password, string login);
@@ -75,8 +79,8 @@ namespace Autenticador
         FeedBack ExcluitExpediente(int id);
 
         [OperationContract]
-        [WebInvoke(Method = "PUT", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        FeedBack AlteraExpediente(Expediente exp);
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
+        FeedBack CadastrarExpediente(Expediente exp);
 
     }
 }

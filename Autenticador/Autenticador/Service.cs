@@ -10,7 +10,9 @@ namespace Autenticador
 {
     public class Service : IService
     {
-
+        public void GetOptions()
+        {
+        }
         public string GetLogin(string Email)
         {
             return new BL.Autenticador().GetLogin(Email);
@@ -97,7 +99,7 @@ namespace Autenticador
         public FeedBack CheckPoint(string funcionario, string type)
         {
             if (!int.TryParse(funcionario, out int func))
-                return new FeedBack() { Status = false, Mensagem = "funcionario invalido" };           
+                return new FeedBack() { Status = false, Mensagem = "funcionario invalido" };
             if (!char.TryParse(type, out char tp))
                 return new FeedBack() { Status = false, Mensagem = "tipo invalido" };
             return new CheckPoint().BaterPonto(func, tp);
@@ -108,9 +110,10 @@ namespace Autenticador
             return Data.ConvertePeriodo(hora);
         }
 
-        public FeedBack AlteraExpediente(Expediente exp)
+        public FeedBack CadastrarExpediente(Expediente exp)
         {
-            return new FeedBack() { Mensagem ="Sucesso"};
+            var request = new Integracao().ValidaSessão();
+            return new FeedBack() { Mensagem = "Sucesso" };
         }
 
         public FeedBack ExcluitExpediente(int id)

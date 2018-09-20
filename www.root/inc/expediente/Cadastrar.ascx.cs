@@ -22,7 +22,7 @@ public partial class inc_expediente_Cadastrar : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        hddIdFuncionario.Value = Id_funcionario.ToString();
     }
 
     public Expediente CriaObjeto()
