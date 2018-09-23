@@ -16,7 +16,7 @@
 
 
 #######wwwroot
-www.root/Bin
+/www.root/Bin
 
 ###### Autenticador
 /Autenticador/packages
