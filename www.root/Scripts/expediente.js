@@ -68,15 +68,15 @@ var expediente = function (func) {
 
         if (valid) {
             $('.erro').removeClass('erro')
-            if ($('#txtEntrada').val() == "") {
+            if ($('#txtEntrada').val() === "") {
                 $('#txtEntrada').addClass('erro');
                 valid = false;
             }
-            if ($('#txtSaida').val() == "") {
+            if ($('#txtSaida').val() === "") {
                 $('#txtSaida').addClass('erro')
                 valid = false;
             }
-            if ($('#ddlDiaSemana').val() == "") {
+            if ($('#ddlDiaSemana').val() === "") {
                 $('#ddlDiaSemana').addClass('erro')
                 valid = false;
             }
@@ -99,7 +99,7 @@ var expediente = function (func) {
     }
     self.ValidaHorasTrabalhada = function () {
         $('#lblmsg').empty();
-        if ($('#txtEntrada').val() == '' || $('#txtEntrada').val() == '')
+        if ($('#txtEntrada').val() === '' || $('#txtEntrada').val() === '')
             return;
         var valid = true;
         var saida = parseFloat($('#txtSaida').val());
@@ -115,8 +115,6 @@ var expediente = function (func) {
             valid = false;
             self.sucess({ Status: false, Mensagem: 'O funcionario não deve trabalhar mais de 10 horas' });
         }
-
-
         return valid;
     }
     $('.cadastrar-expediente').on('click', function () {

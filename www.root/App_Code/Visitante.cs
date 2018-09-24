@@ -5,6 +5,8 @@ using System.Web;
 using System.Security.Principal;
 using Classes.VO;
 using System.Web.Security;
+using System.Security.Cryptography;
+using System.Text;
 /// <summary>
 /// Descrição resumida de Visitante
 /// </summary>
@@ -48,7 +50,7 @@ public class Visitante
             if (ticket != null)
             {
                 func = Newtonsoft.Json.JsonConvert.DeserializeObject<Funcionario>(ticket.UserData);
-            }         
+            }
             return func;
         }
     }
@@ -60,4 +62,17 @@ public class Visitante
             HttpContext.Current.User = identity;
         }
     }
+    public static string CriaCookieIntegracao(Funcionario use)
+    {
+        var cookie = new HttpCookie("Integracao", string.Join("", use.Roles));
+        RSAParameters parameters = new RSAParameters() { D = Encoding.UTF8.GetBytes("3233"), Q = Encoding.UTF8.GetBytes("17") };
+        var crip = new RSACryptoServiceProvider();
+       
+        crip.ImportParameters(crip.ExportParameters(false));
+        var bp = crip.Encrypt(Encoding.UTF8.GetBytes("kiko"),false);
+
+        var de = Encoding.UTF8.GetString(crip.Decrypt(bp, false));
+        return bp.ToString();
+    }
+
 }

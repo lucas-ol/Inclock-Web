@@ -32,6 +32,8 @@ public partial class inc_Login : System.Web.UI.UserControl
 
         if (funcionarioJson != null)
         {
+            Visitante.CriaCookieIntegracao(funcionarioJson);
+
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,funcionarioJson.Nome, DateTime.Now, DateTime.MaxValue, false, Newtonsoft.Json.JsonConvert.SerializeObject(funcionarioJson), FormsAuthentication.FormsCookiePath);
             string encrypt = FormsAuthentication.Encrypt(ticket);
 
