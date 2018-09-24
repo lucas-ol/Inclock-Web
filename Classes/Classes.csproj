@@ -76,9 +76,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Config.cs" />
     <Compile Include="Common\DataBase.cs" />
     <Compile Include="Common\Mail.cs" />
     <Compile Include="Common\QrCode.cs" />
+    <Compile Include="Common\Rijndael.cs" />
     <Compile Include="Common\UtilCep.cs" />
     <Compile Include="Common\UtilDate.cs" />
     <Compile Include="Common\UtilEmail.cs" />

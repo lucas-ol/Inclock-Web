@@ -129,7 +129,7 @@ var expediente = function (func) {
 
     self.onInit = function () {
         var cook = document.cookie;
-        var nome = '.AUT=';
+        var nome = 'integracao=';
         var co = cook.substr(cook.indexOf(nome) + nome.length)
         if (co.indexOf(';') < 0)
             self.Aut = co;

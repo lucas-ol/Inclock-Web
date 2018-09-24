@@ -5,8 +5,7 @@ using System.Web;
 using System.Security.Principal;
 using Classes.VO;
 using System.Web.Security;
-using System.Security.Cryptography;
-using System.Text;
+
 /// <summary>
 /// Descrição resumida de Visitante
 /// </summary>
@@ -62,17 +61,14 @@ public class Visitante
             HttpContext.Current.User = identity;
         }
     }
-    public static string CriaCookieIntegracao(Funcionario use)
+    public static void CriaCookieIntegracao(Funcionario use)
     {
-        var cookie = new HttpCookie("Integracao", string.Join("", use.Roles));
-        RSAParameters parameters = new RSAParameters() { D = Encoding.UTF8.GetBytes("3233"), Q = Encoding.UTF8.GetBytes("17") };
-        var crip = new RSACryptoServiceProvider();
        
-        crip.ImportParameters(crip.ExportParameters(false));
-        var bp = crip.Encrypt(Encoding.UTF8.GetBytes("kiko"),false);
-
-        var de = Encoding.UTF8.GetString(crip.Decrypt(bp, false));
-        return bp.ToString();
+        var tcxt =  Classes.Common.Rijndael.Criptografar(use.Roles.ToArray());
+        var tx = System.Text.Encoding.ASCII.GetString(tcxt);    
+        var versa = Convert.ToByte(tx);
+        var cookie = new HttpCookie("integracao", tx);
+        HttpContext.Current.Response.Cookies.Add(cookie);
     }
-
+  
 }

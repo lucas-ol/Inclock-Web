@@ -5,7 +5,6 @@ using System.Net;
 using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Security;
 using Classes.VO;
 using Newtonsoft.Json;
 using Classes.Interface;
@@ -33,9 +32,9 @@ namespace Autenticador.BL
                 
                 try
                 {
-                    var tk = FormsAuthentication.Decrypt(encryptedToken);
-                    
-                    var vrt = JsonConvert.DeserializeObject<Funcionario>(tk.UserData);
+                    byte[] bt = Encoding.ASCII.GetBytes(encryptedToken);
+                    var tk = Classes.Common.Rijndael.Descriptografar(bt);
+                    var vrt = JsonConvert.DeserializeObject<Funcionario>(tk);
                 }
                 catch (Exception ex)
                 {
