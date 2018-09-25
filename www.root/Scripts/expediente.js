@@ -5,10 +5,10 @@ var expediente = function (func) {
     self = this;
     self.APIHOST = "http://localhost:64241/Service.svc/rest/";
     self.funcionario = parseInt(func);
-    self.Aut = "";
+    self.integracao = "";
     self.sucess = function (data) {
         if (data.Status) {
-            alert('O expediente foi deleteado com sucesso');
+            alert(data.Mensagem);
             window.location.href = window.location.href;
         }
         else {
@@ -28,7 +28,7 @@ var expediente = function (func) {
             data: { id: id },
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            headers: { aut: self.Aut },
+            headers: { integracao: self.integracao },
             complete: function () {
                 $('#exp-loader').removeClass('active');
             },
@@ -48,12 +48,12 @@ var expediente = function (func) {
             data: JSON.stringify(self.CriaObjeto()),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            headers: { aut: self.Aut },
+            headers: { integracao: self.integracao },
             complete: function () {
                 $('#exp-loader').removeClass('active');
             },
             success: function (data) {
-                self.sucess(JSON.parse(data));
+                self.sucess(data);
             },
             error: function (erro) {
                 $('#exp-loader').removeClass('active');
@@ -132,9 +132,9 @@ var expediente = function (func) {
         var nome = 'integracao=';
         var co = cook.substr(cook.indexOf(nome) + nome.length)
         if (co.indexOf(';') < 0)
-            self.Aut = co;
+            self.integracao = co;
         else
-            self.Aut = co.substr(0, co.indexOf(';'));
+            self.integracao = co.substr(0, co.indexOf(';'));
     }
     self.onInit();
 }

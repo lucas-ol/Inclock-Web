@@ -7,11 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Classes.VO;
 using Newtonsoft.Json;
-using Classes.Interface;
+
+using System.Diagnostics;
+
 namespace Autenticador.BL
 {
-    public class Integracao
+    public class Integracao : IDisposable
     {
+      public  const string MENSAGEMERRO = "Você não tem privilegios necessarios";
         private WebHeaderCollection GetHeaders()
         {
             IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
@@ -19,23 +22,29 @@ namespace Autenticador.BL
         }
         public bool ValidaSessão()
         {
+
             var readers = GetHeaders();
-            Autenticador.Autenticar(readers["aut"]);
-            return false;
+            return Autenticador.Autenticar(readers["integracao"]);             
         }
-        public class Autenticador : Classes.Common.Role
+
+        public void Dispose()
         {
-            delegate string CallMethodo();
-            public static void Autenticar(string encryptedToken)
+            GC.SuppressFinalize(this);
+        }
+
+        private class Autenticador : Classes.Common.Role
+        {
+            public static bool Autenticar(string encryptedRoles)
             {
                 try
                 {
-                    var bt = Classes.Common.Rijndael.DescriptografaFromBase64(encryptedToken);
+                    var stack = new StackTrace().GetFrame(2);
+                    var bt = Classes.Common.Rijndael.DescriptografaFromBase64(encryptedRoles).Split(new[] { ';' });
+                    return IsInRole<Service>(bt, stack.GetMethod().Name);
                 }
-                catch (Exception ex)
+                catch
                 {
-
-                    throw;
+                    return false;
                 }
             }
 
