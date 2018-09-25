@@ -5,6 +5,7 @@ using System.Web;
 using System.Security.Principal;
 using Classes.VO;
 using System.Web.Security;
+using Classes.Common;
 
 /// <summary>
 /// Descrição resumida de Visitante
@@ -64,10 +65,10 @@ public class Visitante
     public static void CriaCookieIntegracao(Funcionario use)
     {
        
-        var tcxt =  Classes.Common.Rijndael.Criptografar(use.Roles.ToArray());
-        var tx = System.Text.Encoding.ASCII.GetString(tcxt);    
-        var versa = Convert.ToByte(tx);
-        var cookie = new HttpCookie("integracao", tx);
+        var content =  Rijndael.Criptografar(use.Roles.ToArray());       
+        var integracao =  content.ToBase64();
+
+        var cookie = new HttpCookie("integracao", integracao);
         HttpContext.Current.Response.Cookies.Add(cookie);
     }
   

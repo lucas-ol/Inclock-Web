@@ -8,20 +8,19 @@ using System.IO;
 
 namespace Classes.Common
 {
-    public class Rijndael
+    public static class Rijndael
     {
         private static PasswordDeriveBytes Pass
         {
             get
             {
-                var password = Encoding.ASCII.GetBytes(Common.Config.ChaveCriptografia);
+                var password = Encoding.UTF8.GetBytes(Common.Config.ChaveCriptografia);
                 return new PasswordDeriveBytes(password, Salt);
             }
         }
         private static byte[] Salt { get { return new byte[8]; } }
         private static byte[] Key { get { return Pass.GetBytes(32); } }
         private static byte[] IV { get { return Pass.GetBytes(16); } }
-
         public static byte[] Criptografar(string texo)
         {
             byte[] encrypted;
@@ -34,7 +33,7 @@ namespace Classes.Common
                 {
                     using (CryptoStream csEncrypt = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
                     {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt,new ASCIIEncoding()))
+                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
                         {
                             swEncrypt.Write(texo);
                         }
@@ -46,7 +45,7 @@ namespace Classes.Common
         }
         public static byte[] Criptografar(params string[] texto)
         {
-            return Criptografar(string.Join(";",texto));
+            return Criptografar(string.Join(";", texto));
         }
         public static string Descriptografar(byte[] TextoCriptografado)
         {
@@ -58,7 +57,7 @@ namespace Classes.Common
                 {
                     using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt,new ASCIIEncoding()))
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
                         {
                             plaintext = srDecrypt.ReadToEnd();
                         }
@@ -67,6 +66,13 @@ namespace Classes.Common
             }
             return plaintext;
         }
-
+        public static string ToBase64(this byte[] obj) {
+            return Convert.ToBase64String(obj);
+        }
+        public static string DescriptografaFromBase64(this string szTextoCifrado)
+        {
+            byte[] chaArray = Convert.FromBase64String(szTextoCifrado);
+            return Descriptografar(chaArray);
+        }
     }
 }

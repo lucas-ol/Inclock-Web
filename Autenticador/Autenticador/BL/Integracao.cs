@@ -23,18 +23,14 @@ namespace Autenticador.BL
             Autenticador.Autenticar(readers["aut"]);
             return false;
         }
-        public class Autenticador : IRole
+        public class Autenticador : Classes.Common.Role
         {
-            public IEnumerable<string> Roles => new List<string>() { "ADM", "ROOT" };
-
+            delegate string CallMethodo();
             public static void Autenticar(string encryptedToken)
             {
-                
                 try
                 {
-                    byte[] bt = Encoding.ASCII.GetBytes(encryptedToken);
-                    var tk = Classes.Common.Rijndael.Descriptografar(bt);
-                    var vrt = JsonConvert.DeserializeObject<Funcionario>(tk);
+                    var bt = Classes.Common.Rijndael.DescriptografaFromBase64(encryptedToken);
                 }
                 catch (Exception ex)
                 {
@@ -43,14 +39,6 @@ namespace Autenticador.BL
                 }
             }
 
-            public bool IsInRole(string[] role)
-            {
-                foreach (string item in role)                
-                    if (Roles.Contains(item))
-                        return true;
-                
-                return false;
-            }
         }
     }
 }
