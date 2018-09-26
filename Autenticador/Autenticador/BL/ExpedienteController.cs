@@ -30,9 +30,9 @@ namespace Autenticador.BL
                         Funcionario_id = Convert.ToInt32(linha["funcionario_id"]),
                         Periodo = Convert.ToInt32(linha["periodo"])
                     };
-                    var bt = Math.Round(GetHorasTrabalhada(expediente), 2, MidpointRounding.ToEven);
+                    var bt = GetHorasTrabalhada(expediente);
                     var vr = Convert.ToDateTime("00:00");
-                    var tts = vr.AddMinutes(bt);
+                   // var tts = vr.AddMinutes(bt);
                     expediente.HorasTrabalhada = Convert.ToDateTime("00:00").TimeOfDay.ToString("HH:mm");
                     ExpedienteList.Add(expediente);
                 }
@@ -158,15 +158,26 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("id", id);
             return MySqlExecutaComando("delete from expediente_id where id = @id", System.Data.CommandType.Text);
         }
-        public double GetHorasTrabalhada(Expediente expediente)
+        public TimeSpan GetHorasTrabalhada(Expediente expediente)
         {
-            double horasTrabalhada;
-            double saida = Convert.ToDouble(expediente.Saida.Replace(":", ","));
-            double entrada = Convert.ToDouble(expediente.Entrada.Replace(":", ","));
-            var minutos = Convert.ToDateTime(expediente.Entrada) - Convert.ToDateTime(expediente.Saida);
-            horasTrabalhada = (Math.Abs((entrada - saida) - 24));
-            //se for mais que 24 indica que que ele entrou em um dia e saiu no outro
-            return horasTrabalhada > 24 ? Math.Abs(entrada - saida) : horasTrabalhada;
+            TimeSpan horasTrabalhada;
+            try
+            {
+                var VinteQuatroHoras = TimeSpan.Parse("23:59:59");
+
+                TimeSpan saida = TimeSpan.Parse(expediente.Saida);
+                TimeSpan entrada = TimeSpan.Parse(expediente.Entrada);
+                horasTrabalhada = ((entrada - saida) - VinteQuatroHoras).Duration();
+                //se for mais que 24 indica que que ele entrou em um dia e saiu no outro
+                return horasTrabalhada > VinteQuatroHoras ? (entrada - saida).Duration() : horasTrabalhada;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
+           
         }
         /// <summary>
         /// 
@@ -177,8 +188,7 @@ namespace Autenticador.BL
         {
             /* dia onde o dia da semana é o mesmo do dia do mes */
             DateTime etr = Convert.ToDateTime(string.Format("2018/07/{0} {1}", expediente.DiaSemana, expediente.Entrada));
-            var horasTrabalhada = GetHorasTrabalhada(expediente);
-            etr = etr.AddMinutes(Convert.ToDouble(GetHorasTrabalhada(expediente)) * 60);
+            etr = etr.Add(GetHorasTrabalhada(expediente));
             return Convert.ToInt32(etr.DayOfWeek) + 1;
         }
         public bool ValidaDados(Expediente ex)
