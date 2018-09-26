@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,10 +25,15 @@ namespace Library.Inclock.web.br.BL
             {
                 return expediente;
             }
-            var responce = new Autenticador.ServiceClient().GetExpediente(semana.ToString(), funcionario_Id.ToString());
-            expediente.AddRange(responce);
+            string cifra = Rijndael.Criptografar(string.Join(";", Common.Autenticador.CurrentUser.Roles)).ToBase64();
+            using (var client = new Client(cifra))
+            {
+                var responce = client.Service.GetExpediente(semana.ToString(), funcionario_Id.ToString());
+                expediente.AddRange(responce);
+            }
+
             return expediente;
-        }          
+        }
 
 
     }

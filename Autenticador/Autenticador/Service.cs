@@ -40,7 +40,11 @@ namespace Autenticador
         [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<Expediente> GetExpediente(string semana, string funcionario_Id)
         {
-            int.TryParse(semana, out int isemana);
+            using (var ig = new Integracao())
+            {
+                ig.ValidaSessão();               
+            }
+                    int.TryParse(semana, out int isemana);
             int.TryParse(funcionario_Id, out int ifuncionario_Id);
             if (ifuncionario_Id == 0)
                 throw new Exception("Parametros incorretos");
@@ -79,8 +83,7 @@ namespace Autenticador
         [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<EspelhoPonto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario)
         {
-            int funcionario;
-            if (int.TryParse(id_funcionario, out funcionario))
+            if (int.TryParse(id_funcionario, out int funcionario))
             {
                 return new CheckPoint().GetListCheckPoint(InitialDate, FinalDate, funcionario);
             }
