@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Classes.VO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Classes.VO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-  <xs:import schemaLocation="" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:complexType name="Funcionario">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:User">
@@ -54,6 +54,7 @@
       <xs:element minOccurs="0" name="DiaSemana" type="xs:int" />
       <xs:element minOccurs="0" name="Entrada" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Funcionario_id" type="xs:int" />
+      <xs:element minOccurs="0" name="HorasTrabalhada" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Periodo" type="xs:int" />
       <xs:element minOccurs="0" name="PeriodoSaida" type="xs:int" />

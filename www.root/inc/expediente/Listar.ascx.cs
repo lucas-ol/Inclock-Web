@@ -40,10 +40,10 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         Label Saida = (Label)e.Item.FindControl("txtSaida");
         Label Semanda = (Label)e.Item.FindControl("txtDiaSemana");
         Label Periodo = (Label)e.Item.FindControl("txtPeriodo");
-
+        Label horas = (Label)e.Item.FindControl("txtHosrasTrabalhada");
         Entrada.Text = expediente.Entrada.Substring(0, 5);
         Saida.Text = expediente.Saida.Substring(0, 5);
-
+        horas.Text = expediente.HorasTrabalhada;
         Semanda.Text = UtilDate.ConverteSemanaExtenso(expediente.DiaSemana);
         Periodo.Text = UtilDate.ConvertePeriodo(expediente.Periodo);
         if (expediente.DiaSemana == Convert.ToInt32(DateTime.Now.DayOfWeek)+1)

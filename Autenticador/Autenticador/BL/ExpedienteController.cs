@@ -31,9 +31,9 @@ namespace Autenticador.BL
                         Periodo = Convert.ToInt32(linha["periodo"])
                     };
                     var bt = GetHorasTrabalhada(expediente);
-                    var vr = Convert.ToDateTime("00:00");
+                 
                    // var tts = vr.AddMinutes(bt);
-                    expediente.HorasTrabalhada = Convert.ToDateTime("00:00").TimeOfDay.ToString("HH:mm");
+                    expediente.HorasTrabalhada = bt.ToString();
                     ExpedienteList.Add(expediente);
                 }
             }
@@ -165,7 +165,7 @@ namespace Autenticador.BL
             {
                 var VinteQuatroHoras = TimeSpan.Parse("23:59:59");
 
-                TimeSpan saida = TimeSpan.Parse(expediente.Saida);
+                TimeSpan saida = TimeSpan.Parse(expediente.Saida).Add(TimeSpan.Parse("00:00:01"));
                 TimeSpan entrada = TimeSpan.Parse(expediente.Entrada);
                 horasTrabalhada = ((entrada - saida) - VinteQuatroHoras).Duration();
                 //se for mais que 24 indica que que ele entrou em um dia e saiu no outro
