@@ -26,13 +26,20 @@ namespace Library.Inclock.web.br.BL
             
             string cifra = Rijndael.Criptografar(string.Join(";", Common.Autenticador.CurrentUser.Roles)).ToBase64();
             var headers = new List<KeyValuePair<string, string>> {
-                new KeyValuePair<string, string>("integracao",cifra),
-                new KeyValuePair<string, string>("senha","cript")
+                new KeyValuePair<string, string>("integracao",cifra)              
             };
             using (var client = new Client(headers))
             {
-                var responce = client.Service.GetExpediente(semana.ToString(), funcionario_Id.ToString());
-                expediente.AddRange(responce);
+                try
+                {
+                    var responce = client.Service.GetExpediente(semana.ToString(), funcionario_Id.ToString());
+                    expediente.AddRange(responce);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                
             }
 
             return expediente;

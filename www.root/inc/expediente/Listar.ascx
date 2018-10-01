@@ -38,7 +38,7 @@
         </ItemTemplate>
     </asp:ListView>
 </div>
-<% if (!Visitante.IsFunc)%>
+<% if (!Library.Inclock.web.br.BL.Common.Autenticador.IsFunc)%>
 <%{%>
 <div class="modal fade" id="expExclui" runat="server">
     <div class="modal-dialog">

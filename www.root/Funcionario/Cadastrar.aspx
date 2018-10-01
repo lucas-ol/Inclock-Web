@@ -40,7 +40,7 @@
 </asp:Content>
 <asp:Content ID="Corpo" ContentPlaceHolderID="Corpo" runat="server">
     <div class="text-capitalize card-header text-center">dados do funcionario</div>
-
+    <asp:HiddenField ID="hddIdFuncionario" ClientIDMode="Static" runat="server" />
     <div class=" container pt-5">
         <div class="form-group">
             <div class=" form-inline">
@@ -75,18 +75,18 @@
                         <div class="form-inline ">
                             <asp:RadioButtonList runat="server" ID="rdaSexo" CssClass="form-inline" RepeatLayout="Flow">
                                 <asp:ListItem Text="Masculino" Value="M" />
-                                <asp:ListItem Text="Feminino"  Value="F"/>
+                                <asp:ListItem Text="Feminino" Value="F" />
                             </asp:RadioButtonList>
                             <br />
                             <asp:RequiredFieldValidator ErrorMessage="Sexo" ControlToValidate="rdaSexo" runat="server" ValidationGroup="cadastro" ForeColor="Red" Display="None" />
 
-                           
+
                         </div>
                     </asp:Panel>
                 </div>
             </div>
         </div>
-        <div class="form-group"> 
+        <div class="form-group">
             <div class="form-inline">
                 <label for="Corpo_txtAniversario" class="col-sm-1">Nacimento*</label>
                 <div class="col-md-3">
@@ -201,7 +201,9 @@
             <div class="form-inline">
                 <asp:Panel runat="server" CssClass="col-md-12" GroupingText="Roles">
                     <asp:CheckBoxList ID="ckListRoles" runat="server" CssClass="ckGroup form-control custom-checkbox" RepeatDirection="Horizontal" RepeatLayout="Flow" CellSpacing="2" CellPadding="2">
-                    </asp:CheckBoxList>                
+                        <asp:ListItem Text="Administrador" Value="ADM"></asp:ListItem>
+                        <asp:ListItem Text="Funcionario" Value="FUNC"></asp:ListItem>
+                    </asp:CheckBoxList>
                 </asp:Panel>
 
             </div>

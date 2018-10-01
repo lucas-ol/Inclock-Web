@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
+using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,14 +48,14 @@ namespace Library.Inclock.web.br.BL
 
             public object BeforeSendRequest(ref Message request, IClientChannel channel)
             {
-                HttpRequestMessageProperty property = new HttpRequestMessageProperty();
-                property.Headers.Add("integra", "kiko");
-                request.Properties.Add("header", property);
-
-                foreach (var item in Headers)
-                    request.Headers.Add(MessageHeader.CreateHeader(item.Key, "urn:thejoyofcode-com:services:activity-header:2006-11", item.Value)); //     property.Headers[item.Key] = item.Value;
-                 
-            //    request.Properties.Add(HttpRequestMessageProperty.Name, property);
+                HttpRequestMessageProperty httpRequestMessage;
+                if (request.Properties.TryGetValue(HttpRequestMessageProperty.Name, out object httpRequestMessageObject))
+                {
+                    httpRequestMessage = httpRequestMessageObject as HttpRequestMessageProperty;
+                    foreach (var item in Headers)
+                        if (string.IsNullOrEmpty(httpRequestMessage.Headers[item.Key]))
+                            httpRequestMessage.Headers[item.Key] = item.Value;
+                }
                 return null;
             }
         }

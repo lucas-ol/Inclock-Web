@@ -5,30 +5,19 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using Library.Inclock.web.br.BL.Common;
 
 
 public partial class masterpage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!HttpContext.Current.Request.IsAuthenticated)
+        if (!IsPostBack)
         {
-            ucLogin.Visible = true;
-            btnLogout.Visible = false;
-        }
-        else
-        {
-            ucLogin.Visible = false;
-            btnLogout.Visible = true;
+           topoFunc.Visible = !(topoAdm.Visible = Autenticador.CurrentUser.Roles.Contains("ADM"));
+            
         }
 
     }
-
-
-    protected void btnLogout_Click(object sender, EventArgs e)
-    {
-        FormsAuthentication.SignOut();
-        Response.Redirect("/", false);
-    }
+        
 }

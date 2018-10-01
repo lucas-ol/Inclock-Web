@@ -1,4 +1,5 @@
 ﻿using Classes.VO;
+using Library.Inclock.web.br.BL.Common;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -32,8 +33,7 @@ public partial class inc_Login : System.Web.UI.UserControl
 
         if (funcionarioJson != null)
         {
-            Visitante.CriaCookieIntegracao(funcionarioJson);
-
+           Autenticador.CriaCookieIntegracao(funcionarioJson);
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,funcionarioJson.Nome, DateTime.Now, DateTime.MaxValue, false, Newtonsoft.Json.JsonConvert.SerializeObject(funcionarioJson), FormsAuthentication.FormsCookiePath);
             string encrypt = FormsAuthentication.Encrypt(ticket);
 

@@ -76,7 +76,7 @@ namespace Autenticador
         /*Expediente*/
         [OperationContract]
         [WebInvoke(Method = "DELETE", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        FeedBack ExcluitExpediente(int id);
+        FeedBack ExcluirExpediente(int id);
 
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]

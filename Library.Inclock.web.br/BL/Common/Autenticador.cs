@@ -11,10 +11,10 @@ using System.Web.Security;
 
 namespace Library.Inclock.web.br.BL.Common
 {
-    class Autenticador
+    public class Autenticador
     {
         public static readonly Autenticador Instance = new Autenticador();
-       
+
         public static bool IsFunc
         {
             get
@@ -56,17 +56,26 @@ namespace Library.Inclock.web.br.BL.Common
             {
                 GenericPrincipal identity = new GenericPrincipal(new GenericIdentity(Ticket.Name), CurrentUser.Roles.ToArray());
                 HttpContext.Current.User = identity;
+               
             }
         }
         public static void CriaCookieIntegracao(Funcionario use)
         {
 
-            var content =  Rijndael.Criptografar(use.Roles.ToArray());
+            var content = Rijndael.Criptografar(use.Roles.ToArray());
             var integracao = content.ToBase64();
 
             var cookie = new HttpCookie("integracao", integracao);
             HttpContext.Current.Response.Cookies.Add(cookie);
         }
+        public static void Logout()
+        {
+            var response = HttpContext.Current.Response;
 
+            response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, "") { Expires = DateTime.Now.AddDays(-1) });    
+            response.Cookies.Add(new HttpCookie("integracao", "") {Expires = DateTime.Now.AddDays(-1) });
+            response.Redirect("/",true);
+           
+        }
     }
 }

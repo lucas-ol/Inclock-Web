@@ -9,6 +9,7 @@ using Library.Inclock.web.br.BL;
 using System.Globalization;
 using System.Web.UI.HtmlControls;
 using Classes.Common;
+using Library.Inclock.web.br.BL.Common;
 
 public partial class inc_expediente_Listar : System.Web.UI.UserControl
 {
@@ -30,7 +31,6 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         lvExpediente.ItemDataBound += LvExpediente_ItemDataBound;
         lvExpediente.DataSource = new Expedientes().ListaExpediente(funcionarioId);
         lvExpediente.DataBind();
-
     }
 
     private void LvExpediente_ItemDataBound(object sender, ListViewItemEventArgs e)
@@ -52,7 +52,7 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
             headerExpediente.Style.Add(HtmlTextWriterStyle.BackgroundColor, "LightGreen");
         }
 
-        if (Visitante.IsFunc)
+        if (Autenticador.IsFunc)
         {
             HtmlControl pnlButtons = (HtmlControl)e.Item.FindControl("pnlButtons");
             pnlButtons.Visible = false;

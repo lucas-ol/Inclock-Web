@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Classes.VO;
 using Library.Inclock.web.br.BL;
+using Library.Inclock.web.br.BL.Common;
 
 public partial class Ponto_Default : System.Web.UI.Page
 {
@@ -14,7 +15,7 @@ public partial class Ponto_Default : System.Web.UI.Page
         lvPontos.ItemDataBound += LvPontos_ItemDataBound;
         if (!this.Page.IsPostBack)
         {
-            Funcionario funcionario = Visitante.CurrentUser;
+            Funcionario funcionario = Autenticador.CurrentUser;
             lblCargo.Text = funcionario.Cargo;
             lblId.Text = funcionario.Id.ToString();
             lblNome.Text = funcionario.Nome;

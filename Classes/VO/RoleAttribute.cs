@@ -10,10 +10,6 @@ namespace Classes.VO
     public sealed class RoleAttribute : Attribute
     {
         public string[] Roles { get; set; }
-
-        public RoleAttribute()
-        {
-            Console.WriteLine("KIKO");
-        }
+      
     }
 }

@@ -23,8 +23,8 @@ namespace Autenticador.BL
         public bool ValidaSessão()
         {
 
-            var readers = GetHeaders();
-            return Autenticador.Autenticar(readers["integracao"]);             
+            var headers = GetHeaders();
+            return Autenticador.Autenticar(headers["integracao"]);             
         }
 
         public void Dispose()
@@ -47,7 +47,6 @@ namespace Autenticador.BL
                     return false;
                 }
             }
-
         }
     }
 }

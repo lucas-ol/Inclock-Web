@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
+using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Services.Protocols;
 
 namespace Library.Inclock.web.br.BL
 {
@@ -27,13 +30,11 @@ namespace Library.Inclock.web.br.BL
         public Client()
         {
             Service = new Autenticador.ServiceClient();
-            Service.OnSendingRequest 
         }
         public Client(IEnumerable<KeyValuePair<string, string>> headers)
         {
             Service = new Autenticador.ServiceClient();
             Service.Endpoint.EndpointBehaviors.Add(new CustomEndpoint { Headers = headers });
-
         }
         public void Dispose()
         {
@@ -41,5 +42,6 @@ namespace Library.Inclock.web.br.BL
             GC.SuppressFinalize(this);
             disposed = true;
         }
+
     }
 }

@@ -47,7 +47,7 @@
 
     void Application_PostAuthenticateRequest(object sender, EventArgs e)
     {
-         Visitante.Instance.Autenticar();
+        Library.Inclock.web.br.BL.Common.Autenticador.Instance.Autenticar();
     }
     void RegisterRoutes(RouteCollection routes)
     {

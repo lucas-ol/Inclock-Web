@@ -2,7 +2,7 @@
 using Classes.VO;
 using Library.Inclock.web.br;
 using Library.Inclock.web.br.BL;
-
+using Library.Inclock.web.br.BL.Common;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,19 +13,23 @@ using System.Web.UI.WebControls;
 
 public partial class Funcionario_Cadastrar : System.Web.UI.Page
 {
-    private int idfuncionario;
     public int IdFuncionario
     {
         get
         {
-            int.TryParse(Request.QueryString["id"], out idfuncionario);
-            return idfuncionario;
+            int id;
+            if (!int.TryParse(Request.QueryString["id"], out id))
+                int.TryParse(hddIdFuncionario.Value,out id);
+            
+            return id;
         }
-        private set { idfuncionario = value; }
+
     }
-    private Funcionario User {
-        get {
-            return Visitante.CurrentUser;
+    private Funcionario User
+    {
+        get
+        {
+            return Autenticador.CurrentUser;
         }
     }
     #region Metodos
@@ -35,18 +39,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
         //Carrega os dados do estado 
         if (!IsPostBack)
         {
-            DataTable td = Controller.BuscaCargos();
-            //Carrega os dados dos cargos                
-            txtCargo.DataSource = td;
-            txtCargo.DataTextField = "descricao";
-            txtCargo.DataValueField = "id";
-            txtCargo.DataBind();
-            txtCargo.Items.Insert(0, new ListItem("Selecione o Cargo", "0") { Selected = true });
-            var vt = Server.MapPath("/config/Roles.json");
-            ckListRoles.DataSource = Role.GetRoles(Server.MapPath("/config/Roles.json"));
-            ckListRoles.DataValueField = "value";
-            ckListRoles.DataTextField = "text";
-            ckListRoles.DataBind();
+            CarregaDadosFixos(Controller);
 
             if (IdFuncionario > 0)
             {
@@ -60,20 +53,31 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
                     ucExpListar.BuscaEspediente(IdFuncionario);
                 }
                 else
-                    IdFuncionario = 0;
+                    hddIdFuncionario.Value = "0";
             }
-            else if (Visitante.Instance.Ticket != null)
+            else if (Autenticador.Instance.Ticket != null)
             {
                 if (PreencheDados(Controller.Pesquisa_Funcionario_ID(User.Id)))
                 {
-                    ckListRoles.Visible = User.Roles.Contains("ADM"); 
+                    ckListRoles.Visible = User.Roles.Contains("ADM");
                     btnCadastraExpediente.Visible = true;
                     ucExpCadastrar.Visible = true;
                     ucExpListar.Visible = true;
                     ucExpListar.BuscaEspediente(User.Id);
+                    hddIdFuncionario.Value = User.Id.ToString();
                 }
             }
         }
+    }
+    private void CarregaDadosFixos(Funcionarios controller)
+    {
+        DataTable td = controller.BuscaCargos();
+        //Carrega os dados dos cargos                
+        txtCargo.DataSource = td;
+        txtCargo.DataTextField = "descricao";
+        txtCargo.DataValueField = "id";
+        txtCargo.DataBind();
+        txtCargo.Items.Insert(0, new ListItem("Selecione o Cargo", "0") { Selected = true });
     }
 
 
@@ -297,7 +301,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
     }
     public bool PreencheDados(Funcionario funcionario)
     {
-        if (funcionario.Id == 0)
+        if (funcionario.Id == 0 || funcionario.Roles.Contains("ADM"))
             return false;
         txtNome.Text = funcionario.Nome;
         txtTelefone.Text = funcionario.Telefone;

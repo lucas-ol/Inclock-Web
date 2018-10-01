@@ -20,7 +20,6 @@ namespace Classes.Common
         }
         protected static bool IsInRole<T>(string[] role, string metodo = "")
         {
-
             if (!SetRoles(metodo, typeof(T))) // indica que o Metodo é livre
                 return false;
             return IsInRole(role);

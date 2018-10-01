@@ -40,18 +40,18 @@ namespace Autenticador
         [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<Expediente> GetExpediente(string semana, string funcionario_Id)
         {
-            using (var ig = new Integracao())
-            {
-                ig.ValidaSessão();               
-            }
-                    int.TryParse(semana, out int isemana);
+            if (!new Integracao().ValidaSessão())
+                throw new Exception(Integracao.MENSAGEMERRO);
+
+            int.TryParse(semana, out int isemana);
             int.TryParse(funcionario_Id, out int ifuncionario_Id);
             if (ifuncionario_Id == 0)
                 throw new Exception("Parametros incorretos");
             else
                 return new ExpedienteController().GetExpediente(isemana, ifuncionario_Id);
+
         }
-        [Role(Roles = new string[] { "ADM", "FUNC" })]
+
         public List<Aviso> GetAvisos(string qtde)
         {
             if (string.IsNullOrEmpty(qtde))
@@ -102,11 +102,19 @@ namespace Autenticador
         [Role(Roles = new string[] { "ADM", "FUNC" })]
         public FeedBack CheckPoint(string funcionario, string type)
         {
-            if (!int.TryParse(funcionario, out int func))
-                return new FeedBack() { Status = false, Mensagem = "funcionario invalido" };
-            if (!char.TryParse(type, out char tp))
-                return new FeedBack() { Status = false, Mensagem = "tipo invalido" };
-            return new CheckPoint().BaterPonto(func, tp);
+            using (var ig = new Integracao())
+            {
+                if (ig.ValidaSessão())
+                {
+                    if (!int.TryParse(funcionario, out int func))
+                        return new FeedBack() { Status = false, Mensagem = "funcionario invalido" };
+                    if (!char.TryParse(type, out char tp))
+                        return new FeedBack() { Status = false, Mensagem = "tipo invalido" };
+                    return new CheckPoint().BaterPonto(func, tp);
+                }
+                else
+                    return new FeedBack() { Mensagem = Integracao.MENSAGEMERRO, Status = false };
+            }
         }
 
         public int ConvertePeriodo(string hora)
@@ -133,7 +141,7 @@ namespace Autenticador
 
         }
         [Role(Roles = new string[] { "ADM" })]
-        public FeedBack ExcluitExpediente(int id)
+        public FeedBack ExcluirExpediente(int id)
         {
             using (var ig = new Integracao())
             {
