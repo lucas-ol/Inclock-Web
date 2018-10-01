@@ -21,12 +21,15 @@ namespace Library.Inclock.web.br.BL
         {
             List<Expediente> expediente = new List<Expediente>();
 
-            if (funcionario_Id <= 0)
-            {
+            if (funcionario_Id <= 0)            
                 return expediente;
-            }
+            
             string cifra = Rijndael.Criptografar(string.Join(";", Common.Autenticador.CurrentUser.Roles)).ToBase64();
-            using (var client = new Client(cifra))
+            var headers = new List<KeyValuePair<string, string>> {
+                new KeyValuePair<string, string>("integracao",cifra),
+                new KeyValuePair<string, string>("senha","cript")
+            };
+            using (var client = new Client(headers))
             {
                 var responce = client.Service.GetExpediente(semana.ToString(), funcionario_Id.ToString());
                 expediente.AddRange(responce);

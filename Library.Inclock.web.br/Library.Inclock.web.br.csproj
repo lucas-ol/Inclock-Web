@@ -73,6 +73,7 @@
     <Compile Include="BL\Common\Autenticador.cs" />
     <Compile Include="BL\Avisos.cs" />
     <Compile Include="BL\Client.cs" />
+    <Compile Include="BL\CustomEndpoint.cs" />
     <Compile Include="BL\Expedientes.cs" />
     <Compile Include="BL\Funcionarios.cs" />
     <Compile Include="BL\Login.cs" />

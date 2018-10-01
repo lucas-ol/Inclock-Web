@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Library.Inclock.web.br.BL
 {
-    public class Client : IDisposable, IClientMessageInspector
+    public class Client : IDisposable
     {
         public Autenticador.ServiceClient Service { get; private set; }
         private bool disposed = false;
@@ -23,41 +23,23 @@ namespace Library.Inclock.web.br.BL
                     disposed = value;
             }
         }
-        private void Create()
-        {
-            Service = new Autenticador.ServiceClient();
-        }
-        private void Create(string aut)
-        {
-            Create();
-            EndpointAddressBuilder addressBuilder = new EndpointAddressBuilder(Service.Endpoint.Address);
-            addressBuilder.Headers.Add(AddressHeader.CreateAddressHeader("integracao", "", aut));
-            var header = MessageHeader.CreateHeader("integracao", "integracao", aut);
-            Service.Endpoint.Address = addressBuilder.ToEndpointAddress();
-        }
+
         public Client()
         {
-            Create();
+            Service = new Autenticador.ServiceClient();
+            Service.OnSendingRequest 
         }
-        public Client(string chave)
+        public Client(IEnumerable<KeyValuePair<string, string>> headers)
         {
-            Create(chave);
+            Service = new Autenticador.ServiceClient();
+            Service.Endpoint.EndpointBehaviors.Add(new CustomEndpoint { Headers = headers });
+
         }
         public void Dispose()
         {
             GC.SuppressFinalize(Service);
             GC.SuppressFinalize(this);
             disposed = true;
-        }
-
-        public object BeforeSendRequest(ref Message request, IClientChannel channel)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AfterReceiveReply(ref Message reply, object correlationState)
-        {
-            throw new NotImplementedException();
         }
     }
 }
