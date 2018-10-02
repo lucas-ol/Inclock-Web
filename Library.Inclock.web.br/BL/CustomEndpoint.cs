@@ -27,7 +27,7 @@ namespace Library.Inclock.web.br.BL
 
         public void ApplyDispatchBehavior(ServiceEndpoint endpoint, EndpointDispatcher endpointDispatcher)
         {
-            throw new NotImplementedException();
+           
         }
 
         public void Validate(ServiceEndpoint endpoint)
