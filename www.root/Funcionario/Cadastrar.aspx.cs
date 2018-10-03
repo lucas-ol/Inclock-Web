@@ -63,8 +63,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
                     btnCadastraExpediente.Visible = true;
                     ucExpCadastrar.Visible = true;
                     ucExpListar.Visible = true;
-                    ucExpListar.BuscaEspediente(User.Id);
-                    hddIdFuncionario.Value = User.Id.ToString();
+                    ucExpListar.BuscaEspediente(User.Id);                   
                 }
             }
         }
@@ -303,6 +302,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
     {
         if (funcionario.Id == 0 || funcionario.Roles.Contains("ADM"))
             return false;
+        hddIdFuncionario.Value = funcionario.Id.ToString();
         txtNome.Text = funcionario.Nome;
         txtTelefone.Text = funcionario.Telefone;
         txtCelular.Text = funcionario.Celular;

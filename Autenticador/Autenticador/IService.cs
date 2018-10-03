@@ -39,7 +39,7 @@ namespace Autenticador
         Funcionario GetUserById(string id);
 
         [OperationContract]
-        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "POST",UriTemplate = "checkin/{funcionario}/{type}")]
+        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "POST",BodyStyle = WebMessageBodyStyle.Wrapped)]
         FeedBack CheckPoint(string funcionario, string type);
 
         [OperationContract]

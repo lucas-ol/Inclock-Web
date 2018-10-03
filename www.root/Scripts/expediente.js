@@ -3,7 +3,7 @@
 })
 var expediente = function (func) {
     self = this;
-    self.APIHOST = "http://localhost:64241/Service.svc/rest/";
+    self.APIHOST = window.appRest;
     self.funcionario = parseInt(func);
     self.integracao = "";
     self.sucess = function (data) {
@@ -24,7 +24,7 @@ var expediente = function (func) {
         $('#exp-loader').addClass('active');
         $.ajax({
             method: 'DELETE',
-            url: '',
+            url: self.APIHOST + '/ExcluirExpediente',
             data: { id: id },
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -63,7 +63,7 @@ var expediente = function (func) {
         })
     }
     self.ValidaDados = function () {
-        
+
         var valid = self.ValidaHorasTrabalhada();
 
         if (valid) {
@@ -83,7 +83,7 @@ var expediente = function (func) {
             if (!valid)
                 self.sucess({ Status: false, Mensagem: 'Corrija o campos destacados em vermelho' });
         }
-       
+
 
         return valid
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 namespace Classes.Common
 {
-    class Config
+   public class Config
     {
         public static string ChaveCriptografia
         {
@@ -16,6 +16,10 @@ namespace Classes.Common
                 return string.IsNullOrEmpty(chave)? "" : chave;
             }
         }
+        public static string UrlRest { get {
+                string url = ConfigurationManager.AppSettings.Get("apiRest");
+                return string.IsNullOrEmpty(url) ? "" : url;
 
+            } }
     }
 }
