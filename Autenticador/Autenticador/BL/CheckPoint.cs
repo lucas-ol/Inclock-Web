@@ -16,7 +16,7 @@ namespace Autenticador.BL
 
         DateTime Data_Hoje
         {
-            get { return DateTime.Now.AddDays(14); }
+            get { return DateTime.Now.AddDays(19); }
         }
         public CheckPoint()
         {

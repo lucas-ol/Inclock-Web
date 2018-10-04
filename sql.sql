@@ -83,9 +83,10 @@ CREATE TABLE `expediente` (
   `periodo` int(11) NOT NULL,
   `type_point` char(1) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `FK_expediente_id` (`expediente_id`),
   CONSTRAINT `FK_expediente_id` FOREIGN KEY (`expediente_id`) REFERENCES `expediente_id` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +95,7 @@ CREATE TABLE `expediente` (
 
 LOCK TABLES `expediente` WRITE;
 /*!40000 ALTER TABLE `expediente` DISABLE KEYS */;
-INSERT INTO `expediente` VALUES (50,38,'13:00:00',3,1,'E'),(51,38,'22:00:00',3,3,'S'),(88,57,'12:00:00',5,4,'E'),(89,57,'01:00:00',5,4,'S'),(90,58,'10:15:00',1,1,'E'),(91,58,'14:00:00',1,2,'S'),(94,60,'00:00:00',2,3,'E'),(95,60,'01:00:00',2,3,'S');
+INSERT INTO `expediente` VALUES (50,38,'13:00:00',3,1,'E'),(51,38,'22:00:00',3,3,'S'),(88,57,'12:00:00',5,4,'E'),(89,57,'01:00:00',5,4,'S'),(90,58,'10:15:00',1,1,'E'),(91,58,'14:00:00',1,2,'S'),(94,60,'00:00:00',2,3,'E'),(95,60,'01:00:00',2,3,'S'),(96,61,'01:00:00',5,3,'E'),(97,61,'06:00:00',5,1,'S'),(98,62,'15:00:00',2,2,'E'),(99,62,'23:00:00',2,3,'S'),(100,63,'17:00:00',4,2,'E'),(101,63,'22:00:00',4,3,'S');
 /*!40000 ALTER TABLE `expediente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,7 +112,7 @@ CREATE TABLE `expediente_id` (
   PRIMARY KEY (`id`),
   KEY `FK_expediente_funcionarios` (`funcionario_id`),
   CONSTRAINT `FK_expediente_funcionarios` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +121,7 @@ CREATE TABLE `expediente_id` (
 
 LOCK TABLES `expediente_id` WRITE;
 /*!40000 ALTER TABLE `expediente_id` DISABLE KEYS */;
-INSERT INTO `expediente_id` VALUES (38,5),(57,5),(58,5),(60,5);
+INSERT INTO `expediente_id` VALUES (38,5),(57,5),(58,5),(60,5),(61,7),(62,7),(63,7);
 /*!40000 ALTER TABLE `expediente_id` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +159,7 @@ CREATE TABLE `funcionarios` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `FK_Funcionarios_Cargos` (`cargo_id`),
   CONSTRAINT `FK_Funcionarios_Cargos` FOREIGN KEY (`cargo_id`) REFERENCES `cargo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -167,7 +168,7 @@ CREATE TABLE `funcionarios` (
 
 LOCK TABLES `funcionarios` WRITE;
 /*!40000 ALTER TABLE `funcionarios` DISABLE KEYS */;
-INSERT INTO `funcionarios` VALUES (5,'Lucas ','(17) 7711-1111','(17) 77711-1111','blublucas@gmail.com','Rua Vera Lúcia Pinto da Silva','177.711.111-11',3,'1996-10-10','M','Suzano','SP','08690215','90809','Cidade Miguel Badra','11.111.111-1','123','123','ADM;FUNC;');
+INSERT INTO `funcionarios` VALUES (5,'Lucas ','(17) 7711-1111','(17) 77711-1111','blublucas@gmail.com','Rua Vera Lúcia Pinto da Silva','177.711.111-11',3,'1996-10-10','M','Suzano','SP','08690215','90809','Cidade Miguel Badra','11.111.111-1','123','123','ADM;FUNC'),(7,'Josénildo Ferraz','(11) 1111-1111','(11) 11111-1111','oliveiramelo1996@gmail.com','Rua Vera Lúcia Pinto da Silva','222.222.222-22',3,'2008-03-14','M','Suzano','SP','08690215','1111','Cidade Miguel Badra','37.959.520-1','1234','1234','FUNC');
 /*!40000 ALTER TABLE `funcionarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,10 +214,10 @@ CREATE TABLE `pontos` (
   `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`funcionario_id`,`expediente_id`,`data`,`tipo`),
   UNIQUE KEY `id_ponto_UNIQUE` (`id_ponto`),
-  KEY `FK_exp` (`expediente_id`),
-  CONSTRAINT `FK_exp` FOREIGN KEY (`expediente_id`) REFERENCES `expediente_id` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `FK_funcionarios` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `FK_Expedientes_funcionarios` (`expediente_id`),
+  CONSTRAINT `FK_Expedientes_funcionarios` FOREIGN KEY (`expediente_id`) REFERENCES `expediente` (`id`),
+  CONSTRAINT `FK_funcionarios` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +226,7 @@ CREATE TABLE `pontos` (
 
 LOCK TABLES `pontos` WRITE;
 /*!40000 ALTER TABLE `pontos` DISABLE KEYS */;
-INSERT INTO `pontos` VALUES (7,5,'2018-09-21','12:00:00',38,'E',NULL,0),(8,5,'2018-09-21','12:00:00',38,'S',NULL,0),(5,5,'2018-09-20','12:00:00',57,'E',NULL,0),(6,5,'2018-09-20','12:00:00',57,'S',NULL,0),(1,5,'2018-09-13','04:00:13',58,'E',NULL,0),(2,5,'2018-09-13','04:00:27',58,'S',NULL,0);
+INSERT INTO `pontos` VALUES (9,5,'2018-10-23','11:17:36',51,'S',NULL,0),(7,5,'2018-10-25','11:11:27',88,'E',NULL,0),(8,5,'2018-10-25','11:11:46',89,'S',NULL,0),(1,7,'2018-10-18','11:01:33',96,'E',NULL,0),(5,7,'2018-10-25','11:09:05',96,'E',NULL,0),(2,7,'2018-10-18','11:05:28',97,'S',NULL,0),(6,7,'2018-10-25','11:09:15',97,'S',NULL,0),(3,7,'2018-10-17','11:06:18',100,'E',NULL,0),(4,7,'2018-10-17','11:06:54',101,'S',NULL,0);
 /*!40000 ALTER TABLE `pontos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -525,7 +526,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `prd_se_expediente`(
 ,in _type char(1)
 )
 begin
-	select ex.expediente_id as id,ex.hora,ex.diasemana,ex.periodo,ex.type_point,exi.funcionario_id
+	select ex.id as id,ex.hora,ex.diasemana,ex.periodo,ex.type_point,exi.funcionario_id
     from expediente ex inner join expediente_id exi on exi.id =  ex.expediente_id 
     where exi.funcionario_id = _funcionario and ex.diasemana = _semana and ex.periodo = _periodo and ex.type_point = _type ;  
 end ;;
@@ -921,4 +922,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-25 19:04:02
+-- Dump completed on 2018-10-04 18:16:37

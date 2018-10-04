@@ -77,8 +77,9 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("_periodo", periodo);
             MySqlAdicionaParametro("_type", tp);
             DataTable tb = MySqlLeitura("prd_se_expediente", CommandType.StoredProcedure);
+
             if (tb.Rows.Count > 0 && tb.TableName != "erro")
-            {
+            {               
                 return new Expediente
                 {
                     Id = Convert.ToInt32(tb.Rows[0]["id"]),

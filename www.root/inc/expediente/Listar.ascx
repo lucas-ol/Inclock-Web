@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Listar.ascx.cs" Inherits="inc_expediente_Listar" %>
 
-<div>
+<div style="text-align:center">
 
     <asp:ListView runat="server" ID="lvExpediente">
         <ItemTemplate>
