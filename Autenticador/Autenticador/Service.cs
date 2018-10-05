@@ -1,4 +1,5 @@
 ﻿using Autenticador.BL;
+using common = Classes.Common;
 using Classes.VO;
 using System;
 using System.Collections.Generic;
@@ -10,15 +11,17 @@ namespace Autenticador
 {
     public class Service : IService
     {
-
+        public void GetOptions()
+        {
+        }
         public string GetLogin(string Email)
         {
             return new BL.Autenticador().GetLogin(Email);
         }
+        [Role(Roles = new string[] { "ADM" })]
         public Funcionario GetUserById(string id)
         {
-            int iId;
-            int.TryParse(id, out iId);
+            int.TryParse(id, out int iId);
             if (iId == 0)
                 throw new Exception("Parametro Incorreto");
             else
@@ -34,16 +37,19 @@ namespace Autenticador
         {
             return new BL.Autenticador().GetPassword(Login);
         }
-
+        [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<Expediente> GetExpediente(string semana, string funcionario_Id)
         {
-            int isemana, ifuncionario_Id;
-            int.TryParse(semana, out isemana);
-            int.TryParse(funcionario_Id, out ifuncionario_Id);
+            if (!new Integracao().ValidaSessão())
+                throw new Exception(Integracao.MENSAGEMERRO);
+
+            int.TryParse(semana, out int isemana);
+            int.TryParse(funcionario_Id, out int ifuncionario_Id);
             if (ifuncionario_Id == 0)
                 throw new Exception("Parametros incorretos");
             else
                 return new ExpedienteController().GetExpediente(isemana, ifuncionario_Id);
+
         }
 
         public List<Aviso> GetAvisos(string qtde)
@@ -52,60 +58,101 @@ namespace Autenticador
                 qtde = "10";
             return new BL.Autenticador().getAvisos(qtde);
         }
+        [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<EspelhoPonto> GetCheckPoint(string month, string funcionario)
         {
-            int iMonth, iFuncionario;
-            int.TryParse(month, out iMonth);
+            int.TryParse(month, out int iMonth);
             if (iMonth == 0)
                 throw new Exception("Parametros incorretos");
-            int.TryParse(funcionario, out iFuncionario);
+            int.TryParse(funcionario, out int iFuncionario);
             if (iFuncionario == 0)
                 throw new Exception("Parametros incorretos");
             return new CheckPoint().GetCheckPointByMonth(iMonth, iFuncionario);
         }
+        [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<EspelhoPonto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario)
         {
-            int iFuncionario;
             if (string.IsNullOrEmpty(InitialDate) || string.IsNullOrEmpty(FinalDate))
                 throw new Exception("Parametros incorretos");
 
-            int.TryParse(id_funcionario, out iFuncionario);
+            int.TryParse(id_funcionario, out int iFuncionario);
             if (iFuncionario == 0)
                 throw new Exception("Parametros incorretos");
             return new CheckPoint().GetListCheckPoint(InitialDate, FinalDate, iFuncionario);
         }
+        [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<EspelhoPonto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario)
         {
-            int funcionario;
-            if (int.TryParse(id_funcionario, out funcionario))
+            if (int.TryParse(id_funcionario, out int funcionario))
             {
                 return new CheckPoint().GetListCheckPoint(InitialDate, FinalDate, funcionario);
             }
             else
                 throw new Exception("Parametros incorretos");
         }
+        [Role(Roles = new string[] { "ADM" })]
         public Ponto GetCheckPointById(string id)
         {
-            int idd;
-            int.TryParse(id, out idd);
+            int.TryParse(id, out int idd);
             if (idd == 0)
-                throw new Exception("Parametros incorretos");
+                return new Ponto();
 
             return new CheckPoint().GetPoint(idd);
         }
-
+        [Role(Roles = new string[] { "ADM", "FUNC" })]
         public FeedBack CheckPoint(string funcionario, string type)
         {
-            if (!int.TryParse(funcionario, out int func))
-                return new FeedBack() { Status = false, Mensagem = "funcionario invalido" };           
-            if (!char.TryParse(type, out char tp))
-                return new FeedBack() { Status = false, Mensagem = "tipo invalido" };
-            return new CheckPoint().BaterPonto(func, tp);
+            using (var ig = new Integracao())
+            {
+                if (ig.ValidaSessão())
+                {
+                    if (!int.TryParse(funcionario, out int func))
+                        return new FeedBack() { Status = false, Mensagem = "funcionario invalido" };
+                    if (!char.TryParse(type, out char tp))
+                        return new FeedBack() { Status = false, Mensagem = "tipo invalido" };
+                    return new CheckPoint().BaterPonto(func, tp);
+                }
+                else
+                    return new FeedBack() { Mensagem = Integracao.MENSAGEMERRO, Status = false };
+            }
         }
 
         public int ConvertePeriodo(string hora)
         {
             return Data.ConvertePeriodo(hora);
+        }
+        [Role(Roles = new string[] { "ADM" })]
+        public FeedBack CadastrarExpediente(Expediente exp)
+        {
+            using (var ig = new Integracao())
+            {
+                if (ig.ValidaSessão())
+                {
+                    var feed = new FeedBack();
+                    if (exp.Id == 0)
+                        feed = new ExpedienteController().SalvaExpediente(exp);
+                    else
+                        feed = new ExpedienteController().AtualizaExpediente(exp);
+                    return feed;
+                }
+                else
+                    return new FeedBack() { Mensagem = Integracao.MENSAGEMERRO, Status = false };
+            }
+
+        }
+        [Role(Roles = new string[] { "ADM" })]
+        public FeedBack ExcluirExpediente(int id)
+        {
+            using (var ig = new Integracao())
+            {
+                if (ig.ValidaSessão())
+                {
+                    return new ExpedienteController().Excluir(id);
+                }
+                else
+                    return new FeedBack() { Mensagem = Integracao.MENSAGEMERRO, Status = false };
+            }
+
         }
     }
 }

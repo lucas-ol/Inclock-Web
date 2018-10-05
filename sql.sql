@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `inclock` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+USE `inclock`;
 -- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: inclock
@@ -16,6 +18,23 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `avisos`
+--
+
+DROP TABLE IF EXISTS `avisos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `avisos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(50) DEFAULT NULL,
+  `conteudo` varchar(300) DEFAULT NULL,
+  `imagem` varchar(200) DEFAULT NULL,
+  `data_noticia` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `avisos`
 --
 
@@ -24,6 +43,20 @@ LOCK TABLES `avisos` WRITE;
 INSERT INTO `avisos` VALUES (1,'','','02.jpg','2018-05-02 01:04:04');
 /*!40000 ALTER TABLE `avisos` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `cargo`
+--
+
+DROP TABLE IF EXISTS `cargo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `cargo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=965 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `cargo`
@@ -36,14 +69,51 @@ INSERT INTO `cargo` VALUES (3,'Desenvolvedor'),(964,'schandule');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `expediente`
+--
+
+DROP TABLE IF EXISTS `expediente`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `expediente` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `expediente_id` int(11) NOT NULL,
+  `hora` time DEFAULT NULL,
+  `diasemana` int(11) NOT NULL,
+  `periodo` int(11) NOT NULL,
+  `type_point` char(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `FK_expediente_id` (`expediente_id`),
+  CONSTRAINT `FK_expediente_id` FOREIGN KEY (`expediente_id`) REFERENCES `expediente_id` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `expediente`
 --
 
 LOCK TABLES `expediente` WRITE;
 /*!40000 ALTER TABLE `expediente` DISABLE KEYS */;
-INSERT INTO `expediente` VALUES (50,38,'10:00:00',6,1,'E'),(51,38,'01:00:00',7,3,'S'),(88,57,'12:00:00',5,4,'E'),(89,57,'01:00:00',5,4,'S'),(90,58,'10:15:00',6,0,'E'),(91,58,'14:00:00',6,0,'S');
+INSERT INTO `expediente` VALUES (50,38,'13:00:00',3,1,'E'),(51,38,'22:00:00',3,3,'S'),(88,57,'12:00:00',5,4,'E'),(89,57,'01:00:00',5,4,'S'),(90,58,'10:15:00',1,1,'E'),(91,58,'14:00:00',1,2,'S'),(94,60,'00:00:00',2,3,'E'),(95,60,'01:00:00',2,3,'S'),(96,61,'01:00:00',5,3,'E'),(97,61,'06:00:00',5,1,'S'),(98,62,'15:00:00',2,2,'E'),(99,62,'23:00:00',2,3,'S'),(100,63,'17:00:00',4,2,'E'),(101,63,'22:00:00',4,3,'S');
 /*!40000 ALTER TABLE `expediente` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `expediente_id`
+--
+
+DROP TABLE IF EXISTS `expediente_id`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `expediente_id` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `funcionario_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_expediente_funcionarios` (`funcionario_id`),
+  CONSTRAINT `FK_expediente_funcionarios` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `expediente_id`
@@ -51,9 +121,46 @@ UNLOCK TABLES;
 
 LOCK TABLES `expediente_id` WRITE;
 /*!40000 ALTER TABLE `expediente_id` DISABLE KEYS */;
-INSERT INTO `expediente_id` VALUES (38,5),(57,5),(58,5);
+INSERT INTO `expediente_id` VALUES (38,5),(57,5),(58,5),(60,5),(61,7),(62,7),(63,7);
 /*!40000 ALTER TABLE `expediente_id` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `funcionarios`
+--
+
+DROP TABLE IF EXISTS `funcionarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `funcionarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  `telefone` varchar(16) DEFAULT NULL,
+  `celular` varchar(17) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `endereco` varchar(50) NOT NULL,
+  `cpf` varchar(15) NOT NULL,
+  `cargo_id` int(11) NOT NULL,
+  `nascimento` date NOT NULL,
+  `sexo` char(2) NOT NULL,
+  `cidade` varchar(30) NOT NULL,
+  `estado` char(2) NOT NULL,
+  `cep` varchar(15) NOT NULL,
+  `numero` varchar(5) NOT NULL,
+  `bairro` varchar(45) DEFAULT NULL,
+  `rg` varchar(14) NOT NULL,
+  `senha` varchar(8) NOT NULL,
+  `login` varchar(15) NOT NULL,
+  `role` varchar(15) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cpf_UNIQUE` (`cpf`),
+  UNIQUE KEY `login_UNIQUE` (`login`),
+  UNIQUE KEY `rg_UNIQUE` (`rg`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `FK_Funcionarios_Cargos` (`cargo_id`),
+  CONSTRAINT `FK_Funcionarios_Cargos` FOREIGN KEY (`cargo_id`) REFERENCES `cargo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `funcionarios`
@@ -61,9 +168,24 @@ UNLOCK TABLES;
 
 LOCK TABLES `funcionarios` WRITE;
 /*!40000 ALTER TABLE `funcionarios` DISABLE KEYS */;
-INSERT INTO `funcionarios` VALUES (5,'Lucas ','(17) 7711-1111','(17) 77711-1111','blublucas@gmail.com','Rua Vera Lúcia Pinto da Silva','177.711.111-11',3,'1996-10-10','M','Suzano','SP','08690215','90809','Cidade Miguel Badra','11.111.111-1','123','123','ADM;FUNC;');
+INSERT INTO `funcionarios` VALUES (5,'Lucas ','(17) 7711-1111','(17) 77711-1111','blublucas@gmail.com','Rua Vera Lúcia Pinto da Silva','177.711.111-11',3,'1996-10-10','M','Suzano','SP','08690215','90809','Cidade Miguel Badra','11.111.111-1','123','123','ADM;FUNC'),(7,'Josénildo Ferraz','(11) 1111-1111','(11) 11111-1111','oliveiramelo1996@gmail.com','Rua Vera Lúcia Pinto da Silva','222.222.222-22',3,'2008-03-14','M','Suzano','SP','08690215','1111','Cidade Miguel Badra','37.959.520-1','1234','1234','FUNC');
 /*!40000 ALTER TABLE `funcionarios` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `log_codes`
+--
+
+DROP TABLE IF EXISTS `log_codes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `log_codes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code_qr` varchar(25) NOT NULL,
+  `expirado` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `log_codes`
@@ -75,13 +197,36 @@ LOCK TABLES `log_codes` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping data for table `pontos`
+-- Table structure for table `ponto`
 --
 
-LOCK TABLES `pontos` WRITE;
-/*!40000 ALTER TABLE `pontos` DISABLE KEYS */;
-INSERT INTO `pontos` VALUES (7,5,'2018-09-21','12:00:00',38,'E',NULL,0),(8,5,'2018-09-21','12:00:00',38,'S',NULL,0),(5,5,'2018-09-20','12:00:00',57,'E',NULL,0),(6,5,'2018-09-20','12:00:00',57,'S',NULL,0),(1,5,'2018-09-13','04:00:13',58,'E',NULL,0),(2,5,'2018-09-13','04:00:27',58,'S',NULL,0);
-/*!40000 ALTER TABLE `pontos` ENABLE KEYS */;
+DROP TABLE IF EXISTS `ponto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `ponto` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `funcionario_id` int(11) DEFAULT NULL,
+  `expediente_id` int(11) DEFAULT NULL,
+  `entrada` time DEFAULT NULL,
+  `saida` time DEFAULT NULL,
+  `dta_entrada` date NOT NULL,
+  `dta_saida` date NOT NULL,
+  `obs` text,
+  PRIMARY KEY (`id`),
+  KEY `FK_Funcionarios_Pontos` (`funcionario_id`),
+  KEY `FK_expediente_pontos` (`expediente_id`),
+  CONSTRAINT `FK_Funcionarios_Pontos` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `FK_expediente_pontos` FOREIGN KEY (`expediente_id`) REFERENCES `expediente_id` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ponto`
+--
+
+LOCK TABLES `ponto` WRITE;
+/*!40000 ALTER TABLE `ponto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ponto` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -380,7 +525,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `prd_se_expediente`(
 ,in _type char(1)
 )
 begin
-	select ex.expediente_id as id,ex.hora,ex.diasemana,ex.periodo,ex.type_point,exi.funcionario_id
+	select ex.id as id,ex.hora,ex.diasemana,ex.periodo,ex.type_point,exi.funcionario_id
     from expediente ex inner join expediente_id exi on exi.id =  ex.expediente_id 
     where exi.funcionario_id = _funcionario and ex.diasemana = _semana and ex.periodo = _periodo and ex.type_point = _type ;  
 end ;;
@@ -664,7 +809,7 @@ declare exit handler for sqlexception
 			
 			
             if(exists(select 1 from expediente exp	inner join expediente_id eid on eid.id = exp.expediente_id
-						where exp.diasemana = _semanaEntrada and eid.funcionario_id = _funcionario_id and exp.periodo = _periodo and type_point = 'E')) then
+						where exp.expediente_id != _id and  exp.diasemana = _semanaEntrada and eid.funcionario_id = _funcionario_id and exp.periodo = _periodo and type_point = 'E')) then
 			BEGIN				
 				select 'duplicate' as erro;
 			end;
@@ -776,4 +921,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-13 19:07:25
+-- Dump completed on 2018-10-05 18:46:19

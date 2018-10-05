@@ -9,35 +9,15 @@ namespace Classes.VO
     public class User
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
-
-        private string login;
-        /// <summary>
-        /// Encapsulamento do login
-        /// </summary>
-        public string Login
+        public string Nome { get; set; }    
+        public string Login { get; set; }   
+        public string Senha { get; set; }
+        public List<string> Roles { get; set; } = new List<string>();
+        public static string ConvertToRoleStr(List<string> roles)
         {
-            get { return login; }
-            set { login = value; }
-        }
-        private string senha;
-        //Encapsulamento da senha 
-        public string Senha
-        {
-            get { return senha; }
-            set { senha = value; }
-        }
-        private List<string> roles = new List<string>();
-        public List<string> Roles
-        {
-            get
-            {
-                return roles;
-            }
-            set
-            {
-                roles = value;
-            }
+            var str = string.Join(";", roles);          
+            return str.LastIndexOf(";") == str.Length - 1 ? str.Remove(str.Length - 1) : str;
         }
     }
+
 }

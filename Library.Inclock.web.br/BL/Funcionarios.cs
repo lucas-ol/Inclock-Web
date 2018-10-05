@@ -64,7 +64,7 @@ namespace Library.Inclock.web.br.BL
             MySqlAdicionaParametro("_rg", funcionario.RG);
             MySqlAdicionaParametro("_senha", funcionario.Senha);
             MySqlAdicionaParametro("_login", funcionario.Login);
-            MySqlAdicionaParametro("_role", string.Join("", funcionario.Roles).Replace(',', ';'));
+            MySqlAdicionaParametro("_role", User.ConvertToRoleStr(funcionario.Roles));
             feedBack = MySqlExecutaComando("prd_insere_func", CommandType.StoredProcedure);
 
             string mensagem = "";
@@ -109,7 +109,7 @@ namespace Library.Inclock.web.br.BL
             MySqlAdicionaParametro("_rg", funcionario.RG);
             MySqlAdicionaParametro("_senha", funcionario.Senha);
             MySqlAdicionaParametro("_login", funcionario.Login);
-            MySqlAdicionaParametro("_role", string.Join("", funcionario.Roles));
+            MySqlAdicionaParametro("_role", User.ConvertToRoleStr(funcionario.Roles));
             feedBack = MySqlExecutaComando("prd_update_func", CommandType.StoredProcedure);
 
             string mensagem = "";

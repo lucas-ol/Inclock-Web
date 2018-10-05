@@ -142,10 +142,9 @@ namespace Autenticador.BL
                     });
                 }
             }
-            catch (Exception ex)
+            catch
             {
-
-                throw;
+                return new List<Aviso>() { new Aviso() { Conteudo = "Estamos passando por problemas tecnicos", ID = 0 } };
             }
             return avisos;
         }

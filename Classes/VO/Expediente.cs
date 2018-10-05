@@ -19,6 +19,7 @@ namespace Classes.VO
         public int PeriodoSaida { get; set; }
         public int DiaSemana { get; set; }
         public char Type { get; set; }
+        public string HorasTrabalhada { get; set; }
         public Expediente()
         {
 

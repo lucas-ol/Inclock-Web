@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="" namespace="http://schemas.datacontract.org/2004/07/Classes.VO" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Classes.VO" />
+  <xs:element name="GetOptions">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOptionsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Logar">
     <xs:complexType>
       <xs:sequence>
@@ -174,6 +184,34 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ConvertePeriodoResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExcluitExpediente">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExcluitExpedienteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="ExcluitExpedienteResult" nillable="true" type="q10:FeedBack" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CadastrarExpediente">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="exp" nillable="true" type="q11:Expediente" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CadastrarExpedienteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="CadastrarExpedienteResult" nillable="true" type="q12:FeedBack" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

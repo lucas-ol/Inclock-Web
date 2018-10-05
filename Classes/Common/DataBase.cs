@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using System.Data;
 using Classes.VO;
 using MySql.Data.MySqlClient;
@@ -12,17 +11,19 @@ namespace Classes.Common
 {
     public class DataBase
     {
-        #region Propriedades
-        protected object ObjetoRetorno;
-        /// <summary>
-        /// Tabela usada para receber os dados do de algum metodo assyscrono 
-        /// </summary>
-        protected DataTable MySqlTabela_Asyncrona = new DataTable();
+        #region Propriedades      
         private string szConnexao;
         /// <summary>
         /// string de conexão com o Banco
         /// </summary>
-        public string SzConnexao { get { return System.Configuration.ConfigurationManager.ConnectionStrings["sql"].ConnectionString; ; } private set { szConnexao = value; } }// = "server=localhost;user=root;password=root;database=inclock;port=3306;";
+        public string SzConnexao
+        {
+            get
+            {
+                return System.Configuration.ConfigurationManager.ConnectionStrings["sql"].ConnectionString;
+            }
+            private set { szConnexao = value; }
+        }// = "server=localhost;user=root;password=root;database=inclock;port=3306;";
 
         /// <summary>
         /// Coleção de parametro Generica
@@ -172,7 +173,7 @@ namespace Classes.Common
                 TabelaDeRetorno.Rows.Add();
                 TabelaDeRetorno.TableName = "erro";
                 TabelaDeRetorno.Columns.Add("Mensagem");
-                //   TabelaDeRetorno.Rows[0]["Mensagem"] = "Deu Erro: " + ex.Message;
+                TabelaDeRetorno.Rows[0]["Mensagem"] = "Deu Erro: " + ex.Message;
                 retorno = 0;
             }
             finally
@@ -183,69 +184,6 @@ namespace Classes.Common
             MySqlZeraParametro();// vai zerar a coleção de parametros
             return TabelaDeRetorno;
             throw new NotImplementedException();
-        }
-        /// <summary>
-        /// Metodo assiscrono que faz qualquer tipo de leitura(não imprementado)
-        /// </summary>
-        /// <param name="szCommand">Commando que vai ser enviado ao banco de dados</param>
-        /// <param name="TypeCommand">Tipo de comando que vai ser enviado</param>
-        /// <returns></returns>
-        protected virtual async void MySqlAssincronoLeitura(string szCommand, CommandType TypeCommand)
-        {
-            MySqlDataAdapter Adapter = new MySqlDataAdapter();
-            MySqlConnection Connection = new MySqlConnection(SzConnexao); // Objeto de connexão
-            MySqlCommand Command = new MySqlCommand();// Objeto de Commando 
-            Command.Connection = Connection;
-            Command.CommandTimeout = 2000; // se passar de 2 mim tentando se conectar ele interrompe o comando 
-            Command.CommandType = TypeCommand;
-            try
-            {
-                await Connection.OpenAsync(); // espera do metodo
-                await Command.ExecuteNonQueryAsync();
-                Adapter.SelectCommand = Command;
-                Adapter.Fill(MySqlTabela_Asyncrona);
-
-            }
-            catch (Exception ex)
-            {
-                MySqlTabela_Asyncrona.Rows.Add();
-                MySqlTabela_Asyncrona.TableName = "erro";
-                MySqlTabela_Asyncrona.Columns.Add("Mensagem");
-                MySqlTabela_Asyncrona.Rows[0]["Mensagem"] = "Deu Erro: " + ex.Message;
-                if (Connection.State == ConnectionState.Open)
-                {
-                    Connection.Close();
-                }
-
-            }
-        }
-        protected async Task MySqlExecutaComandoAssincrono(string szCommand, CommandType TypeCommand)
-        {
-
-            MySqlCommand Command = new MySqlCommand();// Objeto de Commando 
-            MySqlConnection Connection = new MySqlConnection(SzConnexao); // Objeto de connexão
-            Task<object> task;
-            Command.Connection = Connection;
-            Command.CommandType = TypeCommand;
-            Command.CommandText = szCommand;
-            Command.CommandTimeout = 5000;
-            foreach (MySqlParameter Parameter in ParameterCollection)
-                Command.Parameters.AddWithValue(Parameter.ParameterName, Parameter.Value);
-            try
-            {
-                await Connection.OpenAsync();
-                var obj = await Command.ExecuteScalarAsync();
-
-            }
-            catch (Exception)
-            {
-                await Task.FromCanceled(new System.Threading.CancellationToken(true));
-            }
-            finally
-            {
-                MySqlZeraParametro();
-            }
-
         }
         #endregion
     }

@@ -1,13 +1,14 @@
 ﻿<%@ Application Language="C#" %>
+<%@ Import Namespace="System.Web" %>
+<%@ Import Namespace="System.Web.Http" %>
 <%@ Import Namespace="System.Web.Routing" %>
-<%@ Import Namespace="System.Security.Principal" %>
 
 <script RunAt="server">
 
     void Application_Start(object sender, EventArgs e)
     {
         // Code that runs on application startup    
-
+        RegisterRoutes(RouteTable.Routes);
     }
 
     void Application_End(object sender, EventArgs e)
@@ -19,7 +20,7 @@
     void Application_Error(object sender, EventArgs e)
     {
         // Code that runs when an unhandled error occurs
-
+        var vt = Server.GetLastError();
     }
 
     void Session_Start(object sender, EventArgs e)
@@ -47,11 +48,16 @@
 
     void Application_PostAuthenticateRequest(object sender, EventArgs e)
     {
-         Visitante.Instance.Autenticar();
+        Library.Inclock.web.br.BL.Common.Autenticador.Instance.Autenticar();
     }
     void RegisterRoutes(RouteCollection routes)
     {
-        //   routes.MapPageRoute("ExpenseReport/{locale}","~/",);
+        routes.MapHttpRoute(
+                 name: "api",              
+                 routeTemplate: "api/{controller}/{action}/{id}",
+                 defaults: new { id = System.Web.Http.RouteParameter.Optional });
+    
     }
+   
 
 </script>

@@ -9,6 +9,7 @@ using Library.Inclock.web.br.BL;
 using System.Globalization;
 using System.Web.UI.HtmlControls;
 using Classes.Common;
+using Library.Inclock.web.br.BL.Common;
 
 public partial class inc_expediente_Listar : System.Web.UI.UserControl
 {
@@ -30,7 +31,6 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         lvExpediente.ItemDataBound += LvExpediente_ItemDataBound;
         lvExpediente.DataSource = new Expedientes().ListaExpediente(funcionarioId);
         lvExpediente.DataBind();
-
     }
 
     private void LvExpediente_ItemDataBound(object sender, ListViewItemEventArgs e)
@@ -40,21 +40,19 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
         Label Saida = (Label)e.Item.FindControl("txtSaida");
         Label Semanda = (Label)e.Item.FindControl("txtDiaSemana");
         Label Periodo = (Label)e.Item.FindControl("txtPeriodo");
-
+        Label horas = (Label)e.Item.FindControl("txtHosrasTrabalhada");
         Entrada.Text = expediente.Entrada.Substring(0, 5);
         Saida.Text = expediente.Saida.Substring(0, 5);
-        
-       
-
+        horas.Text = expediente.HorasTrabalhada;
         Semanda.Text = UtilDate.ConverteSemanaExtenso(expediente.DiaSemana);
         Periodo.Text = UtilDate.ConvertePeriodo(expediente.Periodo);
-        if (expediente.DiaSemana == Convert.ToInt32(DateTime.Now.DayOfWeek))
+        if (expediente.DiaSemana == Convert.ToInt32(DateTime.Now.DayOfWeek)+1)
         {
             var headerExpediente = (HtmlControl)e.Item.FindControl("headerExpediente");
             headerExpediente.Style.Add(HtmlTextWriterStyle.BackgroundColor, "LightGreen");
         }
 
-        if (Visitante.IsFunc)
+        if (Autenticador.IsFunc)
         {
             HtmlControl pnlButtons = (HtmlControl)e.Item.FindControl("pnlButtons");
             pnlButtons.Visible = false;
@@ -68,16 +66,5 @@ public partial class inc_expediente_Listar : System.Web.UI.UserControl
             Panel painel = (Panel)e.Item.FindControl("pnlExpediente");
             painel.Attributes.Add("data-id", expediente.Id.ToString());
         }
-    }
-
-    protected void btnExcluirConfimar_Click(object sender, EventArgs e)
-    {
-        Expedientes exp = new Expedientes();
-        int id;
-        int.TryParse(hhdIdexpediente.Value, out id);
-        if (exp.Excluir(id))
-        {
-            Response.Write("<script>alert('Expediente excluido com sucesso'); window.location.href ='" + Request.Url.AbsoluteUri + "'</script>");
-        }
-    }
+    }    
 }

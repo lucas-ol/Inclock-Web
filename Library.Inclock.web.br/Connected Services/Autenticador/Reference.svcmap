@@ -19,14 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:64241/Service.svc/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://localhost:64241/Service.svc/mex/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="6a4ab7d6-b465-4c03-882b-19a94e35d445" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex" />
-    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="b3e70d5c-faed-414f-85d2-8993fb4a4b1c" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex" />
-    <MetadataFile FileName="service3.xsd" MetadataType="Schema" ID="dd62678f-a755-4e26-874d-f091c8907c39" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex" />
-    <MetadataFile FileName="Classes.VO1.xsd" MetadataType="Schema" ID="c4cebfdf-ea7f-43cf-b493-f725cd79ce9e" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex" />
-    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="5a6dd114-5377-467e-8031-f270884cacb0" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="2cf97fe4-4a2b-4123-982d-bc1a43f3dc9e" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="27cb45bc-b746-4794-9b7f-05cd2cd6ca1e" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex/mex" />
+    <MetadataFile FileName="service3.xsd" MetadataType="Schema" ID="e05e27e7-6d50-46c2-9364-1aad438a5d74" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex/mex" />
+    <MetadataFile FileName="Classes.VO1.xsd" MetadataType="Schema" ID="ff79f177-df4c-470c-8366-6420cee8a04f" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex/mex" />
+    <MetadataFile FileName="Arrays1.xsd" MetadataType="Schema" ID="9398dd2e-8c88-4e0a-9c73-82f6897822dd" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

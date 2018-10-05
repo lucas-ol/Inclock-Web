@@ -13,6 +13,10 @@ namespace Autenticador
     public interface IService
     {
         [OperationContract]
+        [WebInvoke(Method = "OPTIONS", UriTemplate = "*")]
+        void GetOptions();
+      
+        [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json
             , UriTemplate = "logar/{password}/{login}")]
         Funcionario Logar(string password, string login);
@@ -35,7 +39,7 @@ namespace Autenticador
         Funcionario GetUserById(string id);
 
         [OperationContract]
-        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "POST",UriTemplate = "checkin/{funcionario}/{type}")]
+        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "POST",BodyStyle = WebMessageBodyStyle.Wrapped)]
         FeedBack CheckPoint(string funcionario, string type);
 
         [OperationContract]
@@ -68,5 +72,15 @@ namespace Autenticador
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "periodo/{hora}")]
         int ConvertePeriodo(string hora);
+
+        /*Expediente*/
+        [OperationContract]
+        [WebInvoke(Method = "DELETE", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
+        FeedBack ExcluirExpediente(int id);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
+        FeedBack CadastrarExpediente(Expediente exp);
+
     }
 }

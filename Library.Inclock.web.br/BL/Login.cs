@@ -23,11 +23,14 @@ namespace Library.Inclock.web.br.BL
             {
                 var cliente = new Autenticador.ServiceClient();
                 funcionario = cliente.Logar(user.Senha, user.Login);
+                if (funcionario.Id == 0)
+                    return null;
+
             }
             catch (Exception ex)
             {
                 //isso foi feito so para teste 
-                return new Funcionario { Id = 1,Nome="Usuario Teste",Email="kiko",Roles = new List<string> { "ADM","FUNC","PALHACO"} };
+                return new Funcionario { Id = 1, Nome = "Usuario Teste", Email = "kiko", Roles = new List<string> { "ADM", "FUNC", "PALHACO" } };
             }
 
             return funcionario;

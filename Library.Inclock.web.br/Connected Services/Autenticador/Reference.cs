@@ -15,6 +15,12 @@ namespace Library.Inclock.web.br.Autenticador {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Autenticador.IService")]
     public interface IService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetOptions", ReplyAction="http://tempuri.org/IService/GetOptionsResponse")]
+        void GetOptions();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetOptions", ReplyAction="http://tempuri.org/IService/GetOptionsResponse")]
+        System.Threading.Tasks.Task GetOptionsAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/Logar", ReplyAction="http://tempuri.org/IService/LogarResponse")]
         Classes.VO.Funcionario Logar(string password, string login);
         
@@ -86,6 +92,18 @@ namespace Library.Inclock.web.br.Autenticador {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ConvertePeriodo", ReplyAction="http://tempuri.org/IService/ConvertePeriodoResponse")]
         System.Threading.Tasks.Task<int> ConvertePeriodoAsync(string hora);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ExcluitExpediente", ReplyAction="http://tempuri.org/IService/ExcluitExpedienteResponse")]
+        Classes.VO.FeedBack ExcluitExpediente(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ExcluitExpediente", ReplyAction="http://tempuri.org/IService/ExcluitExpedienteResponse")]
+        System.Threading.Tasks.Task<Classes.VO.FeedBack> ExcluitExpedienteAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/CadastrarExpediente", ReplyAction="http://tempuri.org/IService/CadastrarExpedienteResponse")]
+        Classes.VO.FeedBack CadastrarExpediente(Classes.VO.Expediente exp);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/CadastrarExpediente", ReplyAction="http://tempuri.org/IService/CadastrarExpedienteResponse")]
+        System.Threading.Tasks.Task<Classes.VO.FeedBack> CadastrarExpedienteAsync(Classes.VO.Expediente exp);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -113,6 +131,14 @@ namespace Library.Inclock.web.br.Autenticador {
         
         public ServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public void GetOptions() {
+            base.Channel.GetOptions();
+        }
+        
+        public System.Threading.Tasks.Task GetOptionsAsync() {
+            return base.Channel.GetOptionsAsync();
         }
         
         public Classes.VO.Funcionario Logar(string password, string login) {
@@ -209,6 +235,22 @@ namespace Library.Inclock.web.br.Autenticador {
         
         public System.Threading.Tasks.Task<int> ConvertePeriodoAsync(string hora) {
             return base.Channel.ConvertePeriodoAsync(hora);
+        }
+        
+        public Classes.VO.FeedBack ExcluitExpediente(int id) {
+            return base.Channel.ExcluitExpediente(id);
+        }
+        
+        public System.Threading.Tasks.Task<Classes.VO.FeedBack> ExcluitExpedienteAsync(int id) {
+            return base.Channel.ExcluitExpedienteAsync(id);
+        }
+        
+        public Classes.VO.FeedBack CadastrarExpediente(Classes.VO.Expediente exp) {
+            return base.Channel.CadastrarExpediente(exp);
+        }
+        
+        public System.Threading.Tasks.Task<Classes.VO.FeedBack> CadastrarExpedienteAsync(Classes.VO.Expediente exp) {
+            return base.Channel.CadastrarExpedienteAsync(exp);
         }
     }
 }

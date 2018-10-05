@@ -1,21 +1,30 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="masterpage.master.cs" Inherits="masterpage" %>
 
-<%@ Register TagPrefix="uc" TagName="Login" Src="~/inc/Login.ascx" %>
+<%@ Register TagPrefix="uc" TagName="TopoADM" Src="~/inc/Topo/Administrador.ascx" %>
+<%@ Register TagPrefix="uc" TagName="TopoFUNC" Src="~/inc/Topo/Funcionario.ascx" %>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/Styles/Style.css" rel="stylesheet" />
     <link href="/Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
 
     <script src="/Scripts/jquery.js"></script>
     <script src="/Scripts/popper/popper.js"></script>
     <script src="/Scripts/bootstrap/bootstrap.js"></script>
+     <script> 
+        $(function () {
+            $("").mouseenter(function () {
+                $(this).trigger("click");
+            });
+            window.appRest = '<% =Classes.Common.Config.UrlRest %>' ;
+        });</script>
     <asp:ContentPlaceHolder runat="server" ID="Head">
     </asp:ContentPlaceHolder>
     <script>        
-    </script>
+</script>
     <style>
         .dropdown:hover .dropdown-menu {
             display: block;
@@ -30,8 +39,9 @@
 
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server" ID="scpManager" />
-
-        <div>
+        <uc:TopoADM runat="server" ID="topoAdm" Visible="false" />
+        <uc:TopoFUNC runat="server" ID="topoFunc" Visible="true" />
+        <%--   <div>
             <!-- Menu de Navegação -->
             <nav class="navbar navbar-expand-xl navbar-dark bg-dark  " role="navigation" id="menu">
                 <div class=" container-fluid">
@@ -55,8 +65,6 @@
                             <li class="nav-item"><a class=" nav-link" href="#contact">Contato</a></li>
                         </ul>
                         <asp:LinkButton Text="Sair" runat="server" ID="btnLogout" OnClick="btnLogout_Click" CssClass=" login-button" /><uc:Login runat="server" ID="ucLogin" />
-
-
                     </div>
 
                 </div>
@@ -64,7 +72,7 @@
 
             </nav>
             <!-- Navbar -->
-        </div>
+        </div>--%>
 
 
 
@@ -81,11 +89,6 @@
 
 
     <!--FrameWorks secundarias-->
-
-    <script> $(document).ready(function () {
-     $("").mouseenter(function () {
-         $(this).trigger("click");
-     });
- });</script>
+   
 </body>
 </html>

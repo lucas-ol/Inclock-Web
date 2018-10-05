@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Listar.ascx.cs" Inherits="inc_expediente_Listar" %>
 
-<div>
+<div style="text-align:center">
 
     <asp:ListView runat="server" ID="lvExpediente">
         <ItemTemplate>
@@ -38,7 +38,7 @@
         </ItemTemplate>
     </asp:ListView>
 </div>
-<% if (!Visitante.IsFunc)%>
+<% if (!Library.Inclock.web.br.BL.Common.Autenticador.IsFunc)%>
 <%{%>
 <div class="modal fade" id="expExclui" runat="server">
     <div class="modal-dialog">
@@ -53,7 +53,7 @@
             </div>
             <div class="modal-body">
                 <button type="button" class="btn btn-danger align-content-lg-start" data-dismiss="modal">Cancelar</button>
-                <asp:Button Text="Comfirmar" runat="server" ID="btnExcluirConfimar" CssClass="btn btn-success" Style="display: inline-block; float: right" OnClick="btnExcluirConfimar_Click" />
+                <asp:Button Text="Comfirmar" runat="server" ID="btnExcluirConfimar" CssClass="btn btn-success" Style="display: inline-block; float: right" />
             </div>
         </div>
     </div>

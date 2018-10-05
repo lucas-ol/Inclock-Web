@@ -76,14 +76,16 @@ namespace Classes.Common
             public static StDiasSemana GetInstance()
             {
                 var Instance = new StDiasSemana();
-                Instance.Semanas = new Dictionary<DayOfWeek, IList<DateTime>>();
-                Instance.Semanas.Add(DayOfWeek.Sunday, new List<DateTime>());
-                Instance.Semanas.Add(DayOfWeek.Monday, new List<DateTime>());
-                Instance.Semanas.Add(DayOfWeek.Tuesday, new List<DateTime>());
-                Instance.Semanas.Add(DayOfWeek.Wednesday, new List<DateTime>());
-                Instance.Semanas.Add(DayOfWeek.Thursday, new List<DateTime>());
-                Instance.Semanas.Add(DayOfWeek.Friday, new List<DateTime>());
-                Instance.Semanas.Add(DayOfWeek.Saturday, new List<DateTime>());
+                Instance.Semanas = new Dictionary<DayOfWeek, IList<DateTime>>
+                {
+                    { DayOfWeek.Sunday, new List<DateTime>() },
+                    { DayOfWeek.Monday, new List<DateTime>() },
+                    { DayOfWeek.Tuesday, new List<DateTime>() },
+                    { DayOfWeek.Wednesday, new List<DateTime>() },
+                    { DayOfWeek.Thursday, new List<DateTime>() },
+                    { DayOfWeek.Friday, new List<DateTime>() },
+                    { DayOfWeek.Saturday, new List<DateTime>() }
+                };
                 return Instance;
             }
         }
