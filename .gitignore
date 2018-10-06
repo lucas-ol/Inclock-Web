@@ -7,17 +7,19 @@
 /Autenticador/.vs
 
 
-/packages
+/packages/
 
 ########Classes 
 /Classes/obj/
 /Classes/Bin
 
 
-
+/www.root/Bin
+/Autenticador/Autenticador_Host
 #######wwwroot
 
 
 ###### Autenticador
 /Autenticador/packages
 /Autenticador/Autenticador/bin/
+/Autenticador/Autenticador_IIS/bin/
