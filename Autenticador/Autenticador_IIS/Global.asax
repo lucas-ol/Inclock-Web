@@ -2,6 +2,10 @@
 <%@ Import Namespace="Autenticador.BL.Quartz" %>
 <script RunAt="server">
 
+    protected void Application_Start(object sender, EventArgs e)
+    {
+        IniciaQuartz();
+    }
     protected void Application_BeginRequest(object sender, EventArgs e)
     {
         // Adiciona headers permitidos
@@ -15,7 +19,7 @@
             HttpContext.Current.Response.End();
         }
 
-        IniciaQuartz();
+
     }
     private void IniciaQuartz()
     {

@@ -21,8 +21,7 @@ namespace Autenticador.BL.Quartz
         {
             IScheduler Servidor = await StdSchedulerFactory.GetDefaultScheduler();
             Servidor = await StdSchedulerFactory.GetDefaultScheduler();
-            await Servidor.Start();
-
+          
             JobDetailImpl job = new JobDetailImpl(nameof(Job), Job);
 
             ITrigger trigger = TriggerBuilder.Create().WithIdentity(nameof(Job)).StartNow()

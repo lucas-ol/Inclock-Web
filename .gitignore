@@ -14,11 +14,10 @@
 /Classes/Bin
 
 
-/www.root/Bin
+
 /Autenticador/Autenticador_Host
 #######wwwroot
-
-
+/www.root/Bin
 ###### Autenticador
 /Autenticador/packages
 /Autenticador/Autenticador/bin/
