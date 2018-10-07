@@ -4,7 +4,7 @@
 
     protected void Application_Start(object sender, EventArgs e)
     {
-        IniciaQuartz();
+
     }
     protected void Application_BeginRequest(object sender, EventArgs e)
     {
@@ -18,7 +18,7 @@
             HttpContext.Current.Response.AddHeader("Access-Control-Max-Age", "1728000");
             HttpContext.Current.Response.End();
         }
-
+        IniciaQuartz();
 
     }
     private void IniciaQuartz()

@@ -28,7 +28,7 @@ namespace Autenticador.BL.Quartz
         {
             if (GetLastInsertPoint(out DateTime dtPrxMes))
             {
-                var Arquivo = UtilFile.CreateOrOpenFile(dtPrxMes.ToString("yyyy_MM_dd") + ".txt", HostingEnvironment.MapPath(Config.Exports));
+                var Arquivo = HostingEnvironment.MapPath(Config.Exports) + "\\" + dtPrxMes.ToString("yyyy_MM_dd") + ".txt";
                 var Datas = UtilDate.GetDiasSemanas(dtPrxMes.Year, dtPrxMes.Month);
                 DataTable tb = MySqlLeitura("select id from funcionarios", System.Data.CommandType.Text);
                 foreach (DataRow func in tb.Rows)
@@ -42,13 +42,13 @@ namespace Autenticador.BL.Quartz
                             foreach (var item in exp)
                             {
 
-                                Arquivo.FileWrite(String.Format("{0};{1};{2};{3};{4};{5}\n\r", funcionario_id, item.Id, null, null, dia.ToString("yyyy-MM-dd"), dia.Add(ExpedienteController.GetHorasTrabalhada(item)).ToString("yyyy-MM-dd")));
+                                UtilFile.FileWrite(Arquivo, String.Format("{0};{1};{2};{3};{4};{5}\n\r", funcionario_id, item.Id, null, null, dia.ToString("yyyy-MM-dd"), dia.Add(ExpedienteController.GetHorasTrabalhada(item)).ToString("yyyy-MM-dd")));
 
                             }
                         }
                     }
                 }
-
+                InsertNullPoits(Arquivo);
             }
         }
         private bool GetLastInsertPoint(out DateTime dateTime)
@@ -70,13 +70,23 @@ namespace Autenticador.BL.Quartz
             command.Connection = connection;
             MySqlBulkLoader bulk = new MySqlBulkLoader(connection)
             {
-                TableName = "",
+                TableName = "ponto",
                 FieldTerminator = ";",
                 LineTerminator = "\n\r",
                 FileName = aquivo,
                 NumberOfLinesToSkip = 0
             };
-            bulk.Load();
+            try
+            {
+                //bulk.Load();
+                var tb = bulk.LoadAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
 
         }
 

@@ -35,7 +35,7 @@ namespace Classes.Common
                 Body = "Erro: " + ex.Message + "<br />Inner Exception: " + ex.InnerException + "<br />Source: " + ex.Source + "Stack: " + ex.StackTrace + "<br />" + obs
             };
             foreach (string item in ConfigurationManager.AppSettings.Get("ErroEmail").Split(';'))
-                mail.ReplyToList.Add(item);
+                mail.CC.Add(item);
 
             Client.Send(mail);
         }

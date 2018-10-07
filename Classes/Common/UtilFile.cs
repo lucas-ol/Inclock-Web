@@ -32,7 +32,7 @@ namespace Classes.Common
                 throw new Exception("Erro acessar o aquivo", ex.InnerException);
             }
         }
-        public static FileStream CreateOrOpenFile(string filename, string diretorio = "c:\\")
+        public static FileStream CreateOrOpenFile(string filename, string diretorio)
         {
             try
             {
@@ -45,11 +45,24 @@ namespace Classes.Common
                 throw ex;
             }
         }
-        public static void FileWrite(this FileStream arquivo, string conteudo)
+        public static void FileWrite(string arquivo, string conteudo)
         {
-            using (StreamWriter sw = new StreamWriter(arquivo.Name,true))
+            using (var fs = CreateOrOpenFile(GetFileName(arquivo), GetDirectoryName(arquivo)))
             {
-                sw.Write(conteudo);
+
+          //      fs.Close();
+            }
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(arquivo, true))
+                {
+                    sw.Write(conteudo);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
         public static DirectoryInfo CreateFolder(string nomePasta, string diretorio = "")
@@ -59,6 +72,22 @@ namespace Classes.Common
                 return new DirectoryInfo(diretorio + nomePasta);
             //  diretorio = diretorio.Remove(diretorio.LastIndexOf("//"));
             return Directory.CreateDirectory(diretorio + nomePasta);
+        }
+        public static string GetDirectoryName(string dir)
+        {
+            string str = dir;
+            if (dir.IndexOf(".") > 0)
+                str = dir.Substring(0, dir.LastIndexOf("\\"));
+            return str;
+        }
+        public static string GetFileName(string dir)
+        {
+            string str = "";
+            var tt = dir.Length - dir.LastIndexOf("\\");
+            if (dir.IndexOf(".") > 0)
+                str = dir.Substring(dir.LastIndexOf("\\") + 1, dir.Length - dir.LastIndexOf("\\") - 1);
+
+            return str;
         }
     }
 }
