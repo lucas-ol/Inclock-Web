@@ -23,6 +23,8 @@
     }
     private void IniciaQuartz()
     {
-        Schendule.Instance.Start(typeof(JobPoint));
+        //      Schendule.Instance.Start(typeof(JobPoint));
+        var jb = new JobPoint();
+        jb.Adiciona_Pontos();
     }
 </script>

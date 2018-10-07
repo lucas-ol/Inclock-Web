@@ -18,6 +18,7 @@
 /Autenticador/Autenticador_Host
 #######wwwroot
 /www.root/Bin
+s
 ###### Autenticador
 /Autenticador/packages
 /Autenticador/Autenticador/bin/

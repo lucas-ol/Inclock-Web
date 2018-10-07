@@ -7,9 +7,9 @@ using System.IO;
 
 namespace Classes.Common
 {
-    public class UtilFile
+    public static class UtilFile
     {
-        public string AplicationDirectory { get { return AppDomain.CurrentDomain.BaseDirectory; } }
+        public static string AplicationDirectory { get { return AppDomain.CurrentDomain.BaseDirectory; } }
         /// <summary>
         /// metodo que verifica se um Aquivo ja existe 
         /// </summary>
@@ -32,11 +32,11 @@ namespace Classes.Common
                 throw new Exception("Erro acessar o aquivo", ex.InnerException);
             }
         }
-        public FileStream CreateOrOpenFile(string filename, string diretorio = "c:\\")
+        public static FileStream CreateOrOpenFile(string filename, string diretorio = "c:\\")
         {
             try
             {
-                FileStream fs = new FileStream(CreateFolder(diretorio).FullName + filename, FileMode.Append, FileAccess.ReadWrite, FileShare.Delete);
+                FileStream fs = new FileStream(CreateFolder(diretorio).FullName + "\\" + filename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Delete);
                 return fs;
             }
             catch (Exception ex)
@@ -45,14 +45,14 @@ namespace Classes.Common
                 throw ex;
             }
         }
-        public void FileWrite(string conteudo, FileStream arquivo)
+        public static void FileWrite(this FileStream arquivo, string conteudo)
         {
-            using (StreamWriter sw = new StreamWriter(arquivo))
+            using (StreamWriter sw = new StreamWriter(arquivo.Name,true))
             {
                 sw.Write(conteudo);
             }
         }
-        public DirectoryInfo CreateFolder(string nomePasta, string diretorio = "")
+        public static DirectoryInfo CreateFolder(string nomePasta, string diretorio = "")
         {
             // string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             if (Directory.Exists(diretorio + nomePasta))

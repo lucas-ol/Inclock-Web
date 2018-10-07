@@ -7,9 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 
 namespace Autenticador.BL.Quartz
 {
@@ -26,8 +28,8 @@ namespace Autenticador.BL.Quartz
         {
             if (GetLastInsertPoint(out DateTime dtPrxMes))
             {
+                var Arquivo = UtilFile.CreateOrOpenFile(dtPrxMes.ToString("yyyy_MM_dd") + ".txt", HostingEnvironment.MapPath(Config.Exports));
                 var Datas = UtilDate.GetDiasSemanas(dtPrxMes.Year, dtPrxMes.Month);
-
                 DataTable tb = MySqlLeitura("select id from funcionarios", System.Data.CommandType.Text);
                 foreach (DataRow func in tb.Rows)
                 {
@@ -39,15 +41,9 @@ namespace Autenticador.BL.Quartz
                         {
                             foreach (var item in exp)
                             {
-                            // int ponto_id = InsertID(funcionario_id);
-                                /* var parameter = new MySqlCommand().Parameters;
-                                 parameter.AddWithValue("_funcionario", id);
-                                 parameter.AddWithValue("_entrada", item.Entrada);
-                                 parameter.AddWithValue("_dataEntrada", dia);
-                                 parameter.AddWithValue("_expediente", item.Id);
-                                 parameter.AddWithValue("_saida", item.Saida);
-                                 parameter.AddWithValue("_dataSaida", dia.AddDays(CheckSaida(item)).Date);*/
-                                RealizaExportacao("");
+
+                                Arquivo.FileWrite(String.Format("{0};{1};{2};{3};{4};{5}\n\r", funcionario_id, item.Id, null, null, dia.ToString("yyyy-MM-dd"), dia.Add(ExpedienteController.GetHorasTrabalhada(item)).ToString("yyyy-MM-dd")));
+
                             }
                         }
                     }
@@ -55,13 +51,9 @@ namespace Autenticador.BL.Quartz
 
             }
         }
-        private bool RealizaExportacao(string linha)
-        {
-            return true;
-        }
         private bool GetLastInsertPoint(out DateTime dateTime)
         {
-            var tb = MySqlLeitura("SELECT data_ponto from pontos order by data_ponto desc limit 1", CommandType.Text);
+            var tb = MySqlLeitura("SELECT dta_entrada from ponto order by dta_entrada desc limit 1", CommandType.Text);
             if (tb.Rows.Count == 0)
                 dateTime = Convert.ToDateTime("01/" + DateTime.Now.Month + "/" + DateTime.Now.Year);
             else
@@ -87,26 +79,7 @@ namespace Autenticador.BL.Quartz
             bulk.Load();
 
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="expediente"></param>
-        /// <returns></returns>
-        private int CheckSaida(Expediente expediente)
-        {
-            TimeSpan saida;
-            TimeSpan entrada;
-            TimeSpan ht;
-            DateTime hora;
-            saida = Convert.ToDateTime(expediente.Saida).TimeOfDay;
-            entrada = Convert.ToDateTime(expediente.Entrada).TimeOfDay;
-            ht = entrada - saida;
-            hora = DateTime.Now;
-            hora = hora.Add(ht);
-            if (hora.Day > DateTime.Now.Day)  // Se virar o dia, quer dizer que o func vai bater a saida no outro dia         
-                expediente.DiaSemana++;
-            return expediente.DiaSemana;
-        }
+
         public int InsertID(int funcionario)
         {
 

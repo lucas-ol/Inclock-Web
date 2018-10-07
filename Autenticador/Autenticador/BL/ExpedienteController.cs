@@ -159,7 +159,7 @@ namespace Autenticador.BL
             MySqlAdicionaParametro("id", id);
             return MySqlExecutaComando("delete from expediente_id where id = @id", System.Data.CommandType.Text);
         }
-        public TimeSpan GetHorasTrabalhada(Expediente expediente)
+        public static TimeSpan GetHorasTrabalhada(Expediente expediente)
         {
             TimeSpan horasTrabalhada;
             try

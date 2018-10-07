@@ -25,12 +25,12 @@ namespace Classes.Common
 
             }
         }
-        public string Exports
+        public static string Exports
         {
             get
             {
                 string dir = ConfigurationManager.AppSettings.Get("exports");
-                return string.IsNullOrEmpty(dir) ? @"c:\\" : dir;
+                return string.IsNullOrEmpty(dir) ? @"c:" : dir;
 
             }
         }
