@@ -28,7 +28,8 @@ namespace Autenticador.BL.Quartz
         {
             if (GetLastInsertPoint(out DateTime dtPrxMes))
             {
-                var Arquivo = HostingEnvironment.MapPath(Config.Exports) + "\\" + dtPrxMes.ToString("yyyy_MM_dd") + ".txt";
+                var Arquivo = HostingEnvironment.MapPath(Config.Exports) + "\\" + dtPrxMes.ToString("yyyy_MM_dd") + ".csv";
+                UtilFile.Delete(Arquivo);
                 var Datas = UtilDate.GetDiasSemanas(dtPrxMes.Year, dtPrxMes.Month);
                 DataTable tb = MySqlLeitura("select id from funcionarios", System.Data.CommandType.Text);
                 foreach (DataRow func in tb.Rows)
@@ -41,9 +42,7 @@ namespace Autenticador.BL.Quartz
                         {
                             foreach (var item in exp)
                             {
-
-                                UtilFile.FileWrite(Arquivo, String.Format("{0};{1};{2};{3};{4};{5}\n\r", funcionario_id, item.Id, null, null, dia.ToString("yyyy-MM-dd"), dia.Add(ExpedienteController.GetHorasTrabalhada(item)).ToString("yyyy-MM-dd")));
-
+                                UtilFile.FileWrite(Arquivo, String.Format("{0};{1};{2};{3};{4};{5};{6}\r", null, funcionario_id, item.Id, null, null, dia.ToString("yyyy-MM-dd"), dia.Add(ExpedienteController.GetHorasTrabalhada(item)).ToString("yyyy-MM-dd")));
                             }
                         }
                     }
@@ -53,8 +52,8 @@ namespace Autenticador.BL.Quartz
         }
         private bool GetLastInsertPoint(out DateTime dateTime)
         {
-            var tb = MySqlLeitura("SELECT dta_entrada from ponto order by dta_entrada desc limit 1", CommandType.Text);
-            if (tb.Rows.Count == 0)
+            var tb = MySqlLeitura("SELECT dta_entrada from pontos order by dta_entrada desc limit 1", CommandType.Text);
+            if (tb.Rows.Count == 0 || tb.TableName =="erro")
                 dateTime = Convert.ToDateTime("01/" + DateTime.Now.Month + "/" + DateTime.Now.Year);
             else
                 dateTime = Convert.ToDateTime("01/" + tb.Rows[0][0].ToString().Substring(3)).AddMonths(1);
@@ -63,23 +62,24 @@ namespace Autenticador.BL.Quartz
         }
         private void InsertNullPoits(string aquivo)
         {
-            var command = new MySqlCommand();
+
             var connection = new MySqlConnection(SzConnexao);
 
-            command.CommandTimeout = 1000 * 60 * 2; // Vai esperar ate 2 min para fazer a inserçao 
-            command.Connection = connection;
+            connection.Open();
+        //    connection.Open();
             MySqlBulkLoader bulk = new MySqlBulkLoader(connection)
             {
-                TableName = "ponto",
+                TableName = "pontos",
                 FieldTerminator = ";",
-                LineTerminator = "\n\r",
+                LineTerminator = "\r",
                 FileName = aquivo,
-                NumberOfLinesToSkip = 0
+                NumberOfLinesToSkip = 1,
+                Priority = MySqlBulkLoaderPriority.Concurrent
             };
             try
             {
-                //bulk.Load();
-                var tb = bulk.LoadAsync();
+
+                var tb = bulk.Load();
             }
             catch (Exception ex)
             {

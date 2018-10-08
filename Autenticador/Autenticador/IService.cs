@@ -54,15 +54,15 @@ namespace Autenticador
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getpoint/{month}/{funcionario}")]
-        List<EspelhoPonto> GetCheckPoint(string month, string funcionario);
+        List<Ponto> GetCheckPoint(string month, string funcionario);
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getpoint/{InitialDate}/{FinalDate}/{id_funcionario}")]
-        List<EspelhoPonto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario);
+        List<Ponto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario);
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        List<EspelhoPonto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario);
+        List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario);
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getpoint/{id}")]

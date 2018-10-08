@@ -59,7 +59,7 @@ namespace Autenticador
             return new BL.Autenticador().getAvisos(qtde);
         }
         [Role(Roles = new string[] { "ADM", "FUNC" })]
-        public List<EspelhoPonto> GetCheckPoint(string month, string funcionario)
+        public List<Ponto> GetCheckPoint(string month, string funcionario)
         {
             int.TryParse(month, out int iMonth);
             if (iMonth == 0)
@@ -70,7 +70,7 @@ namespace Autenticador
             return new CheckPoint().GetCheckPointByMonth(iMonth, iFuncionario);
         }
         [Role(Roles = new string[] { "ADM", "FUNC" })]
-        public List<EspelhoPonto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario)
+        public List<Ponto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario)
         {
             if (string.IsNullOrEmpty(InitialDate) || string.IsNullOrEmpty(FinalDate))
                 throw new Exception("Parametros incorretos");
@@ -81,7 +81,7 @@ namespace Autenticador
             return new CheckPoint().GetListCheckPoint(InitialDate, FinalDate, iFuncionario);
         }
         [Role(Roles = new string[] { "ADM", "FUNC" })]
-        public List<EspelhoPonto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario)
+        public List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario)
         {
             if (int.TryParse(id_funcionario, out int funcionario))
             {

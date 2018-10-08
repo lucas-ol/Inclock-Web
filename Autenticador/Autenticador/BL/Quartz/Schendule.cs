@@ -11,25 +11,26 @@ namespace Autenticador.BL.Quartz
     /// <summary>
     /// classe que vai programar os quartz 
     /// </summary>
-   public class Schendule
+    public class Schendule
     {
-        public static readonly Schendule Instance = new Schendule();     
-       
-      
-        private const string EXPRESSAO = "0 */2 * ? * *";// Cron Expressions para o Job          59 59 23 L * ? *
+        public static readonly Schendule Instance = new Schendule();
+
+
+        public string EXPRESSAO = "0 */2 * ? * *";// Cron Expressions para o Job          59 59 23 L * ? *
         public async void Start(Type Job)
         {
             IScheduler Servidor = await StdSchedulerFactory.GetDefaultScheduler();
             Servidor = await StdSchedulerFactory.GetDefaultScheduler();
-          
+
             JobDetailImpl job = new JobDetailImpl(nameof(Job), Job);
 
             ITrigger trigger = TriggerBuilder.Create().WithIdentity(nameof(Job)).StartNow()
               .WithSchedule(CronScheduleBuilder.CronSchedule(new CronExpression(EXPRESSAO))).ForJob(nameof(Job)).Build();
             try
-            {
+            {                
                 await Servidor.ScheduleJob(job, trigger);
                 await Servidor.Start();
+                await Servidor.TriggerJob(job.Key);
             }
             catch (Exception ex)
             {

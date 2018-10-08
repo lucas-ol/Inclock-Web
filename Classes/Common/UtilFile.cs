@@ -46,14 +46,10 @@ namespace Classes.Common
             }
         }
         public static void FileWrite(string arquivo, string conteudo)
-        {
-            using (var fs = CreateOrOpenFile(GetFileName(arquivo), GetDirectoryName(arquivo)))
-            {
-
-          //      fs.Close();
-            }
+        {           
             try
             {
+                CreateOrOpenFile(GetFileName(arquivo), GetDirectoryName(arquivo)).Dispose();
                 using (StreamWriter sw = new StreamWriter(arquivo, true))
                 {
                     sw.Write(conteudo);
@@ -61,9 +57,13 @@ namespace Classes.Common
             }
             catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
+        }
+        public static void Delete(string aquivo) {
+            FileInfo fi = new FileInfo(aquivo);
+            if(fi.Exists)
+                fi.Delete();
         }
         public static DirectoryInfo CreateFolder(string nomePasta, string diretorio = "")
         {
