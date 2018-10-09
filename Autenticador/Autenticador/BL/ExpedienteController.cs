@@ -30,38 +30,16 @@ namespace Autenticador.BL
                         Funcionario_id = Convert.ToInt32(linha["funcionario_id"]),
                         Periodo = Convert.ToInt32(linha["periodo"])
                     };
-                    var bt = GetHorasTrabalhada(expediente);
+                    
                  
                    // var tts = vr.AddMinutes(bt);
-                    expediente.HorasTrabalhada = bt.ToString();
+                    expediente.HorasTrabalhada = GetHorasTrabalhada(expediente).ToString().Substring(0,5);
                     ExpedienteList.Add(expediente);
                 }
             }
             return ExpedienteList;
         }
-        public Expediente GetExpediente(int funcionario, int semana, int periodo)
-        {
-            MySqlAdicionaParametro("_funcionario", funcionario);
-            MySqlAdicionaParametro("_semana", semana);
-            MySqlAdicionaParametro("_periodo", periodo);
-            try
-            {
-                DataRow dr = MySqlLeitura("procedure a ser criada ", CommandType.Text).Rows[0];
-                return new Expediente
-                {
-                    Id = Convert.ToInt32(dr["id"]),
-                    Funcionario_id = Convert.ToInt32(dr["funcionario_id"]),
-                    Entrada = dr["entrada"].ToString(),
-                    Saida = dr["saida"].ToString(),
-                    Periodo = Convert.ToInt32(dr["periodo"]),
-                    DiaSemana = Convert.ToInt32(dr["diasemana"])
-                };
-            }
-            catch
-            {
-                return new Expediente();
-            }
-        }
+        
         /// <summary>
         /// Sobrecarga de metodo, Busca o expediente de entrada ou saida
         /// </summary>

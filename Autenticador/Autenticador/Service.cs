@@ -72,6 +72,13 @@ namespace Autenticador
         [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<Ponto> GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario)
         {
+            using (var ig = new Integracao())
+            {
+                if (ig.ValidaSessão())
+                {
+                    
+                }
+            }
             if (string.IsNullOrEmpty(InitialDate) || string.IsNullOrEmpty(FinalDate))
                 throw new Exception("Parametros incorretos");
 

@@ -13,7 +13,7 @@ public partial class Ponto_Default : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         lvPontos.ItemDataBound += LvPontos_ItemDataBound;
-        if (!this.Page.IsPostBack)
+        if (!Page.IsPostBack)
         {
             Funcionario funcionario = Autenticador.CurrentUser;
             lblCargo.Text = funcionario.Cargo;
@@ -29,11 +29,9 @@ public partial class Ponto_Default : System.Web.UI.Page
 
         Label txtData = (Label)e.Item.FindControl("txtData");
         Label txtTurno = (Label)e.Item.FindControl("txtTurno");
-        Label txtEntrada = (Label)e.Item.FindControl("txtEntrada");
-        Label txtEntradaPausa = (Label)e.Item.FindControl("txtEntradaPausa");
-        Label txtSaidaPausa = (Label)e.Item.FindControl("txtSaidaPausa");
+        Label txtEntrada = (Label)e.Item.FindControl("txtEntrada");     
         Label txtSaida = (Label)e.Item.FindControl("txtSaida");
-        Label txtStatus = (Label)e.Item.FindControl("txtStatus");
+        Label txtStatus = (Label)e.Item.FindControl("txtObs");
 
       /* txtData.Text = ponto.Entrada;
         txtTurno.Text = ponto.Periodo.ToString();

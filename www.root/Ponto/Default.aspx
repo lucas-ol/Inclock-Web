@@ -77,11 +77,9 @@
                 <tr>
                     <th>Data</th>
                     <th>Turno</th>
-                    <th>Entrada</th>
-                    <th>Entrada Pausa</th>
-                    <th>Saida Pausa</th>
+                    <th>Entrada</th>                   
                     <th>Saída</th>
-                    <th>status</th>
+                    <th>Obs</th>                   
                 </tr>
             </thead>
             <tbody>
@@ -93,15 +91,11 @@
                             <td>
                                 <asp:Label runat="server" ID="txtTurno" /></td>
                             <td>
-                                <asp:Label runat="server" ID="txtEntrada" /></td>
-                            <td>
-                                <asp:Label runat="server" ID="txtEntradaPausa" /></td>
-                            <td>
-                                <asp:Label runat="server" ID="txtSaidaPausa" /></td>
+                                <asp:Label runat="server" ID="txtEntrada" /></td>                          
                             <td>
                                 <asp:Label runat="server" ID="txtSaida" /></td>
                             <td>
-                                <asp:Label runat="server" ID="txtStatus" /></td>
+                                <asp:Label runat="server" ID="txtObs" /></td>
                         </ItemTemplate>
                     </asp:ListView>
 
