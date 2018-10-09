@@ -82,7 +82,7 @@ namespace Autenticador.BL
             {               
                 return new Expediente
                 {
-                    Id = Convert.ToInt32(tb.Rows[0]["id"]),
+                    Id = Convert.ToInt32(tb.Rows[0]["expediente_id"]),
                     Periodo = Convert.ToInt32(tb.Rows[0]["periodo"]),
                     Type = Convert.ToChar(tb.Rows[0]["type_point"]),
                     Funcionario_id = Convert.ToInt32(tb.Rows[0]["funcionario_id"]),

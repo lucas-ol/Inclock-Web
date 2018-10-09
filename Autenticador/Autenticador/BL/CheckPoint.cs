@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using static Classes.VO.Ponto;
+
 
 namespace Autenticador.BL
 {
@@ -38,7 +37,7 @@ namespace Autenticador.BL
             if (expediente == null)
                 return new FeedBack { Mensagem = "Você não pode bater o ponto", Status = false };
 
-            if (GetPoint(funcionario, expediente.Id, Data_Hoje.Date.ToString("yyyy-MM-dd")) != null)
+            if (GetExpelhoPonto(funcionario, expediente.Id, null, Data_Hoje.Date.ToString("yyyy-MM-dd"), out Ponto ponto))
                 return new FeedBack { Mensagem = "Voce ja bateu o ponto entrada", Status = false };
 
 
@@ -59,8 +58,8 @@ namespace Autenticador.BL
             if (expediente == null)
                 return new FeedBack { Mensagem = "Você não pode bater o ponto", Status = false };
 
-            if (GetPoint(funcionario, expediente.Id, Data_Hoje.Date.ToString("yyyy-MM-dd")) != null)
-                return new FeedBack { Mensagem = "Voce ja bateu o ponto de saida", Status = false };
+            if (GetExpelhoPonto(funcionario, expediente.Id, null, Data_Hoje.Date.ToString("yyyy-MM-dd"), out Ponto ponto))
+                return new FeedBack { Mensagem = "Voce ja bateu o ponto de saida as " + ponto.Entrada, Status = false };
 
 
             DateTime saida = Convert.ToDateTime(Data_Hoje.ToString("dd/MM/yyyy ") + expediente.Entrada);
@@ -68,7 +67,7 @@ namespace Autenticador.BL
                 return new FeedBack { Mensagem = "horario minimo para bater o ponto " + saida.TimeOfDay, Status = false };
             else if ((saida - Tolerancia) > Data_Hoje)
                 status = 2;
-        
+
 
             return SalvaPonto(funcionario, status, expediente.Id, "S");
         }
@@ -90,29 +89,38 @@ namespace Autenticador.BL
         {
             return null;
         }
-        public bool GetPoint(ref Ponto ponto)
+        public bool GetExpelhoPonto(int func, int exp, string entrada, string saida, out Ponto ponto)
         {
+            Ponto pt = null;
+            bool sucesso = false;
             var comand = " SELECT * FROM pontos " +
-                         "WHERE funcionario_id = @func AND expediente_id = @exp AND (dta_entrada = @dta_entrada || dta_saida = @dta_saida)";
-            MySqlAdicionaParametro("func",  ponto.Funcionario);
-            MySqlAdicionaParametro("exp", ponto.Expediente.Id);
-            MySqlAdicionaParametro("dia", !string.IsNullOrEmpty(ponto.DataEntrada)? ponto.DataEntrada: ponto.DataSaida);
+                         "WHERE funcionario_id = @func AND expediente_id = @exp AND " + (!string.IsNullOrEmpty(entrada) ? "dta_entrada ='" + entrada : "dta_saida ='" + saida) + "'";
+            MySqlAdicionaParametro("func", func);
+            MySqlAdicionaParametro("exp", exp);
+         //   MySqlAdicionaParametro("query", (!string.IsNullOrEmpty(entrada) ? "dta_entrada ='" + entrada : "dta_saida ='" + saida) + "'");
+
             DataTable tb = MySqlLeitura(comand, CommandType.Text);
             if (tb.Rows.Count > 0 && tb.TableName != "erro")
             {
-                ponto = new Ponto
+                pt = new Ponto
                 {
                     Id = Convert.ToInt32(tb.Rows[0]["id_ponto"]),
-                    Entrada = tb.Rows[0]["hora"].ToString(),
-                    Saida = Convert.ToDateTime(tb.Rows[0]["data"]).ToString("dd/MM/yyyy"),
+                    Entrada = tb.Rows[0]["entrada"].ToString(),
+                    DataEntrada = tb.Rows[0]["dta_entrada"].ToString(),
+                    DataSaida = tb.Rows[0]["dta_saida"].ToString(),
+                    Saida = Convert.ToDateTime(tb.Rows[0]["saida"]).ToString("dd/MM/yyyy"),
                     Obs = tb.Rows[0]["obs"].ToString(),
-                    Funcionario = ponto.Funcionario,
-                    Expediente = MySqlLeitura("prd", CommandType.StoredProcedure).
+                    Funcionario = func
+
                 };
-
+                MySqlAdicionaParametro("_id", tb.Rows[0]["expediente_id"].ToString());
+                var expe = from row in MySqlLeitura("prd_se_full_expediente_id", CommandType.StoredProcedure).Rows.AsQueryable().Cast<DataRow>()
+                           where row["expediente_id"].ToString() == ""
+                           select row;
+                sucesso = true;
             }
-
-            return false;
+            ponto = pt;
+            return sucesso;
         }
         public List<Ponto> GetListCheckPoint(string initialDate, string finalDate, int funcionario)
         {
@@ -133,7 +141,7 @@ namespace Autenticador.BL
                         Entrada = item[""].ToString(),
                         DataEntrada = item[""].ToString(),
                         Saida = item[""].ToString(),
-                        DataSaida = item[""].ToString(),                       
+                        DataSaida = item[""].ToString(),
                         Obs = item[""].ToString()
                     };
                     ListExpediente.Add(ponto);
@@ -159,7 +167,7 @@ namespace Autenticador.BL
                         Entrada = item[""].ToString(),
                         DataEntrada = item[""].ToString(),
                         Saida = item[""].ToString(),
-                        DataSaida = item[""].ToString(),                       
+                        DataSaida = item[""].ToString(),
                         Obs = item[""].ToString()
                     };
                     ListExpediente.Add(ponto);

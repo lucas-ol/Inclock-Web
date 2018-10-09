@@ -64,22 +64,22 @@ namespace Library.Inclock.web.br.Autenticador {
         System.Threading.Tasks.Task<Classes.VO.Aviso[]> GetAvisosAsync(string qtde);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPoint", ReplyAction="http://tempuri.org/IService/GetCheckPointResponse")]
-        Classes.VO.EspelhoPonto[] GetCheckPoint(string month, string funcionario);
+        Classes.VO.Ponto[] GetCheckPoint(string month, string funcionario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPoint", ReplyAction="http://tempuri.org/IService/GetCheckPointResponse")]
-        System.Threading.Tasks.Task<Classes.VO.EspelhoPonto[]> GetCheckPointAsync(string month, string funcionario);
+        System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointAsync(string month, string funcionario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointByDate", ReplyAction="http://tempuri.org/IService/GetCheckPointByDateResponse")]
-        Classes.VO.EspelhoPonto[] GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario);
+        Classes.VO.Ponto[] GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointByDate", ReplyAction="http://tempuri.org/IService/GetCheckPointByDateResponse")]
-        System.Threading.Tasks.Task<Classes.VO.EspelhoPonto[]> GetCheckPointByDateAsync(string InitialDate, string FinalDate, string id_funcionario);
+        System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointByDateAsync(string InitialDate, string FinalDate, string id_funcionario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointDateInterval", ReplyAction="http://tempuri.org/IService/GetCheckPointDateIntervalResponse")]
-        Classes.VO.EspelhoPonto[] GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario);
+        Classes.VO.Ponto[] GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointDateInterval", ReplyAction="http://tempuri.org/IService/GetCheckPointDateIntervalResponse")]
-        System.Threading.Tasks.Task<Classes.VO.EspelhoPonto[]> GetCheckPointDateIntervalAsync(string InitialDate, string FinalDate, string id_funcionario);
+        System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointDateIntervalAsync(string InitialDate, string FinalDate, string id_funcionario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointById", ReplyAction="http://tempuri.org/IService/GetCheckPointByIdResponse")]
         Classes.VO.Ponto GetCheckPointById(string id);
@@ -93,11 +93,11 @@ namespace Library.Inclock.web.br.Autenticador {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ConvertePeriodo", ReplyAction="http://tempuri.org/IService/ConvertePeriodoResponse")]
         System.Threading.Tasks.Task<int> ConvertePeriodoAsync(string hora);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ExcluitExpediente", ReplyAction="http://tempuri.org/IService/ExcluitExpedienteResponse")]
-        Classes.VO.FeedBack ExcluitExpediente(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ExcluirExpediente", ReplyAction="http://tempuri.org/IService/ExcluirExpedienteResponse")]
+        Classes.VO.FeedBack ExcluirExpediente(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ExcluitExpediente", ReplyAction="http://tempuri.org/IService/ExcluitExpedienteResponse")]
-        System.Threading.Tasks.Task<Classes.VO.FeedBack> ExcluitExpedienteAsync(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ExcluirExpediente", ReplyAction="http://tempuri.org/IService/ExcluirExpedienteResponse")]
+        System.Threading.Tasks.Task<Classes.VO.FeedBack> ExcluirExpedienteAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/CadastrarExpediente", ReplyAction="http://tempuri.org/IService/CadastrarExpedienteResponse")]
         Classes.VO.FeedBack CadastrarExpediente(Classes.VO.Expediente exp);
@@ -197,27 +197,27 @@ namespace Library.Inclock.web.br.Autenticador {
             return base.Channel.GetAvisosAsync(qtde);
         }
         
-        public Classes.VO.EspelhoPonto[] GetCheckPoint(string month, string funcionario) {
+        public Classes.VO.Ponto[] GetCheckPoint(string month, string funcionario) {
             return base.Channel.GetCheckPoint(month, funcionario);
         }
         
-        public System.Threading.Tasks.Task<Classes.VO.EspelhoPonto[]> GetCheckPointAsync(string month, string funcionario) {
+        public System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointAsync(string month, string funcionario) {
             return base.Channel.GetCheckPointAsync(month, funcionario);
         }
         
-        public Classes.VO.EspelhoPonto[] GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario) {
+        public Classes.VO.Ponto[] GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario) {
             return base.Channel.GetCheckPointByDate(InitialDate, FinalDate, id_funcionario);
         }
         
-        public System.Threading.Tasks.Task<Classes.VO.EspelhoPonto[]> GetCheckPointByDateAsync(string InitialDate, string FinalDate, string id_funcionario) {
+        public System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointByDateAsync(string InitialDate, string FinalDate, string id_funcionario) {
             return base.Channel.GetCheckPointByDateAsync(InitialDate, FinalDate, id_funcionario);
         }
         
-        public Classes.VO.EspelhoPonto[] GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario) {
+        public Classes.VO.Ponto[] GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario) {
             return base.Channel.GetCheckPointDateInterval(InitialDate, FinalDate, id_funcionario);
         }
         
-        public System.Threading.Tasks.Task<Classes.VO.EspelhoPonto[]> GetCheckPointDateIntervalAsync(string InitialDate, string FinalDate, string id_funcionario) {
+        public System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointDateIntervalAsync(string InitialDate, string FinalDate, string id_funcionario) {
             return base.Channel.GetCheckPointDateIntervalAsync(InitialDate, FinalDate, id_funcionario);
         }
         
@@ -237,12 +237,12 @@ namespace Library.Inclock.web.br.Autenticador {
             return base.Channel.ConvertePeriodoAsync(hora);
         }
         
-        public Classes.VO.FeedBack ExcluitExpediente(int id) {
-            return base.Channel.ExcluitExpediente(id);
+        public Classes.VO.FeedBack ExcluirExpediente(int id) {
+            return base.Channel.ExcluirExpediente(id);
         }
         
-        public System.Threading.Tasks.Task<Classes.VO.FeedBack> ExcluitExpedienteAsync(int id) {
-            return base.Channel.ExcluitExpedienteAsync(id);
+        public System.Threading.Tasks.Task<Classes.VO.FeedBack> ExcluirExpedienteAsync(int id) {
+            return base.Channel.ExcluirExpedienteAsync(id);
         }
         
         public Classes.VO.FeedBack CadastrarExpediente(Classes.VO.Expediente exp) {

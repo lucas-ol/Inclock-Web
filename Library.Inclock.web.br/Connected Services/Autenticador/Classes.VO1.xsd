@@ -79,36 +79,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Aviso" nillable="true" type="tns:Aviso" />
-  <xs:complexType name="ArrayOfEspelhoPonto">
+  <xs:complexType name="ArrayOfPonto">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="EspelhoPonto" nillable="true" type="tns:EspelhoPonto" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Ponto" nillable="true" type="tns:Ponto" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfEspelhoPonto" nillable="true" type="tns:ArrayOfEspelhoPonto" />
-  <xs:complexType name="EspelhoPonto">
+  <xs:element name="ArrayOfPonto" nillable="true" type="tns:ArrayOfPonto" />
+  <xs:complexType name="Ponto">
     <xs:sequence>
       <xs:element minOccurs="0" name="DataEntrada" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DataSaida" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Entrada" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Expediente" nillable="true" type="tns:Expediente" />
       <xs:element minOccurs="0" name="Funcionario" type="xs:int" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Obs" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Periodo" type="xs:int" />
       <xs:element minOccurs="0" name="Saida" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="EspelhoPonto" nillable="true" type="tns:EspelhoPonto" />
-  <xs:complexType name="Ponto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Data" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Expediente" type="xs:int" />
-      <xs:element minOccurs="0" name="Funcionario" type="xs:int" />
-      <xs:element minOccurs="0" name="Hora" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Obs" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Status" type="xs:int" />
-      <xs:element minOccurs="0" name="Tipo" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Ponto" nillable="true" type="tns:Ponto" />

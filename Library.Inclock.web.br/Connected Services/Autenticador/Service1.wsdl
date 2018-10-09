@@ -86,11 +86,11 @@
   <wsdl:message name="IService_ConvertePeriodo_OutputMessage">
     <wsdl:part name="parameters" element="tns:ConvertePeriodoResponse" />
   </wsdl:message>
-  <wsdl:message name="IService_ExcluitExpediente_InputMessage">
-    <wsdl:part name="parameters" element="tns:ExcluitExpediente" />
+  <wsdl:message name="IService_ExcluirExpediente_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExcluirExpediente" />
   </wsdl:message>
-  <wsdl:message name="IService_ExcluitExpediente_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ExcluitExpedienteResponse" />
+  <wsdl:message name="IService_ExcluirExpediente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExcluirExpedienteResponse" />
   </wsdl:message>
   <wsdl:message name="IService_CadastrarExpediente_InputMessage">
     <wsdl:part name="parameters" element="tns:CadastrarExpediente" />
@@ -151,9 +151,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService/ConvertePeriodo" message="tns:IService_ConvertePeriodo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService/ConvertePeriodoResponse" message="tns:IService_ConvertePeriodo_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ExcluitExpediente">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService/ExcluitExpediente" message="tns:IService_ExcluitExpediente_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService/ExcluitExpedienteResponse" message="tns:IService_ExcluitExpediente_OutputMessage" />
+    <wsdl:operation name="ExcluirExpediente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/ExcluirExpediente" message="tns:IService_ExcluirExpediente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/ExcluirExpedienteResponse" message="tns:IService_ExcluirExpediente_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CadastrarExpediente">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/CadastrarExpediente" message="tns:IService_CadastrarExpediente_InputMessage" />
@@ -279,8 +279,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ExcluitExpediente">
-      <soap:operation soapAction="http://tempuri.org/IService/ExcluitExpediente" style="document" />
+    <wsdl:operation name="ExcluirExpediente">
+      <soap:operation soapAction="http://tempuri.org/IService/ExcluirExpediente" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
