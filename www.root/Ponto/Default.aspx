@@ -77,29 +77,28 @@
                 <tr>
                     <th>Data</th>
                     <th>Turno</th>
-                    <th>Entrada</th>                   
+                    <th>Entrada</th>
                     <th>Saída</th>
-                    <th>Obs</th>                   
+                    <th>Obs</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <asp:ListView runat="server" ID="lvPontos">
-                        <ItemTemplate>
+                <asp:ListView runat="server" ID="lvPontos">
+                    <ItemTemplate>
+                        <tr>
                             <td>
                                 <asp:Label runat="server" ID="txtData" /></td>
                             <td>
                                 <asp:Label runat="server" ID="txtTurno" /></td>
                             <td>
-                                <asp:Label runat="server" ID="txtEntrada" /></td>                          
+                                <asp:Label runat="server" ID="txtEntrada" /></td>
                             <td>
                                 <asp:Label runat="server" ID="txtSaida" /></td>
                             <td>
                                 <asp:Label runat="server" ID="txtObs" /></td>
-                        </ItemTemplate>
-                    </asp:ListView>
-
-                </tr>
+                        </tr>
+                    </ItemTemplate>
+                </asp:ListView>
             </tbody>
         </table>
     </div>
@@ -107,8 +106,7 @@
     <script>
 
         $(function () {
-
-            $("#<% =txtDataInicio.ClientID %>").datepicker({
+            var calendario = {
                 changeMonth: true,
                 changeYear: true,
                 dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
@@ -120,25 +118,14 @@
                 prevText: 'Anterior',
                 yearRange: "-5:+5",
                 dateFormat: "dd/mm/yy"
-            });
-            $("#<% =txtDataFim.ClientID %>").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                nextText: 'Proximo',
-                prevText: 'Anterior',
-                yearRange: "-5:+5",
-                dateFormat: "dd/mm/yy"
-            });
+            };
+            $("#<% =txtDataInicio.ClientID %>").datepicker(calendario);
+            $("#<% =txtDataFim.ClientID %>").datepicker(calendario);
 
             $("#<% =txtDataFim.ClientID %>").keypress(function () {
                 $(this).mask("00/00/0000", { placeholder: "__/__/____" });
             });
-             $("#<% =txtDataInicio.ClientID %>").keypress(function () {
+            $("#<% =txtDataInicio.ClientID %>").keypress(function () {
                 $(this).mask("00/00/0000", { placeholder: "__/__/____" });
             });
         })

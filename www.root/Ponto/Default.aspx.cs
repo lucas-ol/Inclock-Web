@@ -29,21 +29,22 @@ public partial class Ponto_Default : System.Web.UI.Page
 
         Label txtData = (Label)e.Item.FindControl("txtData");
         Label txtTurno = (Label)e.Item.FindControl("txtTurno");
-        Label txtEntrada = (Label)e.Item.FindControl("txtEntrada");     
+        Label txtEntrada = (Label)e.Item.FindControl("txtEntrada");
         Label txtSaida = (Label)e.Item.FindControl("txtSaida");
-        Label txtStatus = (Label)e.Item.FindControl("txtObs");
+        Label txtObs = (Label)e.Item.FindControl("txtObs");
 
-      /* txtData.Text = ponto.Entrada;
-        txtTurno.Text = ponto.Periodo.ToString();
-        txtEntrada.Text = ponto.Entrada;       
-        txtSaida.Text = ponto.Saida;
-        txtStatus.Text = string.Join(" ,", ponto.Status);*/ 
+        txtData.Text = ponto.DataEntrada;
+        txtEntrada.Text = string.IsNullOrEmpty(ponto.Entrada)?" - ": ponto.Entrada;
+        txtSaida.Text = string.IsNullOrEmpty(ponto.Saida) ? " - " : ponto.Saida;
+        txtObs.Text = ponto.Obs;
+        var periodo = Classes.Common.UtilDate.ConvertePeriodo(ponto.Expediente.Periodo);
+        txtTurno.Text = periodo;
     }
 
     protected void btnBuscarPontos_Click(object sender, EventArgs e)
     {
         lblPeriodoHeader.Text = "De " + txtDataInicio.Text + " ate " + txtDataFim.Text;
-        lvPontos.DataSource = new Pontos().GetPontos(txtDataInicio.Text, txtDataFim.Text);
+        lvPontos.DataSource = new Pontos().GetPontos(txtDataInicio.Text, txtDataFim.Text, Autenticador.CurrentUser.Id);
         lvPontos.DataBind();
     }
 }

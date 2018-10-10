@@ -14,12 +14,12 @@ namespace Autenticador.BL
         public const string MSGATRASOSAIDA = "saida em atraso";
         public const string MSGATRASOENTRADA = "entrada em atraso";
         private TimeSpan Tolerancia = new TimeSpan(0, 15, 0); // ele tem 15 minutos de tolerancia, para entrada ou saida            
-
+        delegate Expediente findExp(int id);
         DateTime Data_Hoje
         {
-            get {
-                return Convert.ToDateTime("8/10/2018 23:16:00");
-         //       return DateTime.Now.AddDays(-1);
+            get
+            {
+                return DateTime.Now.AddMinutes(-15);
             }
         }
         public CheckPoint()
@@ -103,30 +103,18 @@ namespace Autenticador.BL
         }
         public List<Ponto> GetListCheckPoint(string initialDate, string finalDate, int funcionario)
         {
-            List<Ponto> ListExpediente = new List<Ponto>();
-            MySqlAdicionaParametro("_InitialDade", initialDate);
-            MySqlAdicionaParametro("_FinalDade", finalDate);
+            List<Ponto> pontos = new List<Ponto>();
+            MySqlAdicionaParametro("dta_de", Convert.ToDateTime(initialDate).ToString("yyyy-MM-dd"));
+            MySqlAdicionaParametro("dta_ate", Convert.ToDateTime(finalDate).ToString("yyyy-MM-dd"));
             MySqlAdicionaParametro("funcionario", funcionario);
-            var tb = MySqlLeitura("procedure aqui", CommandType.StoredProcedure);
-            if (tb.TableName == "erro")
+            var tb = MySqlLeitura("select * from pontos where funcionario_id = @funcionario and dta_entrada between @dta_de and @dta_ate order by dta_entrada; ", CommandType.Text);
+            if (tb == null)
                 throw new Exception("erro desconhecido");
             else
             {
-                foreach (DataRow item in tb.Rows)
-                {
-                    Ponto ponto = new Ponto
-                    {
-                        Id = Convert.ToInt32(item[""]),
-                        Entrada = item[""].ToString(),
-                        DataEntrada = item[""].ToString(),
-                        Saida = item[""].ToString(),
-                        DataSaida = item[""].ToString(),
-                        Obs = item[""].ToString()
-                    };
-                    ListExpediente.Add(ponto);
-                }
+                pontos = ConvertTableToPonto(tb, true).ToList();
             }
-            return ListExpediente;
+            return pontos;
         }
         public List<Ponto> GetCheckPointByMonth(int month, int funcionario)
         {
@@ -177,36 +165,21 @@ namespace Autenticador.BL
         private IEnumerable<Ponto> ConvertTableToPonto(DataTable tb, bool full = false)
         {
             List<Ponto> pontos = new List<Ponto>();
-            if (tb.Rows.Count > 0 && tb.TableName != "erro")
+            var ctx = tb.Select();
+
+            if (ctx != null)
             {
-                foreach (DataRow dr in tb.Rows)
+                pontos = ctx.Select(x => new Ponto
                 {
-                    var pt = new Ponto
-                    {
-                        Id = Convert.ToInt32(dr["id"]),
-                        Entrada = dr["entrada"].ToString(),
-                        DataEntrada = dr["dta_entrada"].ToString().Substring(0, 10),
-                        DataSaida = dr["dta_saida"].ToString().Substring(0, 10),
-                        Saida = dr["saida"].ToString(),
-                        Obs = dr["obs"].ToString(),
-                        Funcionario = Convert.ToInt32(tb.Rows[0]["funcionario_id"])
-                    };
-                    if (full)
-                    {
-                        MySqlAdicionaParametro("_id", tb.Rows[0]["expediente_id"].ToString());
-                        pt.Expediente = MySqlLeitura("prd_se_full_expediente_id", CommandType.StoredProcedure).Select().Select(x => new Expediente
-                        {
-                            Id = Convert.ToInt32(x["id"]),
-                            Entrada = x["entrada"].ToString(),
-                            Saida = x["saida"].ToString(),
-                            DiaSemana = Convert.ToInt32(x["etr_semana"]),
-                            Periodo = Convert.ToInt32(x["etr_periodo"]),
-                            PeriodoSaida = Convert.ToInt32(x["sda_semana"]),
-                            Funcionario_id = pt.Funcionario
-                        }).FirstOrDefault();
-                    }
-                    pontos.Add(pt);
-                }
+                    Id = Convert.ToInt32(x["id"]),
+                    Entrada = x["entrada"].ToString(),
+                    DataEntrada = x["dta_entrada"].ToString().Substring(0, 10),
+                    DataSaida = x["dta_saida"].ToString().Substring(0, 10),
+                    Saida = x["saida"].ToString() ,
+                    Obs = x["obs"].ToString(),
+                    Funcionario = Convert.ToInt32(tb.Rows[0]["funcionario_id"]),
+                    Expediente = full ? new ExpedienteController().GetExpedienteId(Convert.ToInt32(x["expediente_id"])) : null
+                }).ToList();
             }
             return pontos;
         }

@@ -158,6 +158,20 @@ namespace Autenticador.BL
            
            
         }
+        public Expediente GetExpedienteId(int id)
+        {
+            MySqlAdicionaParametro("_id", id);
+            var ret = MySqlLeitura("prd_se_full_expediente_id", CommandType.StoredProcedure).Select().Select(x => new Expediente
+            {
+                Id = Convert.ToInt32(x["id"]),
+                Entrada = x["entrada"].ToString(),
+                Saida = x["saida"].ToString(),
+                DiaSemana = Convert.ToInt32(x["etr_semana"]),
+                Periodo = Convert.ToInt32(x["etr_periodo"]),
+                PeriodoSaida = Convert.ToInt32(x["sda_semana"])
+            }).FirstOrDefault();
+            return ret;
+        }
         /// <summary>
         /// 
         /// </summary>

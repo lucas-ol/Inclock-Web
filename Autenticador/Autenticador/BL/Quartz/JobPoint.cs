@@ -42,7 +42,8 @@ namespace Autenticador.BL.Quartz
                         {
                             foreach (var item in exp)
                             {
-                                UtilFile.FileWrite(Arquivo, String.Format("{0};{1};{2};{3};{4};{5};{6}\r", null, funcionario_id, item.Id, null, null, dia.ToString("yyyy-MM-dd"), dia.Add(ExpedienteController.GetHorasTrabalhada(item)).ToString("yyyy-MM-dd")));
+                                var dta_saida = dia.Add(TimeSpan.Parse(item.Entrada)).Add(ExpedienteController.GetHorasTrabalhada(item));
+                                UtilFile.FileWrite(Arquivo, String.Format("{0};{1};{2};{3};{4};{5};{6}\r", null, funcionario_id, item.Id, null, null, dia.ToString("yyyy-MM-dd"), dta_saida.ToString("yyyy-MM-dd")));
                             }
                         }
                     }

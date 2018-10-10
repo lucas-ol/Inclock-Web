@@ -42,15 +42,16 @@ namespace Autenticador.BL
                     throw new ConfigurationErrorsException("Erro ao obter a configuração do horario tarde");
             }
         }
-        public static int ConvertePeriodo(string hora)
+        public static int ConvertePeriodo(string hora, string tolerancia = "")
         {
-            if (!TimeSpan.TryParse(hora.Replace(" ",":"), out TimeSpan hr))
+            TimeSpan.TryParse(tolerancia, out TimeSpan tl);
+            if (!TimeSpan.TryParse(hora.Replace(" ", ":"), out TimeSpan hr))
                 return 0;
-            if (hr >= Manha && hr < Tarde)
+            if (hr >= Manha - tl && hr < Tarde + tl)
                 return 1;
-            else if (hr >= Tarde && hr < Noite)
+            else if (hr >= Tarde - tl && hr < Noite + tl)
                 return 2;
-            else if (hr >= Noite)
+            else if (hr >= Noite - tl)
                 return 3;
             else if (hr < Manha) // isso é o que se equivale a madrugada
                 return 3;

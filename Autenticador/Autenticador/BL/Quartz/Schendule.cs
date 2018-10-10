@@ -16,7 +16,7 @@ namespace Autenticador.BL.Quartz
         public static readonly Schendule Instance = new Schendule();
 
 
-        public string EXPRESSAO = "0 */2 * ? * *";// Cron Expressions para o Job          59 59 23 L * ? *
+        public string EXPRESSAO = "59 59 23 L * ? *";
         public async void Start(Type Job)
         {
             IScheduler Servidor = await StdSchedulerFactory.GetDefaultScheduler();
