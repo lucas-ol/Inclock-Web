@@ -9,27 +9,15 @@ using MySql.Data.MySqlClient;
 
 namespace Classes.Common
 {
-    public class DataBase
+    sealed public class DataBase : IDisposable
     {
-        #region Propriedades      
-        private string szConnexao;
-        /// <summary>
-        /// string de conexão com o Banco
-        /// </summary>
-        public string SzConnexao
-        {
-            get
-            {
-                return System.Configuration.ConfigurationManager.ConnectionStrings["sql"].ConnectionString;
-            }
-            private set { szConnexao = value; }
-        }// = "server=localhost;user=root;password=root;database=inclock;port=3306;";
-
+        public string SzConnexao { get; private set; } = System.Configuration.ConfigurationManager.ConnectionStrings["sql"].ConnectionString;
+        public bool Disposed { get; private set; } = false;
         /// <summary>
         /// Coleção de parametro Generica
         /// </summary>
         private MySqlParameterCollection ParameterCollection = new MySqlCommand().Parameters;
-        #endregion
+
         #region Construtor
         public DataBase()
         {
@@ -53,9 +41,9 @@ namespace Classes.Common
         /// </summary>
         /// <param name="NomeParametro">Nome do parametro</param>
         /// <param name="ValorParametro">Valor do parametro</param>
-        protected virtual void MySqlAdicionaParametro(string NomeParametro, object ValorParametro)
+        public void MySqlAdicionaParametro(string NomeParametro, object ValorParametro)
         {
-            ParameterCollection.AddWithValue(NomeParametro, ValorParametro).Direction = NomeParametro.Contains("@") ? ParameterDirection.Output : ParameterDirection.Input;
+            ParameterCollection.AddWithValue(NomeParametro, ValorParametro).Direction = NomeParametro.LastIndexOf("@") > 0 ? ParameterDirection.Output : ParameterDirection.Input;
             //  ParameterCollection.AddWithValue(NomeParametro, ValorParametro);
         }
         /// <summary>
@@ -64,7 +52,7 @@ namespace Classes.Common
         /// <param name="szCommand">Commando que vai ser enviado ao banco de dados</param>
         /// <param name="TypeCommand">Tipo de comando que vai ser enviado </param>
         /// <returns>Retorna uma tabela </returns>
-        protected virtual DataTable MySqlLeitura(string szCommand, CommandType TypeCommand)
+        public DataTable MySqlLeitura(string szCommand, CommandType TypeCommand)
         {
             DataTable TabelaDeRetorno = new DataTable();
             MySqlCommand Command = new MySqlCommand();// Objeto de Commando 
@@ -107,7 +95,7 @@ namespace Classes.Common
         /// <param name="szCommand">Commando que vai ser enviado ao banco de dados</param>
         /// <param name="TypeCommand">Tipo de comando que vai ser enviado</param>
         /// <returns>Retorna o numero de linhas afetadas</returns>
-        protected virtual FeedBack MySqlExecutaComando(string szCommand, CommandType TypeCommand)
+        public FeedBack MySqlExecutaComando(string szCommand, CommandType TypeCommand)
         {
             FeedBack feedBack = new FeedBack();
             MySqlCommand Command = new MySqlCommand();// Objeto de Commando 
@@ -142,7 +130,7 @@ namespace Classes.Common
         /// <param name="TypeCommand">Tipo do comando</param>
         /// <param name="retorno">Parametro out que vai</param>
         /// <returns></returns>
-        protected virtual DataTable MySqlLeitura(string szCommand, CommandType TypeCommand, out int retorno, string collumname = "_TotalLinhas")
+        public DataTable MySqlLeitura(string szCommand, CommandType TypeCommand, out int retorno, string collumname = "_TotalLinhas")
         {
             DataTable TabelaDeRetorno = new DataTable();
             MySqlCommand Command = new MySqlCommand();// Objeto de Commando 
@@ -184,6 +172,42 @@ namespace Classes.Common
             MySqlZeraParametro();// vai zerar a coleção de parametros
             return TabelaDeRetorno;
             throw new NotImplementedException();
+        }
+        public int MySqlGenericBulk(BulkConfig config, bool delete = true)
+        {
+            var connection = new MySqlConnection(SzConnexao);
+            var bulk = new MySqlBulkLoader(connection)
+            {
+                TableName = config.TableName,
+                FieldTerminator = config.FieldTerminator,
+                LineTerminator = config.LineTerminator,
+                FileName = config.File,
+                NumberOfLinesToSkip = config.NumberOfLinesToSkip
+            };
+            connection.Open();
+            try
+            {
+                return bulk.Load();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (delete)
+                    UtilFile.Delete(config.File);
+            }
+
+        }
+
+        public void Dispose()
+        {
+            if (!Disposed)
+            {
+                Disposed = true;
+                GC.SuppressFinalize(this);
+            }
         }
         #endregion
     }

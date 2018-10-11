@@ -77,6 +77,7 @@
     <Compile Include="BL\ExpedienteController.cs" />
     <Compile Include="BL\Integracao.cs" />
     <Compile Include="BL\Quartz\JobPoint.cs" />
+    <Compile Include="BL\Quartz\JobPointExpedientes.cs" />
     <Compile Include="BL\Quartz\Schendule.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

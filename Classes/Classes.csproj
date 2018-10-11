@@ -90,6 +90,7 @@
     <Compile Include="Enumeradores\StatusPonto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VO\Aviso.cs" />
+    <Compile Include="VO\BulkConfig.cs" />
     <Compile Include="VO\Expediente.cs" />
     <Compile Include="VO\FeedBack.cs" />
     <Compile Include="VO\Funcionario.cs" />

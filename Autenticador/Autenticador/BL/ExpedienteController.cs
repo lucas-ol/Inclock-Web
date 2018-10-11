@@ -9,37 +9,40 @@ using System.Threading.Tasks;
 
 namespace Autenticador.BL
 {
-    public class ExpedienteController : DataBase
+    public class ExpedienteController
     {
         public List<Expediente> GetExpediente(int semana, int funcionario_id)
         {
-            MySqlAdicionaParametro("iSemana", semana);
-            MySqlAdicionaParametro("iFuncionario", funcionario_id);
-            List<Expediente> ExpedienteList = new List<Expediente>();
-            DataTable tb = MySqlLeitura("prd_se_expediente_semana", CommandType.StoredProcedure);
-            if (tb.TableName != "erro")
+            using (var db = new DataBase())
             {
-                foreach (DataRow linha in tb.Rows)
+                db.MySqlAdicionaParametro("iSemana", semana);
+                db.MySqlAdicionaParametro("iFuncionario", funcionario_id);
+                List<Expediente> ExpedienteList = new List<Expediente>();
+                DataTable tb = db.MySqlLeitura("prd_se_expediente_semana", CommandType.StoredProcedure);
+                if (tb.TableName != "erro")
                 {
-                    Expediente expediente = new Expediente
+                    foreach (DataRow linha in tb.Rows)
                     {
-                        Id = Convert.ToInt32(linha["id"]),
-                        Entrada = DateTime.Parse(linha["entrada"].ToString()).ToString("HH:mm"),
-                        Saida = DateTime.Parse(linha["saida"].ToString()).ToString("HH:mm"),
-                        DiaSemana = Convert.ToInt32(linha["diasemana"]),
-                        Funcionario_id = Convert.ToInt32(linha["funcionario_id"]),
-                        Periodo = Convert.ToInt32(linha["periodo"])
-                    };
-                    
-                 
-                   // var tts = vr.AddMinutes(bt);
-                    expediente.HorasTrabalhada = GetHorasTrabalhada(expediente).ToString().Substring(0,5);
-                    ExpedienteList.Add(expediente);
+                        Expediente expediente = new Expediente
+                        {
+                            Id = Convert.ToInt32(linha["id"]),
+                            Entrada = DateTime.Parse(linha["entrada"].ToString()).ToString("HH:mm"),
+                            Saida = DateTime.Parse(linha["saida"].ToString()).ToString("HH:mm"),
+                            DiaSemana = Convert.ToInt32(linha["diasemana"]),
+                            Funcionario_id = Convert.ToInt32(linha["funcionario_id"]),
+                            Periodo = Convert.ToInt32(linha["periodo"])
+                        };
+
+
+                        // var tts = vr.AddMinutes(bt);
+                        expediente.HorasTrabalhada = GetHorasTrabalhada(expediente).ToString().Substring(0, 5);
+                        ExpedienteList.Add(expediente);
+                    }
                 }
+                return ExpedienteList;
             }
-            return ExpedienteList;
         }
-        
+
         /// <summary>
         /// Sobrecarga de metodo, Busca o expediente de entrada ou saida
         /// </summary>
@@ -50,92 +53,104 @@ namespace Autenticador.BL
         /// <returns></returns>
         public Expediente GetExpediente(int funcionario, DayOfWeek semana, int periodo, char tp)
         {
-            MySqlAdicionaParametro("_funcionario", funcionario);
-            MySqlAdicionaParametro("_semana", Convert.ToInt32(semana) + 1);
-            MySqlAdicionaParametro("_periodo", periodo);
-            MySqlAdicionaParametro("_type", tp);
-            DataTable tb = MySqlLeitura("prd_se_expediente", CommandType.StoredProcedure);
+            using (var db = new DataBase())
+            {
+                db.MySqlAdicionaParametro("_funcionario", funcionario);
+                db.MySqlAdicionaParametro("_semana", Convert.ToInt32(semana) + 1);
+                db.MySqlAdicionaParametro("_periodo", periodo);
+                db.MySqlAdicionaParametro("_type", tp);
+                DataTable tb = db.MySqlLeitura("prd_se_expediente", CommandType.StoredProcedure);
 
-            if (tb.Rows.Count > 0 && tb.TableName != "erro")
-            {               
-                return new Expediente
+                if (tb.Rows.Count > 0 && tb.TableName != "erro")
                 {
-                    Id = Convert.ToInt32(tb.Rows[0]["expediente_id"]),
-                    Periodo = Convert.ToInt32(tb.Rows[0]["periodo"]),
-                    Type = Convert.ToChar(tb.Rows[0]["type_point"]),
-                    Funcionario_id = Convert.ToInt32(tb.Rows[0]["funcionario_id"]),
-                    Entrada = tb.Rows[0]["hora"].ToString(),
-                    Saida = tb.Rows[0]["hora"].ToString(),
-                    DiaSemana = Convert.ToInt32(tb.Rows[0]["diasemana"])
-                };
+                    return new Expediente
+                    {
+                        Id = Convert.ToInt32(tb.Rows[0]["expediente_id"]),
+                        Periodo = Convert.ToInt32(tb.Rows[0]["periodo"]),
+                        Type = Convert.ToChar(tb.Rows[0]["type_point"]),
+                        Funcionario_id = Convert.ToInt32(tb.Rows[0]["funcionario_id"]),
+                        Entrada = tb.Rows[0]["hora"].ToString(),
+                        Saida = tb.Rows[0]["hora"].ToString(),
+                        DiaSemana = Convert.ToInt32(tb.Rows[0]["diasemana"])
+                    };
+                }
+                return null;
             }
-            return null;
         }
 
         public FeedBack SalvaExpediente(Expediente expediente)
         {
-            if (!ValidaDados(expediente))
-                return new FeedBack() { Mensagem = "Dados invalidos", Status = false };
-            FeedBack feedBack = new FeedBack() { Status = false };
-            MySqlAdicionaParametro("_saida", expediente.Saida);
-            MySqlAdicionaParametro("_entrada", expediente.Entrada);
-            MySqlAdicionaParametro("_semanaEntrada", expediente.DiaSemana);
-            MySqlAdicionaParametro("_semanaSaida", CheckSaida(expediente));
-            MySqlAdicionaParametro("_periodo", Data.ConvertePeriodo(expediente.Entrada));
-            MySqlAdicionaParametro("_periodo_sda", Data.ConvertePeriodo(expediente.Saida));
-            MySqlAdicionaParametro("_funcionario_id", expediente.Funcionario_id);
-            feedBack = MySqlExecutaComando("prd_insert_expediente", CommandType.StoredProcedure);
-
-            if (feedBack.Status)
+            using (var db = new DataBase())
             {
-                if (feedBack.Mensagem.Contains("duplicate"))
-                {
-                    feedBack.Status = false;
-                    feedBack.Mensagem = "Expediente ja cadastrado";
-                }
-                feedBack.Mensagem = "Expediente cadastrado com sucesso";
-            }
-            else
-                feedBack.Mensagem = "Erro ao processar dados no DB";
+                if (!ValidaDados(expediente))
+                    return new FeedBack() { Mensagem = "Dados invalidos", Status = false };
+                FeedBack feedBack = new FeedBack() { Status = false };
+                db.MySqlAdicionaParametro("_saida", expediente.Saida);
+                db.MySqlAdicionaParametro("_entrada", expediente.Entrada);
+                db.MySqlAdicionaParametro("_semanaEntrada", expediente.DiaSemana);
+                db.MySqlAdicionaParametro("_semanaSaida", CheckSaida(expediente));
+                db.MySqlAdicionaParametro("_periodo", Data.ConvertePeriodo(expediente.Entrada));
+                db.MySqlAdicionaParametro("_periodo_sda", Data.ConvertePeriodo(expediente.Saida));
+                db.MySqlAdicionaParametro("_funcionario_id", expediente.Funcionario_id);
+                feedBack = db.MySqlExecutaComando("prd_insert_expediente", CommandType.StoredProcedure);
 
-            return feedBack;
+                if (feedBack.Status)
+                {
+                    if (feedBack.Mensagem.Contains("duplicate"))
+                    {
+                        feedBack.Status = false;
+                        feedBack.Mensagem = "Expediente ja cadastrado";
+                    }
+                    feedBack.Mensagem = "Expediente cadastrado com sucesso";
+                }
+                else
+                    feedBack.Mensagem = "Erro ao processar dados no DB";
+
+                return feedBack;
+            }
         }
 
         public FeedBack AtualizaExpediente(Expediente expediente)
         {
-            FeedBack feedBack = new FeedBack();
-            if (!ValidaDados(expediente))
-                return new FeedBack() { Mensagem = "Dados invalidos", Status = false };
-
-            MySqlAdicionaParametro("_id", expediente.Id);
-            MySqlAdicionaParametro("_saida", expediente.Saida);
-            MySqlAdicionaParametro("_entrada", expediente.Entrada);
-            MySqlAdicionaParametro("_semanaEntrada", expediente.DiaSemana);
-            MySqlAdicionaParametro("_semanaSaida", CheckSaida(expediente));
-            MySqlAdicionaParametro("_periodo", Data.ConvertePeriodo(expediente.Entrada));
-            MySqlAdicionaParametro("_periodo_sda", Data.ConvertePeriodo(expediente.Saida));
-            MySqlAdicionaParametro("_funcionario_id", expediente.Funcionario_id);
-            feedBack = MySqlExecutaComando("prd_updade_expediente", CommandType.StoredProcedure);
-
-            if (feedBack.Status)
+            using (var db = new DataBase())
             {
-                if (feedBack.Mensagem.Contains("duplicate"))
+                FeedBack feedBack = new FeedBack();
+                if (!ValidaDados(expediente))
+                    return new FeedBack() { Mensagem = "Dados invalidos", Status = false };
+
+                db.MySqlAdicionaParametro("_id", expediente.Id);
+                db.MySqlAdicionaParametro("_saida", expediente.Saida);
+                db.MySqlAdicionaParametro("_entrada", expediente.Entrada);
+                db.MySqlAdicionaParametro("_semanaEntrada", expediente.DiaSemana);
+                db.MySqlAdicionaParametro("_semanaSaida", CheckSaida(expediente));
+                db.MySqlAdicionaParametro("_periodo", Data.ConvertePeriodo(expediente.Entrada));
+                db.MySqlAdicionaParametro("_periodo_sda", Data.ConvertePeriodo(expediente.Saida));
+                db.MySqlAdicionaParametro("_funcionario_id", expediente.Funcionario_id);
+                feedBack = db.MySqlExecutaComando("prd_updade_expediente", CommandType.StoredProcedure);
+
+                if (feedBack.Status)
                 {
-                    feedBack.Status = false;
-                    feedBack.Mensagem = "Expediente ja cadastrado";
+                    if (feedBack.Mensagem.Contains("duplicate"))
+                    {
+                        feedBack.Status = false;
+                        feedBack.Mensagem = "Expediente ja cadastrado";
+                    }
+                    else
+                        feedBack.Mensagem = "expediente cadastrado com sucesso";
                 }
                 else
-                    feedBack.Mensagem = "expediente cadastrado com sucesso";
-            }
-            else
-                feedBack.Mensagem = "Erro ao processar dados no DB";
+                    feedBack.Mensagem = "Erro ao processar dados no DB";
 
-            return feedBack;
+                return feedBack;
+            }
         }
         public FeedBack Excluir(int id)
         {
-            MySqlAdicionaParametro("id", id);
-            return MySqlExecutaComando("delete from expediente_id where id = @id", System.Data.CommandType.Text);
+            using (var db = new DataBase())
+            {
+                db.MySqlAdicionaParametro("id", id);
+                return db.MySqlExecutaComando("delete from expediente_id where id = @id", System.Data.CommandType.Text);
+            }
         }
         public static TimeSpan GetHorasTrabalhada(Expediente expediente)
         {
@@ -155,22 +170,25 @@ namespace Autenticador.BL
 
                 throw;
             }
-           
-           
+
+
         }
         public Expediente GetExpedienteId(int id)
         {
-            MySqlAdicionaParametro("_id", id);
-            var ret = MySqlLeitura("prd_se_full_expediente_id", CommandType.StoredProcedure).Select().Select(x => new Expediente
+            using (var db = new DataBase())
             {
-                Id = Convert.ToInt32(x["id"]),
-                Entrada = x["entrada"].ToString(),
-                Saida = x["saida"].ToString(),
-                DiaSemana = Convert.ToInt32(x["etr_semana"]),
-                Periodo = Convert.ToInt32(x["etr_periodo"]),
-                PeriodoSaida = Convert.ToInt32(x["sda_semana"])
-            }).FirstOrDefault();
-            return ret;
+                db.MySqlAdicionaParametro("_id", id);
+                var ret = db.MySqlLeitura("prd_se_full_expediente_id", CommandType.StoredProcedure).Select().Select(x => new Expediente
+                {
+                    Id = Convert.ToInt32(x["id"]),
+                    Entrada = x["entrada"].ToString(),
+                    Saida = x["saida"].ToString(),
+                    DiaSemana = Convert.ToInt32(x["etr_semana"]),
+                    Periodo = Convert.ToInt32(x["etr_periodo"]),
+                    PeriodoSaida = Convert.ToInt32(x["sda_semana"])
+                }).FirstOrDefault();
+                return ret;
+            }
         }
         /// <summary>
         /// 

@@ -13,7 +13,7 @@ using System.ServiceModel;
 
 namespace Library.Inclock.web.br.BL
 {
-    public class Funcionarios : DataBase
+    public class Funcionarios
     {
         /// <summary>
         /// Metodo que vai buscar todos os cargos, ele vai retornar uma tabela com o id 1 caso de algum erro 
@@ -21,19 +21,22 @@ namespace Library.Inclock.web.br.BL
         /// <returns>DataTable</returns>
         public DataTable BuscaCargos()
         {
-            DataTable TabelaCargos = new DataTable();
-            TabelaCargos = MySqlLeitura("SELECT * FROM inclock.cargo order by descricao", CommandType.Text);
-            //Verifica se o banco retornou alguma linha e verificar se não teve nem um tipo de erro 
-            if (TabelaCargos.Rows.Count > 0 && TabelaCargos.TableName != "erro")
-                return TabelaCargos;
-            else
+            using (var db = new DataBase())
             {
-                TabelaCargos = new DataTable();
-                TabelaCargos.Columns.Add("id");
-                TabelaCargos.Columns.Add("descricao");
-                TabelaCargos.NewRow();
-                TabelaCargos.Rows.Add(new object[] { 1, "cargo não adicionado" });
-                return TabelaCargos;
+                DataTable TabelaCargos = new DataTable();
+                TabelaCargos = db.MySqlLeitura("SELECT * FROM inclock.cargo order by descricao", CommandType.Text);
+                //Verifica se o banco retornou alguma linha e verificar se não teve nem um tipo de erro 
+                if (TabelaCargos.Rows.Count > 0 && TabelaCargos.TableName != "erro")
+                    return TabelaCargos;
+                else
+                {
+                    TabelaCargos = new DataTable();
+                    TabelaCargos.Columns.Add("id");
+                    TabelaCargos.Columns.Add("descricao");
+                    TabelaCargos.NewRow();
+                    TabelaCargos.Rows.Add(new object[] { 1, "cargo não adicionado" });
+                    return TabelaCargos;
+                }
             }
             throw new Exception("erro " + new Exception().Message); // lança uma excessao na pilha caso de algum erro, para nao  parar a execução do programa 
         }
@@ -45,92 +48,98 @@ namespace Library.Inclock.web.br.BL
         /// <returns></returns>
         public FeedBack Cadastrar_Funcionario(Funcionario funcionario)
         {
-            FeedBack feedBack = new FeedBack();
-            feedBack.Status = false;
-            MySqlAdicionaParametro("_nome", funcionario.Nome);
-            MySqlAdicionaParametro("_telefone", funcionario.Telefone);
-            MySqlAdicionaParametro("_celular", funcionario.Celular);
-            MySqlAdicionaParametro("_email", funcionario.Email);
-            MySqlAdicionaParametro("_endereco", funcionario.Endereco);
-            MySqlAdicionaParametro("_cpf", funcionario.CPF);
-            MySqlAdicionaParametro("_fk_cargo", funcionario.cargo_id);
-            MySqlAdicionaParametro("_nascimento", funcionario.Nascimento);
-            MySqlAdicionaParametro("_sexo", funcionario.Sexo);
-            MySqlAdicionaParametro("_cidade", funcionario.Cidade);
-            MySqlAdicionaParametro("_estado", funcionario.Estado);
-            MySqlAdicionaParametro("_cep", funcionario.CEP);
-            MySqlAdicionaParametro("_numero", funcionario.Numero);
-            MySqlAdicionaParametro("_bairro", funcionario.Bairro);
-            MySqlAdicionaParametro("_rg", funcionario.RG);
-            MySqlAdicionaParametro("_senha", funcionario.Senha);
-            MySqlAdicionaParametro("_login", funcionario.Login);
-            MySqlAdicionaParametro("_role", User.ConvertToRoleStr(funcionario.Roles));
-            feedBack = MySqlExecutaComando("prd_insere_func", CommandType.StoredProcedure);
+            using (var db = new DataBase())
+            {
+                FeedBack feedBack = new FeedBack();
+                feedBack.Status = false;
+                db.MySqlAdicionaParametro("_nome", funcionario.Nome);
+                db.MySqlAdicionaParametro("_telefone", funcionario.Telefone);
+                db.MySqlAdicionaParametro("_celular", funcionario.Celular);
+                db.MySqlAdicionaParametro("_email", funcionario.Email);
+                db.MySqlAdicionaParametro("_endereco", funcionario.Endereco);
+                db.MySqlAdicionaParametro("_cpf", funcionario.CPF);
+                db.MySqlAdicionaParametro("_fk_cargo", funcionario.cargo_id);
+                db.MySqlAdicionaParametro("_nascimento", funcionario.Nascimento);
+                db.MySqlAdicionaParametro("_sexo", funcionario.Sexo);
+                db.MySqlAdicionaParametro("_cidade", funcionario.Cidade);
+                db.MySqlAdicionaParametro("_estado", funcionario.Estado);
+                db.MySqlAdicionaParametro("_cep", funcionario.CEP);
+                db.MySqlAdicionaParametro("_numero", funcionario.Numero);
+                db.MySqlAdicionaParametro("_bairro", funcionario.Bairro);
+                db.MySqlAdicionaParametro("_rg", funcionario.RG);
+                db.MySqlAdicionaParametro("_senha", funcionario.Senha);
+                db.MySqlAdicionaParametro("_login", funcionario.Login);
+                db.MySqlAdicionaParametro("_role", User.ConvertToRoleStr(funcionario.Roles));
+                feedBack = db.MySqlExecutaComando("prd_insere_func", CommandType.StoredProcedure);
 
-            string mensagem = "";
-            if (feedBack.Mensagem.ToLower().Contains("cpf"))
-            {
-                mensagem += "<strong>CPF</strong> ";
+                string mensagem = "";
+                if (feedBack.Mensagem.ToLower().Contains("cpf"))
+                {
+                    mensagem += "<strong>CPF</strong> ";
+                }
+                else if (feedBack.Mensagem.ToLower().Contains("rg"))
+                {
+                    mensagem += "<strong>RG</strong> ";
+                }
+                else if (feedBack.Mensagem.ToLower().Contains("login"))
+                {
+                    mensagem += "<strong>login</strong> ";
+                }
+                else if (feedBack.Mensagem.ToLower().Contains("email"))
+                {
+                    mensagem += "<strong>email</strong>";
+                }
+                feedBack.Mensagem = String.Format("Os campo {0} a já existe no banco ", mensagem);
+                return feedBack;
             }
-            else if (feedBack.Mensagem.ToLower().Contains("rg"))
-            {
-                mensagem += "<strong>RG</strong> ";
-            }
-            else if (feedBack.Mensagem.ToLower().Contains("login"))
-            {
-                mensagem += "<strong>login</strong> ";
-            }
-            else if (feedBack.Mensagem.ToLower().Contains("email"))
-            {
-                mensagem += "<strong>email</strong>";
-            }
-            feedBack.Mensagem = String.Format("Os campo {0} a já existe no banco ", mensagem);
-            return feedBack;
         }
         public FeedBack Altera_Funcionario(Funcionario funcionario)
         {
-            FeedBack feedBack = new FeedBack();
-            feedBack.Status = false;
-            MySqlAdicionaParametro("_id", funcionario.Id);
-            MySqlAdicionaParametro("_nome", funcionario.Nome);
-            MySqlAdicionaParametro("_telefone", funcionario.Telefone);
-            MySqlAdicionaParametro("_celular", funcionario.Celular);
-            MySqlAdicionaParametro("_email", funcionario.Email);
-            MySqlAdicionaParametro("_endereco", funcionario.Endereco);
-            MySqlAdicionaParametro("_cpf", funcionario.CPF);
-            MySqlAdicionaParametro("_fk_cargo", funcionario.cargo_id);
-            MySqlAdicionaParametro("_nascimento", funcionario.Nascimento);
-            MySqlAdicionaParametro("_sexo", funcionario.Sexo);
-            MySqlAdicionaParametro("_cidade", funcionario.Cidade);
-            MySqlAdicionaParametro("_estado", funcionario.Estado);
-            MySqlAdicionaParametro("_cep", funcionario.CEP);
-            MySqlAdicionaParametro("_numero", funcionario.Numero);
-            MySqlAdicionaParametro("_bairro", funcionario.Bairro);
-            MySqlAdicionaParametro("_rg", funcionario.RG);
-            MySqlAdicionaParametro("_senha", funcionario.Senha);
-            MySqlAdicionaParametro("_login", funcionario.Login);
-            MySqlAdicionaParametro("_role", User.ConvertToRoleStr(funcionario.Roles));
-            feedBack = MySqlExecutaComando("prd_update_func", CommandType.StoredProcedure);
+            using (var db = new DataBase())
+            {
+                FeedBack feedBack = new FeedBack();
+                feedBack.Status = false;
+                db.MySqlAdicionaParametro("_id", funcionario.Id);
+                db.MySqlAdicionaParametro("_nome", funcionario.Nome);
+                db.MySqlAdicionaParametro("_telefone", funcionario.Telefone);
+                db.MySqlAdicionaParametro("_celular", funcionario.Celular);
+                db.MySqlAdicionaParametro("_email", funcionario.Email);
+                db.MySqlAdicionaParametro("_endereco", funcionario.Endereco);
+                db.MySqlAdicionaParametro("_cpf", funcionario.CPF);
+                db.MySqlAdicionaParametro("_fk_cargo", funcionario.cargo_id);
+                db.MySqlAdicionaParametro("_nascimento", funcionario.Nascimento);
+                db.MySqlAdicionaParametro("_sexo", funcionario.Sexo);
+                db.MySqlAdicionaParametro("_cidade", funcionario.Cidade);
+                db.MySqlAdicionaParametro("_estado", funcionario.Estado);
+                db.MySqlAdicionaParametro("_cep", funcionario.CEP);
+                db.MySqlAdicionaParametro("_numero", funcionario.Numero);
+                db.MySqlAdicionaParametro("_bairro", funcionario.Bairro);
+                db.MySqlAdicionaParametro("_rg", funcionario.RG);
+                db.MySqlAdicionaParametro("_senha", funcionario.Senha);
+                db.MySqlAdicionaParametro("_login", funcionario.Login);
+                db.MySqlAdicionaParametro("_role", User.ConvertToRoleStr(funcionario.Roles));
+                feedBack = db.MySqlExecutaComando("prd_update_func", CommandType.StoredProcedure);
 
-            string mensagem = "";
-            if (feedBack.Mensagem.ToLower().Contains("cpf"))
-            {
-                mensagem += "<strong>CPF</strong> ";
+                string mensagem = "";
+                if (feedBack.Mensagem.ToLower().Contains("cpf"))
+                {
+                    mensagem += "<strong>CPF</strong> ";
+                }
+                else if (feedBack.Mensagem.ToLower().Contains("rg"))
+                {
+                    mensagem += "<strong>RG</strong> ";
+                }
+                else if (feedBack.Mensagem.ToLower().Contains("login"))
+                {
+                    mensagem += "<strong>login</strong> ";
+                }
+                else if (feedBack.Mensagem.ToLower().Contains("email"))
+                {
+                    mensagem += "<strong>email</strong>";
+                }
+                feedBack.Mensagem = String.Format("Os campo {0} a já existe no banco ", mensagem);
+                return feedBack;
             }
-            else if (feedBack.Mensagem.ToLower().Contains("rg"))
-            {
-                mensagem += "<strong>RG</strong> ";
-            }
-            else if (feedBack.Mensagem.ToLower().Contains("login"))
-            {
-                mensagem += "<strong>login</strong> ";
-            }
-            else if (feedBack.Mensagem.ToLower().Contains("email"))
-            {
-                mensagem += "<strong>email</strong>";
-            }
-            feedBack.Mensagem = String.Format("Os campo {0} a já existe no banco ", mensagem);
-            return feedBack;
         }
         /// <summary>
         /// Metodo que busca as pessoas pelo nome
@@ -142,34 +151,36 @@ namespace Library.Inclock.web.br.BL
         /// <returns></returns>
         public List<Funcionario> ListarPessoasPorNome(string Nome, int pagina, int qtdeitens, out int qtdeTotalItens)
         {
-            List<Funcionario> ListaFuncionario = new List<Funcionario>();
-            MySqlAdicionaParametro("_nome", Nome);
-            MySqlAdicionaParametro("_pagina", pagina);
-            MySqlAdicionaParametro("_quantidade", qtdeitens);
-            MySqlAdicionaParametro("@_TotalLinhas", 0);
-            DataTable tb = MySqlLeitura("prd_se_pessoas", CommandType.StoredProcedure, out qtdeTotalItens);
-
-            if (tb.TableName == "erro")
-                return ListaFuncionario;
-            foreach (DataRow item in tb.Rows)
+            using (var db = new DataBase())
             {
-                Funcionario funcionario = new Funcionario();
-                ListaFuncionario.Add(new Funcionario()
-                {
-                    Id = Convert.ToInt32(item["id"]),
-                    Nome = Convert.ToString(item["nome"]),
-                    Telefone = Convert.ToString(item["telefone"]),
-                    Celular = Convert.ToString(item["celular"]),
-                    Email = Convert.ToString(item["email"]),
-                    CPF = Convert.ToString(item["cpf"]),
-                    Cargo = Convert.ToString(item["cargo"]),
-                    Nascimento = Convert.ToDateTime(item["nascimento"]).ToString("dd-MM-yyyy"),
-                    Sexo = Convert.ToString(item["sexo"]).ToLower() == "m" ? "Masculino" : "Feminino",
-                    RG = Convert.ToString(item["rg"])
-                });
-            }
+                List<Funcionario> ListaFuncionario = new List<Funcionario>();
+                db.MySqlAdicionaParametro("_nome", Nome);
+                db.MySqlAdicionaParametro("_pagina", pagina);
+                db.MySqlAdicionaParametro("_quantidade", qtdeitens);
+                db.MySqlAdicionaParametro("@_TotalLinhas", 0);
+                DataTable tb = db.MySqlLeitura("prd_se_pessoas", CommandType.StoredProcedure, out qtdeTotalItens);
 
-            return ListaFuncionario;
+                if (tb.TableName == "erro")
+                    return ListaFuncionario;
+                foreach (DataRow item in tb.Rows)
+                {
+                    Funcionario funcionario = new Funcionario();
+                    ListaFuncionario.Add(new Funcionario()
+                    {
+                        Id = Convert.ToInt32(item["id"]),
+                        Nome = Convert.ToString(item["nome"]),
+                        Telefone = Convert.ToString(item["telefone"]),
+                        Celular = Convert.ToString(item["celular"]),
+                        Email = Convert.ToString(item["email"]),
+                        CPF = Convert.ToString(item["cpf"]),
+                        Cargo = Convert.ToString(item["cargo"]),
+                        Nascimento = Convert.ToDateTime(item["nascimento"]).ToString("dd-MM-yyyy"),
+                        Sexo = Convert.ToString(item["sexo"]).ToLower() == "m" ? "Masculino" : "Feminino",
+                        RG = Convert.ToString(item["rg"])
+                    });
+                }
+                return ListaFuncionario;
+            }
         }
         /// <summary>
         /// lista todas as pesoas 
@@ -178,24 +189,27 @@ namespace Library.Inclock.web.br.BL
         /// <returns></returns>
         public List<Funcionario> ListaPessoasNome(String strNome)
         {
-            MySqlAdicionaParametro("_nome", strNome);
-            DataTable dt = MySqlLeitura("prd_se_pessoas_expediente_nome", CommandType.StoredProcedure);
-            List<Funcionario> user = new List<Funcionario>();
-            if (dt.TableName == "erro")
-                return user;
-            foreach (DataRow item in dt.Rows)
+            using (var db = new DataBase())
             {
-                user.Add(new Funcionario()
+                db.MySqlAdicionaParametro("_nome", strNome);
+                DataTable dt = db.MySqlLeitura("prd_se_pessoas_expediente_nome", CommandType.StoredProcedure);
+                List<Funcionario> user = new List<Funcionario>();
+                if (dt.TableName == "erro")
+                    return user;
+                foreach (DataRow item in dt.Rows)
                 {
-                    Id = Convert.ToInt32(item["id"]),
-                    Nome = Convert.ToString(item["nome"]),
-                    Cargo = Convert.ToString(item["cargo"]),
-                    cargo_id = Convert.ToInt32(item["expediente"]),
-                    CPF = Convert.ToString(item["cpf"]),
-                    RG = Convert.ToString(item["rg"])
-                });
+                    user.Add(new Funcionario()
+                    {
+                        Id = Convert.ToInt32(item["id"]),
+                        Nome = Convert.ToString(item["nome"]),
+                        Cargo = Convert.ToString(item["cargo"]),
+                        cargo_id = Convert.ToInt32(item["expediente"]),
+                        CPF = Convert.ToString(item["cpf"]),
+                        RG = Convert.ToString(item["rg"])
+                    });
+                }
+                return user;
             }
-            return user;
         }
         public Funcionario Pesquisa_Funcionario_ID(int ID)
         {

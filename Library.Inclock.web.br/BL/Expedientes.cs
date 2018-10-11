@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Library.Inclock.web.br.BL
 {
-    public class Expedientes : DataBase
+    public class Expedientes
     {
         public List<Expediente> ListaExpediente(int funcionario_Id)
         {

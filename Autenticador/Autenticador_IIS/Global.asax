@@ -23,6 +23,7 @@
     }
     private void IniciaQuartz()
     {
-        Schendule.Instance.Start(typeof(JobPoint));       
+        Schendule.Instance.Start(typeof(JobPoint), Schendule.Instance.CronUltimoDiaDoMes);
+        Schendule.Instance.Start(typeof(JobPointExpedientes), Schendule.Instance.CronHoraEmHora);
     }
 </script>

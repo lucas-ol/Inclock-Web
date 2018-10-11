@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Autenticador.BL
 {
-    public class CheckPoint : DataBase
+    public class CheckPoint
     {
         public const string MSGATRASOSAIDA = "saida em atraso";
         public const string MSGATRASOENTRADA = "entrada em atraso";
@@ -88,71 +88,84 @@ namespace Autenticador.BL
         }
         public bool GetExpelhoPonto(int func, int exp, string entrada, string saida, out Ponto ponto)
         {
-            Ponto pt = null;
-            bool sucesso = false;
-            var comand = " SELECT * FROM pontos " +
-                         "WHERE funcionario_id = @func AND expediente_id = @exp AND " + (!string.IsNullOrEmpty(entrada) ? "dta_entrada ='" + entrada : "dta_saida ='" + saida) + "'";
-            MySqlAdicionaParametro("func", func);
-            MySqlAdicionaParametro("exp", exp);
+            using (DataBase db = new DataBase())
+            {
+                bool sucesso = false;
+                Ponto pt = null;
+                var comand = " SELECT * FROM pontos " +
+                             "WHERE funcionario_id = @func AND expediente_id = @exp AND " + (!string.IsNullOrEmpty(entrada) ? "dta_entrada ='" + entrada : "dta_saida ='" + saida) + "'";
+                db.MySqlAdicionaParametro("func", func);
+                db.MySqlAdicionaParametro("exp", exp);
 
-            DataTable tb = MySqlLeitura(comand, CommandType.Text);
-            pt = ConvertTableToPonto(tb).FirstOrDefault();
-            sucesso = pt != null;
-            ponto = pt;
-            return sucesso;
+                DataTable tb = db.MySqlLeitura(comand, CommandType.Text);
+                pt = ConvertTableToPonto(tb).FirstOrDefault();
+                sucesso = pt != null;
+                ponto = pt;
+                return sucesso;
+            }
+
         }
         public List<Ponto> GetListCheckPoint(string initialDate, string finalDate, int funcionario)
         {
-            List<Ponto> pontos = new List<Ponto>();
-            MySqlAdicionaParametro("dta_de", Convert.ToDateTime(initialDate).ToString("yyyy-MM-dd"));
-            MySqlAdicionaParametro("dta_ate", Convert.ToDateTime(finalDate).ToString("yyyy-MM-dd"));
-            MySqlAdicionaParametro("funcionario", funcionario);
-            var tb = MySqlLeitura("select * from pontos where funcionario_id = @funcionario and dta_entrada between @dta_de and @dta_ate order by dta_entrada; ", CommandType.Text);
-            if (tb == null)
-                throw new Exception("erro desconhecido");
-            else
+            using (DataBase db = new DataBase())
             {
-                pontos = ConvertTableToPonto(tb, true).ToList();
+                List<Ponto> pontos = new List<Ponto>();
+                db.MySqlAdicionaParametro("dta_de", Convert.ToDateTime(initialDate).ToString("yyyy-MM-dd"));
+                db.MySqlAdicionaParametro("dta_ate", Convert.ToDateTime(finalDate).ToString("yyyy-MM-dd"));
+                db.MySqlAdicionaParametro("funcionario", funcionario);
+                var tb = db.MySqlLeitura("select * from pontos where funcionario_id = @funcionario and dta_entrada between @dta_de and @dta_ate order by dta_entrada; ", CommandType.Text);
+                if (tb == null)
+                    throw new Exception("erro desconhecido");
+                else
+                {
+                    pontos = ConvertTableToPonto(tb, true).ToList();
+                }
+                return pontos;
             }
-            return pontos;
         }
         public List<Ponto> GetCheckPointByMonth(int month, int funcionario)
         {
-            List<Ponto> ListExpediente = new List<Ponto>();
-            MySqlAdicionaParametro("_month", month);
-            MySqlAdicionaParametro("_funcionario", funcionario);
-            var tb = MySqlLeitura("procedure aqui", CommandType.StoredProcedure);
-            if (tb.TableName == "erro")
-                throw new Exception("erro desconhecido");
-            else
+            using (DataBase db = new DataBase())
             {
-                foreach (DataRow item in tb.Rows)
+                List<Ponto> ListExpediente = new List<Ponto>();
+                db.MySqlAdicionaParametro("_month", month);
+                db.MySqlAdicionaParametro("_funcionario", funcionario);
+                var tb = db.MySqlLeitura("procedure aqui", CommandType.StoredProcedure);
+                if (tb.TableName == "erro")
+                    throw new Exception("erro desconhecido");
+                else
                 {
-                    Ponto ponto = new Ponto
+                    foreach (DataRow item in tb.Rows)
                     {
-                        Id = Convert.ToInt32(item[""]),
-                        Entrada = item[""].ToString(),
-                        DataEntrada = item[""].ToString(),
-                        Saida = item[""].ToString(),
-                        DataSaida = item[""].ToString(),
-                        Obs = item[""].ToString()
-                    };
-                    ListExpediente.Add(ponto);
+                        Ponto ponto = new Ponto
+                        {
+                            Id = Convert.ToInt32(item[""]),
+                            Entrada = item[""].ToString(),
+                            DataEntrada = item[""].ToString(),
+                            Saida = item[""].ToString(),
+                            DataSaida = item[""].ToString(),
+                            Obs = item[""].ToString()
+                        };
+                        ListExpediente.Add(ponto);
+                    }
                 }
+                return ListExpediente;
             }
-            return ListExpediente;
         }
 
         private FeedBack AlterarPonto(Ponto ponto)
         {
-            MySqlAdicionaParametro("id", ponto.Id);
-            MySqlAdicionaParametro("func", ponto.Funcionario);
-            MySqlAdicionaParametro("entrada", ponto.Entrada);
-            MySqlAdicionaParametro("saida", ponto.Saida);
-            MySqlAdicionaParametro("obs", ponto.Obs);
-            MySqlAdicionaParametro("dta_entrada", string.IsNullOrEmpty(ponto.DataEntrada) ? "" : Convert.ToDateTime(ponto.DataEntrada).ToString("yyyy-MM-dd"));
-            MySqlAdicionaParametro("dta_saida", string.IsNullOrEmpty(ponto.DataSaida) ? "" : Convert.ToDateTime(ponto.DataSaida).ToString("yyyy-MM-dd"));
-            return MySqlExecutaComando("UPDATE pontos SET funcionario_id = @func, entrada = @entrada, saida = @saida, dta_entrada = @dta_entrada,dta_saida = @dta_saida ,obs = @obs WHERE id = @id", CommandType.Text);
+            using (DataBase db = new DataBase())
+            {
+                db.MySqlAdicionaParametro("id", ponto.Id);
+                db.MySqlAdicionaParametro("func", ponto.Funcionario);
+                db.MySqlAdicionaParametro("entrada", ponto.Entrada);
+                db.MySqlAdicionaParametro("saida", ponto.Saida);
+                db.MySqlAdicionaParametro("obs", ponto.Obs);
+                db.MySqlAdicionaParametro("dta_entrada", string.IsNullOrEmpty(ponto.DataEntrada) ? "" : Convert.ToDateTime(ponto.DataEntrada).ToString("yyyy-MM-dd"));
+                db.MySqlAdicionaParametro("dta_saida", string.IsNullOrEmpty(ponto.DataSaida) ? "" : Convert.ToDateTime(ponto.DataSaida).ToString("yyyy-MM-dd"));
+                return db.MySqlExecutaComando("UPDATE pontos SET funcionario_id = @func, entrada = @entrada, saida = @saida, dta_entrada = @dta_entrada,dta_saida = @dta_saida ,obs = @obs WHERE id = @id", CommandType.Text);
+            }
         }
         private Expediente GetExpedienteHoje(int funcionario, int periodo, char type)
         {
@@ -175,7 +188,7 @@ namespace Autenticador.BL
                     Entrada = x["entrada"].ToString(),
                     DataEntrada = x["dta_entrada"].ToString().Substring(0, 10),
                     DataSaida = x["dta_saida"].ToString().Substring(0, 10),
-                    Saida = x["saida"].ToString() ,
+                    Saida = x["saida"].ToString(),
                     Obs = x["obs"].ToString(),
                     Funcionario = Convert.ToInt32(tb.Rows[0]["funcionario_id"]),
                     Expediente = full ? new ExpedienteController().GetExpedienteId(Convert.ToInt32(x["expediente_id"])) : null

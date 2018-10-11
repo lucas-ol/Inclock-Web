@@ -10,34 +10,40 @@ using System.Threading.Tasks;
 
 namespace Library.Inclock.web.br.BL
 {
-   public class Avisos:DataBase
+    public class Avisos
     {
         public List<Aviso> ListaNoticias(int quantidade)
         {
-            List<Aviso> noticias = new List<Aviso>();
-            DataTable TbNoticia = new DataTable();
-            MySqlAdicionaParametro("@quantidade", quantidade);
-            TbNoticia = MySqlLeitura("select * from avisos order by data_noticia desc limit @quantidade", CommandType.Text);
-            foreach (DataRow Linha in TbNoticia.Rows)
+            using (var db = new DataBase())
             {
-                Aviso ItemNoticia = new Aviso();
-                ItemNoticia.ID = Convert.ToInt32(Linha["id"]);
-                ItemNoticia.Imagem = Linha["imagem"].ToString();
-                ItemNoticia.Titulo = Linha["titulo"].ToString();
-                ItemNoticia.Conteudo = Linha["conteudo"].ToString();
-                noticias.Add(ItemNoticia);
+                List<Aviso> noticias = new List<Aviso>();
+                DataTable TbNoticia = new DataTable();
+                db.MySqlAdicionaParametro("@quantidade", quantidade);
+                TbNoticia = db.MySqlLeitura("select * from avisos order by data_noticia desc limit @quantidade", CommandType.Text);
+                foreach (DataRow Linha in TbNoticia.Rows)
+                {
+                    Aviso ItemNoticia = new Aviso();
+                    ItemNoticia.ID = Convert.ToInt32(Linha["id"]);
+                    ItemNoticia.Imagem = Linha["imagem"].ToString();
+                    ItemNoticia.Titulo = Linha["titulo"].ToString();
+                    ItemNoticia.Conteudo = Linha["conteudo"].ToString();
+                    noticias.Add(ItemNoticia);
+                }
+                return noticias;
             }
-            return noticias;
         }
 
         public FeedBack InserirNoticia(Aviso aviso)
         {
-            MySqlAdicionaParametro("titulo_", aviso.Titulo);
-            MySqlAdicionaParametro("conteudo_", aviso.Conteudo);
-            MySqlAdicionaParametro("img", aviso.Imagem);
+            using (var db = new DataBase())
+            {
+                db.MySqlAdicionaParametro("titulo_", aviso.Titulo);
+                db.MySqlAdicionaParametro("conteudo_", aviso.Conteudo);
+                db.MySqlAdicionaParametro("img", aviso.Imagem);
 
 
-            return MySqlExecutaComando("insert into avisos(titulo,conteudo,imagem) values(@titulo_,@conteudo_,@img)", CommandType.Text);
+                return db.MySqlExecutaComando("insert into avisos(titulo,conteudo,imagem) values(@titulo_,@conteudo_,@img)", CommandType.Text);
+            }
         }
     }
 }
