@@ -31,27 +31,21 @@ namespace Autenticador.BL.Quartz
                 using (DataBase data = new DataBase())
                 {
 
-
                     var Arquivo = HostingEnvironment.MapPath(Config.Exports) + "\\" + dtPrxMes.ToString("yyyy_MM_dd") + ".csv";
                     UtilFile.Delete(Arquivo);
                     var Datas = UtilDate.GetDiasSemanas(dtPrxMes.Year, dtPrxMes.Month);
-                    DataTable tb = data.MySqlLeitura("select id from funcionarios", System.Data.CommandType.Text);
-                    foreach (DataRow func in tb.Rows)
+                    var tb = new ExpedienteController().GetExpediente(0, 0);
+
+                    foreach (var exp in tb)
                     {
-                        int funcionario_id = Convert.ToInt32(func["id"]);
-                        foreach (var week in Datas.Semanas)
+                        foreach (var dia in Datas.Semanas[(DayOfWeek)exp.DiaSemana-1])
                         {
-                            var exp = new ExpedienteController().GetExpediente(Convert.ToInt32(week.Key) + 1, funcionario_id);
-                            foreach (var dia in week.Value)
-                            {
-                                foreach (var item in exp)
-                                {
-                                    var dta_saida = dia.Add(TimeSpan.Parse(item.Entrada)).Add(ExpedienteController.GetHorasTrabalhada(item));
-                                    UtilFile.FileWrite(Arquivo, String.Format("{0};{1};{2};{3};{4};{5};{6}\r", null, funcionario_id, item.Id, null, null, dia.ToString("yyyy-MM-dd"), dta_saida.ToString("yyyy-MM-dd")));
-                                }
-                            }
+                            var dta_saida = dia.Add(TimeSpan.Parse(exp.Entrada)).Add(ExpedienteController.GetHorasTrabalhada(exp));
+                            string dados = String.Format("{0};{1};{2};{3};{4};{5};{6}\r", null, exp.Funcionario_id, exp.Id, null, null, dia.ToString("yyyy-MM-dd"), dta_saida.ToString("yyyy-MM-dd"));
+                           UtilFile.FileWrite(Arquivo,dados);
+
                         }
-                    }
+                    }                   
                     InsertNullPoits(Arquivo);
                 }
             }

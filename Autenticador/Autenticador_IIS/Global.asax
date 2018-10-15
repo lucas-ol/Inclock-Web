@@ -19,11 +19,15 @@
             HttpContext.Current.Response.End();
         }
 
-
+    }
+    public void Application_Error(object sender, EventArgs e)
+    {
+         var vt = Server.GetLastError();
+        Classes.Common.UtilEmail.ErroMail(vt);
     }
     private void IniciaQuartz()
     {
         Schendule.Instance.Start(typeof(JobPoint), Schendule.Instance.CronUltimoDiaDoMes);
-        Schendule.Instance.Start(typeof(JobPointExpedientes), Schendule.Instance.CronHoraEmHora);
     }
+
 </script>

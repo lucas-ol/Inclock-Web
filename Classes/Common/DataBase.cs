@@ -184,19 +184,17 @@ namespace Classes.Common
                 FileName = config.File,
                 NumberOfLinesToSkip = config.NumberOfLinesToSkip
             };
-            connection.Open();
+
             try
             {
-                return bulk.Load();
+                var nLinhasModificadas = bulk.Load();
+                if (delete)
+                    UtilFile.Delete(config.File);
+                return nLinhasModificadas;
             }
             catch (Exception ex)
             {
                 throw ex;
-            }
-            finally
-            {
-                if (delete)
-                    UtilFile.Delete(config.File);
             }
 
         }

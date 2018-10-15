@@ -86,7 +86,7 @@ CREATE TABLE `expediente` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `FK_expediente_id` (`expediente_id`),
   CONSTRAINT `FK_expediente_id` FOREIGN KEY (`expediente_id`) REFERENCES `expediente_id` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +95,7 @@ CREATE TABLE `expediente` (
 
 LOCK TABLES `expediente` WRITE;
 /*!40000 ALTER TABLE `expediente` DISABLE KEYS */;
-INSERT INTO `expediente` VALUES (50,38,'13:00:00',3,1,'E'),(51,38,'22:00:00',3,3,'S'),(88,57,'12:00:00',5,4,'E'),(89,57,'01:00:00',5,4,'S'),(90,58,'10:15:00',1,1,'E'),(91,58,'14:00:00',1,2,'S'),(94,60,'00:00:00',2,3,'E'),(95,60,'01:00:00',2,3,'S'),(96,61,'01:00:00',5,3,'E'),(97,61,'06:00:00',5,1,'S'),(98,62,'15:00:00',2,2,'E'),(99,62,'23:00:00',2,3,'S'),(100,63,'17:00:00',4,2,'E'),(101,63,'22:00:00',4,3,'S');
+INSERT INTO `expediente` VALUES (50,38,'13:00:00',3,1,'E'),(51,38,'22:00:00',3,3,'S'),(88,57,'12:00:00',5,4,'E'),(89,57,'01:00:00',5,4,'S'),(90,58,'10:15:00',1,1,'E'),(91,58,'14:00:00',1,2,'S'),(94,60,'00:00:00',2,3,'E'),(95,60,'01:00:00',2,3,'S'),(96,61,'01:00:00',5,3,'E'),(97,61,'06:00:00',5,1,'S'),(98,62,'15:00:00',2,2,'E'),(99,62,'23:00:00',2,3,'S'),(100,63,'17:00:00',4,2,'E'),(101,63,'22:00:00',4,3,'S'),(102,64,'01:00:00',7,3,'E'),(103,64,'09:00:00',7,1,'S'),(104,65,'12:01:00',7,2,'E'),(105,65,'22:03:00',7,3,'S'),(106,66,'13:00:00',1,2,'E'),(107,66,'15:00:00',1,2,'S');
 /*!40000 ALTER TABLE `expediente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -112,7 +112,7 @@ CREATE TABLE `expediente_id` (
   PRIMARY KEY (`id`),
   KEY `FK_expediente_funcionarios` (`funcionario_id`),
   CONSTRAINT `FK_expediente_funcionarios` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +121,7 @@ CREATE TABLE `expediente_id` (
 
 LOCK TABLES `expediente_id` WRITE;
 /*!40000 ALTER TABLE `expediente_id` DISABLE KEYS */;
-INSERT INTO `expediente_id` VALUES (38,5),(57,5),(58,5),(60,5),(61,7),(62,7),(63,7);
+INSERT INTO `expediente_id` VALUES (38,5),(57,5),(58,5),(60,5),(61,7),(62,7),(63,7),(64,7),(65,7),(66,7);
 /*!40000 ALTER TABLE `expediente_id` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +217,7 @@ CREATE TABLE `pontos` (
   KEY `FK_expediente_pontos` (`expediente_id`),
   CONSTRAINT `FK_Funcionarios_Pontos` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_expediente_pontos` FOREIGN KEY (`expediente_id`) REFERENCES `expediente_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=196 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -226,7 +226,6 @@ CREATE TABLE `pontos` (
 
 LOCK TABLES `pontos` WRITE;
 /*!40000 ALTER TABLE `pontos` DISABLE KEYS */;
-INSERT INTO `pontos` VALUES (71,5,38,'','','2018-10-02','2018-10-02',NULL),(72,5,38,'','','2018-10-04','2018-10-04',NULL),(73,5,38,'','','2018-10-09','2018-10-09',NULL),(74,5,38,'','','2018-10-11','2018-10-11',NULL),(75,5,38,'','','2018-10-16','2018-10-16',NULL),(76,5,38,'','','2018-10-18','2018-10-18',NULL),(77,5,38,'','','2018-10-23','2018-10-23',NULL),(78,5,38,'','','2018-10-25','2018-10-25',NULL),(79,5,38,'','','2018-10-30','2018-10-30',NULL),(63,5,58,'','','2018-10-14','2018-10-14',NULL),(64,5,58,'','','2018-10-21','2018-10-21',NULL),(65,5,58,'','','2018-10-28','2018-10-28',NULL),(66,5,60,'','','2018-10-01','2018-10-01',NULL),(67,5,60,'','','2018-10-08','2018-10-08',NULL),(68,5,60,'','','2018-10-15','2018-10-15',NULL),(69,5,60,'','','2018-10-22','2018-10-22',NULL),(70,5,60,'','','2018-10-29','2018-10-29',NULL),(80,7,62,'','','2018-10-01','2018-10-01',NULL),(81,7,62,'','','2018-10-08','2018-10-08',NULL),(82,7,62,'','','2018-10-15','2018-10-15',NULL),(83,7,62,'','','2018-10-22','2018-10-22',NULL),(84,7,62,'','','2018-10-29','2018-10-29',NULL),(85,7,63,'','','2018-10-03','2018-10-03',NULL),(86,7,63,'','','2018-10-10','2018-10-10',NULL),(87,7,63,'','','2018-10-17','2018-10-17',NULL),(88,7,63,'','','2018-10-24','2018-10-24',NULL),(89,7,63,'','','2018-10-31','2018-10-31',NULL);
 /*!40000 ALTER TABLE `pontos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -492,7 +491,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `prd_se_expediente_semana`(
 in iSemana int,
 in iFuncionario int)
 begin
-	if(iSemana <= 0) then 
+	if(iFuncionario <= 0)then
+    with
+		entrada as (select hora as entrada, diasemana,periodo, expediente_id from expediente exp  where type_point ='E'),
+		saida as (select hora as saida, expediente_id from expediente where type_point ='S')		
+        select eid.id ,etr.entrada,sda.saida, etr.diasemana,etr.periodo,eid.funcionario_id   from entrada etr
+		inner join saida sda  on etr.expediente_id  = sda.expediente_id
+		inner join expediente_id eid on eid.id = sda.expediente_id
+		order by etr.diasemana, etr.periodo asc ;
+	elseif(iSemana <= 0) then 
 	with
 		entrada as (select hora as entrada, diasemana,periodo, expediente_id from expediente exp  where type_point ='E'),
 		saida as (select hora as saida, expediente_id from expediente where type_point ='S')		
@@ -508,8 +515,7 @@ begin
 		inner join saida sda  on etr.expediente_id  = sda.expediente_id
 		inner join expediente_id eid on eid.id = sda.expediente_id
 		where etr.diasemana = iSemana and eid.funcionario_id = iFuncionario order by etr.diasemana, etr.periodo asc;
-    end if;
-    
+    end if;    
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -875,4 +881,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-11 18:27:59
+-- Dump completed on 2018-10-14 21:51:26

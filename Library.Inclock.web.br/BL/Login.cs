@@ -30,7 +30,7 @@ namespace Library.Inclock.web.br.BL
             catch (Exception ex)
             {
                 //isso foi feito so para teste 
-                return new Funcionario { Id = 1, Nome = "Usuario Teste", Email = "kiko", Roles = new List<string> { "ADM", "FUNC", "PALHACO" } };
+           //     return new Funcionario { Id = 1, Nome = "Usuario Teste", Email = "kiko", Roles = new List<string> { "ADM", "FUNC", "PALHACO" } };
             }
 
             return funcionario;

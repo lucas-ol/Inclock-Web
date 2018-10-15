@@ -101,11 +101,14 @@ namespace Autenticador.BL
                         feedBack.Status = false;
                         feedBack.Mensagem = "Expediente ja cadastrado";
                     }
-                    feedBack.Mensagem = "Expediente cadastrado com sucesso";
+                    else
+                    {
+                        AdicionaPontosExpediente(Convert.ToInt32(feedBack.Mensagem),expediente.Funcionario_id);
+                        feedBack.Mensagem = "Expediente cadastrado com sucesso";
+                    }
                 }
                 else
                     feedBack.Mensagem = "Erro ao processar dados no DB";
-
                 return feedBack;
             }
         }
@@ -167,8 +170,7 @@ namespace Autenticador.BL
             }
             catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
 
@@ -181,6 +183,7 @@ namespace Autenticador.BL
                 var ret = db.MySqlLeitura("prd_se_full_expediente_id", CommandType.StoredProcedure).Select().Select(x => new Expediente
                 {
                     Id = Convert.ToInt32(x["id"]),
+                    Funcionario_id = Convert.ToInt32(x["id"]),
                     Entrada = x["entrada"].ToString(),
                     Saida = x["saida"].ToString(),
                     DiaSemana = Convert.ToInt32(x["etr_semana"]),
@@ -220,6 +223,41 @@ namespace Autenticador.BL
 
             return validade;
         }
-
+        public Task AdicionaPontosExpediente(int expID,int func)
+        {
+            using (DataBase db = new DataBase())
+            {
+                var exp = GetExpedienteId(expID);
+                var dta = UtilDate.GetDiasSemanas(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                string dados = "";
+                foreach (var dia in dta.Semanas[(DayOfWeek)exp.DiaSemana - 1])
+                {
+                    var dta_saida = dia.Add(TimeSpan.Parse(exp.Entrada)).Add(GetHorasTrabalhada(exp));
+                    dados += String.Format("({0},{1},'{2}','{3}'),", func, exp.Id, dia.ToString("yyyy-MM-dd"), dta_saida.ToString("yyyy-MM-dd"));
+                }
+                if (!string.IsNullOrEmpty(dados))
+                {
+                    db.MySqlExecutaComando("INSERT INTO pontos(funcionario_id, expediente_id, dta_entrada,dta_saida) VALUES " + dados.Substring(0, dados.Length - 1), CommandType.Text);
+                }
+            }
+            return Task.Factory.StartNew(() =>
+            {
+                using (DataBase db = new DataBase())
+                {
+                    var exp = GetExpedienteId(expID);
+                    var dta = UtilDate.GetDiasSemanas(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                    string dados = "";
+                    foreach (var dia in dta.Semanas[(DayOfWeek)exp.DiaSemana + 1])
+                    {
+                        var dta_saida = dia.Add(TimeSpan.Parse(exp.Entrada)).Add(GetHorasTrabalhada(exp));
+                        dados = String.Format("({0},{1},{2},{3}),", exp.Funcionario_id, exp.Id, dia.ToString("yyyy-MM-dd"), dta_saida.ToString("yyyy-MM-dd"));
+                    }
+                    if (!string.IsNullOrEmpty(dados))
+                    {
+                        db.MySqlExecutaComando("INSERT INTO pontos(funcionario_id, expediente_id, dta_entrada,dta_saida) VALUES " + dados.Substring(0, dados.Length - 1), CommandType.Text);
+                    }
+                }
+            });
+        }
     }
 }

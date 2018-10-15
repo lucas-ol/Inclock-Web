@@ -89,38 +89,39 @@ namespace Classes.Common
                 return Instance;
             }
         }
-        public static StDiasSemana GetDiasSemanas(int ano, int mes)
+        public static StDiasSemana GetDiasSemanas(int ano, int mes, int dia = 0)
         {
             int qtdeMes = DateTime.DaysInMonth(ano, mes);
             var Dias = StDiasSemana.GetInstance();
             var Data = new DateTime(ano, mes, 1);
-            for (int i = 1; i <= qtdeMes; i++)
+            for (int i = dia; i <= qtdeMes; i++)
             {
-                switch (Data.DayOfWeek)
+                var dt = Data.AddDays(i - 1);
+                switch (dt.DayOfWeek)
                 {
                     case DayOfWeek.Sunday:
-                        Dias.Semanas[DayOfWeek.Sunday].Add(Data);
+                        Dias.Semanas[DayOfWeek.Sunday].Add(dt);
                         break;
                     case DayOfWeek.Monday:
-                        Dias.Semanas[DayOfWeek.Monday].Add(Data);
+                        Dias.Semanas[DayOfWeek.Monday].Add(dt);
                         break;
                     case DayOfWeek.Tuesday:
-                        Dias.Semanas[DayOfWeek.Tuesday].Add(Data);
+                        Dias.Semanas[DayOfWeek.Tuesday].Add(dt);
                         break;
                     case DayOfWeek.Wednesday:
-                        Dias.Semanas[DayOfWeek.Wednesday].Add(Data);
+                        Dias.Semanas[DayOfWeek.Wednesday].Add(dt);
                         break;
                     case DayOfWeek.Thursday:
-                        Dias.Semanas[DayOfWeek.Tuesday].Add(Data);
+                        Dias.Semanas[DayOfWeek.Thursday].Add(dt);
                         break;
                     case DayOfWeek.Friday:
-                        Dias.Semanas[DayOfWeek.Friday].Add(Data);
+                        Dias.Semanas[DayOfWeek.Friday].Add(dt);
                         break;
                     case DayOfWeek.Saturday:
-                        Dias.Semanas[DayOfWeek.Saturday].Add(Data);
+                        Dias.Semanas[DayOfWeek.Saturday].Add(dt);
                         break;
                 }
-                Data = Data.AddDays(1);
+                //   Data = Data.AddDays(1);
             }
             return Dias;
         }
