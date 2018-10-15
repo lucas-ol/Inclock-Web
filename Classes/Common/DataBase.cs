@@ -130,7 +130,7 @@ namespace Classes.Common
         /// <param name="TypeCommand">Tipo do comando</param>
         /// <param name="retorno">Parametro out que vai</param>
         /// <returns></returns>
-        public DataTable MySqlLeitura(string szCommand, CommandType TypeCommand, out int retorno, string collumname = "_TotalLinhas")
+        public DataTable MySqlLeitura<T>(string szCommand, CommandType TypeCommand, out T retorno, string collumname = "_TotalLinhas")
         {
             DataTable TabelaDeRetorno = new DataTable();
             MySqlCommand Command = new MySqlCommand();// Objeto de Commando 
@@ -153,7 +153,7 @@ namespace Classes.Common
                 Connection.Close();
                 Adapter = new MySqlDataAdapter(Command);
                 Adapter.Fill(TabelaDeRetorno);
-                retorno = reader.GetInt32(0);
+                retorno = reader.GetFieldValue<T>(0);
             }
             catch (Exception ex)
             {
@@ -162,7 +162,7 @@ namespace Classes.Common
                 TabelaDeRetorno.TableName = "erro";
                 TabelaDeRetorno.Columns.Add("Mensagem");
                 TabelaDeRetorno.Rows[0]["Mensagem"] = "Deu Erro: " + ex.Message;
-                retorno = 0;
+                retorno = (T)new object();
             }
             finally
             {

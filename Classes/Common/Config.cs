@@ -34,5 +34,13 @@ namespace Classes.Common
 
             }
         }
+        public static string DiretorioImagensAvisos
+        {
+            get
+            {
+                string dir = ConfigurationManager.AppSettings.Get("UpLoadImagensAvisos");
+                return string.IsNullOrEmpty(dir) ? "" : dir;
+            }
+        }
     }
 }

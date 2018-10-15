@@ -30,8 +30,9 @@ CREATE TABLE `avisos` (
   `conteudo` varchar(300) DEFAULT NULL,
   `imagem` varchar(200) DEFAULT NULL,
   `data_noticia` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ativo` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +41,7 @@ CREATE TABLE `avisos` (
 
 LOCK TABLES `avisos` WRITE;
 /*!40000 ALTER TABLE `avisos` DISABLE KEYS */;
-INSERT INTO `avisos` VALUES (1,'','','02.jpg','2018-05-02 01:04:04');
+INSERT INTO `avisos` VALUES (1,'','','02.jpg','2018-05-02 01:04:04',1),(2,'Teste','','01.jpg','2018-10-15 14:37:06',1),(3,'','<h1>Dia do Pedreiro  </h1>','carta-back.jpg','2018-10-15 14:44:53',0);
 /*!40000 ALTER TABLE `avisos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,6 +110,7 @@ DROP TABLE IF EXISTS `expediente_id`;
 CREATE TABLE `expediente_id` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `funcionario_id` int(11) NOT NULL,
+  `ativo` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `FK_expediente_funcionarios` (`funcionario_id`),
   CONSTRAINT `FK_expediente_funcionarios` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -121,7 +123,7 @@ CREATE TABLE `expediente_id` (
 
 LOCK TABLES `expediente_id` WRITE;
 /*!40000 ALTER TABLE `expediente_id` DISABLE KEYS */;
-INSERT INTO `expediente_id` VALUES (38,5),(57,5),(58,5),(60,5),(61,7),(62,7),(63,7),(64,7),(65,7),(66,7);
+INSERT INTO `expediente_id` VALUES (38,5,1),(57,5,1),(58,5,1),(60,5,1),(61,7,1),(62,7,1),(63,7,1),(64,7,1),(65,7,1),(66,7,1);
 /*!40000 ALTER TABLE `expediente_id` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,6 +154,7 @@ CREATE TABLE `funcionarios` (
   `senha` varchar(8) NOT NULL,
   `login` varchar(15) NOT NULL,
   `role` varchar(15) NOT NULL,
+  `ativo` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `cpf_UNIQUE` (`cpf`),
   UNIQUE KEY `login_UNIQUE` (`login`),
@@ -168,7 +171,7 @@ CREATE TABLE `funcionarios` (
 
 LOCK TABLES `funcionarios` WRITE;
 /*!40000 ALTER TABLE `funcionarios` DISABLE KEYS */;
-INSERT INTO `funcionarios` VALUES (5,'Lucas ','(17) 7711-1111','(17) 77711-1111','blublucas@gmail.com','Rua Vera Lúcia Pinto da Silva','177.711.111-11',3,'1996-10-10','M','Suzano','SP','08690215','90809','Cidade Miguel Badra','11.111.111-1','123','123','ADM;FUNC'),(7,'Josénildo Ferraz','(11) 1111-1111','(11) 11111-1111','oliveiramelo1996@gmail.com','Rua Vera Lúcia Pinto da Silva','222.222.222-22',3,'2008-03-14','M','Suzano','SP','08690215','1111','Cidade Miguel Badra','37.959.520-1','1234','1234','FUNC');
+INSERT INTO `funcionarios` VALUES (5,'Lucas ','(17) 7711-1111','(17) 77711-1111','blublucas@gmail.com','Rua Vera Lúcia Pinto da Silva','177.711.111-11',3,'1996-10-10','M','Suzano','SP','08690215','90809','Cidade Miguel Badra','11.111.111-1','123','123','ADM;FUNC',1),(7,'Josénildo Ferraz','(11) 1111-1111','(11) 11111-1111','oliveiramelo1996@gmail.com','Rua Vera Lúcia Pinto da Silva','222.222.222-22',3,'2008-03-14','M','Suzano','SP','08690215','1111','Cidade Miguel Badra','37.959.520-1','1234','1234','FUNC',1);
 /*!40000 ALTER TABLE `funcionarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +220,7 @@ CREATE TABLE `pontos` (
   KEY `FK_expediente_pontos` (`expediente_id`),
   CONSTRAINT `FK_Funcionarios_Pontos` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_expediente_pontos` FOREIGN KEY (`expediente_id`) REFERENCES `expediente_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=196 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -226,6 +229,7 @@ CREATE TABLE `pontos` (
 
 LOCK TABLES `pontos` WRITE;
 /*!40000 ALTER TABLE `pontos` DISABLE KEYS */;
+INSERT INTO `pontos` VALUES (215,5,38,'','','2018-10-02','2018-10-02',NULL),(216,5,38,'','','2018-10-09','2018-10-09',NULL),(217,5,38,'','','2018-10-16','2018-10-16',NULL),(218,5,38,'','','2018-10-23','2018-10-23',NULL),(219,5,38,'','','2018-10-30','2018-10-30',NULL),(229,5,57,'','','2018-10-04','2018-10-05',NULL),(230,5,57,'','','2018-10-11','2018-10-12',NULL),(231,5,57,'','','2018-10-18','2018-10-19',NULL),(232,5,57,'','','2018-10-25','2018-10-26',NULL),(196,5,58,'','','2018-10-07','2018-10-07',NULL),(197,5,58,'','','2018-10-14','2018-10-14',NULL),(198,5,58,'','','2018-10-21','2018-10-21',NULL),(199,5,58,'','','2018-10-28','2018-10-28',NULL),(210,5,60,'','','2018-10-01','2018-10-01',NULL),(211,5,60,'','','2018-10-08','2018-10-08',NULL),(212,5,60,'','','2018-10-15','2018-10-15',NULL),(213,5,60,'','','2018-10-22','2018-10-22',NULL),(214,5,60,'','','2018-10-29','2018-10-29',NULL),(225,7,61,'','','2018-10-04','2018-10-04',NULL),(226,7,61,'','','2018-10-11','2018-10-11',NULL),(227,7,61,'','','2018-10-18','2018-10-18',NULL),(228,7,61,'','','2018-10-25','2018-10-25',NULL),(205,7,62,'','','2018-10-01','2018-10-01',NULL),(206,7,62,'','','2018-10-08','2018-10-08',NULL),(207,7,62,'','','2018-10-15','2018-10-15',NULL),(208,7,62,'','','2018-10-22','2018-10-22',NULL),(209,7,62,'','','2018-10-29','2018-10-29',NULL),(220,7,63,'','','2018-10-03','2018-10-03',NULL),(221,7,63,'','','2018-10-10','2018-10-10',NULL),(222,7,63,'','','2018-10-17','2018-10-17',NULL),(223,7,63,'','','2018-10-24','2018-10-24',NULL),(224,7,63,'','','2018-10-31','2018-10-31',NULL),(237,7,64,'','','2018-10-06','2018-10-06',NULL),(238,7,64,'','','2018-10-13','2018-10-13',NULL),(239,7,64,'','','2018-10-20','2018-10-20',NULL),(240,7,64,'','','2018-10-27','2018-10-27',NULL),(233,7,65,'','','2018-10-06','2018-10-06',NULL),(234,7,65,'','','2018-10-13','2018-10-13',NULL),(235,7,65,'','','2018-10-20','2018-10-20',NULL),(236,7,65,'','','2018-10-27','2018-10-27',NULL),(200,7,66,'','','2018-09-30','2018-09-30',NULL),(201,7,66,'','','2018-10-07','2018-10-07',NULL),(202,7,66,'','','2018-10-14','2018-10-14',NULL),(203,7,66,'','','2018-10-21','2018-10-21',NULL),(204,7,66,'','','2018-10-28','2018-10-28',NULL);
 /*!40000 ALTER TABLE `pontos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -464,13 +468,14 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prd_se_expediente_dia`(in _funcionario int,in _periodo int,in _semana int)
 begin 
- with
+/* with
 	entrada as (select * from expediente exp  where type_point ='E'),
 	saida as (select hora as saida, expediente_id from expediente where type_point ='S')
 	select * from entrada etr
 		inner join saida sda  on etr.expediente_id  = sda.expediente_id
 		inner join expediente_id eid on eid.id = sda.expediente_id
-		where etr.diasemana = _semana and etr.periodo = _periodo and eid.funcionario_id = _funcionario;
+		where etr.diasemana = _semana and etr.periodo = _periodo and eid.funcionario_id = _funcionario;*/
+        select 'erro, a procedure foi comentada favor ver onde ela for chamada';
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -491,31 +496,27 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `prd_se_expediente_semana`(
 in iSemana int,
 in iFuncionario int)
 begin
-	if(iFuncionario <= 0)then
-    with
-		entrada as (select hora as entrada, diasemana,periodo, expediente_id from expediente exp  where type_point ='E'),
-		saida as (select hora as saida, expediente_id from expediente where type_point ='S')		
+	create temporary table entrada select hora as entrada, diasemana,periodo, expediente_id from expediente exp  where type_point ='E';
+	create temporary table saida select hora as saida, expediente_id from expediente where type_point ='S';
+	
+    if(iFuncionario <= 0)then    		
         select eid.id ,etr.entrada,sda.saida, etr.diasemana,etr.periodo,eid.funcionario_id   from entrada etr
 		inner join saida sda  on etr.expediente_id  = sda.expediente_id
 		inner join expediente_id eid on eid.id = sda.expediente_id
 		order by etr.diasemana, etr.periodo asc ;
 	elseif(iSemana <= 0) then 
-	with
-		entrada as (select hora as entrada, diasemana,periodo, expediente_id from expediente exp  where type_point ='E'),
-		saida as (select hora as saida, expediente_id from expediente where type_point ='S')		
         select eid.id ,etr.entrada,sda.saida, etr.diasemana,etr.periodo,eid.funcionario_id   from entrada etr
 		inner join saida sda  on etr.expediente_id  = sda.expediente_id
 		inner join expediente_id eid on eid.id = sda.expediente_id
 		where eid.funcionario_id = iFuncionario order by etr.diasemana, etr.periodo asc ;
-	else 		
-		with 
-        entrada as (select hora as entrada, diasemana,periodo, expediente_id from expediente exp  where type_point ='E'),
-		saida as (select hora as saida, expediente_id from expediente where type_point ='S')		
+	else 				
         select eid.id ,etr.entrada,sda.saida, etr.diasemana,etr.periodo,eid.funcionario_id  from entrada etr
 		inner join saida sda  on etr.expediente_id  = sda.expediente_id
 		inner join expediente_id eid on eid.id = sda.expediente_id
 		where etr.diasemana = iSemana and eid.funcionario_id = iFuncionario order by etr.diasemana, etr.periodo asc;
-    end if;    
+    end if;   
+    drop table saida;
+    drop table entrada;
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -534,9 +535,9 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prd_se_full_expediente_id`(in _id int)
 begin
-with
-	entrada as (select * from expediente  where type_point ='E' and expediente_id = _id ),
-	saida as (select * from expediente where type_point ='S'and expediente_id = _id )
+	create temporary table entrada select * from expediente  where type_point ='E' and expediente_id = _id;
+	create temporary table saida select * from expediente where type_point ='S'and expediente_id = _id ;
+    
 	select 
 		e.expediente_id as id
         ,e.id as etr_id
@@ -550,7 +551,8 @@ with
     from entrada e
 		inner join saida s  on e.expediente_id  = s.expediente_id
 		inner join expediente_id eid on eid.id = s.expediente_id;
-	
+	drop table saida;
+	drop table entrada;
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -881,4 +883,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-14 21:51:26
+-- Dump completed on 2018-10-15 18:34:30

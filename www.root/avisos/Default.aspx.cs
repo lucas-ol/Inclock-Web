@@ -17,23 +17,12 @@ public partial class avisos_Default : System.Web.UI.Page
         }
     }
     protected void Page_Load(object sender, EventArgs e)
-    {
+    {        
         
-
-            if (TipoPagina == 1)
-            {
                 pnlCorpo.Controls.Add(LoadControl("~/inc/avisos/Cadastrar.ascx"));
-            }
-            else if (TipoPagina == 2)
-            {
+            
                 pnlCorpo.Controls.Add(LoadControl("~/inc/avisos/Alterar.ascx"));
-            }
-            else if (TipoPagina == 3)
-            {
-                pnlCorpo.Controls.Add(LoadControl("~/inc/avisos/Excluir.ascx"));
-            }
-            else
-                pnlCorpo.Controls.Add(LoadControl("~/inc/avisos/Listar.ascx"));
-        
+          
+                pnlCorpo.Controls.Add(LoadControl("~/inc/avisos/Excluir.ascx"));               
     }
 }

@@ -24,9 +24,9 @@ public partial class _Default : System.Web.UI.Page
     }
     protected override void OnInitComplete(EventArgs e)
     {
-        lvCarousel.ItemDataBound += LvCarousel_ItemDataBound;
-        lvCarousel.DataSource = new Portable.BL.Avisos().ListaNoticias(10);
-        lvCarousel.DataBind();
+     //   lvCarousel.ItemDataBound += LvCarousel_ItemDataBound;
+    //    lvCarousel.DataSource = new Portable.BL.Avisos().ListaNoticias(10);
+   //     lvCarousel.DataBind();
         base.OnInitComplete(e);
 
     }

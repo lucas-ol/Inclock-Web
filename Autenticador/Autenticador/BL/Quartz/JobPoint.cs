@@ -30,7 +30,6 @@ namespace Autenticador.BL.Quartz
             {
                 using (DataBase data = new DataBase())
                 {
-
                     var Arquivo = HostingEnvironment.MapPath(Config.Exports) + "\\" + dtPrxMes.ToString("yyyy_MM_dd") + ".csv";
                     UtilFile.Delete(Arquivo);
                     var Datas = UtilDate.GetDiasSemanas(dtPrxMes.Year, dtPrxMes.Month);
@@ -43,7 +42,6 @@ namespace Autenticador.BL.Quartz
                             var dta_saida = dia.Add(TimeSpan.Parse(exp.Entrada)).Add(ExpedienteController.GetHorasTrabalhada(exp));
                             string dados = String.Format("{0};{1};{2};{3};{4};{5};{6}\r", null, exp.Funcionario_id, exp.Id, null, null, dia.ToString("yyyy-MM-dd"), dta_saida.ToString("yyyy-MM-dd"));
                            UtilFile.FileWrite(Arquivo,dados);
-
                         }
                     }                   
                     InsertNullPoits(Arquivo);
@@ -59,7 +57,7 @@ namespace Autenticador.BL.Quartz
             else
                 dateTime = Convert.ToDateTime("01/" + tb.Rows[0][0].ToString().Substring(3)).AddMonths(1);
             return
-              dateTime.Month - DateTime.Now.Month <= 1;
+              dateTime.Month - DateTime.Now.Month == 0;
         }
         private void InsertNullPoits(string aquivo)
         {

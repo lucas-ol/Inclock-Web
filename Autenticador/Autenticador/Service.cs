@@ -52,11 +52,12 @@ namespace Autenticador
 
         }
 
-        public List<Aviso> GetAvisos(string qtde)
+        public List<Aviso> GetAvisos(string qtde,string index)
         {
             if (string.IsNullOrEmpty(qtde))
                 qtde = "10";
-            return new BL.Autenticador().getAvisos(qtde);
+            int.TryParse(index, out int result);
+            return new BL.Autenticador().getAvisos(qtde, result);
         }
         [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<Ponto> GetCheckPoint(string month, string funcionario)

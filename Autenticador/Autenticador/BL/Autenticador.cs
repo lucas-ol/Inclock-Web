@@ -73,7 +73,7 @@ namespace Autenticador.BL
                 db.MySqlAdicionaParametro("login", Login);
                 return JsonConvert.SerializeObject(db.MySqlLeitura("select nome, email from funcionarios where login = @login", System.Data.CommandType.Text));
             }
-        }      
+        }
         public Funcionario GetUserById(int id)
         {
             using (var db = new DataBase())
@@ -115,12 +115,12 @@ namespace Autenticador.BL
 
             }
         }
-        public List<Aviso> getAvisos(string qted)
+        public List<Aviso> getAvisos(string qted, int index = 0)
         {
             using (var db = new DataBase())
             {
                 List<Aviso> avisos = new List<Aviso>();
-                string command = "select * from avisos order by data_noticia desc limit " + qted;
+                string command = "select * from avisos where ativo order by data_noticia desc limit " + index + "," + qted;
                 var obj = db.MySqlLeitura(command, CommandType.Text);
                 try
                 {
@@ -139,7 +139,7 @@ namespace Autenticador.BL
                 }
                 catch
                 {
-                    return new List<Aviso>() { new Aviso() { Conteudo = "Estamos passando por problemas tecnicos", ID = 0 } };
+                    return new List<Aviso>() { new Aviso() { Conteudo = "Estamos passando por problemas tecnicos", ID = 0, Imagem = "generic-erro.jpg" } };
                 }
                 return avisos;
             }

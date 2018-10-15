@@ -49,8 +49,8 @@ namespace Autenticador
 
 
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getaviso/{qtde}")]
-        List<Aviso> GetAvisos(string qtde);
+        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getaviso/{qtde}/{index}")]
+        List<Aviso> GetAvisos(string qtde,string index);
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getpoint/{month}/{funcionario}")]

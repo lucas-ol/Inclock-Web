@@ -21,32 +21,28 @@ public partial class index : System.Web.UI.Page
         table.Rows.Add(Session.SessionID.ToString());
         GridQrCode.DataSource = table;
         GridQrCode.DataBind();
-       
+
 
     }
     protected override void OnInitComplete(EventArgs e)
     {
-        lvCarousel.ItemDataBound += LvCarousel_ItemDataBound;
-        lvCarousel.DataSource = new Portable.BL.Avisos().ListaNoticias(10);
-        lvCarousel.DataBind();
+    //    lvCarousel.ItemDataBound += LvCarousel_ItemDataBound;
+    //    lvCarousel.DataSource = new Portable.BL.Avisos().ListaNoticias(10);
+    //    lvCarousel.DataBind();
         base.OnInitComplete(e);
 
     }
 
     private void LvCarousel_ItemDataBound(object sender, ListViewItemEventArgs e)
     {
-         Aviso Aviso = (Aviso)e.Item.DataItem;
-        Panel Painel = (Panel)e.Item.FindControl("CarouselItem");
-      Image carouselImg = (Image)e.Item.FindControl("imgCarousel");
-    /*      Literal CarrouselTitulo = (Literal)e.Item.FindControl("txtTitulo");
-        Literal Carrouselconteudo = (Literal)e.Item.FindControl("txtConteudo");*/
+        Aviso Aviso = (Aviso)e.Item.DataItem;
+        Image carouselImg = (Image)e.Item.FindControl("imgCarousel");
+        Literal title = (Literal)e.Item.FindControl("txtTitulo");
+        Literal conteudo = (Literal)e.Item.FindControl("txtConteudo");
         int dd = e.Item.DataItemIndex;
-        if (e.Item.DataItemIndex == 0)
-        {
-            Painel.CssClass += " active";
-        }
+
         carouselImg.ImageUrl = System.Configuration.ConfigurationManager.AppSettings["UpLoadImagensAvisos"] + Aviso.Imagem;
-    /*    Carrouselconteudo.Text = Aviso.Conteudo;
-        CarrouselTitulo.Text = Aviso.Titulo;*/
+        conteudo.Text = Aviso.Conteudo;
+        title.Text = Aviso.Titulo;
     }
 }
