@@ -15,7 +15,7 @@ namespace Autenticador
         [OperationContract]
         [WebInvoke(Method = "OPTIONS", UriTemplate = "*")]
         void GetOptions();
-      
+
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json
             , UriTemplate = "logar/{password}/{login}")]
@@ -31,7 +31,7 @@ namespace Autenticador
             UriTemplate = "GetPassword/{Login}")]
         string GetPassword(string Login);
 
-        
+
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
@@ -39,7 +39,7 @@ namespace Autenticador
         Funcionario GetUserById(string id);
 
         [OperationContract]
-        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "POST",BodyStyle = WebMessageBodyStyle.Wrapped)]
+        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
         FeedBack CheckPoint(string funcionario, string type);
 
         [OperationContract]
@@ -49,9 +49,9 @@ namespace Autenticador
 
 
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getaviso/{qtde}/{index}")]
-        List<Aviso> GetAvisos(string qtde,string index);
-
+        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getavisoe/{qtde}/{index}")]
+        List<Aviso> GetAvisos(string qtde, string index);
+        FeedBack ExcluirAvisos(int id, bool flag);
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getpoint/{month}/{funcionario}")]
         List<Ponto> GetCheckPoint(string month, string funcionario);
@@ -68,7 +68,7 @@ namespace Autenticador
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getpoint/{id}")]
         Ponto GetCheckPointById(string id);
 
-        
+
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "periodo/{hora}")]
         int ConvertePeriodo(string hora);

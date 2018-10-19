@@ -34,7 +34,7 @@
         return new Promise((resolve, reject) => {
             $.ajax({
                 method: 'DELETE',
-                url: self.APIHOST + 'falta fazer/',
+                url: self.APIHOST + 'ExcluirAvisos',
                 data: { "id": id, "flag": flag },
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",

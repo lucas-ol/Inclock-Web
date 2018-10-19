@@ -52,12 +52,17 @@ namespace Autenticador
 
         }
 
-        public List<Aviso> GetAvisos(string qtde,string index)
+        public List<Aviso> GetAvisos(string qtde, string index)
         {
             if (string.IsNullOrEmpty(qtde))
                 qtde = "10";
             int.TryParse(index, out int result);
             return new BL.Autenticador().getAvisos(qtde, result);
+        }
+        [Role(Roles = new string[] { "ADM" })]
+        public FeedBack ExcluirAvisos(int id, bool flag)
+        {
+            return new FeedBack { Status = false, Mensagem = "Metodo não implementado implementado" };
         }
         [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<Ponto> GetCheckPoint(string month, string funcionario)
