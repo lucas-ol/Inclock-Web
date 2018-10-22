@@ -49,7 +49,7 @@ namespace Autenticador
 
 
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getavisoe/{qtde}/{index}")]
+        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getavisos/{qtde}/{index}")]
         List<Aviso> GetAvisos(string qtde, string index);
         FeedBack ExcluirAvisos(int id, bool flag);
         [OperationContract]

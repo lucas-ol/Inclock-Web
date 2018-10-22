@@ -20,39 +20,33 @@ namespace Autenticador.BL
             {
                 db.MySqlAdicionaParametro("_login", login);
                 db.MySqlAdicionaParametro("_senha", password);
-                DataRow tb = db.MySqlLeitura("prd_se_login", System.Data.CommandType.StoredProcedure).Select().FirstOrDefault();
+                var tbl = db.MySqlLeitura("prd_se_login", System.Data.CommandType.StoredProcedure);
                 Funcionario func = new Funcionario();
-                if (tb != null)
-                {
-                    if (tb[0].ToString() != "erro")
-                        func = new Funcionario()
-                        {
-                            Id = Convert.ToInt32(tb["id"]),
-                            Nome = tb["nome"].ToString(),
-                            CPF = tb["cpf"].ToString(),
-                            RG = tb["rg"].ToString(),
-                            Telefone = tb["telefone"].ToString(),
-                            Celular = tb["celular"].ToString(),
-                            Email = tb["email"].ToString(),
-                            Endereco = tb["endereco"].ToString(),
-                            Numero = tb["numero"].ToString(),
-                            cargo_id = Convert.ToInt32(tb["cargo_id"]),
-                            Cargo = tb["cargo"].ToString(),
-                            Nascimento = Convert.ToDateTime(tb["nascimento"]).ToString("dd/MM/yyyy"),
-                            Sexo = tb["sexo"].ToString(),
-                            Cidade = tb["cidade"].ToString(),
-                            Estado = tb["estado"].ToString(),
-                            CEP = tb["cep"].ToString(),
-                            Bairro = tb["bairro"].ToString(),
-                            Senha = "123"
-                        };
-                    foreach (var item in tb["role"].ToString().Split(new char[] { ';' }))
-                        func.Roles.Add(item);
-                }
+                if (tbl.TableName != "erro")
+                    func = tbl.Select().Select(tb => new Funcionario()
+                    {
+                        Id = Convert.ToInt32(tb["id"]),
+                        Nome = tb["nome"].ToString(),
+                        CPF = tb["cpf"].ToString(),
+                        RG = tb["rg"].ToString(),
+                        Telefone = tb["telefone"].ToString(),
+                        Celular = tb["celular"].ToString(),
+                        Email = tb["email"].ToString(),
+                        Endereco = tb["endereco"].ToString(),
+                        Numero = tb["numero"].ToString(),
+                        cargo_id = Convert.ToInt32(tb["cargo_id"]),
+                        Cargo = tb["cargo"].ToString(),
+                        Nascimento = Convert.ToDateTime(tb["nascimento"]).ToString("dd/MM/yyyy"),
+                        Sexo = tb["sexo"].ToString(),
+                        Cidade = tb["cidade"].ToString(),
+                        Estado = tb["estado"].ToString(),
+                        CEP = tb["cep"].ToString(),
+                        Bairro = tb["bairro"].ToString(),
+                        Senha = "123",
+                        Roles = tb["role"].ToString().Split(new char[] { ';' }).ToList()
+                    }).FirstOrDefault();
                 else
-                {
-                    //   return "erro:true";
-                }
+                    throw new Exception("erro ao connectar com o banco" + tbl.Rows[0][0]);
                 return func;
             }
         }
