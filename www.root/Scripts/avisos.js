@@ -18,7 +18,7 @@
         return new Promise((resolve, reject) => {
             $.ajax({
                 method: 'GET',
-                url: self.APIHOST + 'getaviso/' + qtd + "/" + index,
+                url: self.APIHOST + 'getavisos/' + qtd + "/" + index,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
