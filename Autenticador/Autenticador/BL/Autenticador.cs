@@ -45,6 +45,7 @@ namespace Autenticador.BL
                         Senha = "123",
                         Roles = tb["role"].ToString().Split(new char[] { ';' }).ToList()
                     }).FirstOrDefault();
+
                 else
                     throw new Exception("erro ao connectar com o banco" + tbl.Rows[0][0]);
                 return func;
@@ -137,6 +138,18 @@ namespace Autenticador.BL
                 }
                 return avisos;
             }
+        }
+        public void AbrirSessao(int func)
+        {
+            using (var ctx  = new DataBase())
+            {
+                ctx.MySqlAdicionaParametro("func", func);
+                ctx.MySqlExecutaComando("insert into log_acessos(funcionario_id) values @func",CommandType.Text);
+            }
+        }
+        public void VerificarSessao(int funcionario)
+        {
+             
         }
     }
 }

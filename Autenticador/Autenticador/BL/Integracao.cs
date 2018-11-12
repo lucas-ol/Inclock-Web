@@ -9,22 +9,23 @@ using Classes.VO;
 using Newtonsoft.Json;
 
 using System.Diagnostics;
+using System.ServiceModel.Channels;
 
 namespace Autenticador.BL
 {
     public class Integracao : IDisposable
     {
-      public  const string MENSAGEMERRO = "Você não tem privilegios necessarios";
+        public const string MENSAGEMERRO = "Você não tem privilegios necessarios";
         private WebHeaderCollection GetHeaders()
         {
             IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
             return request.Headers;
         }
-        public bool ValidaSessão()
+        public bool ValidaSessao()
         {
-
+            GetUserAgent();
             var headers = GetHeaders();
-            return Autenticador.Autenticar(headers["integracao"]);             
+            return Autenticador.Autenticar(headers["integracao"]);
         }
 
         public void Dispose()
@@ -48,5 +49,12 @@ namespace Autenticador.BL
                 }
             }
         }
+        public static void GetUserAgent()
+        {
+            var request = WebOperationContext.Current;
+            
+            var bt = request.IncomingRequest.Headers["Host"];
+        }
+
     }
 }

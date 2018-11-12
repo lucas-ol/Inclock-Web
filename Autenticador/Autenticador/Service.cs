@@ -40,7 +40,7 @@ namespace Autenticador
         [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<Expediente> GetExpediente(string semana, string funcionario_Id)
         {
-            if (!new Integracao().ValidaSessão())
+            if (!new Integracao().ValidaSessao())
                 throw new Exception(Integracao.MENSAGEMERRO);
 
             int.TryParse(semana, out int isemana);
@@ -80,7 +80,7 @@ namespace Autenticador
         {
             using (var ig = new Integracao())
             {
-                if (ig.ValidaSessão())
+                if (ig.ValidaSessao())
                 {
 
                     if (string.IsNullOrEmpty(InitialDate) || string.IsNullOrEmpty(FinalDate))
@@ -118,7 +118,7 @@ namespace Autenticador
         {
             using (var ig = new Integracao())
             {
-                if (ig.ValidaSessão())
+                if (ig.ValidaSessao())
                 {
                     if (!int.TryParse(funcionario, out int func))
                         return new FeedBack() { Status = false, Mensagem = "funcionario invalido" };
@@ -140,7 +140,7 @@ namespace Autenticador
         {
             using (var ig = new Integracao())
             {
-                if (ig.ValidaSessão())
+                if (ig.ValidaSessao())
                 {
                     var feed = new FeedBack();
                     if (exp.Id == 0)
@@ -159,7 +159,7 @@ namespace Autenticador
         {
             using (var ig = new Integracao())
             {
-                if (ig.ValidaSessão())
+                if (ig.ValidaSessao())
                 {
                     return new ExpedienteController().Excluir(id);
                 }
