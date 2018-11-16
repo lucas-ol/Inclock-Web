@@ -14,7 +14,7 @@ namespace Autenticador.BL
 {
     public class Autenticador
     {
-        public Classes.VO.Funcionario Logar(string password, string login)
+        public static Funcionario Logar(string password, string login, string dispositivo = "")
         {
             using (var db = new DataBase())
             {
@@ -23,6 +23,7 @@ namespace Autenticador.BL
                 var tbl = db.MySqlLeitura("prd_se_login", System.Data.CommandType.StoredProcedure);
                 Funcionario func = new Funcionario();
                 if (tbl.TableName != "erro")
+                {
                     func = tbl.Select().Select(tb => new Funcionario()
                     {
                         Id = Convert.ToInt32(tb["id"]),
@@ -45,14 +46,18 @@ namespace Autenticador.BL
                         Senha = "123",
                         Roles = tb["role"].ToString().Split(new char[] { ';' }).ToList()
                     }).FirstOrDefault();
-
+                    if (ObeterSessao(func.Id, dispositivo).Id == 0)
+                        SalvarSessao(func.Id, dispositivo);
+                    else
+                        func.Id = -1; // vai informar que o usuario ja esta logado 
+                }
                 else
                     throw new Exception("erro ao connectar com o banco" + tbl.Rows[0][0]);
                 return func;
             }
         }
 
-        public string GetLogin(string Email)
+        public static string GetLogin(string Email)
         {
             using (var db = new DataBase())
             {
@@ -61,7 +66,7 @@ namespace Autenticador.BL
             }
         }
 
-        public string GetPassword(string Login)
+        public static string GetPassword(string Login)
         {
             using (var db = new DataBase())
             {
@@ -69,7 +74,7 @@ namespace Autenticador.BL
                 return JsonConvert.SerializeObject(db.MySqlLeitura("select nome, email from funcionarios where login = @login", System.Data.CommandType.Text));
             }
         }
-        public Funcionario GetUserById(int id)
+        public static Funcionario GetUserById(int id)
         {
             using (var db = new DataBase())
             {
@@ -110,7 +115,7 @@ namespace Autenticador.BL
 
             }
         }
-        public List<Aviso> getAvisos(string qted, int index = 0)
+        public static List<Aviso> getAvisos(string qted, int index = 0)
         {
             using (var db = new DataBase())
             {
@@ -139,17 +144,48 @@ namespace Autenticador.BL
                 return avisos;
             }
         }
-        public void AbrirSessao(int func)
+        public static void SalvarSessao(int func, string dispositivo = "web")
         {
-            using (var ctx  = new DataBase())
+            using (var ctx = new DataBase())
             {
                 ctx.MySqlAdicionaParametro("func", func);
-                ctx.MySqlExecutaComando("insert into log_acessos(funcionario_id) values @func",CommandType.Text);
+                ctx.MySqlAdicionaParametro("disp", dispositivo);
+                ctx.MySqlExecutaComando("insert into acessos(funcionario_id,logado,dispositivo) values (@func,1,@disp)", CommandType.Text);
             }
         }
-        public void VerificarSessao(int funcionario)
+        public static Acesso ObeterSessao(int func, string dispositivo = "web")
         {
-             
+            Acesso acesso = new Acesso();
+            using (var ctx = new DataBase())
+            {
+                ctx.MySqlAdicionaParametro("func", func);
+                ctx.MySqlAdicionaParametro("disp", dispositivo);
+                var tb = ctx.MySqlLeitura("select * from acessos where funcionario_id = @func and dispositivo = @disp and logado order by data_login desc  limit 1", CommandType.Text);
+                if (tb.TableName == "erro" && tb.Rows.Count > 0)
+                {
+                    acesso = tb.Select().Select(x => new Acesso
+                    {
+                        Id = Convert.ToInt32(x["id"]),
+                        Logado = Convert.ToBoolean(x["logado"]),
+                        Funcionario_id = Convert.ToInt32(x["funcionario_id"]),
+                        DataLogin = Convert.ToDateTime(x["data_login"]),
+                        Dispositivo = x["dispositivo"].ToString()
+                    }).FirstOrDefault();
+                }
+                return acesso;
+            }
+        }
+        public static void ApagarSessao(int func, string dispositivo = "web")
+        {
+            var session = ObeterSessao(func, dispositivo);
+            if (session.Id != 0)
+            {
+                using (var ctx = new DataBase())
+                {
+                    ctx.MySqlAdicionaParametro("id", session.Id);
+                    var tb = ctx.MySqlExecutaComando("update acessos set logado = 0 where id = @id", CommandType.Text);
+                }
+            }
         }
     }
 }

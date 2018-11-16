@@ -22,6 +22,10 @@ namespace Autenticador
         Funcionario Logar(string password, string login);
 
         [OperationContract]
+        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
+        void ApagarSessao(int func, string dispositivo);
+
+        [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         string GetLogin(string Email);
 

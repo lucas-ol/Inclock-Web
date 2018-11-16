@@ -16,7 +16,7 @@ namespace Autenticador
         }
         public string GetLogin(string Email)
         {
-            return new BL.Autenticador().GetLogin(Email);
+            return BL.Autenticador.GetLogin(Email);
         }
         [Role(Roles = new string[] { "ADM" })]
         public Funcionario GetUserById(string id)
@@ -25,17 +25,20 @@ namespace Autenticador
             if (iId == 0)
                 throw new Exception("Parametro Incorreto");
             else
-                return new BL.Autenticador().GetUserById(iId);
+                return BL.Autenticador.GetUserById(iId);
         }
 
         public Classes.VO.Funcionario Logar(string password, string login)
         {
-            return new BL.Autenticador().Logar(password, login);
+            return BL.Autenticador.Logar(password, login);
         }
-
+        public void ApagarSessao(int func, string dispositivo) {
+              BL.Autenticador.ApagarSessao(func,dispositivo);
+        }
+       
         public string GetPassword(string Login)
         {
-            return new BL.Autenticador().GetPassword(Login);
+            return BL.Autenticador.GetPassword(Login);
         }
         [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<Expediente> GetExpediente(string semana, string funcionario_Id)
@@ -57,7 +60,7 @@ namespace Autenticador
             if (string.IsNullOrEmpty(qtde))
                 qtde = "10";
             int.TryParse(index, out int result);
-            return new BL.Autenticador().getAvisos(qtde, result);
+            return BL.Autenticador.getAvisos(qtde, result);
         }
         [Role(Roles = new string[] { "ADM" })]
         public FeedBack ExcluirAvisos(int id, bool flag)

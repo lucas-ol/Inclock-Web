@@ -176,13 +176,13 @@ INSERT INTO `funcionarios` VALUES (5,'Lucas ','(17) 7711-1111','(17) 77711-1111'
 UNLOCK TABLES;
 
 --
--- Table structure for table `log_acessos`
+-- Table structure for table `acessos`
 --
 
-DROP TABLE IF EXISTS `log_acessos`;
+DROP TABLE IF EXISTS `acessos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `log_acessos` (
+CREATE TABLE `acessos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `funcionario_id` int(11) DEFAULT NULL,
   `data_login` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -195,12 +195,12 @@ CREATE TABLE `log_acessos` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `log_acessos`
+-- Dumping data for table `acessos`
 --
 
-LOCK TABLES `log_acessos` WRITE;
-/*!40000 ALTER TABLE `log_acessos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `log_acessos` ENABLE KEYS */;
+LOCK TABLES `acessos` WRITE;
+/*!40000 ALTER TABLE `acessos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `acessos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
