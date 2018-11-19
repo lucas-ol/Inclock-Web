@@ -18,8 +18,8 @@ namespace Autenticador
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json
-            , UriTemplate = "logar/{password}/{login}")]
-        Funcionario Logar(string password, string login);
+            , UriTemplate = "logar/{password}/{login}/{dispositivo}")]
+        Funcionario Logar(string password, string login,string dispositivo);
 
         [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]

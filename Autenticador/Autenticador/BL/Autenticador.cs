@@ -14,7 +14,7 @@ namespace Autenticador.BL
 {
     public class Autenticador
     {
-        public static Funcionario Logar(string password, string login, string dispositivo = "")
+        public static Funcionario Logar(string password, string login, string dispositivo = "web")
         {
             using (var db = new DataBase())
             {
@@ -22,7 +22,7 @@ namespace Autenticador.BL
                 db.MySqlAdicionaParametro("_senha", password);
                 var tbl = db.MySqlLeitura("prd_se_login", System.Data.CommandType.StoredProcedure);
                 Funcionario func = new Funcionario();
-                if (tbl.TableName != "erro")
+                if (tbl.TableName != "erro" && tbl.Rows.Count > 0)
                 {
                     func = tbl.Select().Select(tb => new Funcionario()
                     {
@@ -51,8 +51,7 @@ namespace Autenticador.BL
                     else
                         func.Id = -1; // vai informar que o usuario ja esta logado 
                 }
-                else
-                    throw new Exception("erro ao connectar com o banco" + tbl.Rows[0][0]);
+                
                 return func;
             }
         }
@@ -161,7 +160,7 @@ namespace Autenticador.BL
                 ctx.MySqlAdicionaParametro("func", func);
                 ctx.MySqlAdicionaParametro("disp", dispositivo);
                 var tb = ctx.MySqlLeitura("select * from acessos where funcionario_id = @func and dispositivo = @disp and logado order by data_login desc  limit 1", CommandType.Text);
-                if (tb.TableName == "erro" && tb.Rows.Count > 0)
+                if (tb.TableName != "erro" && tb.Rows.Count > 0)
                 {
                     acesso = tb.Select().Select(x => new Acesso
                     {

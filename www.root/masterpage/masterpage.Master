@@ -41,41 +41,7 @@
         <asp:ScriptManager runat="server" ID="scpManager" />
         <uc:TopoADM runat="server" ID="topoAdm" Visible="false" />
         <uc:TopoFUNC runat="server" ID="topoFunc" Visible="true" />
-        <%--   <div>
-            <!-- Menu de Navegação -->
-            <nav class="navbar navbar-expand-xl navbar-dark bg-dark  " role="navigation" id="menu">
-                <div class=" container-fluid">
-                    <!-- Menu  -->
-                    <div class=" navbar-brand"></div>
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class=" navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse">
-                        <ul class="navbar-nav mr-auto ">
-                            <li class=" nav-item"><a class="nav-link" href="/">Home</a></li>
-                            <li class="nav-item dropdown">
-                                <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="/Funcionario">Funcionarios</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/Funcionario/cadastrar.aspx">Cadastrar</a>
-                                    <a class="dropdown-item" href="/Funcionario">Listar</a>
-                                    <a class="dropdown-item " href="#">aqui</a>
-                                </div>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="/avisos?acao=1">Avisos</a></li>
-                            <li class="nav-item"><a class=" nav-link" href="#contact">Contato</a></li>
-                        </ul>
-                        <asp:LinkButton Text="Sair" runat="server" ID="btnLogout" OnClick="btnLogout_Click" CssClass=" login-button" /><uc:Login runat="server" ID="ucLogin" />
-                    </div>
-
-                </div>
-                <!-- fim do menu-->
-
-            </nav>
-            <!-- Navbar -->
-        </div>--%>
-
-
-
+       
         <asp:ContentPlaceHolder runat="server" ID="Corpo">
         </asp:ContentPlaceHolder>
 

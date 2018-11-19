@@ -23,7 +23,7 @@
                     <li class="nav-item"><a class="nav-link" href="/avisos?acao=1">Avisos</a></li>
                     <li class="nav-item"><a class=" nav-link" href="#contact">Contato</a></li>
                 </ul>
-                <asp:LinkButton Text="Sair" runat="server" ID="btnLogout" OnClick="btnLogout_Click" CssClass=" login-button" /><uc:login runat="server" id="ucLogin" />
+              <uc:login runat="server" id="ucLogin" />
             </div>
         </div>
         <!-- fim do menu-->

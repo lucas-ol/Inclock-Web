@@ -92,7 +92,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Autenticador\Arrays1.xsd">
+    <None Include="Connected Services\Autenticador\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\Autenticador\Classes.VO1.xsd">

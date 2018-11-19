@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Web;
+using System.Web.Security;
+
 namespace Library.Inclock.web.br.BL
 {
     public class Login
@@ -16,26 +19,27 @@ namespace Library.Inclock.web.br.BL
         /// </summary>
         /// <param name="user">Objeto User </param>
         /// <returns>Retorna um Json do usuario</returns>
-        public Funcionario Logar(User user)
+        public static Funcionario Logar(User user)
         {
             Funcionario funcionario = new Funcionario();
             try
             {
                 var cliente = new Autenticador.ServiceClient();
-                funcionario = cliente.Logar(user.Senha, user.Login);
+                funcionario = cliente.Logar(user.Senha, user.Login, "web");
                 if (funcionario.Id == 0)
                     return null;
 
             }
             catch (Exception ex)
             {
+                return null;
                 //isso foi feito so para teste 
-           //     return new Funcionario { Id = 1, Nome = "Usuario Teste", Email = "kiko", Roles = new List<string> { "ADM", "FUNC", "PALHACO" } };
+                //     return new Funcionario { Id = 1, Nome = "Usuario Teste", Email = "kiko", Roles = new List<string> { "ADM", "FUNC", "PALHACO" } };
             }
 
             return funcionario;
         }
-        public Funcionario LoginForms(User user, string configPath)
+        public static Funcionario LoginForms(User user, string configPath)
         {
             try
             {
@@ -47,6 +51,17 @@ namespace Library.Inclock.web.br.BL
                 return null;
             }
 
+        }
+        public static void Logout(int func, string dispositivo = "web")
+        {
+            using (Client client = new Client())
+            {
+                client.Service.ApagarSessao(func, dispositivo);
+                var response = HttpContext.Current.Response;
+
+                response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, "") { Expires = DateTime.Now.AddDays(-1) });
+                response.Cookies.Add(new HttpCookie("integracao", "") { Expires = DateTime.Now.AddDays(-1) });
+            }
         }
     }
 }

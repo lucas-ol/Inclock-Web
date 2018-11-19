@@ -22,10 +22,16 @@ namespace Library.Inclock.web.br.Autenticador {
         System.Threading.Tasks.Task GetOptionsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/Logar", ReplyAction="http://tempuri.org/IService/LogarResponse")]
-        Classes.VO.Funcionario Logar(string password, string login);
+        Classes.VO.Funcionario Logar(string password, string login, string dispositivo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/Logar", ReplyAction="http://tempuri.org/IService/LogarResponse")]
-        System.Threading.Tasks.Task<Classes.VO.Funcionario> LogarAsync(string password, string login);
+        System.Threading.Tasks.Task<Classes.VO.Funcionario> LogarAsync(string password, string login, string dispositivo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ApagarSessao", ReplyAction="http://tempuri.org/IService/ApagarSessaoResponse")]
+        void ApagarSessao(int func, string dispositivo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ApagarSessao", ReplyAction="http://tempuri.org/IService/ApagarSessaoResponse")]
+        System.Threading.Tasks.Task ApagarSessaoAsync(int func, string dispositivo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetLogin", ReplyAction="http://tempuri.org/IService/GetLoginResponse")]
         string GetLogin(string Email);
@@ -58,10 +64,10 @@ namespace Library.Inclock.web.br.Autenticador {
         System.Threading.Tasks.Task<Classes.VO.Expediente[]> GetExpedienteAsync(string semana, string funcionario_Id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAvisos", ReplyAction="http://tempuri.org/IService/GetAvisosResponse")]
-        Classes.VO.Aviso[] GetAvisos(string qtde);
+        Classes.VO.Aviso[] GetAvisos(string qtde, string index);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAvisos", ReplyAction="http://tempuri.org/IService/GetAvisosResponse")]
-        System.Threading.Tasks.Task<Classes.VO.Aviso[]> GetAvisosAsync(string qtde);
+        System.Threading.Tasks.Task<Classes.VO.Aviso[]> GetAvisosAsync(string qtde, string index);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPoint", ReplyAction="http://tempuri.org/IService/GetCheckPointResponse")]
         Classes.VO.Ponto[] GetCheckPoint(string month, string funcionario);
@@ -141,12 +147,20 @@ namespace Library.Inclock.web.br.Autenticador {
             return base.Channel.GetOptionsAsync();
         }
         
-        public Classes.VO.Funcionario Logar(string password, string login) {
-            return base.Channel.Logar(password, login);
+        public Classes.VO.Funcionario Logar(string password, string login, string dispositivo) {
+            return base.Channel.Logar(password, login, dispositivo);
         }
         
-        public System.Threading.Tasks.Task<Classes.VO.Funcionario> LogarAsync(string password, string login) {
-            return base.Channel.LogarAsync(password, login);
+        public System.Threading.Tasks.Task<Classes.VO.Funcionario> LogarAsync(string password, string login, string dispositivo) {
+            return base.Channel.LogarAsync(password, login, dispositivo);
+        }
+        
+        public void ApagarSessao(int func, string dispositivo) {
+            base.Channel.ApagarSessao(func, dispositivo);
+        }
+        
+        public System.Threading.Tasks.Task ApagarSessaoAsync(int func, string dispositivo) {
+            return base.Channel.ApagarSessaoAsync(func, dispositivo);
         }
         
         public string GetLogin(string Email) {
@@ -189,12 +203,12 @@ namespace Library.Inclock.web.br.Autenticador {
             return base.Channel.GetExpedienteAsync(semana, funcionario_Id);
         }
         
-        public Classes.VO.Aviso[] GetAvisos(string qtde) {
-            return base.Channel.GetAvisos(qtde);
+        public Classes.VO.Aviso[] GetAvisos(string qtde, string index) {
+            return base.Channel.GetAvisos(qtde, index);
         }
         
-        public System.Threading.Tasks.Task<Classes.VO.Aviso[]> GetAvisosAsync(string qtde) {
-            return base.Channel.GetAvisosAsync(qtde);
+        public System.Threading.Tasks.Task<Classes.VO.Aviso[]> GetAvisosAsync(string qtde, string index) {
+            return base.Channel.GetAvisosAsync(qtde, index);
         }
         
         public Classes.VO.Ponto[] GetCheckPoint(string month, string funcionario) {

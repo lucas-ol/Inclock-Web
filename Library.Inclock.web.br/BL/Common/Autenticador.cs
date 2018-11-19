@@ -71,11 +71,10 @@ namespace Library.Inclock.web.br.BL.Common
         public static void Logout()
         {
             var response = HttpContext.Current.Response;
-
-            response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, "") { Expires = DateTime.Now.AddDays(-1) });    
-            response.Cookies.Add(new HttpCookie("integracao", "") {Expires = DateTime.Now.AddDays(-1) });
-            response.Redirect("/",true);
-           
+            FormsAuthentication.SignOut();
+            HttpContext.Current.Session.Abandon();
+            HttpContext.Current.Session.Clear();
+            HttpContext.Current.Response.Redirect("/");
         }
     }
 }

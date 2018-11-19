@@ -18,6 +18,35 @@ USE `inclock`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `acessos`
+--
+
+DROP TABLE IF EXISTS `acessos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `acessos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `funcionario_id` int(11) DEFAULT NULL,
+  `data_login` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `logado` tinyint(4) DEFAULT NULL,
+  `dispositivo` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_Funcionario_logAcesso` (`funcionario_id`),
+  CONSTRAINT `FK_Funcionario_logAcesso` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `acessos`
+--
+
+LOCK TABLES `acessos` WRITE;
+/*!40000 ALTER TABLE `acessos` DISABLE KEYS */;
+INSERT INTO `acessos` VALUES (1,5,'2018-11-17 13:13:48',0,'web'),(3,5,'2018-11-18 23:36:09',0,'web'),(4,5,'2018-11-19 01:07:12',1,'web');
+/*!40000 ALTER TABLE `acessos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `avisos`
 --
 
@@ -173,34 +202,6 @@ LOCK TABLES `funcionarios` WRITE;
 /*!40000 ALTER TABLE `funcionarios` DISABLE KEYS */;
 INSERT INTO `funcionarios` VALUES (5,'Lucas ','(17) 7711-1111','(17) 77711-1111','blublucas@gmail.com','Rua Vera Lúcia Pinto da Silva','177.711.111-11',3,'1996-10-10','M','Suzano','SP','08690215','90809','Cidade Miguel Badra','11.111.111-1','123','123','ADM;FUNC',1),(7,'Josénildo Ferraz','(11) 1111-1111','(11) 11111-1111','oliveiramelo1996@gmail.com','Rua Vera Lúcia Pinto da Silva','222.222.222-22',3,'2008-03-14','M','Suzano','SP','08690215','1111','Cidade Miguel Badra','37.959.520-1','1234','1234','FUNC',1);
 /*!40000 ALTER TABLE `funcionarios` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `acessos`
---
-
-DROP TABLE IF EXISTS `acessos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `acessos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `funcionario_id` int(11) DEFAULT NULL,
-  `data_login` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `logado` tinyint(4) DEFAULT NULL,
-  `dispositivo` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_Funcionario_logAcesso` (`funcionario_id`),
-  CONSTRAINT `FK_Funcionario_logAcesso` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionarios` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `acessos`
---
-
-LOCK TABLES `acessos` WRITE;
-/*!40000 ALTER TABLE `acessos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `acessos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -914,4 +915,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-12 18:37:53
+-- Dump completed on 2018-11-18 23:21:37

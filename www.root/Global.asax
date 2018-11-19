@@ -2,6 +2,8 @@
 <%@ Import Namespace="System.Web" %>
 <%@ Import Namespace="System.Web.Http" %>
 <%@ Import Namespace="System.Web.Routing" %>
+<%@ Import Namespace="Library.Inclock.web.br.BL.Common"%>
+<%@ Import Namespace="Library.Inclock.web.br.BL"%>
 
 <script RunAt="server">
 
@@ -30,33 +32,30 @@
 
     void Session_End(object sender, EventArgs e)
     {
-        // Code that runs when a session ends. 
-        // Note: The Session_End event is raised only when the sessionstate mode
-        // is set to InProc in the Web.config file. If session mode is set to StateServer 
-        // or SQLServer, the event is not raised.
+        var cur = Autenticador.CurrentUser;
+        Library.Inclock.web.br.BL.Login.Logout(cur.Id);
+        Session.Abandon();
+        Response.Redirect("/");
     }
     void Application_BeginRequest(object sender, EventArgs e)
     {
         var url = HttpContext.Current.Request.Url;
         // HttpContext.Current.RewritePath("/index.aspx");
-        if (url.AbsolutePath.ToLower().Contains("/avisos"))
+        if (url.AbsolutePath.ToLower().Contains(".aspx"))
         {
-            //  HttpContext.Current.RewritePath(MakeUrl(url.Segments));
+        //    HttpContext.Current.RewritePath(HttpContext.Current.Request.Url.ToString().Replace(".aspx",""));
         }
     }
 
     void Application_PostAuthenticateRequest(object sender, EventArgs e)
     {
-        Library.Inclock.web.br.BL.Common.Autenticador.Instance.Autenticar();
+        Autenticador.Instance.Autenticar();
     }
     void RegisterRoutes(RouteCollection routes)
     {
         routes.MapHttpRoute(
-                 name: "api",              
+                 name: "api",
                  routeTemplate: "api/{controller}/{action}/{id}",
                  defaults: new { id = System.Web.Http.RouteParameter.Optional });
-    
     }
-   
-
 </script>

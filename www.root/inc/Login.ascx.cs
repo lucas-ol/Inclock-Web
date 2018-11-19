@@ -19,26 +19,52 @@ public partial class inc_Login : System.Web.UI.UserControl
             return str;
         }
     }
+    public bool FlagMostraModal
+    {
+        get
+        {
+
+            bool flag = !HttpContext.Current.User.Identity.IsAuthenticated && Request.QueryString["logar"] == null? false: true;
+
+            return flag;
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!HttpContext.Current.Request.IsAuthenticated)
+        {
+            login.Visible = true;
+            btnLogout.Visible = false;
 
+        }
+        else
+        {
+            login.Visible = false;
+            btnLogout.Visible = true;
+        }
     }
 
     protected void btnLogar_Click(object sender, EventArgs e)
     {
-        Funcionario  funcionarioJson = new Funcionario { Id = 0 };
-        Library.Inclock.web.br.BL.Login login = new Library.Inclock.web.br.BL.Login();
+        Funcionario funcionarioJson = new Funcionario { Id = 0 };
         // vai buscar no banco de dados      
-        funcionarioJson = login.Logar(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text });
-
+        funcionarioJson = Library.Inclock.web.br.BL.Login.Logar(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text });
         if (funcionarioJson != null)
         {
-           Autenticador.CriaCookieIntegracao(funcionarioJson);
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,funcionarioJson.Nome, DateTime.Now, DateTime.MaxValue, false, Newtonsoft.Json.JsonConvert.SerializeObject(funcionarioJson), FormsAuthentication.FormsCookiePath);
-            string encrypt = FormsAuthentication.Encrypt(ticket);
-
-            Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encrypt));
-            Response.Redirect(FormsAuthentication.GetRedirectUrl(ReturnUrl, false), true);
+            if (funcionarioJson.Id == -1)
+            {
+                lblMensagem.Visible = true;
+                lblMensagem.InnerText = "O usuario ja esta logado em outro computador";
+            }
+            else
+            {
+                Autenticador.CriaCookieIntegracao(funcionarioJson);
+                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, funcionarioJson.Nome, DateTime.Now, DateTime.MaxValue, false, Newtonsoft.Json.JsonConvert.SerializeObject(funcionarioJson), FormsAuthentication.FormsCookiePath);
+                string encrypt = FormsAuthentication.Encrypt(ticket);
+                
+                Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encrypt));
+                Response.Redirect(FormsAuthentication.GetRedirectUrl(ReturnUrl, false), true);
+            }
         }
         else
         {
@@ -50,5 +76,10 @@ public partial class inc_Login : System.Web.UI.UserControl
     private void RegistraScript(string script, Page pagina, bool AdicionaTag)
     {
         ScriptManager.RegisterStartupScript(pagina, pagina.GetType(), "", script, AdicionaTag);
+    }
+
+    protected void btnLogout_Click(object sender, EventArgs e)
+    {
+        Autenticador.Logout();
     }
 }

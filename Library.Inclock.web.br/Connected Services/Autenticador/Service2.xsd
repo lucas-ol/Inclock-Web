@@ -16,6 +16,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="login" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dispositivo" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -24,6 +25,19 @@
       <xs:sequence>
         <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="LogarResult" nillable="true" type="q1:Funcionario" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ApagarSessao">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="func" type="xs:int" />
+        <xs:element minOccurs="0" name="dispositivo" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ApagarSessaoResponse">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="GetLogin">
@@ -102,6 +116,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="qtde" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="index" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

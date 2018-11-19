@@ -28,14 +28,15 @@ namespace Autenticador
                 return BL.Autenticador.GetUserById(iId);
         }
 
-        public Classes.VO.Funcionario Logar(string password, string login)
+        public Classes.VO.Funcionario Logar(string password, string login, string dispositivo)
         {
-            return BL.Autenticador.Logar(password, login);
+            return BL.Autenticador.Logar(password, login, dispositivo);
         }
-        public void ApagarSessao(int func, string dispositivo) {
-              BL.Autenticador.ApagarSessao(func,dispositivo);
+        public void ApagarSessao(int func, string dispositivo)
+        {
+            BL.Autenticador.ApagarSessao(func, dispositivo);
         }
-       
+
         public string GetPassword(string Login)
         {
             return BL.Autenticador.GetPassword(Login);
