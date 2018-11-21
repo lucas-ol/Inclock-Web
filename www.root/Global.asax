@@ -31,10 +31,11 @@
     }
 
     void Session_End(object sender, EventArgs e)
-    {
-        //      var user = Autenticador.Ticket;       
-        Autenticador.Logout();
-       Application_AcquireRequestState(null, null);
+    {        //      var user = Autenticador.Ticket;   
+        if (!FormsAuthentication.IsEnabled)
+        {
+            Application_AcquireRequestState(null, null);
+        }
     }
     protected void Application_AcquireRequestState(object sender, System.EventArgs e)
     {
@@ -49,13 +50,14 @@
                     Library.Inclock.web.br.BL.Login.Logout(id);
                     HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, "") { Expires = DateTime.Now.AddDays(-1) });
                     HttpContext.Current.Response.Cookies.Add(new HttpCookie("integracao", "") { Expires = DateTime.Now.AddDays(-1) });
-                    
+
                 }
             }
         }
     }
     void Application_BeginRequest(object sender, EventArgs e)
     {
+       
         var url = HttpContext.Current.Request.Url;
         // HttpContext.Current.RewritePath("/index.aspx");
         if (url.AbsolutePath.ToLower().Contains(".aspx"))

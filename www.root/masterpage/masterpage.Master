@@ -14,12 +14,20 @@
     <script src="/Scripts/jquery.js"></script>
     <script src="/Scripts/popper/popper.js"></script>
     <script src="/Scripts/bootstrap/bootstrap.js"></script>
-     <script> 
+    <script> 
         $(function () {
             $("").mouseenter(function () {
                 $(this).trigger("click");
             });
-            window.appRest = '<% =Classes.Common.Config.UrlRest %>' ;
+            window.appRest = '<% =Classes.Common.Config.UrlRest %>';
+            window.integracao = '';
+            var cook = document.cookie;
+            var nome = 'integracao=';
+            var co = cook.substr(cook.indexOf(nome) + nome.length)
+            if (co.indexOf(';') < 0)
+                window.integracao = co;
+            else
+                window.integracao = co.substr(0, co.indexOf(';'));            
         });</script>
     <asp:ContentPlaceHolder runat="server" ID="Head">
     </asp:ContentPlaceHolder>
@@ -41,7 +49,7 @@
         <asp:ScriptManager runat="server" ID="scpManager" />
         <uc:TopoADM runat="server" ID="topoAdm" Visible="false" />
         <uc:TopoFUNC runat="server" ID="topoFunc" Visible="true" />
-       
+
         <asp:ContentPlaceHolder runat="server" ID="Corpo">
         </asp:ContentPlaceHolder>
 
@@ -55,6 +63,6 @@
 
 
     <!--FrameWorks secundarias-->
-   
+
 </body>
 </html>
