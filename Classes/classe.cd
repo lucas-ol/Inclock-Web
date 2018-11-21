@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="NameAndType">
+  <Class Name="Classes.Common.Config">
+    <Position X="12" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAgAAE=</HashCode>
+      <FileName>Common\Config.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.Common.DataBase" BaseTypeListCollapsed="true">
+    <Position X="3" Y="0.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAACEAAAAAAAIAAAAAAgESAAA=</HashCode>
+      <FileName>Common\DataBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Classes.Common.CriaQr">
+    <Position X="15.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Common\QrCode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.Common.Rijndael">
+    <Position X="12" Y="2.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAQAAAQAAAAAEIAAAAAAAAAAgAgAAAAAAAA=</HashCode>
+      <FileName>Common\Rijndael.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.Common.Role">
+    <Position X="6.75" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.Common.UtilCep">
+    <Position X="15.25" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\UtilCep.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.Common.UtilDate">
+    <Position X="3" Y="3.75" Width="2.5" />
+    <NestedTypes>
+      <Struct Name="Classes.Common.UtilDate.StDiasSemana" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Common\UtilDate.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Common\UtilDate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.Common.UtilEmail">
+    <Position X="9.5" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAQ=</HashCode>
+      <FileName>Common\UtilEmail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.Common.UtilFile">
+    <Position X="6.75" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAFAAAAEAAQAEAAAAAABAAAAFAAAA=</HashCode>
+      <FileName>Common\UtilFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.Enumeradores.DateEnum">
+    <Position X="17.75" Y="3.25" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Classes.Enumeradores.DateEnum.Periodo" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Enumeradores\DateEnum.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Classes.Enumeradores.DateEnum.Semana" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Enumeradores\DateEnum.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enumeradores\DateEnum.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.VO.Acesso">
+    <Position X="15.25" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAABAAAAAAAACAAAAAAAAAAABAAAAAABAAAAAA=</HashCode>
+      <FileName>VO\Acesso.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.VO.Aviso">
+    <Position X="6.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAAAAgAEABA=</HashCode>
+      <FileName>VO\Aviso.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.VO.BulkConfig">
+    <Position X="9.5" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAgCAAAAAAAAAAAAAAAAAEAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>VO\BulkConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.VO.Expediente">
+    <Position X="9.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACSAAABAAAAEAAACgAAAAAAAAAAAAAAQAEAAAAAAA=</HashCode>
+      <FileName>VO\Expediente.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.VO.FeedBack">
+    <Position X="18" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VO\FeedBack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.VO.Funcionario">
+    <Position X="0.75" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAIAgCBAIAAAgAAAAACAAAAAAAABAAACAAgBEAg=</HashCode>
+      <FileName>VO\Funcionario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.VO.Ponto">
+    <Position X="17.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAECCAAAQAQAAAAAACgAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VO\Ponto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.VO.Role">
+    <Position X="15.25" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAgCAAAAAA=</HashCode>
+      <FileName>VO\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.VO.RoleAttribute">
+    <Position X="11.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VO\RoleAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Classes.VO.User">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAiAAAAAQAAAQAAEAAAA=</HashCode>
+      <FileName>VO\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Classes.Enumeradores.StatusEnum">
+    <Position X="13.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAQAACAAAAAAEAAAAA=</HashCode>
+      <FileName>Enumeradores\StatusEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Classes.Enumeradores.StatusPonto">
+    <Position X="3" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIACAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Enumeradores\StatusPonto.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

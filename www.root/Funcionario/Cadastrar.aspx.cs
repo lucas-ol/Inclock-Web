@@ -55,7 +55,7 @@ public partial class Funcionario_Cadastrar : System.Web.UI.Page
                 else
                     hddIdFuncionario.Value = "0";
             }
-            else if (Autenticador.Instance.Ticket != null)
+            else if (Autenticador.Ticket != null)
             {
                 if (PreencheDados(Controller.Pesquisa_Funcionario_ID(User.Id)))
                 {

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Security;
+using System.Web.SessionState;
 
 namespace Library.Inclock.web.br.BL.Common
 {
@@ -22,7 +23,7 @@ namespace Library.Inclock.web.br.BL.Common
                 return !CurrentUser.Roles.Contains("ADM");
             }
         }
-        public FormsAuthenticationTicket Ticket
+        public static FormsAuthenticationTicket Ticket
         {
             get
             {
@@ -42,7 +43,7 @@ namespace Library.Inclock.web.br.BL.Common
             get
             {
                 Funcionario func = new Funcionario();
-                var ticket = Instance.Ticket;
+                var ticket = Ticket;
                 if (ticket != null)
                 {
                     func = Newtonsoft.Json.JsonConvert.DeserializeObject<Funcionario>(ticket.UserData);
@@ -56,7 +57,6 @@ namespace Library.Inclock.web.br.BL.Common
             {
                 GenericPrincipal identity = new GenericPrincipal(new GenericIdentity(Ticket.Name), CurrentUser.Roles.ToArray());
                 HttpContext.Current.User = identity;
-               
             }
         }
         public static void CriaCookieIntegracao(Funcionario use)
@@ -69,12 +69,14 @@ namespace Library.Inclock.web.br.BL.Common
             HttpContext.Current.Response.Cookies.Add(cookie);
         }
         public static void Logout()
-        {
-            var response = HttpContext.Current.Response;
+        {          
             FormsAuthentication.SignOut();
-            HttpContext.Current.Session.Abandon();
-            HttpContext.Current.Session.Clear();
-            HttpContext.Current.Response.Redirect("/");
+            if (HttpContext.Current != null)
+            {
+                HttpContext.Current.Session.Abandon();
+                HttpContext.Current.Session.Clear();
+                HttpContext.Current.Response.Redirect("/");
+            }
         }
     }
 }

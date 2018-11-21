@@ -34,7 +34,7 @@
 
     <script>
         $(function () {
-            if (true) {
+            if (<% =FlagMostraModal %>) {
                 $('#loginModal').modal('show');
             }
         });

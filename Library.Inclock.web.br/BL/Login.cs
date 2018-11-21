@@ -57,10 +57,7 @@ namespace Library.Inclock.web.br.BL
             using (Client client = new Client())
             {
                 client.Service.ApagarSessao(func, dispositivo);
-                var response = HttpContext.Current.Response;
-
-                response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, "") { Expires = DateTime.Now.AddDays(-1) });
-                response.Cookies.Add(new HttpCookie("integracao", "") { Expires = DateTime.Now.AddDays(-1) });
+                var response = HttpContext.Current.Response;                
             }
         }
     }
