@@ -11,6 +11,7 @@ var ChartFactory = function (container) {
             dataType: "json",
             headers: { integracao: window.integracao },
             success: function (data) {
+                //var data = JSON.stringify(dataa);                
                 callback[0](data, canvas);
             },
             error: function (x, y, z) {
@@ -20,7 +21,14 @@ var ChartFactory = function (container) {
     };    
 };
 
-function GerarRLPonto (data, canvas) {
+function GerarRLPonto(data, canvas) {
+    var labels = data.map(function (e) {
+        var dt = new Date(e.DataEntrada);
+        return dt;
+    });
+    var dados = data.map(function (e) {
+        return e.age;
+    });
     var ctx = $(canvas)[0].getContext('2d');
     var grafico = {
         labels: MONTHS.slice(0, 6),
@@ -30,8 +38,7 @@ function GerarRLPonto (data, canvas) {
             borderColor: "rgba(255, 99, 132, 0.5)",
             borderWidth: 1,
             data: [
-                1,
-                2, 4, 5, 6, 5
+                dados
             ]
         },
         {

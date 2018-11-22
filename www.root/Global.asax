@@ -42,6 +42,7 @@
         if (HttpContext.Current.Session != null)
         {
             string szCookieHeader = Request.Headers["Cookie"];
+            
             if ((szCookieHeader != null) && (szCookieHeader.IndexOf("ASP.NET_SessionId") >= 0) && HttpContext.Current.Session.IsNewSession)
             {
                 if (User.Identity.IsAuthenticated)
