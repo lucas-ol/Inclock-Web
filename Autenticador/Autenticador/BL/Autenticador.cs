@@ -47,7 +47,7 @@ namespace Autenticador.BL
                         Roles = tb["role"].ToString().Split(new char[] { ';' }).ToList()
                     }).FirstOrDefault();
                     if (ObeterSessao(func.Id, dispositivo).Id == 0)
-                        SalvarSessao(func.Id, dispositivo);
+                        SalvarSessao(func.Id, dispositivo != "web" ,dispositivo);
                     else
                         func.Id = -1; // vai informar que o usuario ja esta logado 
                 }
@@ -143,13 +143,14 @@ namespace Autenticador.BL
                 return avisos;
             }
         }
-        public static void SalvarSessao(int func, string dispositivo = "web")
+        public static void SalvarSessao(int func,bool logado, string dispositivo = "web")
         {
             using (var ctx = new DataBase())
             {
                 ctx.MySqlAdicionaParametro("func", func);
                 ctx.MySqlAdicionaParametro("disp", dispositivo);
-                ctx.MySqlExecutaComando("insert into acessos(funcionario_id,logado,dispositivo) values (@func,1,@disp)", CommandType.Text);
+                ctx.MySqlAdicionaParametro("logado",logado);
+                ctx.MySqlExecutaComando("insert into acessos(funcionario_id,logado,dispositivo) values (@func,@logado,@disp)", CommandType.Text);
             }
         }
         public static Acesso ObeterSessao(int func, string dispositivo = "web")

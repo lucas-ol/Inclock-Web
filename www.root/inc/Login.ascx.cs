@@ -23,9 +23,7 @@ public partial class inc_Login : System.Web.UI.UserControl
     {
         get
         {
-
             bool flag = !HttpContext.Current.User.Identity.IsAuthenticated && Request.QueryString["logar"] == null? false: true;
-
             return flag;
         }
     }
@@ -51,7 +49,7 @@ public partial class inc_Login : System.Web.UI.UserControl
         funcionarioJson = Library.Inclock.web.br.BL.Login.Logar(new Classes.VO.User { Senha = txtSenha.Text, Login = txtLogin.Text });
         if (funcionarioJson != null)
         {
-            if (funcionarioJson.Id == -1)
+            if (Autenticador.Logados.Contains(funcionarioJson.Id))
             {
                 lblMensagem.Visible = true;
                 lblMensagem.InnerText = "O usuario ja esta logado em outro computador";
@@ -61,7 +59,7 @@ public partial class inc_Login : System.Web.UI.UserControl
                 Autenticador.CriaCookieIntegracao(funcionarioJson);
                 FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, funcionarioJson.Nome, DateTime.Now, DateTime.MaxValue, false, Newtonsoft.Json.JsonConvert.SerializeObject(funcionarioJson), FormsAuthentication.FormsCookiePath);
                 string encrypt = FormsAuthentication.Encrypt(ticket);
-                
+                Autenticador.Logados.Add(funcionarioJson.Id);
                 Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encrypt));
                 Response.Redirect(FormsAuthentication.GetRedirectUrl(ReturnUrl, false), true);
             }

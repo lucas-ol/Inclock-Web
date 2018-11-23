@@ -11,6 +11,7 @@
     {
         // Code that runs on application startup    
         RegisterRoutes(RouteTable.Routes);
+        HttpContext.Current.Application["logados"] = new List<int>();
     }
 
     void Application_End(object sender, EventArgs e)
@@ -31,40 +32,28 @@
     }
 
     void Session_End(object sender, EventArgs e)
-    {        //      var user = Autenticador.Ticket;   
-        if (!FormsAuthentication.IsEnabled)
-        {
-            Application_AcquireRequestState(null, null);
-        }
+    {        //      var user = Autenticador.Ticket;           
+        Application_AcquireRequestState(null, null);
     }
     protected void Application_AcquireRequestState(object sender, System.EventArgs e)
     {
         if (HttpContext.Current.Session != null)
         {
             string szCookieHeader = Request.Headers["Cookie"];
-            
-            if ((szCookieHeader != null) && (szCookieHeader.IndexOf("ASP.NET_SessionId") >= 0) && HttpContext.Current.Session.IsNewSession)
+
+            if ((szCookieHeader != null) && (szCookieHeader.IndexOf("ASP.NET_SessionId") >= 0) && HttpContext.Current.Session.IsNewSession && Autenticador.Ticket.Expired)
             {
                 if (User.Identity.IsAuthenticated)
                 {
                     var id = Convert.ToInt32(Autenticador.CurrentUser.Id);
-                    Library.Inclock.web.br.BL.Login.Logout(id);
-                    HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, "") { Expires = DateTime.Now.AddDays(-1) });
-                    HttpContext.Current.Response.Cookies.Add(new HttpCookie("integracao", "") { Expires = DateTime.Now.AddDays(-1) });
-
+                    Autenticador.Logados.Remove(id);
                 }
             }
         }
     }
     void Application_BeginRequest(object sender, EventArgs e)
     {
-       
-        var url = HttpContext.Current.Request.Url;
-        // HttpContext.Current.RewritePath("/index.aspx");
-        if (url.AbsolutePath.ToLower().Contains(".aspx"))
-        {
-            //    HttpContext.Current.RewritePath(HttpContext.Current.Request.Url.ToString().Replace(".aspx",""));
-        }
+     
     }
 
     void Application_PostAuthenticateRequest(object sender, EventArgs e)
