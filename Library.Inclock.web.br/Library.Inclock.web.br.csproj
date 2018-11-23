@@ -117,6 +117,7 @@
     <None Include="Connected Services\Autenticador\service3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Library.Inclock.web.br.cd" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Classes.VO.Aviso.datasource" />
     <None Include="Properties\DataSources\Classes.VO.EspelhoPonto.datasource" />

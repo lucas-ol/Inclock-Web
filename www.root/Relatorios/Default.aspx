@@ -9,7 +9,7 @@
     <script>
         var factory = new ChartFactory();
         $(function () {
-            factory.Ajax({}, 'GET', window.appRest+"getpoint/10-06-1996/01-11-2018/5",[GerarRLPonto],$('#canvas'));
+            factory.Ajax({}, 'GET', window.appRest+"getpoint/10-06-1996/01-11-2018/5",[factory.GerarRLPonto],$('#canvas'));
         })
     </script>
 </asp:Content>

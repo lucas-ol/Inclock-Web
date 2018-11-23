@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="NameAndType">
+  <Class Name="Library.Inclock.web.br.BL.Avisos">
+    <Position X="9.75" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>BL\Avisos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.Inclock.web.br.BL.Client" BaseTypeListCollapsed="true">
+    <Position X="13.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAACAAA=</HashCode>
+      <FileName>BL\Client.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Library.Inclock.web.br.BL.CustomEndpoint" BaseTypeListCollapsed="true">
+    <Position X="3" Y="0.5" Width="4" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="Library.Inclock.web.br.BL.CustomEndpoint.ClientInspector">
+        <TypeIdentifier>
+          <NewMemberFileName>BL\CustomEndpoint.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAACAAQAACAAAgAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BL\CustomEndpoint.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Library.Inclock.web.br.BL.Expedientes">
+    <Position X="12.25" Y="4.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BL\Expedientes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.Inclock.web.br.BL.Funcionarios">
+    <Position X="7.25" Y="0.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAQAAAAAAAABABEAAAAAAAAAAQ=</HashCode>
+      <FileName>BL\Funcionarios.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.Inclock.web.br.BL.Login">
+    <Position X="7.25" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAABAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BL\Login.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.Inclock.web.br.BL.Pontos">
+    <Position X="7.5" Y="2.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>BL\Pontos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.Inclock.web.br.BL.Common.Autenticador">
+    <Position X="10.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>IIAAAAAAAIAAACACAAAAAAIAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>BL\Common\Autenticador.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.Inclock.web.br.Autenticador.ServiceClient" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wJAAAAAIcIApAwgIAFAYIAAgAAAAABABEAAABIQAgGA=</HashCode>
+      <FileName>Connected Services\Autenticador\Reference.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="Library.Inclock.web.br.Autenticador.IService" Collapsed="true">
+    <Position X="0.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wJAAAAAIcIApAwgIAFAYIAAgAAAAABABEAAABIQAgGA=</HashCode>
+      <FileName>Connected Services\Autenticador\Reference.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Library.Inclock.web.br.Autenticador.IServiceChannel">
+    <Position X="1" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Connected Services\Autenticador\Reference.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
