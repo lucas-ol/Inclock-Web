@@ -10,12 +10,11 @@ public partial class inc_AlertaGenerico : System.Web.UI.UserControl
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.Visible = false;
-        
+
+
     }
     public void ShowMessager(string Mensagem, StatusEnum Status, string Titulo = "")
     {
-        this.Visible = true;
         lblTitulo.Visible = !string.IsNullOrEmpty(Titulo);
         lblConteudo.InnerHtml = Mensagem;
         lblTitulo.InnerHtml = Titulo;
@@ -35,6 +34,6 @@ public partial class inc_AlertaGenerico : System.Web.UI.UserControl
         {
             pnlAlert.CssClass = "alert alert-warning alert-dismissible ";
         }
-
+        ScriptManager.RegisterStartupScript(this, Page.GetType(), "", " $('.alert').toggle(1000).delay(5000).toggle(1000);", true);
     }
 }

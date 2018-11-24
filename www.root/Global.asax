@@ -41,11 +41,13 @@
         {
             string szCookieHeader = Request.Headers["Cookie"];
 
-            if ((szCookieHeader != null) && (szCookieHeader.IndexOf("ASP.NET_SessionId") >= 0) && HttpContext.Current.Session.IsNewSession && Autenticador.Ticket.Expired)
+            if ((szCookieHeader != null) && (szCookieHeader.IndexOf("ASP.NET_SessionId") >= 0) && HttpContext.Current.Session.IsNewSession && (Autenticador.Ticket != null))
             {
-                if (User.Identity.IsAuthenticated)
+                if (User.Identity.IsAuthenticated && Autenticador.Ticket.Expired)
                 {
                     var id = Convert.ToInt32(Autenticador.CurrentUser.Id);
+                    HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, "") { Expires = DateTime.Now.AddDays(-1) });
+                    HttpContext.Current.Response.Cookies.Add(new HttpCookie("integracao", "") { Expires = DateTime.Now.AddDays(-1) });
                     Autenticador.Logados.Remove(id);
                 }
             }
@@ -53,7 +55,7 @@
     }
     void Application_BeginRequest(object sender, EventArgs e)
     {
-     
+
     }
 
     void Application_PostAuthenticateRequest(object sender, EventArgs e)

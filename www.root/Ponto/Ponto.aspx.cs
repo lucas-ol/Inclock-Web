@@ -14,6 +14,7 @@ public partial class Ponto_Ponto : System.Web.UI.Page
         if (!Page.IsPostBack)
         {
             ucExpediente.BuscaEspediente(Autenticador.CurrentUser.Id);
+            ucMsg.Visible = true;
         }
     }    
 }

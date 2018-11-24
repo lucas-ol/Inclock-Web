@@ -2,7 +2,7 @@
     var pont = new Ponto();
 });
 var Ponto = function () {
-    self = this;   
+    self = this;
     self.api = window.appRest;
     self.baterPonto = function (type) {
         self.FuncionarioLogado().then(function (dados) {
@@ -14,12 +14,10 @@ var Ponto = function () {
                 dataType: "json",
                 headers: { integracao: window.integracao },
                 success: function (data) {
-                    console.log(data);
+                    ShowMsg(data.CheckPointResult.Mensagem, data.CheckPointResult.Status);
                 },
                 error: function (x, y, z) {
-                    console.log(x);
-                    console.log(y);
-                    console.log(z);
+                    ShowMsg('Erro ao enviar solicitação', true);
                 }
             });
 
@@ -45,7 +43,8 @@ var Ponto = function () {
     };
     self.onInit = function () {
         $('#btnEntrada').on('click', function () { self.baterPonto('E'); });
-        $('#btnSaida').on('click', function () { self.baterPonto('S'); });      
+        $('#btnSaida').on('click', function () { self.baterPonto('S'); });
     };
+   
     self.onInit();
 };
