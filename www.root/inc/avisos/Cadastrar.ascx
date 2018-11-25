@@ -9,39 +9,39 @@
         text-align: left;
     }
 </style>
-
-<div class="form-group">
-    <div class="form-inline">
-        <asp:Label runat="server" ID="lblTitulo" Text="Titulo" AssociatedControlID="" CssClass="col-sm-1" />
-        <div class="11">
-            <asp:TextBox CssClass=" form-control" runat="server" ID="txtTitulo" />
+<div class="row mt-3 ml-5">
+    <div class="form-group col-md-12">
+        <div class="form-inline">
+            <asp:Label runat="server" ID="lblTitulo" Text="Titulo" AssociatedControlID="" CssClass="col-sm-1" />
+            <div class="col-md-8">
+                <asp:TextBox CssClass=" form-control" runat="server" ID="txtTitulo" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-md-12">
+        <div class="form-inline">
+            <asp:Label Text="Conteudo" runat="server" CssClass="col-sm-1"/>
+            <div class="col-md-8">
+                <asp:TextBox runat="server" TextMode="MultiLine" ID="txtConteudo" CssClass="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="form-grop col-md-12">
+        <div class="form-inline">
+            <asp:Label runat="server" CssClass="col-sm-2">Escolha uma imagem</asp:Label>
+            <div class="col-md-10">
+                <asp:FileUpload runat="server" ID="img" />
+            </div>
+        </div>
+    </div>
+    <div class="form-grop col-md-12">
+        <div class="form-inline">
+            <div class="col-md-12">
+                <asp:Button Text="Salvar" runat="server" ID="btnSalvar" OnClick="btnSalvar_Click" CssClass="btn btn-success" />
+            </div>
         </div>
     </div>
 </div>
-<div class="form-group">
-    <div class="form-inline">
-        <asp:Label Text="Conteudo" runat="server" />
-        <div class="col-md-11">
-            <asp:TextBox runat="server" TextMode="MultiLine" ID="txtConteudo" CssClass="form-control" />
-        </div>
-    </div>
-</div>
-<div class="form-grop">
-    <div class="form-inline">
-        <asp:Label runat="server" CssClass="col-sm-2">Escolha uma imagem</asp:Label>
-        <div class="col-md-10">
-            <asp:FileUpload runat="server" ID="img" />
-        </div>
-    </div>
-</div>
-<div class="form-grop">
-    <div class="form-inline">
-        <div class="col-md-12">
-            <asp:Button Text="Salvar" runat="server" ID="btnSalvar" OnClick="btnSalvar_Click" />
-        </div>
-    </div>
-</div>
-
 <uc:Alerta runat="server" ID="ucAlerta" />
 <!--
 <script>

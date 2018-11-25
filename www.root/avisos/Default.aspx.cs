@@ -10,8 +10,7 @@ public partial class avisos_Default : System.Web.UI.Page
     public int TipoPagina
     {
         get
-        {
-            int n1;
+        {            int n1;
             int.TryParse(Request.QueryString["acao"], out n1);
             return n1;
         }

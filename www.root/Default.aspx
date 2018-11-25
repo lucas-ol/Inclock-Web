@@ -5,38 +5,7 @@
     <script src="/Scripts/owlcarousel/owl.carousel.min.js"></script>
     <script src="Scripts/avisos.js"></script>
     <style>
-        .owl-carousel {
-            touch-action: none;
-        }
-
-        .owl-theme .owl-nav.disabled + .owl-dots {
-            top: 10px;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            position: absolute;
-            margin-top: 10px;
-        }
-
-        .owl-theme .owl-dots .owl-dot {
-            display: inline-block;
-            zoom: 1;
-        }
-
-            .owl-theme .owl-dots .owl-dot span {
-                width: 10px;
-                height: 10px;
-                margin: 5px 7px;
-                background: #D6D6D6;
-                display: block;
-                -webkit-backface-visibility: visible;
-                transition: opacity 200ms ease;
-                border-radius: 30px;
-            }
-
-            .owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
-                background: #333333;
-            }
-
+      
         .owl-qr {
             position: absolute;
             right: 15%;
@@ -92,7 +61,7 @@
     <!-- Slider -->
 
     <div id="owl-container" class="loader">
-        <asp:GridView ID="GridQrCode" runat="server" AutoGenerateColumns="False" GridLines="None" CssClass="owl-qr w-25 h-25 display-3" ClientIDMode="Static">
+        <asp:GridView ID="GridQrCode" runat="server" AutoGenerateColumns="False" GridLines="None" CssClass="owl-qr w-25 h-25" ClientIDMode="Static">
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>

@@ -33,7 +33,7 @@
 
     void Session_End(object sender, EventArgs e)
     {        //      var user = Autenticador.Ticket;           
-        Application_AcquireRequestState(null, null);
+       // Application_AcquireRequestState(null, null);
     }
     protected void Application_AcquireRequestState(object sender, System.EventArgs e)
     {

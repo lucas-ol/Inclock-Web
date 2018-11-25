@@ -37,7 +37,7 @@ public partial class inc_noticia_Cadastrar : System.Web.UI.UserControl
                 Imagem = img.FileName
             };
 
-            feedBack = new Portable.BL.Avisos().InserirNoticia(avisos);
+            feedBack = Portable.BL.Avisos.Salvar(avisos);
         }
 
         if (feedBack.Status)
