@@ -17,13 +17,27 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/Funcionario/cadastrar.aspx">Cadastrar</a>
                             <a class="dropdown-item" href="/Funcionario">Listar</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Relatorios</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/Funcionario/cadastrar.aspx">Graficos</a>
+                            <a class="dropdown-item" href="/Funcionario">Pontos</a>
                             <a class="dropdown-item " href="#">aqui</a>
                         </div>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="/avisos?acao=1">Avisos</a></li>
-                    <li class="nav-item"><a class=" nav-link" href="#contact">Contato</a></li>
+                    <li class="nav-item dropdown">
+                        <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Ponto</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/Ponto/Ponto.aspx">Registrar</a>
+                            <a class="dropdown-item" href="Ponto/Default.aspx">Espelho de ponto</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/avisos">Avisos</a></li>
+
                 </ul>
-              <uc:login runat="server" id="ucLogin" />
+                <uc:Login runat="server" ID="ucLogin" />
             </div>
         </div>
         <!-- fim do menu-->

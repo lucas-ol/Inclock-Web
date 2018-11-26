@@ -16,9 +16,10 @@ namespace Autenticador
         [WebInvoke(Method = "OPTIONS", UriTemplate = "*")]
         void GetOptions();
 
-        [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json
+        
+        [WebInvoke(Method ="GET" ,ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json
             , UriTemplate = "logar/{password}/{login}/{dispositivo}")]
+        [OperationContract]
         Funcionario Logar(string password, string login,string dispositivo);
 
         [OperationContract]
