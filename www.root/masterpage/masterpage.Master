@@ -46,7 +46,7 @@
 <body>
 
     <form id="form1" runat="server">
-        <asp:ScriptManager runat="server" ID="scpManager" />
+        <%-- asp:ScriptManager runat="server" ID="scpManager" / --%>
         <uc:TopoADM runat="server" ID="topoAdm" Visible="false" />
         <uc:TopoFUNC runat="server" ID="topoFunc" Visible="true" />
 

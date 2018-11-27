@@ -3,7 +3,7 @@
 <link href="/Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
 <asp:LinkButton Text="Sair" runat="server" ID="btnLogout" OnClick="btnLogout_Click" CssClass=" login-button" />
 <asp:Panel runat="server" ID="login">
-    <a href="javascript:void(0)" class="login-button"  data-toggle="modal">Logar</a>
+    <a href="javascript:void(0)" onclick="CriarUrlLogin()" class="login-button" data-toggle="modal">Logar</a>
     <asp:Panel runat="server" ID="pnlLogin" DefaultButton="btnLogar">
         <div class="modal fade" id="loginModal" data-modal="login">
             <div class="modal-dialog">
@@ -34,5 +34,8 @@
                 $('#loginModal').modal('show');
             }
         });
+        function CriarUrlLogin() {
+            window.location.href = window.location.href + window.location.href.indexOf('?') >= 0 ? '&' : '?' + 'logar=true';
+        }
     </script>
 </asp:Panel>
