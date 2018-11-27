@@ -17,7 +17,7 @@ namespace Library.Inclock.web.br.BL
     public class Client : IDisposable
     {
         public Autenticador.ServiceClient Service { get; private set; }
-        public  EndpointAddress Address = new EndpointAddress(ConfigurationManager.AppSettings["apiSoap"]);
+        public  string Address = (ConfigurationManager.AppSettings["apiSoap"]);
         private bool disposed = false;
         public bool Disposed
         {
@@ -31,7 +31,8 @@ namespace Library.Inclock.web.br.BL
 
         public Client()
         {
-            Service = new Autenticador.ServiceClient("Autenticador", Address);
+            
+            Service = new Autenticador.ServiceClient("BasicHttpBinding_IService", Address);
         }
         public Client(IEnumerable<KeyValuePair<string, string>> headers)
         {

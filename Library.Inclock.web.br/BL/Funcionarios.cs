@@ -216,8 +216,10 @@ namespace Library.Inclock.web.br.BL
             var func = new Funcionario();
             try
             {
-                Autenticador.ServiceClient Client = new Autenticador.ServiceClient();
-                func = Client.GetUserById(ID.ToString());
+                using (var client = new Client())
+                {
+                    func = client.Service.GetUserById(ID.ToString());
+                }
                 return func;
             }
             catch (Exception ex)

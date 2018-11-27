@@ -11,7 +11,7 @@
     {
         // Code that runs on application startup    
         RegisterRoutes(RouteTable.Routes);
-        HttpContext.Current.Application["logados"] = new List<int>();
+        HttpContext.Current.Application["logados"] = new List<int>() { -1 };
     }
 
     void Application_End(object sender, EventArgs e)
@@ -33,7 +33,7 @@
 
     void Session_End(object sender, EventArgs e)
     {        //      var user = Autenticador.Ticket;           
-       // Application_AcquireRequestState(null, null);
+             // Application_AcquireRequestState(null, null);
     }
     protected void Application_AcquireRequestState(object sender, System.EventArgs e)
     {
@@ -45,9 +45,7 @@
             {
                 if (User.Identity.IsAuthenticated && Autenticador.Ticket.Expired)
                 {
-                    var id = Convert.ToInt32(Autenticador.CurrentUser.Id);
-                    HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, "") { Expires = DateTime.Now.AddDays(-1) });
-                    HttpContext.Current.Response.Cookies.Add(new HttpCookie("integracao", "") { Expires = DateTime.Now.AddDays(-1) });
+                    var id = Convert.ToInt32(Autenticador.CurrentUser.Id);                   
                     Autenticador.Logados.Remove(id);
                 }
             }
@@ -60,10 +58,9 @@
 
     void Application_PostAuthenticateRequest(object sender, EventArgs e)
     {
-        if (!HttpContext.Current.User.Identity.IsAuthenticated && Autenticador.Ticket != null)
-        {
+        
             Autenticador.Instance.Autenticar();
-        }
+        
     }
     void RegisterRoutes(RouteCollection routes)
     {

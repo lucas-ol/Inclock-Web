@@ -32,6 +32,7 @@ namespace Library.Inclock.web.br.BL.Common
             }
             set { _logados = value; }
         }
+       
         public static FormsAuthenticationTicket Ticket
         {
             get
@@ -45,6 +46,10 @@ namespace Library.Inclock.web.br.BL.Common
                 else
                     ticket = null;
                 return ticket;
+            }
+            set
+            {
+                Ticket = value;
             }
         }
         public static Funcionario CurrentUser
@@ -79,9 +84,17 @@ namespace Library.Inclock.web.br.BL.Common
         }
         public static void Logout()
         {
-            FormsAuthentication.SignOut();
+
+            //FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, CurrentUser.Nome, DateTime.MaxValue, DateTime.MinValue, true, Newtonsoft.Json.JsonConvert.SerializeObject(CurrentUser), FormsAuthentication.FormsCookiePath);
+            //   string encrypt = FormsAuthentication.Encrypt(ticket);
+            //     HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encrypt));
+
+
+         //   HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, "") { Expires = DateTime.Now.AddDays(-1) });
+         //   HttpContext.Current.Response.Cookies.Add(new HttpCookie("integracao", "") { Expires = DateTime.Now.AddDays(-1) });
+
             if (HttpContext.Current != null)
-            {
+            {                               
                 HttpContext.Current.Session.Abandon();
                 HttpContext.Current.Session.Clear();
            

@@ -57,10 +57,10 @@ public partial class inc_Login : System.Web.UI.UserControl
             else
             {
                 Autenticador.CriaCookieIntegracao(funcionarioJson);
-                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, funcionarioJson.Nome, DateTime.Now, DateTime.MaxValue, false, Newtonsoft.Json.JsonConvert.SerializeObject(funcionarioJson), FormsAuthentication.FormsCookiePath);
+                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, funcionarioJson.Nome, DateTime.Now, DateTime.MaxValue, true, Newtonsoft.Json.JsonConvert.SerializeObject(funcionarioJson), FormsAuthentication.FormsCookiePath);
                 string encrypt = FormsAuthentication.Encrypt(ticket);
                 Autenticador.Logados.Add(funcionarioJson.Id);
-                Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encrypt));
+                               Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encrypt));
                 Response.Redirect(FormsAuthentication.GetRedirectUrl(ReturnUrl, false), true);
             }
         }

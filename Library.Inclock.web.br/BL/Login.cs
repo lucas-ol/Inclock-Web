@@ -24,11 +24,12 @@ namespace Library.Inclock.web.br.BL
             Funcionario funcionario = new Funcionario();
             try
             {
-                var cliente = new Autenticador.ServiceClient();
-                funcionario = cliente.Logar(user.Senha, user.Login, "web");
+                using (var cliente = new Client())
+                {
+                    funcionario = cliente.Service.Logar(user.Senha, user.Login, "web");
+                }
                 if (funcionario.Id == 0)
                     return null;
-
             }
             catch (Exception ex)
             {
@@ -57,7 +58,7 @@ namespace Library.Inclock.web.br.BL
             using (Client client = new Client())
             {
                 client.Service.ApagarSessao(func, dispositivo);
-                var response = HttpContext.Current.Response;                
+                var response = HttpContext.Current.Response;
             }
         }
     }
