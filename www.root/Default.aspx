@@ -65,7 +65,7 @@
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:Image ID="Image1" runat="server" ImageUrl='<%# "handler/QRCode.ashx?"+Eval("id") %>' CssClass="img-fluid" />
+                        <asp:Image ID="img" runat="server" ImageUrl='<%# "handler/QRCode.ashx?"+Eval("id") %>' CssClass="img-fluid" />
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="id" HeaderText="id" />

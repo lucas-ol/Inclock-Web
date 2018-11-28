@@ -81,6 +81,7 @@
     <Compile Include="BL\Funcionarios.cs" />
     <Compile Include="BL\Login.cs" />
     <Compile Include="BL\Pontos.cs" />
+    <Compile Include="BL\QrCode.cs" />
     <Compile Include="Connected Services\Autenticador\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

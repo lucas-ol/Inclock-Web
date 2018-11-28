@@ -196,5 +196,13 @@ namespace Autenticador.BL
             }
             return pontos;
         }
+        public bool VerificarCodigo(string codigo)
+        {
+            using (var db = new DataBase())
+            {
+                db.MySqlAdicionaParametro("code", codigo);
+                db.MySqlLeitura("",CommandType.Text);
+            }
+        }
     }
 }
