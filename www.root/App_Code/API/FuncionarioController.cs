@@ -1,4 +1,5 @@
-﻿using Library.Inclock.web.br.BL.Common;
+﻿using Library.Inclock.web.br.BL;
+using Library.Inclock.web.br.BL.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,4 +16,5 @@ public class FuncionarioController : ApiController
     {
         return Autenticador.CurrentUser.Id;
     }
+    
 }

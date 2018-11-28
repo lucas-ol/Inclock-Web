@@ -63,9 +63,9 @@
         
     }
     void RegisterRoutes(RouteCollection routes)
-    {
+    { 
         routes.MapHttpRoute(
-                 name: "api",
+                 name: "routeTemplate",
                  routeTemplate: "api/{controller}/{action}/{id}",
                  defaults: new { id = System.Web.Http.RouteParameter.Optional });
     }
