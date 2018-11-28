@@ -112,8 +112,9 @@
                       $(this).css("width", largura)
                   });
               }
-              setTimeout(CheckCode(),5000)
-          });
+              
+        });
+        setTimeout(CheckCode(), 500)
           function GetNewQr() {
               $.ajax({
                   method: 'GET',
@@ -133,8 +134,7 @@
          function CheckCode() {
               $.ajax({
                   method: 'GET',
-                  url:  "/api/Code/CheckCode",
-                  data: JSON.stringify({ code: $('#hdnCode').val()}),
+                  url:  "/api/Code/get/"+$('#hdnCode').val(),                
                   contentType: "application/json; charset=utf-8",
                   dataType: "json",
                   headers: { integracao: window.integracao },

@@ -66,7 +66,7 @@
     { 
         routes.MapHttpRoute(
                  name: "routeTemplate",
-                 routeTemplate: "api/{controller}/{action}/{id}",
-                 defaults: new { id = System.Web.Http.RouteParameter.Optional });
+                 routeTemplate: "api/{controller}/{action}/{code}",
+                 defaults: new { code = System.Web.Http.RouteParameter.Optional });
     }
 </script>
