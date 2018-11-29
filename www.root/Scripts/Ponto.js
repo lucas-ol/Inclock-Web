@@ -9,7 +9,7 @@ var Ponto = function () {
             $.ajax({
                 method: 'POST',
                 url: appRest + "CheckPoint",
-                data: JSON.stringify({ funcionario: dados.toString(), type: type }),
+                data: JSON.stringify({ funcionario: dados.toString(), type: type, code: "web" }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 headers: { integracao: window.integracao },
@@ -22,11 +22,11 @@ var Ponto = function () {
             });
 
         }, function (erro) {
-            console.log(erro);
+            ShowMsg("Sessão expirada");
         });
     };
     self.FuncionarioLogado = function () {
-        return new Promise(resolve => {
+        return new Promise((resolve,reject) => {
             $.ajax({
                 method: 'GET',
                 url: '/api/funcionario/GetUsuarioLogado',
@@ -36,7 +36,7 @@ var Ponto = function () {
                     resolve(data);
                 },
                 error: function (erro, textStatus, naosei) {
-                    resolve(textStatus);
+                    reject(textStatus);
                 }
             });
         });
@@ -45,6 +45,6 @@ var Ponto = function () {
         $('#btnEntrada').on('click', function () { self.baterPonto('E'); });
         $('#btnSaida').on('click', function () { self.baterPonto('S'); });
     };
-   
+
     self.onInit();
 };

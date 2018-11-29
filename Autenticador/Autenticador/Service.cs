@@ -118,7 +118,7 @@ namespace Autenticador
             return new CheckPoint().GetPoint(idd);
         }
         [Role(Roles = new string[] { "ADM", "FUNC" })]
-        public FeedBack CheckPoint(string funcionario, string type)
+        public FeedBack CheckPoint(string funcionario, string type, string code)
         {
             using (var ig = new Integracao())
             {
@@ -128,7 +128,7 @@ namespace Autenticador
                         return new FeedBack() { Status = false, Mensagem = "funcionario invalido" };
                     if (!char.TryParse(type, out char tp))
                         return new FeedBack() { Status = false, Mensagem = "tipo invalido" };
-                    return new CheckPoint().BaterPonto(func, tp);
+                    return new CheckPoint().BaterPonto(func, tp, code);
                 }
                 else
                     return new FeedBack() { Mensagem = Integracao.MENSAGEMERRO, Status = false };

@@ -15,7 +15,7 @@ public partial class inc_Login : System.Web.UI.UserControl
     {
         get
         {
-            string str = string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]) ? "/" : Request.QueryString["ReturnUrl"];
+            string str = string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]) ? Request.Url.ToString() : Request.QueryString["ReturnUrl"];
             return str;
         }
     }

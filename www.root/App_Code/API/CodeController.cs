@@ -5,24 +5,27 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-
+[Authorize]
 public class CodeController : ApiController
 {
     [HttpGet]
+    [AllowAnonymous]
+    [Authorize(Users = "*", Roles = "*")]
     public string Get()
     {
         return QrCode.GetNewCode();
     }
-   
-    // GET api/<controller>/5
-    public string Get(string code)
+    
+    [AllowAnonymous]
+    [Authorize(Users = "*", Roles = "*")]
+    public bool Get(string code)
     {
         if (string.IsNullOrEmpty(code))
-            return code;
+            return false;
 
-        return QrCode.CheckCode(code) ? QrCode.GetNewCode() : code;
+        return QrCode.CheckCode(code);
     }
 
     // POST api/<controller>
-   
+
 }

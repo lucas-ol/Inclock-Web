@@ -11,7 +11,9 @@
     {
         // Code that runs on application startup    
         RegisterRoutes(RouteTable.Routes);
+        GlobalConfiguration.Configure(Register);
         HttpContext.Current.Application["logados"] = new List<int>() { -1 };
+
     }
 
     void Application_End(object sender, EventArgs e)
@@ -45,7 +47,7 @@
             {
                 if (User.Identity.IsAuthenticated && Autenticador.Ticket.Expired)
                 {
-                    var id = Convert.ToInt32(Autenticador.CurrentUser.Id);                   
+                    var id = Convert.ToInt32(Autenticador.CurrentUser.Id);
                     Autenticador.Logados.Remove(id);
                 }
             }
@@ -58,15 +60,20 @@
 
     void Application_PostAuthenticateRequest(object sender, EventArgs e)
     {
-        
-            Autenticador.Instance.Autenticar();
-        
+
+        Autenticador.Instance.Autenticar();
+
     }
     void RegisterRoutes(RouteCollection routes)
-    { 
+    {
         routes.MapHttpRoute(
                  name: "routeTemplate",
                  routeTemplate: "api/{controller}/{action}/{code}",
-                 defaults: new { code = System.Web.Http.RouteParameter.Optional });
+                 defaults: new { code =  System.Web.Http.RouteParameter.Optional } );
+    }
+    public void Register(HttpConfiguration config)
+    {
+        config.Filters.Add(new AuthorizeAttribute());
+        //      config.Filters.Add(new AllowAnonymousAttribute());
     }
 </script>

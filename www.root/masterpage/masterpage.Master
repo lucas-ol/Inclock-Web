@@ -28,7 +28,15 @@
                 window.integracao = co;
             else
                 window.integracao = co.substr(0, co.indexOf(';'));            
-        });</script>
+        });
+
+        function window_onunload() {
+            if (window.screenTop > 10000 && window.screenLeft > 10000)
+            { }
+            $.post("/Logoff.aspx");
+            
+        }
+    </script>
     <asp:ContentPlaceHolder runat="server" ID="Head">
     </asp:ContentPlaceHolder>
     <script>        
@@ -43,7 +51,7 @@
         }
     </style>
 </head>
-<body>
+<body onunload="window_onunload()">
 
     <form id="form1" runat="server">
         <%-- asp:ScriptManager runat="server" ID="scpManager" / --%>

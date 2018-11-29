@@ -13,13 +13,17 @@ namespace Library.Inclock.web.br.BL
         {
             using (var db = new DataBase())
             {
-                db.MySqlAdicionaParametro("expirado", false);
-                var table = db.MySqlLeitura("insert into log_codes (expirado) values(@expirado);select last_insert_id() as id;", System.Data.CommandType.Text);
-                if (table.TableName != "erro")
+                string code = GetLastCodeNotUsed() ?? "";
+                if (string.IsNullOrEmpty(code))
                 {
-                    return table.Select().Select(x => x["id"].ToString()).FirstOrDefault();
+                    db.MySqlAdicionaParametro("expirado", false);
+                    var table = db.MySqlLeitura("insert into log_codes (expirado) values(@expirado);select last_insert_id() as id;", System.Data.CommandType.Text);
+                    if (table.TableName != "erro")
+                    {
+                        code = table.Select().Select(x => x["id"].ToString()).FirstOrDefault();
+                    }
                 }
-                return "erro";
+                return code;
             }
         }
         public static bool CheckCode(string oldCode)
@@ -31,9 +35,21 @@ namespace Library.Inclock.web.br.BL
                 if (table.TableName != "erro")
                 {
                     return table.Select().Select(x => Convert.ToBoolean(x["expirado"])).FirstOrDefault();
-                }               
+                }
             }
             return true;
+        }
+        public static string GetLastCodeNotUsed()
+        {
+            using (var db = new DataBase())
+            {
+                var table = db.MySqlLeitura("select * from log_codes where !expirado limit 1", System.Data.CommandType.Text);
+                if (table.TableName != "erro" && table.Rows.Count > 0)
+                {
+                    return table.Select().Select(x => x["id"].ToString()).FirstOrDefault();
+                }
+            }
+            return "";
         }
     }
 }

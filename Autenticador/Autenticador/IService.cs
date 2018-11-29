@@ -45,7 +45,7 @@ namespace Autenticador
 
         [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped)]
-        FeedBack CheckPoint(string funcionario, string type);
+        FeedBack CheckPoint(string funcionario, string type, string code);
 
         [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "GET",

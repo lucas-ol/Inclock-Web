@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Autenticador.BL
 {
@@ -13,6 +14,7 @@ namespace Autenticador.BL
     {
         public const string MSGATRASOSAIDA = "saida em atraso";
         public const string MSGATRASOENTRADA = "entrada em atraso";
+        public const string OPERADORWEB = "web";
         private TimeSpan Tolerancia = new TimeSpan(0, 15, 0); // ele tem 15 minutos de tolerancia, para entrada ou saida            
         delegate Expediente findExp(int id);
         DateTime Data_Hoje
@@ -25,14 +27,22 @@ namespace Autenticador.BL
         public CheckPoint()
         {
         }
-        public FeedBack BaterPonto(int funcionario, char type)
+        public FeedBack BaterPonto(int funcionario, char type, string codigo = "0")
         {
-            if (char.ToUpper(type) == 'E')
-                return BaterEntrada(funcionario);
+            FeedBack feed = new FeedBack();
+            if (CheckCode(codigo))
+                feed = new FeedBack { Status = false, Mensagem = "O codigo QR esta espirado tente novamente" };
+            else if (char.ToUpper(type) == 'E')
+                feed = BaterEntrada(funcionario);
             else if (char.ToUpper(type) == 'S')
-                return BaterSaida(funcionario);
+                feed = BaterSaida(funcionario);
             else
-                return new FeedBack { Status = false, Mensagem = "Opção invalida" };
+                feed = new FeedBack { Status = false, Mensagem = "Opção invalida" };
+
+            if (feed.Status && codigo != OPERADORWEB)
+                UseCode(codigo);
+
+            return feed;
         }
         private FeedBack BaterEntrada(int funcionario)
         {
@@ -42,7 +52,7 @@ namespace Autenticador.BL
             if (expediente == null)
                 return new FeedBack { Mensagem = "Você não pode bater o ponto", Status = false };
 
-            if (GetExpelhoPonto(funcionario, expediente.Id, null, Data_Hoje.Date.ToString("yyyy-MM-dd"), out Ponto ponto))
+            if (GetExpelhoPonto(funcionario, expediente.Id, Data_Hoje.Date.ToString("yyyy-MM-dd"), null, out Ponto ponto))
             {
                 if (!string.IsNullOrEmpty(ponto.Entrada))
                     return new FeedBack { Mensagem = "Voce ja bateu o ponto de entrada no dia " + ponto.DataEntrada + " as " + ponto.Entrada, Status = false };
@@ -196,13 +206,31 @@ namespace Autenticador.BL
             }
             return pontos;
         }
-        public bool VerificarCodigo(string codigo)
+        public bool CheckCode(string codigo)
         {
+            if (codigo != OPERADORWEB)
+                return false;
             using (var db = new DataBase())
             {
                 db.MySqlAdicionaParametro("code", codigo);
-                db.MySqlLeitura("",CommandType.Text);
+                var table = db.MySqlLeitura("select expirado from log_codes where id = @code", System.Data.CommandType.Text);
+                if (table.TableName != "erro")
+                {
+                    return table.Select().Select(x => Convert.ToBoolean(x["expirado"])).FirstOrDefault();
+                }
             }
+            return true;
+        }
+        public void UseCode(string codigo)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                using (var db = new DataBase())
+                {
+                    db.MySqlAdicionaParametro("code", codigo);
+                    var linhas = db.MySqlExecutaComando("update log_codes set expirado = 1  where id = @code", System.Data.CommandType.Text);
+                }
+            });
         }
     }
 }
