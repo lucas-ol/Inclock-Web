@@ -70,7 +70,7 @@ namespace Autenticador.BL
             using (var db = new DataBase())
             {
                 db.MySqlAdicionaParametro("login", Login);
-                return JsonConvert.SerializeObject(db.MySqlLeitura("select nome, email from funcionarios where login = @login", System.Data.CommandType.Text));
+                return JsonConvert.SerializeObject(db.MySqlLeitura("select * from funcionarios where login = @login", System.Data.CommandType.Text));
             }
         }
         public static Funcionario GetUserById(int id)

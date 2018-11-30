@@ -90,7 +90,7 @@
             <div class="form-inline">
                 <label for="Corpo_txtAniversario" class="col-sm-1">Nacimento*</label>
                 <div class="col-md-3">
-                    <asp:TextBox runat="server" ID="txtAniversario" CssClass="CampoOk form-control "></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtAniversario" CssClass="CampoOk form-control calendario"></asp:TextBox>
                 </div>
 
                 <label for="Corpo_txtEmail" class="col-sm-1">Email*</label>

@@ -11,7 +11,7 @@
     <link href="/Styles/Style.css" rel="stylesheet" />
     <link href="/Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
 
-    <script src="/Scripts/jquery.js"></script>
+    <script src="/Scripts/jquery.js"></script>    
     <script src="/Scripts/popper/popper.js"></script>
     <script src="/Scripts/bootstrap/bootstrap.js"></script>
     <script> 
@@ -71,6 +71,6 @@
 
 
     <!--FrameWorks secundarias-->
-
+    <script src="/Scripts/geral.js"></script>
 </body>
 </html>

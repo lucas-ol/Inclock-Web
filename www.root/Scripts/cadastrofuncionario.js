@@ -1,22 +1,4 @@
-﻿$(function () {
-
-    $("#Corpo_txtAniversario").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-        dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-        nextText: 'Proximo',
-        prevText: 'Anterior',
-        yearRange: "-100:+0",
-        dateFormat: "dd/mm/yy"
-    });
-    $("#Corpo_txtAniversario").keypress(function () {
-        $(this).mask("00/00/0000", { placeholder: "__/__/____" });
-    });
-
+﻿$(function () {  
     /*Eventos keypress que vai inserir a mascara em alguns campos */
     /*Mascara do cep */
     $("#Corpo_txtCep").keypress(function () {

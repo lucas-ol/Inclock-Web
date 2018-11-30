@@ -30,8 +30,7 @@ namespace Library.Inclock.web.br.BL
         }
 
         public Client()
-        {
-            
+        {            
             Service = new Autenticador.ServiceClient("BasicHttpBinding_IService", Address);
         }
         public Client(IEnumerable<KeyValuePair<string, string>> headers)

@@ -40,7 +40,7 @@ namespace Autenticador.BL
                 try
                 {
                     var stack = new StackTrace().GetFrame(2);
-                    var bt = Classes.Common.Rijndael.DescriptografaFromBase64(encryptedRoles).Split(new[] { ';' });
+                    var bt = string.IsNullOrEmpty(encryptedRoles) ? new string[] { "" } : Classes.Common.Rijndael.DescriptografaFromBase64(encryptedRoles).Split(new[] { ';' });
                     return IsInRole<Service>(bt, stack.GetMethod().Name);
                 }
                 catch
@@ -52,7 +52,7 @@ namespace Autenticador.BL
         public static void GetUserAgent()
         {
             var request = WebOperationContext.Current;
-            
+
             var bt = request.IncomingRequest.Headers["Host"];
         }
 

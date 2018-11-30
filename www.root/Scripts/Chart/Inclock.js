@@ -19,8 +19,7 @@ var ChartFactory = function (container) {
             }
         });
     };
-
-    self.GerarRLPonto = function (data, canvas) {
+    self.AtualizarRLPonto = function (data) {
         var labels = data.map(function (e) {
             var dt = new Date(e.DataEntrada);
             return dt;
@@ -28,6 +27,9 @@ var ChartFactory = function (container) {
         var dados = data.map(function (e) {
             return e.age;
         });
+    };
+    self.GerarRLPonto = function (canvas) {
+
         var ctx = $(canvas)[0].getContext('2d');
         var grafico = {
             labels: MONTHS.slice(0, 6),
@@ -37,7 +39,7 @@ var ChartFactory = function (container) {
                 borderColor: "rgba(255, 99, 132, 0.5)",
                 borderWidth: 1,
                 data: [
-                    dados
+                    0
                 ]
             },
             {
@@ -46,8 +48,7 @@ var ChartFactory = function (container) {
                 borderColor: "rgba(255, 99, 132, 0.5)",
                 borderWidth: 1,
                 data: [
-                    1,
-                    2, 4, 5, 6, 5
+                   0
                 ]
             }]
         };
@@ -66,6 +67,13 @@ var ChartFactory = function (container) {
             }
         };
         window.RLPonto = new Chart(ctx, options);
+    };
+    self.onInit = function () {
+        self.GerarRLPonto($('.rlPonto'));
+    };
+
+    self.PreencherTabela = function () {
+
     };
 };
 

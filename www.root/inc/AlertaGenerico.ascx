@@ -4,7 +4,7 @@
 <script>
      function ShowMsg (msg, bool) {       
         $('#lblConteudo').text(msg);
-        $(".alert").addClass('alert-dismissible ' + bool == true ? 'alert-success' : 'alert-danger')
+        $(".alert").addClass('alert-dismissible ' + (bool == true ? 'alert-success' : 'alert-danger'))
         $(".alert").toggle(1000).delay(5000).toggle(1000);
     }
 </script>

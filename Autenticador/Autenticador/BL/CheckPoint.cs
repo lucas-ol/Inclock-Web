@@ -1,5 +1,6 @@
 ﻿using Classes.Common;
 using Classes.VO;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -123,7 +124,7 @@ namespace Autenticador.BL
                 db.MySqlAdicionaParametro("dta_de", Convert.ToDateTime(initialDate).ToString("yyyy-MM-dd"));
                 db.MySqlAdicionaParametro("dta_ate", Convert.ToDateTime(finalDate).ToString("yyyy-MM-dd"));
                 db.MySqlAdicionaParametro("funcionario", funcionario);
-                var tb = db.MySqlLeitura("select * from pontos where funcionario_id = @funcionario and dta_entrada between @dta_de and @dta_ate order by dta_entrada; ", CommandType.Text);
+                var tb = db.MySqlLeitura("select * from pontos where (funcionario_id = @funcionario or @funcionario = 0 ) and dta_entrada between @dta_de and @dta_ate order by dta_entrada; ", CommandType.Text);
                 if (tb == null)
                     throw new Exception("erro desconhecido");
                 else
@@ -133,6 +134,7 @@ namespace Autenticador.BL
                 return pontos;
             }
         }
+        /*
         public List<Ponto> GetCheckPointByMonth(int month, int funcionario)
         {
             using (DataBase db = new DataBase())
@@ -162,7 +164,7 @@ namespace Autenticador.BL
                 return ListExpediente;
             }
         }
-
+*/
         private FeedBack AlterarPonto(Ponto ponto)
         {
             using (DataBase db = new DataBase())
@@ -231,6 +233,43 @@ namespace Autenticador.BL
                     var linhas = db.MySqlExecutaComando("update log_codes set expirado = 1  where id = @code", System.Data.CommandType.Text);
                 }
             });
+        }
+        public BasicInformations GetBasicInformations(string initialDate, string finalDate, string funcionario)
+        {
+            var info = new BasicInformations();
+            using (DataBase db = new DataBase())
+            {
+                List<Ponto> pontos = new List<Ponto>();
+                db.MySqlAdicionaParametro("dta_de", Convert.ToDateTime(initialDate).ToString("yyyy-MM-dd"));
+                db.MySqlAdicionaParametro("dta_ate", Convert.ToDateTime(finalDate)  .ToString("yyyy-MM-dd"));
+                db.MySqlAdicionaParametro("funcionario", funcionario);
+                var tb = db.MySqlLeitura("select * from pontos where (funcionario_id = @funcionario or @funcionario = 0 ) and dta_entrada between @dta_de and @dta_ate order by dta_entrada; ", CommandType.Text);
+                if (tb == null)
+                    throw new Exception("erro desconhecido");
+                else
+                {
+                    pontos = ConvertTableToPonto(tb, true).ToList();
+                }
+              
+            }
+            return info;
+        }
+        public class BasicInformations
+        {
+            [JsonProperty("Informacao")]
+            public Informacao[] Informacoes { get; set; }
+
+            public class Informacao
+            {
+                [JsonProperty("funcionario")]
+                public long Funcionario { get; set; }
+
+                [JsonProperty("tipo")]
+                public string Tipo { get; set; }
+
+                [JsonProperty("QTDE")]
+                public long Qtde { get; set; }
+            }
         }
     }
 }
