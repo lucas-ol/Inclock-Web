@@ -9,7 +9,8 @@
         text-align: left;
     }
 </style>
-<div class="row mt-3 ml-5">
+<div class=" mt-3 ml-5">
+
     <div class="form-group col-md-12">
         <div class="form-inline">
             <asp:Label runat="server" ID="lblTitulo" Text="Titulo" AssociatedControlID="" CssClass="col-sm-1" />
@@ -42,6 +43,7 @@
         </div>
     </div>
 </div>
+<hr />
 <uc:Alerta runat="server" ID="ucAlerta" />
 <!--
 <script>

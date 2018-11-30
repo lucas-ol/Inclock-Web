@@ -63,8 +63,8 @@
         }
 
         @media (max-width: 1333px) {
-            #GridQrCode {
-                display: none;
+            div#GridQrCode {
+                display: none !important;
             }
         }
     </style>
@@ -76,9 +76,10 @@
     <!-- Slider -->
 
     <div id="owl-container" class="loader">
-        <div id="GridQrCode" class="owl-qr">
+        <div id="GridQrCode" class="owl-qr" style="display:none" >
             <asp:HiddenField runat="server" ID="hdnCode" ClientIDMode="Static" />
-            <div id="img" class="img-fluid" style="padding: 20px; background-color: white; position: relative"></div>
+            <div id="img" class="img-fluid" style="padding: 20px; background-color: white; position: relative">
+            </div>
         </div>
         <div class="owl-carousel owl-theme" id="carrosel">
         </div>
@@ -91,8 +92,9 @@
             colorLight: "#ffffff",
             correctLevel: QRCode.CorrectLevel.H
         });
-        CheckCode();
+      
         $(function () {
+            CheckCode();
             var av = new Avisos();
             var promise = av.GetAvisos(10, 0).then(function (resolve) {
                 $("#carrosel").append(av.CreateObjectHtml(resolve,'<% =@Classes.Common.Config.DiretorioImagensAvisos%>'))
@@ -105,8 +107,8 @@
                     autoplayHoverPause: false,
                     dot: true
                 });
-                ResizeCarouselFullScreen('.autoimg');
-                $('#owl-container').removeClass('loader');
+                ResizeCarouselFullScreen('.autoimg');                
+                $('#owl-container').removeClass('loader');               
             }).catch(function (rejetc) {
                 $('#owl-container').append(rejetc);
                 $('#owl-container').removeClass('loader').addClass('error');
@@ -169,6 +171,7 @@
             if ($('#hdnCode').val() == codigo) {
                 return;
             }
+             $('#GridQrCode').css('display','block');
             qrcode.clear(); // clear the code.
             qrcode.makeCode(codigo);
 

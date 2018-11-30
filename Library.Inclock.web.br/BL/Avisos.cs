@@ -2,11 +2,12 @@
 using Classes.VO;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Web.UI.WebControls;
 
 namespace Library.Inclock.web.br.BL
 {
@@ -49,10 +50,15 @@ namespace Library.Inclock.web.br.BL
                 return db.MySqlExecutaComando("insert into avisos(titulo,conteudo,imagem) values(@titulo_,@conteudo_,@img)", CommandType.Text);
             }
         }
-        public static FeedBack Alterar(Aviso aviso)
+        public static FeedBack Alterar(Aviso aviso, FileUpload fp)
         {
             using (var db = new DataBase())
             {
+                if (fp.HasFile)
+                {
+                    UtilFile.Delete(aviso.Imagem);
+                    fp.SaveAs(aviso.Imagem);
+                }
                 db.MySqlAdicionaParametro("titulo_", aviso.Titulo);
                 db.MySqlAdicionaParametro("conteudo_", aviso.Conteudo);
                 db.MySqlAdicionaParametro("img", aviso.Imagem);
@@ -60,12 +66,13 @@ namespace Library.Inclock.web.br.BL
                 return db.MySqlExecutaComando("update avisos set titulo = @titulo_ ,conteudo = @conteudo_ , imagem = @img where id = @id", CommandType.Text);
             }
         }
-        public static bool Excluir(int id)
+        public static bool AtivarOuDesativar(int id, bool ativo = true)
         {
             using (var db = new DataBase())
-            {                
-                db.MySqlAdicionaParametro("id",id);
-                return db.MySqlExecutaComando("update avisos set titulo = @titulo_ ,conteudo = @conteudo_ , imagem = @img where id = @id", CommandType.Text).Status ;
+            {
+                db.MySqlAdicionaParametro("id", id);
+                db.MySqlAdicionaParametro("ativo", ativo);
+                return db.MySqlExecutaComando("update avisos set ativo = @ativo where id = @id", CommandType.Text).Status;
             }
         }
     }
