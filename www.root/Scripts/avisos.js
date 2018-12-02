@@ -22,7 +22,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
-                    resolve(data);
+                    resolve(data.GetAvisosResult);
                 },
                 error: function (erro, t, y, kiko) {
                     reject(kiko);

@@ -1,4 +1,6 @@
 ﻿$(function () {  
+    $(".calendario").datepicker(CALENDARIO);
+    $(".calendario").mask("00/00/0000", { placeholder: "__/__/____" });
     /*Eventos keypress que vai inserir a mascara em alguns campos */
     /*Mascara do cep */
     $("#Corpo_txtCep").keypress(function () {

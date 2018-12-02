@@ -16,8 +16,7 @@ namespace Autenticador
         [WebInvoke(Method = "OPTIONS", UriTemplate = "*")]
         void GetOptions();
 
-
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json
+        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json
             , UriTemplate = "logar/{password}/{login}/{dispositivo}")]
         [OperationContract]
         Funcionario Logar(string password, string login, string dispositivo);
@@ -47,9 +46,13 @@ namespace Autenticador
         FeedBack CheckPoint(string funcionario, string type, string code);
 
         [OperationContract]
-        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "GET",
-           UriTemplate = "getexpediente/{semana}/{funcionario_Id}")]
-        List<Expediente> GetExpediente(string semana, string funcionario_Id);        
+        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json,
+           UriTemplate = "getexpediente/{semana}/{funcionario_Id}",BodyStyle = WebMessageBodyStyle.Bare)]
+        List<Expediente> GetExpediente(string semana, string funcionario_Id);
+
+        [OperationContract]
+        [WebInvoke(Method ="GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,UriTemplate = "getavisos/{qtde}/{index}",BodyStyle = WebMessageBodyStyle.Wrapped)]
+        List<Aviso> GetAvisos(string qtde, string index);
 
         [OperationContract]
         [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "getpoint/{InitialDate}/{FinalDate}/{funcionario}")]

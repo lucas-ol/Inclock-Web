@@ -1,4 +1,5 @@
 ﻿var MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro '];
+var dta = {};
 var ChartFactory = function (container) {
     self = this;
     self.appUrl = "";
@@ -11,8 +12,8 @@ var ChartFactory = function (container) {
             dataType: "json",
             headers: { integracao: window.integracao },
             success: function (data) {
-                //var data = JSON.stringify(dataa);                
-                callback[0](data, canvas);
+                dta = data;
+                callback[0](data);
             },
             error: function (x, y, z) {
 
@@ -20,12 +21,15 @@ var ChartFactory = function (container) {
         });
     };
     self.AtualizarRLPonto = function (data) {
+        self.PreencherTabela(data);
         var labels = data.map(function (e) {
             var dt = new Date(e.DataEntrada);
             return dt;
         });
-        var dados = data.map(function (e) {
-            return e.age;
+        var entrada = data.map(function (e) {
+            if (e.Entrada) {
+                return e;
+            }
         });
     };
     self.GerarRLPonto = function (canvas) {
@@ -48,7 +52,25 @@ var ChartFactory = function (container) {
                 borderColor: "rgba(255, 99, 132, 0.5)",
                 borderWidth: 1,
                 data: [
-                   0
+                    0
+                ]
+            },
+            {
+                label: 'Atrasos',
+                backgroundColor: "rgba(7,4,5,0.2)",
+                borderColor: "rgba(255, 99, 132, 0.5)",
+                borderWidth: 1,
+                data: [
+                    0
+                ]
+            },
+            {
+                label: 'Faltas',
+                backgroundColor: "rgba(7,4,5,0.2)",
+                borderColor: "rgba(255, 99, 132, 0.5)",
+                borderWidth: 1,
+                data: [
+                    0
                 ]
             }]
         };
@@ -72,8 +94,11 @@ var ChartFactory = function (container) {
         self.GerarRLPonto($('.rlPonto'));
     };
 
-    self.PreencherTabela = function () {
-
+    self.PreencherTabela = function (data) {
+        $('#txtEntradasRegistradas').text(data.Informacoes.reduce(function (acumulado, item) { if (item.Tipo === 'Entrada') { return acumulado + item.Qtde; } else return acumulado + 0; }, 0));
+        $('#txtSaidaRegistradas').text(data.Informacoes.reduce(function (acumulado, item) { if (item.Tipo === 'Saida') { return acumulado + item.Qtde; } else return acumulado + 0; }, 0));
+        $('#txtAtrasosRegistrados').text(data.Informacoes.reduce(function (acumulado, item) { if (item.Tipo === 'Atrasos') { return acumulado + item.Qtde; } else return acumulado + 0; }, 0));
+        $('#txtFaltasRegistradas').text(data.Informacoes.reduce(function (acumulado, item) { if (item.Tipo === 'Faltas') { return acumulado + item.Qtde; } else return acumulado + 0; }, 0));
     };
 };
 

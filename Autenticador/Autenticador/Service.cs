@@ -55,16 +55,16 @@ namespace Autenticador
                 return new ExpedienteController().GetExpediente(isemana, ifuncionario_Id);
 
         }
-
+        
         public List<Aviso> GetAvisos(string qtde, string index)
         {
-            if (string.IsNullOrEmpty(qtde))
-                qtde = "10";
+            if (!int.TryParse(qtde, out int qt))
+                qt = 10;
             int.TryParse(index, out int result);
-            return BL.Autenticador.getAvisos(qtde, result);
-        }       
-       
-      //  [Role(Roles = new string[] { "ADM", "FUNC" })]
+            return BL.Autenticador.getAvisos(qt, result);
+        }
+
+        //  [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario)
         {
             using (var ig = new Integracao())
@@ -74,17 +74,17 @@ namespace Autenticador
                     if (string.IsNullOrEmpty(InitialDate) || string.IsNullOrEmpty(FinalDate))
                         throw new Exception("Parametros incorretos");
 
-                    int.TryParse(id_funcionario, out int iFuncionario);                   
+                    int.TryParse(id_funcionario, out int iFuncionario);
                     return new CheckPoint().GetListCheckPoint(InitialDate, FinalDate, iFuncionario);
                 }
             }
             throw new Exception("Você não tem os privilegios necessarios");
         }
-        [Role(Roles = new string[] { "ADM", "FUNC" })]
-        public CheckPoint.BasicInformations GetBasicInformations(string InitialDate, string FinalDate,string id_funcionario)
+      //  [Role(Roles = new string[] { "ADM", "FUNC" })]
+        public CheckPoint.BasicInformations GetBasicInformations(string InitialDate, string FinalDate, string id_funcionario)
         {
-         
-                throw new Exception("Parametros incorretos");
+            return new CheckPoint().GetBasicInformations(InitialDate, FinalDate, id_funcionario);
+            throw new Exception("Parametros incorretos");
         }
         [Role(Roles = new string[] { "ADM" })]
         public Ponto GetCheckPointById(string id)

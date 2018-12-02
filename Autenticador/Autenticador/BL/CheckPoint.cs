@@ -199,10 +199,12 @@ namespace Autenticador.BL
                     Id = Convert.ToInt32(x["id"]),
                     Entrada = x["entrada"].ToString(),
                     DataEntrada = x["dta_entrada"].ToString().Substring(0, 10),
+                    dt_Entrada = Convert.ToDateTime(x["dta_entrada"]),
                     DataSaida = x["dta_saida"].ToString().Substring(0, 10),
+                    dt_Saida = Convert.ToDateTime(x["dta_saida"]),
                     Saida = x["saida"].ToString(),
                     Obs = x["obs"].ToString(),
-                    Funcionario = Convert.ToInt32(tb.Rows[0]["funcionario_id"]),
+                    Funcionario = Convert.ToInt32(x["funcionario_id"]),
                     Expediente = full ? new ExpedienteController().GetExpedienteId(Convert.ToInt32(x["expediente_id"])) : null
                 }).ToList();
             }
@@ -239,30 +241,40 @@ namespace Autenticador.BL
             var info = new BasicInformations();
             using (DataBase db = new DataBase())
             {
-                List<Ponto> pontos = new List<Ponto>();
+                IEnumerable<Ponto> pontos = new List<Ponto>();
                 db.MySqlAdicionaParametro("dta_de", Convert.ToDateTime(initialDate).ToString("yyyy-MM-dd"));
-                db.MySqlAdicionaParametro("dta_ate", Convert.ToDateTime(finalDate)  .ToString("yyyy-MM-dd"));
+                db.MySqlAdicionaParametro("dta_ate", Convert.ToDateTime(finalDate).ToString("yyyy-MM-dd"));
                 db.MySqlAdicionaParametro("funcionario", funcionario);
                 var tb = db.MySqlLeitura("select * from pontos where (funcionario_id = @funcionario or @funcionario = 0 ) and dta_entrada between @dta_de and @dta_ate order by dta_entrada; ", CommandType.Text);
-                if (tb == null)
-                    throw new Exception("erro desconhecido");
-                else
-                {
-                    pontos = ConvertTableToPonto(tb, true).ToList();
-                }
-              
+                info.Montar(ConvertTableToPonto(tb, false));
             }
             return info;
         }
         public class BasicInformations
         {
             [JsonProperty("Informacao")]
-            public Informacao[] Informacoes { get; set; }
-
+            public List<Informacao> Informacoes { get; set; } = new List<Informacao>();
+            [JsonProperty("Registros")]
+            public List<Ponto> Pontos { get; set; } = new List<Ponto>();
+            public void Montar(IEnumerable<Ponto> pontos)
+            {
+                Pontos = pontos.ToList();
+                /*Monta o Primeiro relatorio*/
+                var vt = pontos.GroupBy(x => x.Funcionario);
+                foreach (var item in pontos.GroupBy(x => x.Funcionario))
+                {
+                    var bt = item;
+                    Informacoes.Add(new Informacao() { Funcionario = item.Key, Tipo = "Entrada", Qtde = item.Count(x => x.Entrada != "") });
+                    Informacoes.Add(new Informacao() { Funcionario = item.Key, Tipo = "Saida", Qtde = item.Count(x => x.Saida != "") });
+                    Informacoes.Add(new Informacao() { Funcionario = item.Key, Tipo = "Atrasos", Qtde = item.Count(x => x.Obs.Contains(MSGATRASOENTRADA)) });
+                    Informacoes.Add(new Informacao() { Funcionario = item.Key, Tipo = "Faltas", Qtde = item.Count(x => x.Entrada == "" && x.Saida =="" && x.dt_Entrada <= DateTime.Now) });
+                }
+                //        Informacoes.AddRange();
+            }
             public class Informacao
             {
                 [JsonProperty("funcionario")]
-                public long Funcionario { get; set; }
+                public int Funcionario { get; set; }
 
                 [JsonProperty("tipo")]
                 public string Tipo { get; set; }

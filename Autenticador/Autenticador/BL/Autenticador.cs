@@ -114,7 +114,7 @@ namespace Autenticador.BL
 
             }
         }
-        public static List<Aviso> getAvisos(string qted, int index = 0)
+        public static List<Aviso> getAvisos(int qted, int index = 0)
         {
             using (var db = new DataBase())
             {

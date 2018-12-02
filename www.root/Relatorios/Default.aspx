@@ -67,10 +67,19 @@
     </div>
 
     <script>
+
         var factory = new ChartFactory();
         $(function () {
+            CALENDARIO.dateFormat = 'dd-mm-yy';
+            $(".calendario").datepicker(CALENDARIO);
+            $(".calendario").mask("00-00-0000", { placeholder: "__-__-____" });
+
             factory.onInit();
-            factory.Ajax({}, 'GET', window.appRest + "getpoint/10-06-1996/01-11-2018/5", [factory.AtualizarRLPonto], $('#canvas'));
         })
+        $('#btnPesquisar').on('click', function () {
+            if (validateDate($('#txtDataDe')[0]) && validateDate($('#txtDataAte')[0])) {
+                 factory.Ajax({}, 'GET', window.appRest + "basicInformation/"+$('#txtDataDe').val()+"/"+$('#txtDataAte').val()+"/0", [factory.AtualizarRLPonto], $('#canvas'));
+            }
+        });
     </script>
 </asp:Content>
