@@ -18,6 +18,7 @@ namespace Classes.VO
         public Expediente Expediente { get; set; }
         public DateTime dt_Entrada { get; set; }
         public DateTime dt_Saida { get; set; }
+        public bool Atraso { get; set; }
     }
 
 }

@@ -1,5 +1,6 @@
 ﻿var MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro '];
-var dta = {};
+var Cores = { "verde": 'rgb(40, 167, 69)', 'vermelho': 'rgb(255, 99, 132)', 'laranja': 'rgb(255, 159, 64)', 'azul': 'rgb(54, 162, 235)' };
+var color = Chart.helpers.color;
 var ChartFactory = function (container) {
     self = this;
     self.appUrl = "";
@@ -12,7 +13,6 @@ var ChartFactory = function (container) {
             dataType: "json",
             headers: { integracao: window.integracao },
             success: function (data) {
-                dta = data;
                 callback[0](data);
             },
             error: function (x, y, z) {
@@ -22,25 +22,91 @@ var ChartFactory = function (container) {
     };
     self.AtualizarRLPonto = function (data) {
         self.PreencherTabela(data);
-        var labels = data.map(function (e) {
-            var dt = new Date(e.DataEntrada);
-            return dt;
-        });
-        var entrada = data.map(function (e) {
+
+        var Entrada = data.Pontos.filter(function (e) {
             if (e.Entrada) {
                 return e;
             }
         });
+        var Saida = data.Pontos.filter(function (i) {
+            if (i.Saida) {
+                return i;
+            }
+        });
+        var Atrasos = data.Pontos.filter(function (i) {
+            if (i.Atraso) {
+                return i;
+            }
+        });
+        var Faltas = data.Pontos.filter(function (i) {
+            if (i.Entrada === "" && i.Saida === "") {
+                return i;
+            }
+        });
+        window.bto = Faltas;
+        /* Faz uma contagem das entradas por mes*/
+        window.RLPonto.data.datasets[0].data = MONTHS.map(function (val, index) {
+            return Entrada.reduce(function (soma, item) {
+                var dt = item.DataEntrada.split("/");
+                var dta = new Date(dt[2], dt[1], dt[0]);
+                dta.setMonth(dta.getMonth() - 1);
+                if (dta.getMonth() === index) {
+                    return soma + 1;
+                }
+                else
+                    return soma + 0;
+            }, 0);
+        });
+        /*Saidas*/
+        window.RLPonto.data.datasets[1].data = MONTHS.map(function (val, index) {
+            return Saida.reduce(function (soma, item) {
+                var dt = item.DataEntrada.split("/");
+                var dta = new Date(dt[2], dt[1], dt[0]);
+                dta.setMonth(dta.getMonth() - 1);
+                if (dta.getMonth() === index) {
+                    return soma + 1;
+                }
+                else
+                    return soma + 0;
+            }, 0);
+        });
+        /*Atraso*/
+        window.RLPonto.data.datasets[2].data = MONTHS.map(function (val, index) {
+            return Atrasos.reduce(function (soma, item) {
+                var dt = item.DataEntrada.split("/");
+                var dta = new Date(dt[2], dt[1], dt[0]);
+                dta.setMonth(dta.getMonth() - 1);
+                if (dta.getMonth() === index) {
+                    return soma + 1;
+                }
+                else
+                    return soma + 0;
+            }, 0);
+        });
+        /*Faz uma falta */
+         window.RLPonto.data.datasets[3].data = MONTHS.map(function (val, index) {
+            return Faltas.reduce(function (soma, item) {
+                var dt = item.DataEntrada.split("/");
+                var dta = new Date(dt[2], dt[1], dt[0]);
+                dta.setMonth(dta.getMonth() - 1);
+                if (dta.getMonth() === index ) {
+                    return soma + 1;
+                }
+                else
+                    return soma + 0;
+            }, 0);
+        });
+        window.RLPonto.update();
     };
     self.GerarRLPonto = function (canvas) {
 
         var ctx = $(canvas)[0].getContext('2d');
         var grafico = {
-            labels: MONTHS.slice(0, 6),
+            labels: MONTHS,
             datasets: [{
                 label: 'Entrada',
-                backgroundColor: "rgba(7,4,5,0.2)",
-                borderColor: "rgba(255, 99, 132, 0.5)",
+                backgroundColor: color(Cores.azul).alpha(0.5).rgbString(),
+                borderColor: Cores["azul"],
                 borderWidth: 1,
                 data: [
                     0
@@ -48,8 +114,8 @@ var ChartFactory = function (container) {
             },
             {
                 label: 'Saida',
-                backgroundColor: "rgba(7,4,5,0.2)",
-                borderColor: "rgba(255, 99, 132, 0.5)",
+                backgroundColor: color(Cores["verde"]).alpha(0.5).rgbString(),
+                borderColor: Cores["verde"],
                 borderWidth: 1,
                 data: [
                     0
@@ -57,8 +123,8 @@ var ChartFactory = function (container) {
             },
             {
                 label: 'Atrasos',
-                backgroundColor: "rgba(7,4,5,0.2)",
-                borderColor: "rgba(255, 99, 132, 0.5)",
+                backgroundColor: color(Cores["laranja"]).alpha(0.5).rgbString(),
+                borderColor: Cores["laranja"],
                 borderWidth: 1,
                 data: [
                     0
@@ -66,8 +132,8 @@ var ChartFactory = function (container) {
             },
             {
                 label: 'Faltas',
-                backgroundColor: "rgba(7,4,5,0.2)",
-                borderColor: "rgba(255, 99, 132, 0.5)",
+                backgroundColor: color(Cores["vermelho"]).alpha(0.5).rgbString(),
+                borderColor: Cores["vermelho"],
                 borderWidth: 1,
                 data: [
                     0
@@ -84,7 +150,7 @@ var ChartFactory = function (container) {
                 },
                 title: {
                     display: true,
-                    text: 'faltas por Mes'
+                    text: 'Grafico'
                 }
             }
         };

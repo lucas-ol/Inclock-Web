@@ -11,7 +11,7 @@
     <link href="/Styles/Style.css" rel="stylesheet" />
     <link href="/Styles/lib/bootstrap/bootstrap.css" rel="stylesheet" />
 
-    <script src="/Scripts/jquery.js"></script>    
+    <script src="/Scripts/jquery.js"></script>
     <script src="/Scripts/popper/popper.js"></script>
     <script src="/Scripts/bootstrap/bootstrap.js"></script>
     <script> 
@@ -27,14 +27,13 @@
             if (co.indexOf(';') < 0)
                 window.integracao = co;
             else
-                window.integracao = co.substr(0, co.indexOf(';'));            
+                window.integracao = co.substr(0, co.indexOf(';'));
         });
 
         function window_onunload() {
-            if (window.screenTop > 10000 && window.screenLeft > 10000)
-            { }
+            if (window.screenTop > 10000 && window.screenLeft > 10000) { }
             $.post("/Logoff.aspx");
-            
+
         }
     </script>
     <asp:ContentPlaceHolder runat="server" ID="Head">
@@ -48,6 +47,12 @@
 
         .login-button {
             color: #B2B4B7;
+        }
+
+        @media print {
+            #menu {
+                display: none;
+            }
         }
     </style>
 </head>

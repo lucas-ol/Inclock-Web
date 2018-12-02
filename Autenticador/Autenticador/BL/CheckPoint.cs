@@ -205,6 +205,7 @@ namespace Autenticador.BL
                     Saida = x["saida"].ToString(),
                     Obs = x["obs"].ToString(),
                     Funcionario = Convert.ToInt32(x["funcionario_id"]),
+                    Atraso = x["obs"].ToString().Contains(MSGATRASOENTRADA),
                     Expediente = full ? new ExpedienteController().GetExpedienteId(Convert.ToInt32(x["expediente_id"])) : null
                 }).ToList();
             }
@@ -266,7 +267,7 @@ namespace Autenticador.BL
                     var bt = item;
                     Informacoes.Add(new Informacao() { Funcionario = item.Key, Tipo = "Entrada", Qtde = item.Count(x => x.Entrada != "") });
                     Informacoes.Add(new Informacao() { Funcionario = item.Key, Tipo = "Saida", Qtde = item.Count(x => x.Saida != "") });
-                    Informacoes.Add(new Informacao() { Funcionario = item.Key, Tipo = "Atrasos", Qtde = item.Count(x => x.Obs.Contains(MSGATRASOENTRADA)) });
+                    Informacoes.Add(new Informacao() { Funcionario = item.Key, Tipo = "Atrasos", Qtde = item.Count(x => x.Atraso) });
                     Informacoes.Add(new Informacao() { Funcionario = item.Key, Tipo = "Faltas", Qtde = item.Count(x => x.Entrada == "" && x.Saida =="" && x.dt_Entrada <= DateTime.Now) });
                 }
                 //        Informacoes.AddRange();

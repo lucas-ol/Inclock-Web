@@ -13,56 +13,55 @@
     <script src="/Scripts/jquery.mask.js"></script>
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="Corpo">
-    <div class="row">
-        <div class=" col-sm-8 m-auto">
-            <div class="form-group form-inline">
-                <div class="col-lg-3  col-sm-3"></div>
-                <div class="col-lg-3 col-md-4 col-sm-3">
-                    <label class="d-inline-block" for="txtDataDe">De</label>
-                    <input type="text" name="name" value="" class="form-control w-100 calendario" id="txtDataDe" />
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-3">
-                    <label class="d-inline-block" for="txtDataAte">Ate</label>
-                    <input type="text" name="name" value="" class="form-control w-100 calendario" id="txtDataAte" />
-                </div>
-                <div class="col-lg-3 col-md-2 col-sm-3">
-                    <input type="button" name="name" value="Pesquisar" id="btnPesquisar" class="form-control btn btn-outline-success mt-1" />
-                </div>
+
+    <div class=" col-sm-8 m-auto">
+        <div class="form-group form-inline">
+            <div class="col-lg-3  col-sm-3"></div>
+            <div class="col-lg-3 col-md-4 col-sm-3">
+                <label class="d-inline-block" for="txtDataDe">De</label>
+                <input type="text" name="name" value="" class="form-control w-100 calendario" id="txtDataDe" />
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-3">
+                <label class="d-inline-block" for="txtDataAte">Ate</label>
+                <input type="text" name="name" value="" class="form-control w-100 calendario" id="txtDataAte" />
+            </div>
+            <div class="col-lg-3 col-md-2 col-sm-3">
+                <input type="button" name="name" value="Pesquisar" id="btnPesquisar" class="form-control btn btn-outline-success mt-4" />
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Quantidade De Entradas:</td>
-                            <td><span id="txtEntradasRegistradas"></span></td>
-                        </tr>
-                        <tr>
-                            <td>Quantidade de Saidas:</td>
-                            <td><span id="txtSaidaRegistradas"></span></td>
-                        </tr>
-                        <tr>
-                            <td>Quantidade de Atrasos:</td>
-                            <td><span id="txtAtrasosRegistrados"></span></td>
-                        </tr>
-                        <tr>
-                            <td>Quantidade de Faltas</td>
-                            <td><span id="txtFaltasRegistradas"></span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+
+    <div class="col-md-10 m-auto">
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Quantidade De Entradas:</td>
+                        <td><span id="txtEntradasRegistradas"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Quantidade de Saidas:</td>
+                        <td><span id="txtSaidaRegistradas"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Quantidade de Atrasos:</td>
+                        <td><span id="txtAtrasosRegistrados"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Quantidade de Faltas</td>
+                        <td><span id="txtFaltasRegistradas"></span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="col-md-6 m-auto">
+
+    <div class="col-md-10 m-auto">
         <canvas id="canvas" class="rlPonto"></canvas>
     </div>
 
@@ -78,7 +77,7 @@
         })
         $('#btnPesquisar').on('click', function () {
             if (validateDate($('#txtDataDe')[0]) && validateDate($('#txtDataAte')[0])) {
-                 factory.Ajax({}, 'GET', window.appRest + "basicInformation/"+$('#txtDataDe').val()+"/"+$('#txtDataAte').val()+"/0", [factory.AtualizarRLPonto], $('#canvas'));
+                factory.Ajax({}, 'GET', window.appRest + "basicInformation/" + $('#txtDataDe').val() + "/" + $('#txtDataAte').val() + "/0", [factory.AtualizarRLPonto], $('#canvas'));
             }
         });
     </script>
