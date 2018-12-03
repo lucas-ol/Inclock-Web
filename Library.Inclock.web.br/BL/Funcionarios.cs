@@ -153,6 +153,7 @@ namespace Library.Inclock.web.br.BL
         {
             using (var db = new DataBase())
             {
+                qtdeTotalItens = 0;
                 List<Funcionario> ListaFuncionario = new List<Funcionario>();
                 db.MySqlAdicionaParametro("_nome", Nome);
                 db.MySqlAdicionaParametro("_pagina", pagina);

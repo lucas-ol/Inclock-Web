@@ -43,7 +43,7 @@ namespace Classes.Common
         /// <param name="ValorParametro">Valor do parametro</param>
         public void MySqlAdicionaParametro(string NomeParametro, object ValorParametro)
         {
-            ParameterCollection.AddWithValue(NomeParametro, ValorParametro).Direction = NomeParametro.LastIndexOf("@") > 0 ? ParameterDirection.Output : ParameterDirection.Input;
+            ParameterCollection.AddWithValue(NomeParametro, ValorParametro).Direction = NomeParametro.LastIndexOf("@") >= 0 ? ParameterDirection.Output : ParameterDirection.Input;
             //  ParameterCollection.AddWithValue(NomeParametro, ValorParametro);
         }
         /// <summary>
