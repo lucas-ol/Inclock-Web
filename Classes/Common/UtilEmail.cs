@@ -39,36 +39,26 @@ namespace Classes.Common
 
             Client.Send(mail);
         }
-        public void SendMail(string body,params string[] emails)
+        public static void SendMail(string body, string sender, string from, string assunto, bool isHtml = true, params string[] emails)
         {
-            SmtpClient client = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                EnableSsl = true,
-                Credentials = new System.Net.NetworkCredential("seu email", "sua senha")
-            };
+
             MailMessage mail = new MailMessage
             {
-                Sender = new MailAddress("email que vai enviar", "ENVIADOR"),
-                From = new MailAddress("de quem", "ENVIADOR")
+                From = new MailAddress(ConfigurationManager.AppSettings.Get("smtpLoginPadrao"), from),
+                Sender = new MailAddress(ConfigurationManager.AppSettings.Get("smtpLoginPadrao"), sender),
+                Subject = assunto,
+                Body = body,
+                IsBodyHtml = true
             };
-
-            mail.To.Add(new MailAddress("paraquem", "RECEBEDOR"));
-            mail.Subject = "Contato";
-            mail.Body = " Mensagem do site:<br/> Nome:  <br/> Email :  <br/> Mensagem : ";
-            mail.IsBodyHtml = true;
-            mail.Priority = MailPriority.High;
+            foreach (var item in emails)
+                mail.To.Add(item);
             try
             {
-                client.Send(mail);
+                Client.Send(mail);
             }
-            catch (Exception erro)
+            catch
             {
                 //trata erro
-            }
-            finally
-            {
-                mail = null;
             }
         }
     }

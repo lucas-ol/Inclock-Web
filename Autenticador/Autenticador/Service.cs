@@ -14,9 +14,9 @@ namespace Autenticador
         public void GetOptions()
         {
         }
-        public string GetLogin(string Email)
+        public FeedBack SendAccount(string Email)
         {
-            return BL.Autenticador.GetLogin(Email);
+            return BL.Autenticador.SendAccount(Email);
         }
         [Role(Roles = new string[] { "ADM" })]
         public Funcionario GetUserById(string id)

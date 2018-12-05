@@ -26,8 +26,8 @@ namespace Autenticador
         void ApagarSessao(int func, string dispositivo);
 
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        string GetLogin(string Email);
+        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json ,UriTemplate = "sendaccount/{Email}")]
+        FeedBack SendAccount(string Email);
 
         [OperationContract]
         [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json,

@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Collections;
 using Classes.Enumeradores;
+using System.Threading.Tasks;
 
 namespace Autenticador.BL
 {
@@ -47,21 +48,38 @@ namespace Autenticador.BL
                         Roles = tb["role"].ToString().Split(new char[] { ';' }).ToList()
                     }).FirstOrDefault();
                     if (ObeterSessao(func.Id, dispositivo).Id == 0)
-                        SalvarSessao(func.Id, dispositivo != "web" ,dispositivo);
+                        SalvarSessao(func.Id, dispositivo != "web", dispositivo);
                     else
                         func.Id = -1; // vai informar que o usuario ja esta logado 
                 }
-                
+
                 return func;
             }
         }
 
-        public static string GetLogin(string Email)
+        public static FeedBack SendAccount(string Email)
         {
+            FeedBack feed;
             using (var db = new DataBase())
             {
                 db.MySqlAdicionaParametro("email", Email);
-                return JsonConvert.SerializeObject(db.MySqlLeitura("select nome, email from funcionarios where email = @email", System.Data.CommandType.Text));
+                var tb = db.MySqlLeitura("select * from funcionarios where email = @email", System.Data.CommandType.Text);
+                if (tb.TableName != "erro" && tb.Rows.Count > 0)
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        var dir = System.Web.Hosting.HostingEnvironment.MapPath("/email/LostAccount.html");                    
+                        string email = UtilFile.FileStringReader( dir )
+                       .Replace("#nome#", tb.Rows[0]["nome"].ToString())
+                       .Replace("#login#", tb.Rows[0]["login"].ToString())
+                       .Replace("#senha#", tb.Rows[0]["senha"].ToString());
+                        UtilEmail.SendMail(email, "Inclock - Recovery", "Inclock", "Perda de conta", true, Email);
+                    });
+                    feed = new FeedBack { Mensagem = "Sua senha foi enviada para o email cadastrado", Status = true };
+                }
+                else
+                    feed = new FeedBack { Mensagem = "O email informado não esta cadastrado ", Status = false };
+                return feed;
             }
         }
 
@@ -143,13 +161,13 @@ namespace Autenticador.BL
                 return avisos;
             }
         }
-        public static void SalvarSessao(int func,bool logado, string dispositivo = "web")
+        public static void SalvarSessao(int func, bool logado, string dispositivo = "web")
         {
             using (var ctx = new DataBase())
             {
                 ctx.MySqlAdicionaParametro("func", func);
                 ctx.MySqlAdicionaParametro("disp", dispositivo);
-                ctx.MySqlAdicionaParametro("logado",logado);
+                ctx.MySqlAdicionaParametro("logado", logado);
                 ctx.MySqlExecutaComando("insert into acessos(funcionario_id,logado,dispositivo) values (@func,@logado,@disp)", CommandType.Text);
             }
         }
