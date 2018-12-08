@@ -6,6 +6,7 @@
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/Classes.VO" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Autenticador.BL" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IService_GetOptions_InputMessage">
@@ -26,11 +27,11 @@
   <wsdl:message name="IService_ApagarSessao_OutputMessage">
     <wsdl:part name="parameters" element="tns:ApagarSessaoResponse" />
   </wsdl:message>
-  <wsdl:message name="IService_GetLogin_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetLogin" />
+  <wsdl:message name="IService_SendAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendAccount" />
   </wsdl:message>
-  <wsdl:message name="IService_GetLogin_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetLoginResponse" />
+  <wsdl:message name="IService_SendAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendAccountResponse" />
   </wsdl:message>
   <wsdl:message name="IService_GetPassword_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPassword" />
@@ -62,23 +63,17 @@
   <wsdl:message name="IService_GetAvisos_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAvisosResponse" />
   </wsdl:message>
-  <wsdl:message name="IService_GetCheckPoint_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetCheckPoint" />
-  </wsdl:message>
-  <wsdl:message name="IService_GetCheckPoint_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetCheckPointResponse" />
-  </wsdl:message>
-  <wsdl:message name="IService_GetCheckPointByDate_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetCheckPointByDate" />
-  </wsdl:message>
-  <wsdl:message name="IService_GetCheckPointByDate_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetCheckPointByDateResponse" />
-  </wsdl:message>
   <wsdl:message name="IService_GetCheckPointDateInterval_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCheckPointDateInterval" />
   </wsdl:message>
   <wsdl:message name="IService_GetCheckPointDateInterval_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCheckPointDateIntervalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetBasicInformations_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBasicInformations" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetBasicInformations_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBasicInformationsResponse" />
   </wsdl:message>
   <wsdl:message name="IService_GetCheckPointById_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCheckPointById" />
@@ -117,9 +112,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService/ApagarSessao" message="tns:IService_ApagarSessao_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService/ApagarSessaoResponse" message="tns:IService_ApagarSessao_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetLogin">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetLogin" message="tns:IService_GetLogin_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetLoginResponse" message="tns:IService_GetLogin_OutputMessage" />
+    <wsdl:operation name="SendAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/SendAccount" message="tns:IService_SendAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/SendAccountResponse" message="tns:IService_SendAccount_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetPassword">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/GetPassword" message="tns:IService_GetPassword_InputMessage" />
@@ -141,17 +136,13 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService/GetAvisos" message="tns:IService_GetAvisos_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService/GetAvisosResponse" message="tns:IService_GetAvisos_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetCheckPoint">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetCheckPoint" message="tns:IService_GetCheckPoint_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetCheckPointResponse" message="tns:IService_GetCheckPoint_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetCheckPointByDate">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetCheckPointByDate" message="tns:IService_GetCheckPointByDate_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetCheckPointByDateResponse" message="tns:IService_GetCheckPointByDate_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="GetCheckPointDateInterval">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/GetCheckPointDateInterval" message="tns:IService_GetCheckPointDateInterval_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService/GetCheckPointDateIntervalResponse" message="tns:IService_GetCheckPointDateInterval_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBasicInformations">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetBasicInformations" message="tns:IService_GetBasicInformations_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetBasicInformationsResponse" message="tns:IService_GetBasicInformations_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetCheckPointById">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/GetCheckPointById" message="tns:IService_GetCheckPointById_InputMessage" />
@@ -199,8 +190,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetLogin">
-      <soap:operation soapAction="http://tempuri.org/IService/GetLogin" style="document" />
+    <wsdl:operation name="SendAccount">
+      <soap:operation soapAction="http://tempuri.org/IService/SendAccount" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -253,26 +244,17 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetCheckPoint">
-      <soap:operation soapAction="http://tempuri.org/IService/GetCheckPoint" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetCheckPointByDate">
-      <soap:operation soapAction="http://tempuri.org/IService/GetCheckPointByDate" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetCheckPointDateInterval">
       <soap:operation soapAction="http://tempuri.org/IService/GetCheckPointDateInterval" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBasicInformations">
+      <soap:operation soapAction="http://tempuri.org/IService/GetBasicInformations" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

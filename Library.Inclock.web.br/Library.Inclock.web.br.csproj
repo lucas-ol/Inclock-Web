@@ -96,8 +96,14 @@
     <None Include="Connected Services\Autenticador\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\Autenticador\Autenticador.BL.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\Autenticador\Classes.VO1.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\Autenticador\Library.Inclock.web.br.Autenticador.CheckPointBasicInformations.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\Autenticador\Library.Inclock.web.br.Autenticador.Expediente.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

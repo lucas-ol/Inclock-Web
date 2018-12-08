@@ -228,6 +228,9 @@ namespace Library.Inclock.web.br.BL
                 return func;
             }
         }
-
+        public User GetUser(int id)
+        {
+            return Pesquisa_Funcionario_ID(id);
+        }
     }
 }

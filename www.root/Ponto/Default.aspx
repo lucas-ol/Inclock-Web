@@ -2,6 +2,7 @@
 
 <asp:Content runat="server" ContentPlaceHolderID="Head">
     <link href="/Scripts/jqueryUI/jquery-ui.css" rel="stylesheet" />
+    <script src="/Scripts/jquery.mask.js"></script>
     <style>
         .table tbody tr:nth-child(odd) {
         }
@@ -31,6 +32,13 @@
             padding-left: 0 !important;
             padding-right: 0 !important;
         }
+        #vlGrupo {
+            margin:auto
+        }
+        #vlGrupo ul > li {
+            display: inline-block;
+            list-style: none
+        }
     </style>
 
 </asp:Content>
@@ -41,14 +49,19 @@
                 <div class="ml-1 mr-1">De</div>
                 <div class="ml-1 mr-1">
                     <asp:TextBox runat="server" ID="txtDataInicio" CssClass="form-control" />
+                    <asp:RegularExpressionValidator ErrorMessage=" - Data de Invalida" ControlToValidate="txtDataInicio" runat="server" ID="data1" Display="None" ValidationGroup="gpPonto" />
+                    <asp:RequiredFieldValidator ErrorMessage="- Data de Invalida" ControlToValidate="txtDataInicio" runat="server" Display="None" ValidationGroup="gpPonto" />
                 </div>
                 <div class="ml-1 mr-1">ate</div>
                 <div class="ml-1 mr-1">
                     <asp:TextBox runat="server" ID="txtDataFim" CssClass="form-control" />
+                    <asp:RegularExpressionValidator ErrorMessage="- Data Ate Invalida" ControlToValidate="txtDataFim" runat="server" ID="data2" Display="None" ValidationGroup="gpPonto" />
+                    <asp:RequiredFieldValidator ErrorMessage="- Data Ate Invalida" ControlToValidate="txtDataFim" runat="server" Display="None" ValidationGroup="gpPonto" />
                 </div>
-
-                <asp:LinkButton Text="Buscar" runat="server" CssClass="btn" ID="btnBuscarPontos" OnClick="btnBuscarPontos_Click" />
-
+                <asp:LinkButton Text="Buscar" runat="server" CssClass="btn" ID="btnBuscarPontos" OnClick="btnBuscarPontos_Click" ValidationGroup="gpPonto" />
+            </div>
+            <div class="col-md-12">
+                <asp:ValidationSummary runat="server" ForeColor="Red" HeaderText="Verique os campos" ClientIDMode="Static" ValidationGroup="gpPonto" CssClass="col-md-6" ID="vlGrupo" />
             </div>
         </asp:Panel>
         <table class="table-hover">
@@ -122,12 +135,12 @@
             $("#<% =txtDataInicio.ClientID %>").datepicker(calendario);
             $("#<% =txtDataFim.ClientID %>").datepicker(calendario);
 
-            $("#<% =txtDataFim.ClientID %>").keypress(function () {
-                $(this).mask("00/00/0000", { placeholder: "__/__/____" });
-            });
-            $("#<% =txtDataInicio.ClientID %>").keypress(function () {
-                $(this).mask("00/00/0000", { placeholder: "__/__/____" });
-            });
+
+            $(this).mask("00/00/0000", { placeholder: "__/__/____" });
+
+
+            $(this).mask("00/00/0000", { placeholder: "__/__/____" });
+
         })
     </script>
 </asp:Content>

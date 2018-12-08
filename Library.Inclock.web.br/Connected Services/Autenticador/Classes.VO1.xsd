@@ -87,6 +87,7 @@
   <xs:element name="ArrayOfPonto" nillable="true" type="tns:ArrayOfPonto" />
   <xs:complexType name="Ponto">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Atraso" type="xs:boolean" />
       <xs:element minOccurs="0" name="DataEntrada" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DataSaida" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Entrada" nillable="true" type="xs:string" />
@@ -95,6 +96,8 @@
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Obs" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Saida" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="dt_Entrada" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="dt_Saida" type="xs:dateTime" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Ponto" nillable="true" type="tns:Ponto" />

@@ -30,7 +30,19 @@
     void Session_Start(object sender, EventArgs e)
     {
         // Code that runs when a new session is started
+        if (HttpContext.Current.Session != null)
+        {
+            string szCookieHeader = Request.Headers["Cookie"];
 
+            if ((szCookieHeader != null) && (szCookieHeader.IndexOf("ASP.NET_SessionId") >= 0) && HttpContext.Current.Session.IsNewSession && (Autenticador.Ticket != null))
+            {
+                if (User.Identity.IsAuthenticated && Autenticador.Ticket.Expired)
+                {
+                    var id = Convert.ToInt32(Autenticador.CurrentUser.Id);
+                    Autenticador.Logados.Remove(id);
+                }
+            }
+        }
     }
 
     void Session_End(object sender, EventArgs e)
@@ -69,7 +81,7 @@
         routes.MapHttpRoute(
                  name: "routeTemplate",
                  routeTemplate: "api/{controller}/{action}/{code}",
-                 defaults: new { code =  System.Web.Http.RouteParameter.Optional } );
+                 defaults: new { code = System.Web.Http.RouteParameter.Optional });
     }
     public void Register(HttpConfiguration config)
     {

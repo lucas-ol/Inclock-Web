@@ -27,6 +27,7 @@
     <MetadataFile FileName="service3.xsd" MetadataType="Schema" ID="3bf66b7e-430e-409b-9d5e-60983b97b4a8" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex" />
     <MetadataFile FileName="Classes.VO1.xsd" MetadataType="Schema" ID="b76f42f6-4808-4d48-b5bb-22410883a9d8" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex" />
     <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="77ec50d0-0abe-445d-b153-d79c6c839206" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex" />
+    <MetadataFile FileName="Autenticador.BL.xsd" MetadataType="Schema" ID="aaf01fe0-4c13-4574-87d0-cfb6f63b2f55" SourceId="1" SourceUrl="http://localhost:64241/Service.svc/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

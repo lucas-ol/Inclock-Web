@@ -17,7 +17,7 @@ namespace Library.Inclock.web.br.BL
 
             using (var cli = new Client(headers))
             {
-                pts = cli.Service.GetCheckPointByDate(InitialDate, FinalDate, func.ToString()).ToList();
+                pts = cli.Service.GetCheckPointDateInterval(InitialDate, FinalDate, func.ToString()).ToList();
             }
             return pts;
         }

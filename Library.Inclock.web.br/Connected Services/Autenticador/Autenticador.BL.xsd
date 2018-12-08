@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Autenticador.BL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Autenticador.BL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Classes.VO" />
+  <xs:complexType name="CheckPoint.BasicInformations">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Informacoes" nillable="true" type="tns:ArrayOfCheckPoint.BasicInformations.Informacao" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="Pontos" nillable="true" type="q1:ArrayOfPonto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CheckPoint.BasicInformations" nillable="true" type="tns:CheckPoint.BasicInformations" />
+  <xs:complexType name="ArrayOfCheckPoint.BasicInformations.Informacao">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CheckPoint.BasicInformations.Informacao" nillable="true" type="tns:CheckPoint.BasicInformations.Informacao" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCheckPoint.BasicInformations.Informacao" nillable="true" type="tns:ArrayOfCheckPoint.BasicInformations.Informacao" />
+  <xs:complexType name="CheckPoint.BasicInformations.Informacao">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Funcionario" type="xs:int" />
+      <xs:element minOccurs="0" name="Qtde" type="xs:long" />
+      <xs:element minOccurs="0" name="Tipo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CheckPoint.BasicInformations.Informacao" nillable="true" type="tns:CheckPoint.BasicInformations.Informacao" />
+</xs:schema>

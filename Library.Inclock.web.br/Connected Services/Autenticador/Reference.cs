@@ -9,7 +9,146 @@
 //------------------------------------------------------------------------------
 
 namespace Library.Inclock.web.br.Autenticador {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CheckPoint.BasicInformations", Namespace="http://schemas.datacontract.org/2004/07/Autenticador.BL")]
+    [System.SerializableAttribute()]
+    public partial class CheckPointBasicInformations : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Library.Inclock.web.br.Autenticador.CheckPointBasicInformations.Informacao[] InformacoesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Classes.VO.Ponto[] PontosField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Library.Inclock.web.br.Autenticador.CheckPointBasicInformations.Informacao[] Informacoes {
+            get {
+                return this.InformacoesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InformacoesField, value) != true)) {
+                    this.InformacoesField = value;
+                    this.RaisePropertyChanged("Informacoes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Classes.VO.Ponto[] Pontos {
+            get {
+                return this.PontosField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PontosField, value) != true)) {
+                    this.PontosField = value;
+                    this.RaisePropertyChanged("Pontos");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThroughAttribute()]
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+        [System.Runtime.Serialization.DataContractAttribute(Name="CheckPoint.BasicInformations.Informacao", Namespace="http://schemas.datacontract.org/2004/07/Autenticador.BL")]
+        [System.SerializableAttribute()]
+        public partial class Informacao : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+            
+            [System.NonSerializedAttribute()]
+            private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+            
+            [System.Runtime.Serialization.OptionalFieldAttribute()]
+            private int FuncionarioField;
+            
+            [System.Runtime.Serialization.OptionalFieldAttribute()]
+            private long QtdeField;
+            
+            [System.Runtime.Serialization.OptionalFieldAttribute()]
+            private string TipoField;
+            
+            public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+                get {
+                    return this.extensionDataField;
+                }
+                set {
+                    this.extensionDataField = value;
+                }
+            }
+            
+            [System.Runtime.Serialization.DataMemberAttribute()]
+            public int Funcionario {
+                get {
+                    return this.FuncionarioField;
+                }
+                set {
+                    if ((this.FuncionarioField.Equals(value) != true)) {
+                        this.FuncionarioField = value;
+                        this.RaisePropertyChanged("Funcionario");
+                    }
+                }
+            }
+            
+            [System.Runtime.Serialization.DataMemberAttribute()]
+            public long Qtde {
+                get {
+                    return this.QtdeField;
+                }
+                set {
+                    if ((this.QtdeField.Equals(value) != true)) {
+                        this.QtdeField = value;
+                        this.RaisePropertyChanged("Qtde");
+                    }
+                }
+            }
+            
+            [System.Runtime.Serialization.DataMemberAttribute()]
+            public string Tipo {
+                get {
+                    return this.TipoField;
+                }
+                set {
+                    if ((object.ReferenceEquals(this.TipoField, value) != true)) {
+                        this.TipoField = value;
+                        this.RaisePropertyChanged("Tipo");
+                    }
+                }
+            }
+            
+            public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+            
+            protected void RaisePropertyChanged(string propertyName) {
+                System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+                if ((propertyChanged != null)) {
+                    propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+                }
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Autenticador.IService")]
@@ -33,11 +172,11 @@ namespace Library.Inclock.web.br.Autenticador {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/ApagarSessao", ReplyAction="http://tempuri.org/IService/ApagarSessaoResponse")]
         System.Threading.Tasks.Task ApagarSessaoAsync(int func, string dispositivo);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetLogin", ReplyAction="http://tempuri.org/IService/GetLoginResponse")]
-        string GetLogin(string Email);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/SendAccount", ReplyAction="http://tempuri.org/IService/SendAccountResponse")]
+        Classes.VO.FeedBack SendAccount(string Email);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetLogin", ReplyAction="http://tempuri.org/IService/GetLoginResponse")]
-        System.Threading.Tasks.Task<string> GetLoginAsync(string Email);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/SendAccount", ReplyAction="http://tempuri.org/IService/SendAccountResponse")]
+        System.Threading.Tasks.Task<Classes.VO.FeedBack> SendAccountAsync(string Email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetPassword", ReplyAction="http://tempuri.org/IService/GetPasswordResponse")]
         string GetPassword(string Login);
@@ -52,10 +191,10 @@ namespace Library.Inclock.web.br.Autenticador {
         System.Threading.Tasks.Task<Classes.VO.Funcionario> GetUserByIdAsync(string id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/CheckPoint", ReplyAction="http://tempuri.org/IService/CheckPointResponse")]
-        Classes.VO.FeedBack CheckPoint(string funcionario, string type);
+        Classes.VO.FeedBack CheckPoint(string funcionario, string type, string code);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/CheckPoint", ReplyAction="http://tempuri.org/IService/CheckPointResponse")]
-        System.Threading.Tasks.Task<Classes.VO.FeedBack> CheckPointAsync(string funcionario, string type);
+        System.Threading.Tasks.Task<Classes.VO.FeedBack> CheckPointAsync(string funcionario, string type, string code);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetExpediente", ReplyAction="http://tempuri.org/IService/GetExpedienteResponse")]
         Classes.VO.Expediente[] GetExpediente(string semana, string funcionario_Id);
@@ -69,23 +208,17 @@ namespace Library.Inclock.web.br.Autenticador {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetAvisos", ReplyAction="http://tempuri.org/IService/GetAvisosResponse")]
         System.Threading.Tasks.Task<Classes.VO.Aviso[]> GetAvisosAsync(string qtde, string index);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPoint", ReplyAction="http://tempuri.org/IService/GetCheckPointResponse")]
-        Classes.VO.Ponto[] GetCheckPoint(string month, string funcionario);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPoint", ReplyAction="http://tempuri.org/IService/GetCheckPointResponse")]
-        System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointAsync(string month, string funcionario);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointByDate", ReplyAction="http://tempuri.org/IService/GetCheckPointByDateResponse")]
-        Classes.VO.Ponto[] GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointByDate", ReplyAction="http://tempuri.org/IService/GetCheckPointByDateResponse")]
-        System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointByDateAsync(string InitialDate, string FinalDate, string id_funcionario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointDateInterval", ReplyAction="http://tempuri.org/IService/GetCheckPointDateIntervalResponse")]
+        Classes.VO.Ponto[] GetCheckPointDateInterval(string InitialDate, string FinalDate, string funcionario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointDateInterval", ReplyAction="http://tempuri.org/IService/GetCheckPointDateIntervalResponse")]
-        Classes.VO.Ponto[] GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario);
+        System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointDateIntervalAsync(string InitialDate, string FinalDate, string funcionario);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointDateInterval", ReplyAction="http://tempuri.org/IService/GetCheckPointDateIntervalResponse")]
-        System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointDateIntervalAsync(string InitialDate, string FinalDate, string id_funcionario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetBasicInformations", ReplyAction="http://tempuri.org/IService/GetBasicInformationsResponse")]
+        Library.Inclock.web.br.Autenticador.CheckPointBasicInformations GetBasicInformations(string InitialDate, string FinalDate, string funcionario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetBasicInformations", ReplyAction="http://tempuri.org/IService/GetBasicInformationsResponse")]
+        System.Threading.Tasks.Task<Library.Inclock.web.br.Autenticador.CheckPointBasicInformations> GetBasicInformationsAsync(string InitialDate, string FinalDate, string funcionario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/GetCheckPointById", ReplyAction="http://tempuri.org/IService/GetCheckPointByIdResponse")]
         Classes.VO.Ponto GetCheckPointById(string id);
@@ -163,12 +296,12 @@ namespace Library.Inclock.web.br.Autenticador {
             return base.Channel.ApagarSessaoAsync(func, dispositivo);
         }
         
-        public string GetLogin(string Email) {
-            return base.Channel.GetLogin(Email);
+        public Classes.VO.FeedBack SendAccount(string Email) {
+            return base.Channel.SendAccount(Email);
         }
         
-        public System.Threading.Tasks.Task<string> GetLoginAsync(string Email) {
-            return base.Channel.GetLoginAsync(Email);
+        public System.Threading.Tasks.Task<Classes.VO.FeedBack> SendAccountAsync(string Email) {
+            return base.Channel.SendAccountAsync(Email);
         }
         
         public string GetPassword(string Login) {
@@ -187,12 +320,12 @@ namespace Library.Inclock.web.br.Autenticador {
             return base.Channel.GetUserByIdAsync(id);
         }
         
-        public Classes.VO.FeedBack CheckPoint(string funcionario, string type) {
-            return base.Channel.CheckPoint(funcionario, type);
+        public Classes.VO.FeedBack CheckPoint(string funcionario, string type, string code) {
+            return base.Channel.CheckPoint(funcionario, type, code);
         }
         
-        public System.Threading.Tasks.Task<Classes.VO.FeedBack> CheckPointAsync(string funcionario, string type) {
-            return base.Channel.CheckPointAsync(funcionario, type);
+        public System.Threading.Tasks.Task<Classes.VO.FeedBack> CheckPointAsync(string funcionario, string type, string code) {
+            return base.Channel.CheckPointAsync(funcionario, type, code);
         }
         
         public Classes.VO.Expediente[] GetExpediente(string semana, string funcionario_Id) {
@@ -211,28 +344,20 @@ namespace Library.Inclock.web.br.Autenticador {
             return base.Channel.GetAvisosAsync(qtde, index);
         }
         
-        public Classes.VO.Ponto[] GetCheckPoint(string month, string funcionario) {
-            return base.Channel.GetCheckPoint(month, funcionario);
+        public Classes.VO.Ponto[] GetCheckPointDateInterval(string InitialDate, string FinalDate, string funcionario) {
+            return base.Channel.GetCheckPointDateInterval(InitialDate, FinalDate, funcionario);
         }
         
-        public System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointAsync(string month, string funcionario) {
-            return base.Channel.GetCheckPointAsync(month, funcionario);
+        public System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointDateIntervalAsync(string InitialDate, string FinalDate, string funcionario) {
+            return base.Channel.GetCheckPointDateIntervalAsync(InitialDate, FinalDate, funcionario);
         }
         
-        public Classes.VO.Ponto[] GetCheckPointByDate(string InitialDate, string FinalDate, string id_funcionario) {
-            return base.Channel.GetCheckPointByDate(InitialDate, FinalDate, id_funcionario);
+        public Library.Inclock.web.br.Autenticador.CheckPointBasicInformations GetBasicInformations(string InitialDate, string FinalDate, string funcionario) {
+            return base.Channel.GetBasicInformations(InitialDate, FinalDate, funcionario);
         }
         
-        public System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointByDateAsync(string InitialDate, string FinalDate, string id_funcionario) {
-            return base.Channel.GetCheckPointByDateAsync(InitialDate, FinalDate, id_funcionario);
-        }
-        
-        public Classes.VO.Ponto[] GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario) {
-            return base.Channel.GetCheckPointDateInterval(InitialDate, FinalDate, id_funcionario);
-        }
-        
-        public System.Threading.Tasks.Task<Classes.VO.Ponto[]> GetCheckPointDateIntervalAsync(string InitialDate, string FinalDate, string id_funcionario) {
-            return base.Channel.GetCheckPointDateIntervalAsync(InitialDate, FinalDate, id_funcionario);
+        public System.Threading.Tasks.Task<Library.Inclock.web.br.Autenticador.CheckPointBasicInformations> GetBasicInformationsAsync(string InitialDate, string FinalDate, string funcionario) {
+            return base.Channel.GetBasicInformationsAsync(InitialDate, FinalDate, funcionario);
         }
         
         public Classes.VO.Ponto GetCheckPointById(string id) {

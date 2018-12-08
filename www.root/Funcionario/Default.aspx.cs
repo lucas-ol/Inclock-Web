@@ -31,9 +31,10 @@ public partial class Funcionario_Default : System.Web.UI.Page
         Literal qtdeExpedientes = (Literal)e.Item.FindControl("qtdecargo");
         Literal cpf = (Literal)e.Item.FindControl("cpf");
         Literal rg = (Literal)e.Item.FindControl("rg");
-        HtmlTableRow link = (HtmlTableRow)e.Item.FindControl("link");
-        link.Attributes.Add("onclick", "window.location.href=' /Funcionario/cadastrar.aspx?id=" + funcionario.Id + "'");
-
+        HyperLink editar = (HyperLink)e.Item.FindControl("hplEditar");
+        HyperLink relatorio = (HyperLink)e.Item.FindControl("hplRelatorio");
+        editar.NavigateUrl = "/Funcionario/cadastrar.aspx?id=" + funcionario.Id;
+        relatorio.NavigateUrl = "/Relatorios/Funcionario.aspx?id=" + funcionario.Id;
         Literal linha = (Literal)e.Item.FindControl("linha");
         linha.Text = Convert.ToString(e.Item.DataItemIndex + 1);
         id.Text = funcionario.Id.ToString();

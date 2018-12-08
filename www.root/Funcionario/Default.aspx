@@ -7,9 +7,6 @@
             background-color: rgba(190, 190, 190, 0.86);
         }
 
-        .table tbody tr:hover {
-       cursor:pointer
-        }
     </style>
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="Corpo">  
@@ -32,12 +29,11 @@
                     <th>RG</th>
                     <th>CPF</th>
                     <th>Quantidade de expediente</th>
-                    <th>#</th>
                 </tr>
             </thead>
             <asp:ListView runat="server" ID="lvPessoas">
                 <ItemTemplate>
-                    <tr onclick="alert('Linha clicada')" runat="server" id="link">
+                    <tr>
                         <td>
                             <asp:Literal Text="text" runat="server" ID="linha" /></td>
                         <td>
@@ -52,9 +48,12 @@
                             <asp:Literal Text="text" runat="server" ID="RG" /></td>
                         <td>
                             <asp:Literal Text="text" runat="server" ID="qtdecargo" /></td>
-                        <td>#
+                        <td>
+                            <asp:HyperLink NavigateUrl="navigateurl" runat="server" ID="hplEditar" Text="Editar" />
                         </td>
-
+                          <td>
+                            <asp:HyperLink NavigateUrl="navigateurl" runat="server" ID="hplRelatorio" Text="Pontos" />
+                        </td>
                     </tr>
                 </ItemTemplate>
             </asp:ListView>

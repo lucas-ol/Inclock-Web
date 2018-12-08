@@ -13,7 +13,10 @@ var ChartFactory = function (container) {
             dataType: "json",
             headers: { integracao: window.integracao },
             success: function (data) {
-                callback[0](data);
+                for (var i = 0; i < callback.length; i++) {
+                    callback[i](data);
+                }
+
             },
             error: function (x, y, z) {
 
@@ -84,12 +87,12 @@ var ChartFactory = function (container) {
             }, 0);
         });
         /*Faz uma falta */
-         window.RLPonto.data.datasets[3].data = MONTHS.map(function (val, index) {
+        window.RLPonto.data.datasets[3].data = MONTHS.map(function (val, index) {
             return Faltas.reduce(function (soma, item) {
                 var dt = item.DataEntrada.split("/");
                 var dta = new Date(dt[2], dt[1], dt[0]);
                 dta.setMonth(dta.getMonth() - 1);
-                if (dta.getMonth() === index ) {
+                if (dta.getMonth() === index) {
                     return soma + 1;
                 }
                 else
@@ -165,6 +168,20 @@ var ChartFactory = function (container) {
         $('#txtSaidaRegistradas').text(data.Informacoes.reduce(function (acumulado, item) { if (item.Tipo === 'Saida') { return acumulado + item.Qtde; } else return acumulado + 0; }, 0));
         $('#txtAtrasosRegistrados').text(data.Informacoes.reduce(function (acumulado, item) { if (item.Tipo === 'Atrasos') { return acumulado + item.Qtde; } else return acumulado + 0; }, 0));
         $('#txtFaltasRegistradas').text(data.Informacoes.reduce(function (acumulado, item) { if (item.Tipo === 'Faltas') { return acumulado + item.Qtde; } else return acumulado + 0; }, 0));
+    };
+
+    self.PreencherPontos = function (data) {
+        $('#htmlPontos').empty();
+        for (var i = 0; i < data.Pontos.length; i++) {
+            var html = "<tr>" + "<td>" + data.Pontos[i].Id + "</td>" +
+                "<td>" + data.Pontos[i].DataEntrada + "</td>" +
+                "<td>Falta fazer</td>" +
+                "<td>" + data.Pontos[i].Entrada+"</td>" +
+                "<td>" + data.Pontos[i].Saida + "</td>" +
+                "<td>" + data.Pontos[i].Obs.replace("<br>","") + "</td>" +
+                "<td><a href=\"/Relatorios/Ajuste.aspx?id=" + data.Pontos[i].Id  + "\">Editar</a></td>" + "</tr>";
+             $('#htmlPontos').html(html+$('#htmlPontos').html());
+        }
     };
 };
 

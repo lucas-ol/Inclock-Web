@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/Classes.VO" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Autenticador.BL" />
   <xs:element name="GetOptions">
     <xs:complexType>
       <xs:sequence />
@@ -40,17 +41,17 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetLogin">
+  <xs:element name="SendAccount">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetLoginResponse">
+  <xs:element name="SendAccountResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="GetLoginResult" nillable="true" type="xs:string" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="SendAccountResult" nillable="true" type="q2:FeedBack" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -78,7 +79,7 @@
   <xs:element name="GetUserByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="GetUserByIdResult" nillable="true" type="q2:Funcionario" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="GetUserByIdResult" nillable="true" type="q3:Funcionario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -87,13 +88,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="funcionario" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="type" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="CheckPointResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="CheckPointResult" nillable="true" type="q3:FeedBack" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="CheckPointResult" nillable="true" type="q4:FeedBack" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -108,7 +110,7 @@
   <xs:element name="GetExpedienteResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="GetExpedienteResult" nillable="true" type="q4:ArrayOfExpediente" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="GetExpedienteResult" nillable="true" type="q5:ArrayOfExpediente" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -123,38 +125,7 @@
   <xs:element name="GetAvisosResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="GetAvisosResult" nillable="true" type="q5:ArrayOfAviso" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetCheckPoint">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="month" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="funcionario" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetCheckPointResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="GetCheckPointResult" nillable="true" type="q6:ArrayOfPonto" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetCheckPointByDate">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="InitialDate" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="FinalDate" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="id_funcionario" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetCheckPointByDateResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="GetCheckPointByDateResult" nillable="true" type="q7:ArrayOfPonto" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="GetAvisosResult" nillable="true" type="q6:ArrayOfAviso" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -163,14 +134,30 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="InitialDate" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="FinalDate" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="id_funcionario" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="funcionario" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetCheckPointDateIntervalResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="GetCheckPointDateIntervalResult" nillable="true" type="q8:ArrayOfPonto" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Classes.VO" minOccurs="0" name="GetCheckPointDateIntervalResult" nillable="true" type="q7:ArrayOfPonto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBasicInformations">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InitialDate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="FinalDate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="funcionario" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBasicInformationsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Autenticador.BL" minOccurs="0" name="GetBasicInformationsResult" nillable="true" type="q8:CheckPoint.BasicInformations" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
