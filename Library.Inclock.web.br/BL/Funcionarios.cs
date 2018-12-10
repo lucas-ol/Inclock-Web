@@ -232,5 +232,29 @@ namespace Library.Inclock.web.br.BL
         {
             return Pesquisa_Funcionario_ID(id);
         }
+        public static List<User> GetUserLogadosMobile()
+        {
+            List<User> us = new List<User>();
+            using (var db = new DataBase())
+            {
+                DataTable dt = db.MySqlLeitura("select * from acessos a inner join funcionarios f  on f.id = a.funcionario_id where a.dispositivo = 'mob' and a.logado", CommandType.Text);
+                if (dt.TableName != "erro" && dt.Rows.Count > 0)
+                {
+                    us.AddRange(dt.Select().Select(x => new User
+                    {
+                        Id = Convert.ToInt32(x["funcionario_id"]),
+                        Nome = x["nome"].ToString()
+                    }));
+                }
+            }
+            return us;
+        }
+        public static void DesonnectarUsuarioMobile(int id)
+        {
+            using (var db = new DataBase())
+            {
+                DataTable dt = db.MySqlLeitura("update acessos set logado = 0 where funcionario_id = " + id, CommandType.Text);
+            }
+        }
     }
 }

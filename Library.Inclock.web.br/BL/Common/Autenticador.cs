@@ -23,16 +23,7 @@ namespace Library.Inclock.web.br.BL.Common
                 return !CurrentUser.Roles.Contains("ADM");
             }
         }
-        private static List<int> _logados = (List<int>)HttpContext.Current.Application["logados"];
-        public static List<int> Logados
-        {
-            get
-            {
-                return _logados;
-            }
-            set { _logados = value; }
-        }
-       
+             
         public static FormsAuthenticationTicket Ticket
         {
             get
