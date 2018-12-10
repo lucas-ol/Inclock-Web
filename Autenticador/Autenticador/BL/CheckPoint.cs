@@ -121,8 +121,8 @@ namespace Autenticador.BL
             using (DataBase db = new DataBase())
             {
                 List<Ponto> pontos = new List<Ponto>();
-                db.MySqlAdicionaParametro("dta_de", Convert.ToDateTime(initialDate).ToString("yyyy-MM-dd"));
-                db.MySqlAdicionaParametro("dta_ate", Convert.ToDateTime(finalDate).ToString("yyyy-MM-dd"));
+                db.MySqlAdicionaParametro("dta_de", DateTime.ParseExact(initialDate,"dd/MM/yyyy",null).ToString("yyyy-MM-dd"));
+                db.MySqlAdicionaParametro("dta_ate", DateTime.ParseExact(finalDate, "dd/MM/yyyy", null).ToString("yyyy-MM-dd"));
                 db.MySqlAdicionaParametro("funcionario", funcionario);
                 var tb = db.MySqlLeitura("select * from pontos where (funcionario_id = @funcionario or @funcionario = 0 ) and dta_entrada between @dta_de and @dta_ate order by dta_entrada; ", CommandType.Text);
                 if (tb == null)

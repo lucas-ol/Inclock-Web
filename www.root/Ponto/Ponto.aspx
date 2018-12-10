@@ -5,9 +5,10 @@
 <asp:Content runat="server" ContentPlaceHolderID="Corpo">
     <uc:msg  runat="server" ID="ucMsg"/>
     <div class="form-inline">
-        <div class="col-md-6 p-0 m-0">
-            <input type="button" name="name" value="Registrar Entrada" class="btn btn-success" id="btnEntrada" />         
+        <div class="col-md-5 p-0 m-0">
+            <input type="button" name="name" value="Registrar Entrada" class="btn btn-success" id="btnEntrada" style="float:right" />         
         </div>
+        <div class="col-md-1 p-0 m-0"></div>
         <div class="col-md-6 p-0 m-0">
             <input type="button" name="name" value="Registrar Saida" class="btn btn-info" id="btnSaida"/>          
         </div>        

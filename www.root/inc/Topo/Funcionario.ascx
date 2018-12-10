@@ -13,7 +13,7 @@
                 <ul class="navbar-nav mr-auto ">
                     <li class=" nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class=" nav-item"><a class="nav-link" href="/Funcionario/cadastrar.aspx">Conta</a></li>                  
-                    <li class="nav-item"><a class=" nav-link" href="#contact">Contato</a></li>
+                    <li class="nav-item"><a class=" nav-link" href="/Contato">Contato</a></li>
                      <li class="nav-item dropdown">
                         <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Ponto</a>
                         <div class="dropdown-menu">

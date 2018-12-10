@@ -22,9 +22,8 @@
                     <li class="nav-item dropdown">
                         <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Relatorios</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/Funcionario/cadastrar.aspx">Graficos</a>
-                            <a class="dropdown-item" href="/Funcionario">Pontos</a>
-                            <a class="dropdown-item " href="#">aqui</a>
+                            <a class="dropdown-item" href="/Relatorios">Graficos</a>
+                            <a class="dropdown-item" href="/Relatorios/Funcionario.aspx">Pontos</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">

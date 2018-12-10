@@ -35,7 +35,7 @@ namespace Library.Inclock.web.br.BL
         }
         public Client(IEnumerable<KeyValuePair<string, string>> headers)
         {
-            Service = new Autenticador.ServiceClient();
+            Service = new Autenticador.ServiceClient("BasicHttpBinding_IService", Address);
             Service.Endpoint.EndpointBehaviors.Add(new CustomEndpoint { Headers = headers });
         }
         public void Dispose()

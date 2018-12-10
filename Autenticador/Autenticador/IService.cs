@@ -22,7 +22,7 @@ namespace Autenticador
         Funcionario Logar(string password, string login, string dispositivo);
 
         [OperationContract]
-        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "DELETE", BodyStyle = WebMessageBodyStyle.Wrapped)]
+        [WebInvoke(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, Method = "PUT", BodyStyle = WebMessageBodyStyle.Wrapped)]
         void ApagarSessao(int func, string dispositivo);
 
         [OperationContract]
