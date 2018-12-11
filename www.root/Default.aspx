@@ -76,7 +76,7 @@
     <!-- Slider -->
 
     <div id="owl-container" class="loader">
-        <div id="GridQrCode" class="owl-qr" style="display:none" >
+        <div id="GridQrCode" class="owl-qr" >
             <asp:HiddenField runat="server" ID="hdnCode" ClientIDMode="Static" />
             <div id="img" class="img-fluid" style="padding: 20px; background-color: white; position: relative;height:196px">
             </div>

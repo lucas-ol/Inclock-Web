@@ -44,9 +44,6 @@ namespace Autenticador
         [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<Expediente> GetExpediente(string semana, string funcionario_Id)
         {
-            if (!new Integracao().ValidaSessao())
-                throw new Exception(Integracao.MENSAGEMERRO);
-
             int.TryParse(semana, out int isemana);
             int.TryParse(funcionario_Id, out int ifuncionario_Id);
             if (ifuncionario_Id == 0)
@@ -55,7 +52,7 @@ namespace Autenticador
                 return new ExpedienteController().GetExpediente(isemana, ifuncionario_Id);
 
         }
-        
+
         public List<Aviso> GetAvisos(string qtde, string index)
         {
             if (!int.TryParse(qtde, out int qt))
@@ -80,7 +77,7 @@ namespace Autenticador
             }
             throw new Exception("Você não tem os privilegios necessarios");
         }
-      //  [Role(Roles = new string[] { "ADM", "FUNC" })]
+        //  [Role(Roles = new string[] { "ADM", "FUNC" })]
         public CheckPoint.BasicInformations GetBasicInformations(string InitialDate, string FinalDate, string id_funcionario)
         {
             return new CheckPoint().GetBasicInformations(InitialDate, FinalDate, id_funcionario);
@@ -120,35 +117,17 @@ namespace Autenticador
         [Role(Roles = new string[] { "ADM" })]
         public FeedBack CadastrarExpediente(Expediente exp)
         {
-            using (var ig = new Integracao())
-            {
-                if (ig.ValidaSessao())
-                {
-                    var feed = new FeedBack();
-                    if (exp.Id == 0)
-                        feed = new ExpedienteController().SalvaExpediente(exp);
-                    else
-                        feed = new ExpedienteController().AtualizaExpediente(exp);
-                    return feed;
-                }
-                else
-                    return new FeedBack() { Mensagem = Integracao.MENSAGEMERRO, Status = false };
-            }
-
+            var feed = new FeedBack();
+            if (exp.Id == 0)
+                feed = new ExpedienteController().SalvaExpediente(exp);
+            else
+                feed = new ExpedienteController().AtualizaExpediente(exp);
+            return feed;
         }
         [Role(Roles = new string[] { "ADM" })]
         public FeedBack ExcluirExpediente(int id)
         {
-            using (var ig = new Integracao())
-            {
-                if (ig.ValidaSessao())
-                {
-                    return new ExpedienteController().Excluir(id);
-                }
-                else
-                    return new FeedBack() { Mensagem = Integracao.MENSAGEMERRO, Status = false };
-            }
-
+            return new ExpedienteController().Excluir(id);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Library.Inclock.web.br.BL
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    throw ex;
                 }
                 
             }

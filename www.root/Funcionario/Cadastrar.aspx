@@ -220,7 +220,7 @@
         </div>
         <div>
             <uc:ExpedienteCadastrar runat="server" ID="ucExpCadastrar" Visible="false" />
-            <uc:ExpedienteListar runat="server" ID="ucExpListar" Visible="false" />
+            <uc:ExpedienteListar runat="server" ID="ucExpListar" />
 
         </div>
 
