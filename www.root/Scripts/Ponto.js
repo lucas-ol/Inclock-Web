@@ -26,6 +26,7 @@ var Ponto = function () {
         });
     };
     self.FuncionarioLogado = function () {
+
         return new Promise((resolve,reject) => {
             $.ajax({
                 method: 'GET',

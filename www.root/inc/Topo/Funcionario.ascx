@@ -12,8 +12,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto ">
                     <li class=" nav-item"><a class="nav-link" href="/">Home</a></li>
-                    <li class=" nav-item"><a class="nav-link" href="/Funcionario/cadastrar.aspx">Conta</a></li>                  
-                    <li class="nav-item"><a class=" nav-link" href="/Contato">Contato</a></li>
+                    <li class=" nav-item"><a class="nav-link" href="/Funcionario/cadastrar.aspx">Conta</a></li>                    
                      <li class="nav-item dropdown">
                         <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Ponto</a>
                         <div class="dropdown-menu">
@@ -21,6 +20,7 @@
                             <a class="dropdown-item" href="Ponto/Default.aspx">Espelho de ponto</a>                          
                         </div>
                     </li>
+                     <li class="nav-item"><a class=" nav-link" href="/Contato">Mobile</a></li>
                 </ul>
             <uc:login runat="server" id="ucLogin" />
             </div>

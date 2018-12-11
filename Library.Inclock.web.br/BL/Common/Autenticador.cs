@@ -81,14 +81,14 @@ namespace Library.Inclock.web.br.BL.Common
             //     HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encrypt));
 
 
-         //   HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, "") { Expires = DateTime.Now.AddDays(-1) });
-         //   HttpContext.Current.Response.Cookies.Add(new HttpCookie("integracao", "") { Expires = DateTime.Now.AddDays(-1) });
-
+          
             if (HttpContext.Current != null)
             {                               
                 HttpContext.Current.Session.Abandon();
                 HttpContext.Current.Session.Clear();
-           
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, "") { Expires = DateTime.Now.AddDays(-1) });
+                HttpContext.Current.Response.Cookies.Add(new HttpCookie("integracao", "") { Expires = DateTime.Now.AddDays(-1) });
+
                 HttpContext.Current.Response.Redirect("/");
             }
         }

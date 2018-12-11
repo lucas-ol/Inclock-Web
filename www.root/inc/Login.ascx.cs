@@ -71,4 +71,12 @@ public partial class inc_Login : System.Web.UI.UserControl
     {
         Autenticador.Logout();
     }
+
+    protected void btnEsqueci_Click(object sender, EventArgs e)
+    {
+        using (Library.Inclock.web.br.BL.Client cli = new Library.Inclock.web.br.BL.Client())
+        {
+            Response.Write( "<script>alert('"+cli.Service.SendAccount(txtEmail.Text).Mensagem+ "')</script>");
+        }
+    }
 }

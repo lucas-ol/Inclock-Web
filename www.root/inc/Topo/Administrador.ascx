@@ -12,6 +12,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto ">
                     <li class=" nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class=" nav-item"><a class="nav-link" href="/Logout">Acessos</a></li>
                     <li class="nav-item dropdown">
                         <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="/Funcionario">Funcionarios</a>
                         <div class="dropdown-menu">

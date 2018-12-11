@@ -30,27 +30,6 @@
                 </asp:ListView>
             </tbody>
         </table>
-         <table class="table">
-            <caption>Usuarios Logados no sistema Web</caption>
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>nome</th>
-                </tr>
-            </thead>
-            <tbody>
-                <asp:ListView runat="server" ID="lvWeb">
-                    <ItemTemplate>
-                        <tr>
-                            <td>
-                                <asp:Label Text="text" runat="server" ID="txtId" /></td>
-                             <td>
-                                <asp:Label Text="text" runat="server" ID="txtNome"/></td>
-                        </tr>
-                    </ItemTemplate>
-                </asp:ListView>
-            </tbody>
-
-        </table>
+    
     </div>
 </asp:Content>
