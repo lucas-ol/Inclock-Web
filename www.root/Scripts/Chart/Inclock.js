@@ -179,7 +179,7 @@ var ChartFactory = function (container) {
                 "<td>" + data.Pontos[i].Entrada+"</td>" +
                 "<td>" + data.Pontos[i].Saida + "</td>" +
                 "<td>" + data.Pontos[i].Obs.replace("<br>","") + "</td>" +
-                "<td><a href=\"/Relatorios/Ajuste.aspx?id=" + data.Pontos[i].Id  + "\">Editar</a></td>" + "</tr>";
+               "</tr>";
              $('#htmlPontos').html(html+$('#htmlPontos').html());
         }
     };

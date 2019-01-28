@@ -64,18 +64,11 @@ namespace Autenticador
         //  [Role(Roles = new string[] { "ADM", "FUNC" })]
         public List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string id_funcionario)
         {
-            using (var ig = new Integracao())
-            {
-                if (ig.ValidaSessao())
-                {
-                    if (string.IsNullOrEmpty(InitialDate) || string.IsNullOrEmpty(FinalDate))
-                        throw new Exception("Parametros incorretos");
+            if (string.IsNullOrEmpty(InitialDate) || string.IsNullOrEmpty(FinalDate))
+                throw new Exception("Parametros incorretos");
 
-                    int.TryParse(id_funcionario, out int iFuncionario);
-                    return new CheckPoint().GetListCheckPoint(InitialDate, FinalDate, iFuncionario);
-                }
-            }
-            throw new Exception("Você não tem os privilegios necessarios");
+            int.TryParse(id_funcionario, out int iFuncionario);
+            return new CheckPoint().GetListCheckPoint(InitialDate, FinalDate, iFuncionario);
         }
         //  [Role(Roles = new string[] { "ADM", "FUNC" })]
         public CheckPoint.BasicInformations GetBasicInformations(string InitialDate, string FinalDate, string id_funcionario)

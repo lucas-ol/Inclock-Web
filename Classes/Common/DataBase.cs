@@ -83,6 +83,7 @@ namespace Classes.Common
                 TabelaDeRetorno.TableName = "erro";
                 TabelaDeRetorno.Columns.Add("erro");
                 TabelaDeRetorno.Rows[0][0] = "Deu Erro: " + ex.Message;
+                throw ex;
 
             }
             MySqlZeraParametro();// vai zerar a coleção de parametros

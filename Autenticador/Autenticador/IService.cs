@@ -59,7 +59,7 @@ namespace Autenticador
         List<Ponto> GetCheckPointDateInterval(string InitialDate, string FinalDate, string funcionario);              
 
         [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "basicInformation/{InitialDate}/{FinalDate}/{funcionario}")]
+        [WebGet(ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, UriTemplate = "basicinformation/{InitialDate}/{FinalDate}/{funcionario}")]
         BL.CheckPoint.BasicInformations GetBasicInformations(string InitialDate, string FinalDate, string funcionario);
 
         [OperationContract]
